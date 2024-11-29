@@ -1,4 +1,26 @@
 document.addEventListener("DOMContentLoaded", () => {
+    const mapModal = document.getElementById("map-modal");
+    const showMapButton = document.getElementById("show-map");
+    const closeButton = mapModal.querySelector(".close-button");
+
+    // Otevření modálního okna
+    showMapButton.addEventListener("click", () => {
+        mapModal.style.display = "flex";
+    });
+
+    // Zavření modálního okna
+    closeButton.addEventListener("click", () => {
+        mapModal.style.display = "none";
+    });
+
+    // Zavření modálního okna kliknutím mimo obsah
+    window.addEventListener("click", (event) => {
+        if (event.target === mapModal) {
+            mapModal.style.display = "none";
+        }
+    });
+
+    
     // Data pro hry
     const games = {
         hra1: {
