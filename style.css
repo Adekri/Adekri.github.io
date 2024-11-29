@@ -96,7 +96,7 @@ h1 {
     left: 10px;         /* Vzdálenost od levého okraje */
     z-index: 1000;      /* Zajištění, že prvek bude nad ostatním obsahem */
 }
-#center{
+#main-content{
     align-items: center;
 }
 
