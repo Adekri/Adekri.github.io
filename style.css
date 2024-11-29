@@ -20,8 +20,10 @@ body {
 }
 
 #slide img {
-    max-width: 100%;
-    border-radius: 10px;
+    width: 100%; /* Obrázek zabere celou šířku dostupného prostoru */
+    height: auto; /* Výška se přizpůsobí šířce, aby zachovala poměr stran */
+    border-radius: 10px; /* Pokud chceš zakulatit rohy, můžeš ponechat, nebo odstranit */
+    margin-bottom: 20px; 
 }
 
 button {
