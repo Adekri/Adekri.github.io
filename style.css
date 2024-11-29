@@ -97,7 +97,10 @@ h1 {
     z-index: 1000;      /* Zajištění, že prvek bude nad ostatním obsahem */
 }
 .main-content{
-    align-items: center;
+     display: flex;
+    justify-content: center; /* Horizontální centrování */
+    align-items: center;     /* Vertikální centrování */
+    height: 100vh;   
 }
 
 .back-link {
