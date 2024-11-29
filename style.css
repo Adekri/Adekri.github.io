@@ -96,6 +96,9 @@ h1 {
     left: 10px;         /* Vzdálenost od levého okraje */
     z-index: 1000;      /* Zajištění, že prvek bude nad ostatním obsahem */
 }
+#center{
+    align-items: center;
+}
 
 .back-link {
     text-decoration: none; /* Zruší podtržení odkazu */
