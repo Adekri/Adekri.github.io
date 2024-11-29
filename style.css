@@ -10,20 +10,13 @@ body {
 }
 
 .container {
-    width: 100%;
+    width: 80%;
     max-width: 800px;
     text-align: center;
     background: #ffffff;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     padding: 20px;
-}
-
-#slide img {
-    width: 100%; /* Obrázek zabere celou šířku dostupného prostoru */
-    height: auto; /* Výška se přizpůsobí šířce, aby zachovala poměr stran */
-    border-radius: 10px; /* Pokud chceš zakulatit rohy, můžeš ponechat, nebo odstranit */
-    margin-bottom: 20px; 
 }
 
 button {
@@ -39,4 +32,13 @@ button {
 
 button:hover {
     background-color: #0056b3;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+.game-list button {
+    width: 100%;
+    margin-bottom: 10px;
 }
