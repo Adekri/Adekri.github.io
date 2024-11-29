@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poklad na ostrově</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div id="main-content"></div>
+        <a href="index.html" class="back-link">Zpět na hlavní stránku</a>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const hra1Slides = {
+                start: {
+                    image: "https://via.placeholder.com/600x400?text=Začátek",
+                    text: "Vítejte v Hře 1! Kam chcete jít dál?",
+                    buttons: [
+                        { text: "Doprava", nextSlide: "right" },
+                        { text: "Doleva", nextSlide: "left" }
+                    ]
+                },
+                right: {
+                    image: "https://via.placeholder.com/600x400?text=Doprava",
+                    text: "Vybrali jste si cestu doprava. Co chcete udělat?",
+                    buttons: [
+                        { text: "Jít dál", nextSlide: "forward" },
+                        { text: "Vrátit se", nextSlide: "start" }
+                    ]
+                },
+                left: {
+                    image: "https://via.placeholder.com/600x400?text=Doleva",
+                    text: "Vybrali jste si cestu doleva. Kam dál?",
+                    buttons: [
+                        { text: "Prozkoumat", nextSlide: "explore" },
+                        { text: "Vrátit se", nextSlide: "start" }
+                    ]
+                },
+                forward: {
+                    image: "https://via.placeholder.com/600x400?text=Další+scéna",
+                    text: "Jdete dál a narazíte na překážku. Co uděláte?",
+                    buttons: [
+                        { text: "Překonat", nextSlide: "end" },
+                        { text: "Vrátit se", nextSlide: "right" }
+                    ]
+                },
+                explore: {
+                    image: "https://via.placeholder.com/600x400?text=Prozkoumání",
+                    text: "Objevili jste skrytý poklad! Gratulujeme!",
+                    buttons: [
+                        { text: "Začít znovu", nextSlide: "start" }
+                    ]
+                },
+                end: {
+                    image: "https://via.placeholder.com/600x400?text=Konec",
+                    text: "Gratulujeme, dokončili jste hru!",
+                    buttons: [
+                        { text: "Zpět na hlavní stránku", nextSlide: "menu" }
+                    ]
+                }
+            };
+
+            function renderSlide(slides, slideKey) {
+                const slide = slides[slideKey];
+                const container = document.getElementById("main-content");
+
+                if (!slide) {
+                    console.error("Neplatný slajd:", slideKey);
+                    return;
+                }
+
+                container.innerHTML = "";
+
+                // Obrázek
+                const img = document.createElement("img");
+                img.src = slide.image;
+                container.appendChild(img);
+
+                // Text
+                const text = document.createElement("p");
+                text.textContent = slide.text;
+                container.appendChild(text);
+
+                // Tlačítka
+                slide.buttons.forEach(button => {
+                    const btn = document.createElement("button");
+                    btn.textContent = button.text;
+                    btn.onclick = () => renderSlide(slides, button.nextSlide);
+                    container.appendChild(btn);
+                });
+            }
+
+            // Načíst úvodní slajd
+            renderSlide(hra1Slides, "start");
+        });
+    </script>
+</body>
+</html>
