@@ -11,8 +11,8 @@ body {
 
 /* Kontejner pro hlavní obsah */
 .container {
-    width: 80%;
-    max-width: 800px;
+    width: 100%;
+    /*max-width: 800px;*/
     text-align: center;
     background: #ffffff;
     border-radius: 10px;
