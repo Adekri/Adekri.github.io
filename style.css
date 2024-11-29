@@ -82,3 +82,25 @@ h1 {
     color: #333;
     cursor: pointer;
 }
+
+#top-left {
+    position: absolute; /* Pevná pozice vůči oknu */
+    top: 10px;          /* Vzdálenost od horního okraje */
+    left: 10px;         /* Vzdálenost od levého okraje */
+    z-index: 1000;      /* Zajištění, že prvek bude nad ostatním obsahem */
+}
+
+.back-link {
+    text-decoration: none; /* Zruší podtržení odkazu */
+    color: #333;           /* Nastaví barvu textu */
+    font-size: 16px;       /* Nastaví velikost písma */
+    font-weight: bold;     /* Zvýrazní text */
+    background-color: rgba(255, 255, 255, 0.8); /* Světlé pozadí s průhledností */
+    padding: 5px 10px;     /* Odsazení textu od okrajů */
+    border-radius: 5px;    /* Zaoblené rohy */
+    border: 1px solid #ccc; /* Jemný rámeček */
+}
+
+.back-link:hover {
+    background-color: rgba(200, 200, 200, 0.8); /* Změna pozadí při najetí myší */
+}
