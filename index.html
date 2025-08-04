@@ -1,18 +1,52 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nabídka Her</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Kontrola úniku hesla</title>
 </head>
 <body>
-    <div class="container">
-        <h1>Vyberte si hru</h1>
-        <div class="game-list">
-            <a href="pokladnaostrove.html" class="game-link">Hra 1: Poklad na ostrově</a>
-            <a href="hra2.html" class="game-link">Hra 2: Dobrodružství</a>
-        </div>
-    </div>
+  <h1>Zkontroluj své heslo</h1>
+  <input type="text" id="passwordInput" placeholder="Zadej heslo">
+  <button onclick="checkPassword()">Zkontrolovat</button>
+  <p id="result"></p>
+
+  <script>
+    async function checkPassword() {
+      const password = document.getElementById("passwordInput").value;
+      const resultEl = document.getElementById("result");
+
+      if (!password) {
+        resultEl.textContent = "Zadej heslo.";
+        return;
+      }
+
+      const sha1 = await sha1Hash(password);
+      const prefix = sha1.substring(0, 5);
+      const suffix = sha1.substring(5).toUpperCase();
+
+      const response = await fetch(`https://api.pwnedpasswords.com/range/${prefix}`);
+      const text = await response.text();
+
+      const found = text.split('\n').some(line => {
+        const [hashSuffix, count] = line.split(':');
+        return hashSuffix === suffix;
+      });
+
+      if (found) {
+        resultEl.textContent = "⚠️ Heslo bylo nalezeno v úniku! Zvaž změnu.";
+      } else {
+        resultEl.textContent = "✅ Heslo nebylo nalezeno v žádném známém úniku.";
+      }
+    }
+
+    async function sha1Hash(str) {
+      const encoder = new TextEncoder();
+      const data = encoder.encode(str);
+      const buffer = await crypto.subtle.digest("SHA-1", data);
+      return Array.from(new Uint8Array(buffer))
+        .map(b => b.toString(16).padStart(2, '0'))
+        .join('').toUpperCase();
+    }
+  </script>
 </body>
 </html>
