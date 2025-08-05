@@ -1,0 +1,18 @@
+
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <title>Phishing Demo - Rozcestník</title>
+</head>
+<body>
+    <h1>Phishing Demo – Rozcestník</h1>
+    <p>Vyberte si jednu z ukázkových phishingových stránek:</p>
+    <ul>
+        <li><a href="phish-login/index.html">Přihlašovací stránka (obecná)</a></li>
+        <li><a href="fake-facebook/index.html">Falešný Facebook</a></li>
+        <li><a href="email-scam/index.html">E-mailový podvod</a></li>
+        <li><a href="bank-alert/index.html">Falešné bankovní upozornění</a></li>
+    </ul>
+</body>
+</html>
