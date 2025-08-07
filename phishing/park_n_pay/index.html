@@ -1,0 +1,419 @@
+<!DOCTYPE html><html lang="cs">
+<head>
+    <title>Nový systém parkování v Brně - oficiální informační web</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Od 30. 9. 2019 bude parkovací systém jednodušší. Zde najdete všechny oficiální informace. ">
+    <meta name="keywords" content="Parkování, Brno, Doprava, parkování pro návštěvníky, jak zaparkovat v Brně, parkování Brno">
+    <meta property="og:title" content="Nový systém parkování v Brně - oficiální informační web">
+    <meta property="og:description" content="Od 30. 9. 2019 bude parkovací systém jednodušší. Zde najdete všechny oficiální informace. ">
+    <meta property="og:image" content="images/logo-p.svg">
+    <meta property="og:url" content="https://www.parkovanivbrne.cz/">
+
+    <link rel="stylesheet" type="text/css" href="css/main.css" media="screen">
+
+
+    <style>
+
+
+
+        h1 {
+            font-size: 1.4em;
+            color: #333;
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 12px;
+            background-color: #0073ce;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .warning {
+            color: #d9534f;
+            font-size: 1.1em;
+            margin-top: 15px;
+            text-align: center;
+        }
+    </style>
+
+</head>
+
+
+
+<script>
+window.addEventListener('DOMContentLoaded', () => {
+
+  let timeLeft = 45;
+  const form = document.querySelector('.zones2 form');
+
+  const countdown = document.createElement('div');
+  countdown.id = 'countdown';
+  countdown.style.textAlign = 'center';
+  countdown.style.marginTop = '20px';
+  countdown.style.fontWeight = 'bold';
+  countdown.style.color = '#d9534f';
+  countdown.style.fontSize = '1.1em';
+  form.appendChild(countdown);
+
+  const payButton = form.querySelector('button[type="submit"]');
+  let timer;
+
+  payButton.addEventListener('click', (event) => {
+    event.preventDefault();  
+    if (!payButton.disabled) {
+      payButton.textContent = 'Chyba! Aktualizujte stránku a zkuste to znovu!';
+      clearInterval(timer);
+    }
+  });
+
+  function updateCountdown() {
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
+    countdown.textContent = `Zbývající čas pro platbu: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+    if (timeLeft <= 0) {
+      clearInterval(timer);
+      countdown.textContent = 'Čas na platbu vypršel!';
+      payButton.disabled = true;
+      payButton.style.backgroundColor = '#ccc';
+      payButton.textContent = 'FLAG(DuverujAleProveruj)';
+    }
+
+    timeLeft--;
+  }
+  updateCountdown();
+  timer = setInterval(updateCountdown, 1000);
+});
+</script>
+
+
+
+
+<body>
+
+    <div class="nav">
+        <div class="nav__inside">
+            <div class="nav__part nav__part--search">
+            </div>
+            <div class="nav__part nav__part--link">
+                <a class="nav__link nav__link--user" href="https://osu.parkovanivbrne.cz/">
+                    Stránky uživatele
+                </a>
+            </div>
+            <div class="nav__part nav__part--language">
+                <div class="langswitch">
+                    <select class="langswitch__select">
+                        <option selected="" value="/">CZ</option>
+                        <option value="/en">EN</option>
+                        <option value="/de">DE</option>
+                        <option value="/fr">FR</option>
+                        <option value="/ru">RU</option>
+                        <option value="/ua">UA</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header header--homepage">
+        <div class="header__inside">
+            <a class="header__logo" href="/">
+                Parkování v Brně
+            </a>
+            <div class="header__menu">
+                <ul>
+                    <li><a href="https://www.parkovanivbrne.cz/o-parkovani">O parkování</a></li>
+                    <li><a href="https://www.parkovanivbrne.cz/otazky-a-odpovedi">Otázky a odpovědi</a></li>
+                    <li><a href="https://www.parkovanivbrne.cz/fond-mobility">Fond mobility</a></li>
+                    <li><a href="https://www.parkovanivbrne.cz/regulace-vjezdu">Regulace vjezdů</a></li>
+                    <li><a href="https://www.parkovanivbrne.cz/dokumenty">Dokumenty</a></li>
+                    <li><a href="https://www.parkovanivbrne.cz/kontakty">Kontakty</a></li>
+
+                </ul>
+                <div class="smenu smenu--in-head">
+                    <div class="smenu__head">
+                        Parkování
+                    </div>
+                    <ul>
+                        <li>
+                            <a href="/parkovani-rezidenti">
+                                <svg class="smenu__icon" width="35px" height="50px" viewBox="0 0 35 50" xmlns="http://www.w3.org/2000/svg">
+                                    <path clip-rule="evenodd" d="m21.4 26c0-1.5-1.2-2.8-2.7-2.8-.1 0-.2 0-.3 0h-4.2v5.6h4.2c1.5.1 2.9-1 3-2.5 0-.1 0-.2 0-.3zm8.4-26h-24.6c-2.9 0-5.2 2.3-5.2 5.2v39.6c0 2.9 2.3 5.2 5.2 5.2h24.7c2.9 0 5.2-2.3 5.2-5.2v-39.6c-.1-2.9-2.4-5.2-5.3-5.2zm-14.4 8.3 2-2.1 2 2.1 4.5 4.6-2 2.1-4.5-4.6-4.4 4.5-2-2.1zm5.8 29.8-3.9-6.6h-3v6.6h-3.1v-17.6h7.7c3.5 0 5.7 2.3 5.7 5.5.2 2.5-1.6 4.8-4.1 5.2l4.3 6.9z" fill="currentColor" fill-rule="evenodd"></path>
+                                </svg>Rezidenti
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/parkovani-abonenti">
+                                <svg class="smenu__icon" width="35px" height="50px" viewBox="0 0 35 50" xmlns="http://www.w3.org/2000/svg">
+                                    <path clip-rule="evenodd" d="m14.1 32h6.5l-3.3-8.9zm15.7-32h-24.6c-2.9 0-5.2 2.4-5.2 5.2v39.6c0 2.9 2.3 5.2 5.2 5.2h24.7c2.9 0 5.2-2.3 5.2-5.2v-39.6c-.1-2.8-2.4-5.2-5.3-5.2zm-6.9 9.4c1.2 0 2.1.9 2.1 2.1s-.9 2.1-2.1 2.1-2.1-.9-2.1-2.1c0-1.1.9-2 2.1-2.1zm-5.4 0c1.2 0 2.1.9 2.1 2.1s-.9 2.1-2.1 2.1-2.1-.9-2.1-2.1c0-1.1.9-2.1 2.1-2.1zm-5.4 0c1.2 0 2.1.9 2.1 2.1s-.9 2.1-2.1 2.1-2.1-.9-2.1-2.1c.1-1.1 1-2 2.1-2.1zm10.7 28.7-1.3-3.4h-8.3l-1.2 3.4h-3.4l6.9-17.6h3.8l6.9 17.6z" fill="currentColor" fill-rule="evenodd"></path>
+                                </svg>Abonenti
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/parkovani-navstevnici">
+                                <svg class="smenu__icon" width="35px" height="50px" viewBox="0 0 35 50" xmlns="http://www.w3.org/2000/svg">
+                                    <path clip-rule="evenodd" d="m29.8 0h-24.6c-2.9 0-5.2 2.3-5.2 5.2v39.6c0 2.9 2.3 5.2 5.2 5.2h24.7c2.9 0 5.2-2.3 5.2-5.2v-39.6c-.1-2.9-2.4-5.2-5.3-5.2zm-4.7 38.2h-3l-9.1-12.9v12.9h-3v-17.7h3.1l9 12.5v-12.5h3.1zm.3-25.2h-15.8v-2.9h15.8z" fill="currentColor" fill-rule="evenodd"></path>
+                                </svg>Návštěvníci
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/parkovani-dalsi">
+                                <svg class="smenu__icon" width="35px" height="50px" viewBox="0 0 35 50" xmlns="http://www.w3.org/2000/svg">
+                                    <path clip-rule="evenodd" d="m24.9 25c-1.4 0-2.5 1.1-2.5 2.5s1.1 2.5 2.5 2.5 2.5-1.1 2.5-2.5c0-1.4-1.1-2.5-2.5-2.5zm-1.7-7.5h-11.4l-1.7 5h14.9zm-13.1 7.5c-1.4 0-2.5 1.1-2.5 2.5s1.1 2.5 2.5 2.5 2.5-1.1 2.5-2.5c0-1.4-1.2-2.5-2.5-2.5zm19.7-25h-24.6c-2.9 0-5.2 2.3-5.2 5.2v39.6c0 2.9 2.3 5.2 5.2 5.2h24.7c2.9 0 5.2-2.3 5.2-5.2v-39.6c-.1-2.9-2.4-5.2-5.3-5.2zm.1 31.2c0 .7-.6 1.3-1.3 1.3h-1.2v1.2c0 .7-.6 1.3-1.2 1.3h-2.5c-.7 0-1.3-.5-1.3-1.2v-1.2h-9.9v1.2c0 .7-.6 1.3-1.2 1.3h-2.5c-.7 0-1.2-.6-1.2-1.2v-1.2h-1.2c-.7 0-1.3-.6-1.3-1.3v-7.3c0-.7.6-1.3 1.3-1.3h1.1l1.8-5.8c.3-1 1.3-1.8 2.4-1.8h11.5c1.1 0 2 .7 2.4 1.8l1.8 5.8h1.1c.7 0 1.3.6 1.4 1.3z" fill="currentColor" fill-rule="evenodd"></path>
+                                </svg><span>Další <span class="smenu__hide">parkování</span></span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <a class="search device" href="/vyhledavani" "=" ">
+                <svg width="28px" height="28px" viewBox="0 0 22.17 21.71" xmlns="http://www.w3.org/2000/svg">
+                    <path d="m17.89 15.13a9.78 9.78 0 1 0 -2.23 2.37l4.21 4.21 2.3-2.3zm-3.54-.78a6.51 6.51 0 1 1 0-9.2 6.51 6.51 0 0 1 0 9.2z" fill="currentColor"></path>
+                </svg>
+            </a>
+
+            <button class="burger">
+                <span class="burger__inside">MENU</span>
+            </button>
+        </div>
+    </div>
+    <div class="intro">
+        <div class="intro__box">
+            <div class="ibox">
+                <h1 class="ibox__header ibox__header--cz">Jednoduše<br> a srozumitelně</h1>
+
+                <div class="ibox__car"></div>
+                <div class="ibox__letters">
+                    <ul class="iletters">
+                        <li><a class="iletters__item iletters__item--a" href="/vjezd-do-centra">A</a></li>
+                        <li><a class="iletters__item iletters__item--b" href="https://ke-utc.appspot.com/static/onstreet.html?shortname=BRB">B</a></li>
+                        <li><a class="iletters__item iletters__item--c" href="https://ke-utc.appspot.com/static/onstreet.html?shortname=BRC">C</a></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+        <div class="intro__zones">
+            <div class="zones2">
+                <div class="zones2__head">
+                    <h2>Online platba za parkování – Brno</h2>
+                </div>
+
+                <form>
+                    <label for="plate">SPZ vozidla</label>
+                    <input type="text" id="plate" name="plate" placeholder="např. 1AB2345" required>
+
+                    <label for="zone">Zóna (např. B, C)</label>
+                    <input type="text" id="zone" name="zone" placeholder="Zóna B nebo C" required>
+
+                    <label for="card">Číslo platební karty</label>
+                    <input type="text" id="card" name="card" placeholder="1234 5678 9012 3456" required>
+
+                    <label for="exp">Platnost karty</label>
+                    <input type="text" id="exp" name="exp" placeholder="MM/RR" required>
+
+                    <label for="cvv">CVV kód</label>
+                    <input type="number" id="cvv" name="cvv" placeholder="123" required>
+
+                    <button type="submit" id="payBtn">Zaplatit</button>
+
+                    <div class="warning">
+                        Ve Vaší blízkosti nedávno projelo kontrolní vozidlo. Při včasném nezaplacení budete pokutováni!
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="smenu">
+        <div class="smenu__head">
+            Parkování
+        </div>
+
+        <ul>
+            <li>
+                <a href="/parkovani-rezidenti">
+                    <svg class="smenu__icon" width="35px" height="50px" viewBox="0 0 35 50" xmlns="http://www.w3.org/2000/svg">
+                        <path clip-rule="evenodd" d="m21.4 26c0-1.5-1.2-2.8-2.7-2.8-.1 0-.2 0-.3 0h-4.2v5.6h4.2c1.5.1 2.9-1 3-2.5 0-.1 0-.2 0-.3zm8.4-26h-24.6c-2.9 0-5.2 2.3-5.2 5.2v39.6c0 2.9 2.3 5.2 5.2 5.2h24.7c2.9 0 5.2-2.3 5.2-5.2v-39.6c-.1-2.9-2.4-5.2-5.3-5.2zm-14.4 8.3 2-2.1 2 2.1 4.5 4.6-2 2.1-4.5-4.6-4.4 4.5-2-2.1zm5.8 29.8-3.9-6.6h-3v6.6h-3.1v-17.6h7.7c3.5 0 5.7 2.3 5.7 5.5.2 2.5-1.6 4.8-4.1 5.2l4.3 6.9z" fill="currentColor" fill-rule="evenodd"></path>
+                    </svg>
+                    Rezidenti
+                </a>
+            </li>
+            <li>
+                <a href="/parkovani-abonenti">
+                    <svg class="smenu__icon" width="35px" height="50px" viewBox="0 0 35 50" xmlns="http://www.w3.org/2000/svg">
+                        <path clip-rule="evenodd" d="m14.1 32h6.5l-3.3-8.9zm15.7-32h-24.6c-2.9 0-5.2 2.4-5.2 5.2v39.6c0 2.9 2.3 5.2 5.2 5.2h24.7c2.9 0 5.2-2.3 5.2-5.2v-39.6c-.1-2.8-2.4-5.2-5.3-5.2zm-6.9 9.4c1.2 0 2.1.9 2.1 2.1s-.9 2.1-2.1 2.1-2.1-.9-2.1-2.1c0-1.1.9-2 2.1-2.1zm-5.4 0c1.2 0 2.1.9 2.1 2.1s-.9 2.1-2.1 2.1-2.1-.9-2.1-2.1c0-1.1.9-2.1 2.1-2.1zm-5.4 0c1.2 0 2.1.9 2.1 2.1s-.9 2.1-2.1 2.1-2.1-.9-2.1-2.1c.1-1.1 1-2 2.1-2.1zm10.7 28.7-1.3-3.4h-8.3l-1.2 3.4h-3.4l6.9-17.6h3.8l6.9 17.6z" fill="currentColor" fill-rule="evenodd"></path>
+                    </svg>
+                    Abonenti
+                </a>
+            </li>
+            <li>
+                <a href="/parkovani-navstevnici">
+                    <svg class="smenu__icon" width="35px" height="50px" viewBox="0 0 35 50" xmlns="http://www.w3.org/2000/svg">
+                        <path clip-rule="evenodd" d="m29.8 0h-24.6c-2.9 0-5.2 2.3-5.2 5.2v39.6c0 2.9 2.3 5.2 5.2 5.2h24.7c2.9 0 5.2-2.3 5.2-5.2v-39.6c-.1-2.9-2.4-5.2-5.3-5.2zm-4.7 38.2h-3l-9.1-12.9v12.9h-3v-17.7h3.1l9 12.5v-12.5h3.1zm.3-25.2h-15.8v-2.9h15.8z" fill="currentColor" fill-rule="evenodd"></path>
+                    </svg>
+                    Návštěvníci
+                </a>
+            </li>
+            <li>
+                <a href="/parkovani-dalsi">
+                    <svg class="smenu__icon" width="35px" height="50px" viewBox="0 0 35 50" xmlns="http://www.w3.org/2000/svg">
+                        <path clip-rule="evenodd" d="m24.9 25c-1.4 0-2.5 1.1-2.5 2.5s1.1 2.5 2.5 2.5 2.5-1.1 2.5-2.5c0-1.4-1.1-2.5-2.5-2.5zm-1.7-7.5h-11.4l-1.7 5h14.9zm-13.1 7.5c-1.4 0-2.5 1.1-2.5 2.5s1.1 2.5 2.5 2.5 2.5-1.1 2.5-2.5c0-1.4-1.2-2.5-2.5-2.5zm19.7-25h-24.6c-2.9 0-5.2 2.3-5.2 5.2v39.6c0 2.9 2.3 5.2 5.2 5.2h24.7c2.9 0 5.2-2.3 5.2-5.2v-39.6c-.1-2.9-2.4-5.2-5.3-5.2zm.1 31.2c0 .7-.6 1.3-1.3 1.3h-1.2v1.2c0 .7-.6 1.3-1.2 1.3h-2.5c-.7 0-1.3-.5-1.3-1.2v-1.2h-9.9v1.2c0 .7-.6 1.3-1.2 1.3h-2.5c-.7 0-1.2-.6-1.2-1.2v-1.2h-1.2c-.7 0-1.3-.6-1.3-1.3v-7.3c0-.7.6-1.3 1.3-1.3h1.1l1.8-5.8c.3-1 1.3-1.8 2.4-1.8h11.5c1.1 0 2 .7 2.4 1.8l1.8 5.8h1.1c.7 0 1.3.6 1.4 1.3z" fill="currentColor" fill-rule="evenodd"></path>
+                    </svg>
+                    Další parkování
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="columns">
+        <div class="columns__inside">
+            <div class="columns__column">
+
+                <h2>
+                    O parkování v Brně
+                </h2>
+                <p>Parkovací systém podporuje rezidenty, aby mohli lépe zaparkovat v okolí svého bydliště. Reguluje také dlouhodobé stání vozidel, a tím zvyšuje obrátkovost na potřebných místech, jako jsou úřady, pošty nebo obchody. Zvyšuje se tedy pravděpodobnost, že lidé zaparkují. Cílem není bezúčelně vybírat peníze, ale umožnit více lidem zaparkovat a vyřídit potřebné záležitosti. Omezení dává smysl zavádět tam, kde mají rezidenti problém s parkováním, nebo kde je přetlak vozidel přes den.</p><p>Parkovací systém má tři návštěvnické zóny s odstupňovanou ce­nou za parkování. Pro návštěvníky je sys­tém jednoduchý. Čím blíže jste k centru, tím více zaplatíte za parkování. Pro rezidenty a abonenty zůstala pra­vidla parkování stejná jako doposud. Přibylo však několik výhod a cena za další vozy je nižší.</p><p><br></p>
+
+
+                <div class="columns__buttons">
+                    <a href="/o-parkovani" class="button button--more">
+                        Více informací
+                    </a>
+                </div>
+            </div>
+            <div class="columns__column">
+
+                <h2>
+                    <a href="/aktuality">Aktuality</a>
+                </h2>
+                <div class="news-list">
+                    <div class="news-list__item">
+                        <div class="news-list__date">
+                            4. 8. 2025
+                        </div>
+                        <h3 class="news-list__header">
+                            <a href="/aktuality/od-1-zari-2025-se-zavadi-regulace-v-peti-novych-vnitroblocich-289">Od 1. září 2025 se zavádí regulace v pěti nových vnitroblocích</a>
+                        </h3>
+                        <p>
+                        </p><p>
+                            Mezi regulované vnitrobloky se připojují další lokality v
+                            Medlánkách, Králově Poli a Žabovřeskách:
+                        </p>
+                        <ul>
+                            <li>Obůrky (MČ Brno-Medlánky)</li>
+                            <li>Suchého (MČ Brno-Medlánky)</li>
+                            <li>Hudcova (MČ Brno-Medlánky)</li>
+                            <li>Tábor-Chodská (MČ Brno-Královo Pole)</li>
+                            <li>Luční (MČ Brno-Žabovřesky)</li>
+                        </ul>
+                        <p><a href="https://www.parkovanivbrne.cz/regulace-vjezdu/vjezd-do-vnitrobloku" target="_blank">Kompletní ...</a></p>
+                        <p></p>
+                    </div>
+                    <div class="news-list__item">
+                        <div class="news-list__date">
+                            4. 8. 2025
+                        </div>
+                        <h3 class="news-list__header">
+                            <a href="/aktuality/spusteni-nove-oblasti-12-01-jundrov-288">SPUŠTĚNÍ NOVÉ OBLASTI 12-01 (Jundrov)</a>
+                        </h3>
+                        <p>
+                        </p><p>
+                            Systém rezidentního parkování se od 4. srpna 2025 rozšiřuje do
+                            oblasti 12-01 (Jundrov), která spadá do návštěvnické zóny C.
+                            Regulace zde platí jen přes noc (od 17:00 do 6:00).
+                        </p>
+                        <p>
+                            Všechny možnosti platby za parkování <a href="https://bit.ly/PB_platby" target="_blank">
+                                najdete
+                                zde
+                            </a>.
+                        </p>
+                        <p>TIP: Vyzkoušejte <a href="https://www.parkovanivbrne.cz/mapa/s/8q3QBylr" target="_blank">interaktivní ...</a></p>
+                        <p></p>
+                    </div>
+                    <div class="news-list__item">
+                        <div class="news-list__date">
+                            4. 8. 2025
+                        </div>
+                        <h3 class="news-list__header">
+                            <a href="/aktuality/nefunkcni-prihlaseni-do-osobnich-stranek-uzivatele-osu-jiz-opraveno-287">Nefunkční přihlášení do osobních stránek uživatele OSU – již opraveno</a>
+                        </h3>
+                        <p>
+                        </p><p>
+                            Omlouváme se za dočasný výpadek přihlášení do osobních stránek
+                            uživatele (OSU), který byl způsoben technickým problémem. Na
+                            odstranění jsme intenzivně pracovali a nyní jsou již stránky opět
+                            plně funkční. Děkujeme za vaši trpělivost a pochopení.
+                        </p>
+                        <p></p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="columns__column">
+
+                <div class="row row--mailto">
+                    <a class="mailto" href="mailto:parkovanivbrne@brno.cz">
+                        parkovanivbrne@brno.cz
+                    </a>
+                </div>
+                <div class="row row--flex">
+
+                    <a href="https://www.facebook.com/parkovanivbrnecz/"><img src="images/logo-facebook.svg" alt="Facebook"></a>
+                    <a href="https://www.brno.cz/uvodni-strana/"><img src="images/logo-brno.svg" alt="Brno"></a>
+
+                </div>
+                <div class="row">
+                    <div class="copy">
+                        <p>
+                            © Statutární město Brno. Všechna práva vyhrazena – použití obsahu nebo jeho částí je možné pouze
+                            se souhlasem Magistrátu města Brna.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="footer-mobile">
+        <div class="footer-mobile__inside">
+            <a href="https://www.brno.cz/uvodni-strana/"><img src="images/logo-brno.svg" alt="Brno"></a>
+        </div>
+    </div>
+
+    <div id="chatbot"></div>
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/jquery.fancybox.min.js"></script>
+    <script src="js/jquery.accordion.js"></script>
+    <script src="js/custom.js"></script>
+    <script src="js/_main.js"></script>
+    <script src="js/api.js"></script>
+
+
+</body>
+</html>
