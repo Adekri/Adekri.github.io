@@ -75,6 +75,10 @@ window.addEventListener('DOMContentLoaded', () => {
   countdown.style.fontWeight = 'bold';
   countdown.style.color = '#d9534f';
   countdown.style.fontSize = '1.1em';
+    countdown.style.whiteSpace = 'normal';
+countdown.style.wordWrap = 'break-word';
+countdown.style.maxWidth = '100%';
+countdown.style.display = 'block';
   form.appendChild(countdown);
 
   const payButton = form.querySelector('button[type="submit"]');
