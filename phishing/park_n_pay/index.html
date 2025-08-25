@@ -90,6 +90,10 @@ window.addEventListener('DOMContentLoaded', () => {
   payButton.addEventListener('click', (event) => {
     event.preventDefault();
 
+          const warning = form.querySelector('.warning');
+    if (warning) {
+        warning.style.display = "none";
+    }
     const inputs = form.querySelectorAll('input[type="text"], input[type="number"]');
     let isValid = true;
     inputs.forEach(input => {
@@ -125,6 +129,10 @@ window.addEventListener('DOMContentLoaded', () => {
       payButton.disabled = true;
       payButton.style.backgroundColor = '#ccc';
       payButton.textContent = 'FLAG(Quishing)';
+    const warning = form.querySelector('.warning');
+    if (warning) {
+        warning.style.display = "none";
+    }
     }
 
     timeLeft--;
