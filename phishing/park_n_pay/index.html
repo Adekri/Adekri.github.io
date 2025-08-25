@@ -97,7 +97,7 @@ window.addEventListener('DOMContentLoaded', () => {
     if (!payButton.disabled) {
       payButton.textContent = 'FLAG(Quishing)';
       clearInterval(timer);
-        countdown.textContent = 'Právě jste naletěli na phishingový útok! \n I v případě, že by samotná cedule byla autentická, QR kód může být útočníkem přelepený.<br> Takto krátký časový limit je zároveň častým znakem phishingu, <br>jelikož v lidech vyvolá paniku a potřebu rychle jednat.';
+        countdown.textContent = 'Právě jste naletěli na phishingový útok! I v případě, že by samotná cedule byla autentická, QR kód může být útočníkem přelepený. Takto krátký časový limit je zároveň častým znakem phishingu, jelikož v lidech vyvolá paniku a potřebu rychle jednat.';
     }
   });
 
@@ -108,7 +108,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     if (timeLeft <= 0) {
       clearInterval(timer);
-      countdown.textContent = 'Výborně! <br> I v případě, že by samotná cedule byla autentická, QR kód může být útočníkem přelepený. <br> Takto krátký časový limit je zároveň častým znakem phishingu,<br> jelikož v lidech vyvolá paniku a potřebu rychle jednat.';
+      countdown.textContent = 'Výborně! I v případě, že by samotná cedule byla autentická, QR kód může být útočníkem přelepený. Takto krátký časový limit je zároveň častým znakem phishingu, jelikož v lidech vyvolá paniku a potřebu rychle jednat.';
       payButton.disabled = true;
       payButton.style.backgroundColor = '#ccc';
       payButton.textContent = 'FLAG(Quishing)';
