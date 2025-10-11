@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>SecureMail</title>
+<style>
+  :root{--accent:#2563eb;--bg:#f5f7fb}
+  *{box-sizing:border-box}
+  body{font-family:Inter, Arial, sans-serif;margin:0;background:var(--bg);color:#111}
+  header{background:#fff;border-bottom:1px solid #e3e6ea;padding:10px 16px;display:flex;align-items:center}
+  .logo{font-weight:700;color:var(--accent);font-size:18px}
+  .banner{margin-left:auto;background:#ffdddd;color:#7a0000;padding:6px 10px;border-left:6px solid #ff5c5c;font-weight:600}
+  .app{display:grid;grid-template-columns:260px 1fr;height:calc(100vh - 64px)}
+  .sidebar{background:#fff;border-right:1px solid #e3e6ea;display:flex;flex-direction:column}
+  .folders{padding:12px;border-bottom:1px solid #e3e6ea}
+  .folder{padding:10px;margin-bottom:10px;border-radius:6px;cursor:pointer}
+  .folder:hover{background:#eef6ff}
+  .folder.active{background:#e7efff;color:#003c99;font-weight:600}
+  /* content area */
+  .content{padding:14px;overflow:auto}
+  .list-view .email-item{background:#fff;padding:12px;margin-bottom:10px;border-radius:8px;cursor:pointer;border:1px solid #edf2f7}
+  .email-item:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(16,24,40,0.04)}
+  .subject{font-weight:700;margin-bottom:6px}
+  .meta{font-size:13px;color:#6b7280;display:flex;justify-content:space-between}
+  .snippet{color:#374151;margin-top:8px}
+  /* message view */
+  .message-card{background:#fff;border-radius:8px;padding:16px;border:1px solid #edf2f7}
+  .message-header{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+  .back-btn{
+    display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;border:1px solid #e6eefc;background:#fff;cursor:pointer;
+  }
+  .back-btn:hover{background:#f0f6ff}
+  .btn{display:inline-block;padding:8px 12px;border-radius:6px;background:var(--accent);color:#fff;text-decoration:none}
+  footer{padding:10px;text-align:center;background:#fff;border-top:1px solid #e3e6ea;font-size:13px;color:#6b7280}
+  @media (max-width:800px){
+    .app{grid-template-columns:1fr}
+    .sidebar{order:2;border-right:0;border-top:1px solid #e3e6ea}
+  }
+
+
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">SecureMail</div>
+</header>
+
+<div class="app">
+  <aside class="sidebar">
+    <div class="folders">
+      <div class="folder active" data-folder="inbox">Doručená pošta</div>
+      <div class="folder" data-folder="spam">Spam</div>
+      <button class="btn" new-mail-button> Nová zpráva</button> <!-- nic nedělá, jen se to tam hodí -->
+    </div>
+  </aside>
+
+  <main class="content" id="content">
+    <!-- hlavní okno kam se vykreslí buď seznam emailů nebo detail zprávy -->
+  </main>
+</div>
+
+<footer>Přihlášený uživatel: <strong>Jan Srnka</strong> (johndoe@gmail.com)</footer>
+
+<script>
+// složky pro inbox a spam
+const messages = {
+  inbox: [
+    {id:1, isPhish:true,from:"it-support@gmail.com", subject:"Bezpečnostní aktualizace účtu",  time:"dnes 10:42", body:`<p>Dobrý den,</p><p>Vaše schránka bude deaktivována, pokud neprovedete bezpečnostní aktualizaci do 24 hodin.</p><p><a href="#" id="link1">Obnovit heslo</a></p></p>`},
+    {id:2, isPhish:true,from:"hr-team-linkedln@cs-linkedln-cs.com", subject:"Na LinkedIn máte novou pracovní nabídku", time:"včera 15:20", body:`<p>Dobrý den,</p><p>našli jsme Váš profil na síti Linkedin <a href="#" class="btn" id="link2">Zobrazit pozvánku</a></p>`},
+    {id:3, isPhish:false,from:"jenda.benda@gmail.com", subject:"<bez předmětu>", time:"sobota 10:53", body:`<p>Čauky,</p><p>Platí ta párty v pátek? Zase tam jako vždycky?</p>`},
+    {id:4,
+  isPhish: true,
+  from: "support-animal-jam@gmail.com",
+  subject: "Nové tokeny do hry Animal Jam!",
+  time: "12. 9.",
+  body: `
+    <p>Všechno nejlepší!</p>
+    <p>Na tvém účtu <i>Sarnkaj</i> přibyly nové tokeny jako dárek k tvým narozeninám!</p>
+
+    <div style="
+      position: relative;
+      width: 100%;
+      max-width: 600px;
+      margin: 16px 0;
+      border-radius: 8px;
+      overflow: hidden;
+    ">
+      <img src="animaljam.png"
+           alt="Animal Jam obrázek"
+           style="width:100%; height:auto; display:block;">
+
+      <!-- Text, který obrázek překrývá -->
+      <div style="
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: rgba(0,0,0,0.5);
+        color: #fff;
+        padding: 12px;
+        font-weight: 600;
+        text-align: center;
+      ">
+        🎉 Klikni na odkaz níže a oslavuj!
+      </div>
+    </div>
+
+    <p>
+      Tokeny si můžeš vyzvednout na této adrese: 
+      <a href="FLAG(OdkazyVzdyKontroluj).html">www.animaljam.com/tokeny</a>
+    </p>
+  `
+},
+    {id:5,
+  from: "jenda.benda@gmail.com",
+  time: "6. 6.",
+  isPhish: false,
+  thread: true,
+  subject: "<bez předmětu>",
+  conversation: [
+    { from: "jenda.benda@gmail.com", time: "18:30", body: "Čauky, přijdeš v pátek?" },
+    { from: "johndoe@gmail.com", time: "19:10", body: "Jojo, dorazím kolem osmé 😉" },
+    { from: "jenda.benda@gmail.com", time: "19:45", body: "Super, beru chipsy a pití!" },
+    { from: "johndoe@gmail.com", time: "20:05", body: "Já vezmu reprák.." }
+  ]
+}
+
+],
+  spam: [
+    {id:6, isPhish:true,from:"barborasterclova193992@gmail.com", subject:"VÝZVA K ÚHRADĚ DLUŽNÉHO PLNĚNÍ PŘED PROVEDENÍM EXEKUCE", time:"před 2 dny", body:`<p>Soudní exekutor JUDr. Dohnal, Antonín, Exekutorský úřad Jeseník město, IČ 65554929, se sídlem Otakara Březiny 104, 172 01 Jeseník pověřený provedením exekuce: č.j. 38 EXE 473/2014 -20, a exekučního titulu: Příkaz č.j. 095007/2014-256/čen/G V.výř., vás ve smyslu 446 odst. 6 z. č. 120/2001 Sb. (exekuční řád) v platném znění vyzývá k splnění označených povinností, které ukládá exekuční titul, jakož i povinnosti uhradit náklady exekuce a odměnu soudního exekutora, případně zálohu na náklady exekuce a odměnu soudního exekutora:</p>
+
+<p>Peněžitý nárok oprávněného včetně nákladů k dnešnímu dni: 8 200,00 Kč
+Záloha na odměnu exekutora (peněžité plnění): 1 164,00 Kč včetně DPH 21 %
+Náklady exekuce paušálem: 6 116,00 Kč včetně DPH 21 %</p>
+
+<p>Pro splnění veškerých povinností povinný musí uhradit na účet soudního exekutora (č. ú. 667913441/2800, variabilní symbol 30119514, ČSOB a.s.), ve lhůtě 15 dnů od doručení této výzvy 15 480,00 Kč.</p>
+
+<p>Nebude-li uvedená částka uhrazena ve lhůtě 15 dnů od doručení této výzvy, bude i provedena exekuce majetku a/nebo zablokován bankovní účet povinného ve smyslu § 44a odst. 1 EŘ a podle § 47 odst. 4 EŘ. Až do okamžiku splnění povinnosti.</p>
+
+<p>Příkaz k úhradě, vyrozumění o zahájení exekuce a výčet povinností najdete v přiložených souborech.</p>
+
+Za správnost vyhotovení
+Barbora Šterclová</p>
+<a href="soubor.txt" download>Stáhnout přílohu vyzva_k_uhrade.pdf</a>`},
+    {id:7, isPhish:true,from:"covid19support@hsbc.com", subject:"Blahopřejeme od HSBC COVID-19 DONATIONS", time:"před 4 dny", body:`<p>Byli jste obdarováni částkou €1,000,000.00 EUR od WHO, prostřednictvím daru od HSBC Donations na podporu boje proti Covid-19.</p>
+
+<p>HSBC vám nabídla částku €1,000,000.00 EUR (jeden milion eur) jako součást našeho charitativního projektu na pomoc a zlepšení života obětí COVID-19.</p>
+
+<p>Jak jste byli vybráni? Vyhledávali jsme veřejné e-mailové registry po celém světě, provedli losování a váš e-mail byl vylosován jako jeden ze šťastných příjemců €1 MILIONU EUR.
+Váš výherní kód je (HSBCC19-12). Proto vás tato nadace kontaktovala s oznámením.</p>
+
+<p>Postup výplaty vaší charitativní výhry spadá pod EVROPSKOU UNII (ITÁLII).</p>
+
+<p>Prosíme, kontaktujte Dr. MARCA GIUSEPPEHO, vedoucího zahraniční služby / pracovníka remitencí společnosti Axitea S.P.A., na tel.: +39 351 042 3202
+e-mail: <a href="#" id="openCompose">remittance.axitea@outlook.com</a></p>
+
+<p>Kancelář pro výplatu prostředků v Itálii — pošlete níže uvedené údaje, abyste si mohli nárokovat svou charitativní výhru.</p>
+<br>
+<p><strong>Níže jsou údaje, které je třeba zaslat pro uplatnění nároku:</strong></p>
+
+<p>Celé jméno: ............</p>
+<p>Adresa: ...............</p>
+<p>Věk: .......................</p>
+<p>Telefonní číslo: .............</p>
+<p>Povolání: ..........</p>
+<p>Země: ................</p>
+</p><p>
+Výherní kód (HSBCC19-12)</p>
+<br>
+<p>Snažte se použít svůj charitativní příspěvek na pomoc dalším lidem ve vaší společnosti, jakmile obdržíte prostředky.</p>
+
+<p>Blahopřejeme!</p>
+<p>S pozdravem,</p>
+<p>Webb Simone k</p>
+<p>Koordinátor</p>
+<p>HSBC COVID-19 DONATIONS</p>`}
+  ]
+};
+
+// aktuální rozkliknutá složka
+let currentFolder = 'inbox';
+
+/* DOM refs */
+const content = document.getElementById('content');
+const folderEls = document.querySelectorAll('.folder');
+
+// přepínání složek
+folderEls.forEach(el=>{
+  el.addEventListener('click', ()=>{
+    folderEls.forEach(x=>x.classList.remove('active'));
+    el.classList.add('active');
+    currentFolder = el.dataset.folder;
+    renderList(); // render list into content area
+  });
+});
+
+// vypsání seznamu majlů v konkrétní složce
+function renderList(){
+  const list = messages[currentFolder];
+  let html = '<div class="list-view">';
+  if(list.length === 0) html += '<p>Žádné zprávy.</p>';
+  list.forEach(msg=>{
+    html += `
+      <div class="email-item" data-id="${msg.id}">
+        <div class="subject">${escapeHtml(msg.subject)}</div>
+        <div class="meta"><span>${escapeHtml(msg.from)}</span><span>${escapeHtml(msg.time)}</span></div>
+      </div>`;
+  });
+  html += '</div>';
+  content.innerHTML = html;
+
+  content.querySelectorAll('.email-item').forEach(item=>{
+    item.addEventListener('click', ()=> openMessage(parseInt(item.dataset.id,10)));
+  });
+}
+
+// otevření majlu po kliknutí - nahrazení textem majlu a přidání tlačítka zpět
+function openMessage(id){
+
+
+  const msg = messages[currentFolder].find(m=>m.id===id);
+  if(!msg) return;
+
+// přidání možnosti konverzace -- jen aby bylo vidět, že si již psali s Jednou Bendou
+if (msg.thread && Array.isArray(msg.conversation)) {
+  let convoHtml = msg.conversation.map(m => `
+    <div class="message-card" style="margin-bottom:12px">
+      <div class="message-header">
+        <div style="font-weight:700;font-size:14px">${escapeHtml(m.from)}</div>
+        <div style="color:#6b7280;font-size:12px">${escapeHtml(m.time)}</div>
+      </div>
+      <div class="message-body">${escapeHtml(m.body)}</div>
+    </div>
+  `).join('');
+
+  content.innerHTML = `
+    <button class="back-btn" id="backBtn">← Zpět</button>
+    <div style="margin-top:10px">
+      <div style="font-weight:700;font-size:18px;margin-bottom:6px">${escapeHtml(msg.subject)}</div>
+      ${convoHtml}
+    </div>
+  `;
+
+  document.getElementById('backBtn').addEventListener('click', () => renderList());
+  return;
+}
+
+
+//vzhled normálního majlu
+const html = `
+  <div class="message-card">
+      <div class="message-header">
+        <button class="back-btn" id="backBtn" title="Zpět k seznamu">← Zpět</button>
+        <div style="margin-left:8px; flex-grow:1">
+          <div style="font-weight:700;font-size:18px">${escapeHtml(msg.subject)}</div>
+          <div style="color:#6b7280;font-size:13px; display:flex; gap:10px; align-items:center">
+            <span class="email-from">${escapeHtml(msg.from)}</span> — ${escapeHtml(msg.time)}
+            ${currentFolder === 'inbox' ? `<a href="#" id="reportSpamLink" class="report-spam" style="color:#6b7280; font-size:12px; text-decoration:none;">Nahlásit spam</a>` : ''}
+          </div>
+        </div>
+      </div>
+
+      <div class="message-body">${msg.body}</div>
+    </div>
+  `;
+
+  content.innerHTML = html;
+
+
+  // tlačítko zpět
+  const back = document.getElementById('backBtn');
+  if(back) back.addEventListener('click', ()=> renderList());
+
+  //otevření výukového okna po kliknutí na odkazy v majlu
+  ['link1','link2','link3','link4'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.addEventListener('click', e=>{
+      e.preventDefault();
+      showResult();
+    });
+  });
+
+
+// kliknutí na nahlásit spam
+      const reportSpam = document.querySelector('.report-spam');
+  if (reportSpam) {
+    reportSpam.addEventListener('click', e => {
+      e.preventDefault();
+      showIfSpam(msg.isPhish);
+    });
+  }
+// simulace kliknutí na "odeslat údaje e-mailem"
+const composeLink = document.getElementById('openCompose');
+if (composeLink) {
+  composeLink.addEventListener('click', e => {
+    e.preventDefault();
+    responseOnPhis();
+  });
+}
+
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  ['link1','link2','link3','link4'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.addEventListener('click', e => {
+        e.preventDefault();
+        showResult();
+      });
+    }
+  });
+});
+
+// po nahlášení spamu zobrazí informaci jestli se jednalo a spam nebo ne(pouze v případě Jendy Bendy)
+function showIfSpam(isPhish) {
+  if (isPhish) {
+    content.innerHTML = `
+      <div class="message-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+          <div style="font-weight:700">Správně! Tato zpráva je phishing.</div>
+          <button class="back-btn" id="backFromResult">← Zpět</button>
+        </div>
+        <p>Znaky phishingového e-mailu:</p>
+        <ul>
+          <li>Adresa odesílatele používá běžnou doménu (např. @gmail.com) ačkoliv daná společnost má vlastní doménu (např. @cs.linkedin.com).</li>
+          <li>Odesílatel se snaží napodobit tuto legitimní doménu (např. @cs-linkedin-cs).</li>
+          <li>Obsahuje odkazy, které mohou vést ke stažení škodlivého softwaru nebo vedou na phishingové stránky.</li>
+          <li>Útočníci často nabízejí něco velmi lákavého (např. výhru v soutěži, nabídku skvělé práce) nebo naopak vyvolávají pocit naléhavosti (např. hrozba zablokování účtu).</li>
+        </ul>
+        <p>Jak se chránit před phishingem:</p>
+        <ul>
+          <li>Zkontrolujte plnou e-mailovou adresu odesílatele (ne pouze jméno).</li>
+          <li>Před otevřením odkazu ověřte, kam skutečně vede (např. najetím myší nad odkaz).</li>
+          <li>Když si nejste jisti, kontaktujte společnost oficiálními kanály (tedy ne těmi, které jsou uvedeny v e-mailu).</li>
+        </ul>
+      </div>
+    `;
+    document.getElementById('backFromResult').addEventListener('click', () => renderList());
+  } else {
+    content.innerHTML = `
+      <div class="message-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+          <div style="font-weight:700">Tato zpráva není phishing</div>
+          <button class="back-btn" id="backFromResult">← Zpět</button>
+        </div>
+        <p>Jenda Benda Vám už z této adresy psal a nikdy po Vás nechtěl žádné osobní údaje nebo kliknutí na odkaz.</p>
+      </div>
+    `;
+    document.getElementById('backFromResult').addEventListener('click', () => renderList());
+  }
+}
+
+// zobrazení textu po "podlehnutí" útoku TODO: jeden univerzální nebo rozdělit?
+function showResult(){
+  content.innerHTML = `
+    <div class="message-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <div style="font-weight:700">Zpráva byla ukázkovým phishingem.</div>
+        <button class="back-btn" id="backFromResult">← Zpět</button>
+      </div>
+      <ul>
+        <li>Zkontrolujte plnou e-mailovou adresu odesílatele (ne pouze jméno).</li>
+        <li>Najeďte myší nad odkaz a ověřte cílovou URL.</li>
+        <li>Nikdy nezadávejte heslo nebo osobní údaje na stránkách z e-mailu.</li>
+        <li>Když si nejste jisti, kontaktujte IT oficiálními kanály.</li>
+      </ul>
+    </div>
+  `;
+  document.getElementById('backFromResult').addEventListener('click', ()=> renderList());
+}
+
+/* utility: basic HTML escape */
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
+}
+
+// příkladové odeslání odpovědi na phising COVID DONATIONS
+function responseOnPhis() {
+  content.innerHTML = `
+    <div class="message-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <div style="font-weight:700;font-size:18px">Nová zpráva</div>
+        <button class="back-btn" id="backCompose">× Zavřít</button>
+      </div>
+      <form id="composeForm" style="display:flex;flex-direction:column;gap:10px">
+        <label>Komu:
+          <input type="email" id="toField" value="remittance.axitea@outlook.com" style="width:100%;padding:6px;border:1px solid #ccc;border-radius:6px"/>
+        </label>
+        <label>Předmět:
+          <input type="text" id="subjectField" value="Posílám Vám své osobní údaje" style="width:100%;padding:6px;border:1px solid #ccc;border-radius:6px"/>
+        </label>
+<label>Zpráva:
+  <textarea id="bodyField" rows="10" style="width:100%;padding:6px;border:1px solid #ccc;border-radius:6px">
+Dobrý den,
+
+Zde Vám zasílám všechny osobní údaje, které jste po mně požadovali:
+
+Jméno: Jan Srnka
+Adresa: Brno, Jezinek 254
+Datum narození: 12.09.1996
+Telefonní číslo: +420 049 294 584
+Povolání: UX Designer
+Země: Česká republika
+
+Děkuji a přeji hezký den.
+  </textarea>
+</label>
+
+        <button class="btn" type="submit">Odeslat</button>
+      </form>
+    </div>
+  `;
+
+  // zavření formuláře
+  document.getElementById('backCompose').addEventListener('click', () => renderList());
+
+  // odeslání = zobraz výukovou obrazovku
+  document.getElementById('composeForm').addEventListener('submit', e => {
+    e.preventDefault();
+    showResult(); // TODO zobrazit obrazovku s konkrétním textem
+  });
+}
+
+/* počáteční render */
+renderList();
+
+</script>
+</body>
+</html>
