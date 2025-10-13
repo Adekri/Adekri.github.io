@@ -66,11 +66,41 @@
 // složky pro inbox a spam nn
 const messages = {
   inbox: [
-    {id:1, isPhish:true,from:"it-support@gmail.com", subject:"Bezpečnostní aktualizace účtu",  time:"dnes 10:42", body:`<p>Dobrý den,</p><p>Vaše schránka bude deaktivována, pokud neprovedete bezpečnostní aktualizaci do 24 hodin.</p><p><a href="#" id="link1">Obnovit heslo</a></p></p>`},
-    {id:2, isPhish:true,from:"hr-team-linkedln@cs-linkedln-cs.com", subject:"Na LinkedIn máte novou pracovní nabídku", time:"včera 15:20", body:`<p>Dobrý den,</p><p>našli jsme Váš profil na síti Linkedin <a href="#" class="btn" id="link2">Zobrazit pozvánku</a></p>`},
-    {id:3, isPhish:false,from:"jenda.benda@gmail.com", subject:"<bez předmětu>", time:"sobota 10:53", body:`<p>Čauky,</p><p>Platí ta párty v pátek? Zase tam jako vždycky?</p>`},
-    {id:4,
-  isPhish: true,
+{id:2, from:"hr-team-linkedln@cs-linkedln-cs.com", subject:"Na LinkedIn máte novou pracovní nabídku", time:"včera 15:20", body:`<p>TODO</p>`},
+    {id:3, from:"jenda.benda@gmail.com", subject:"<bez předmětu>", time:"sobota 10:53", body:`<p>Čauky,</p><p>Platí ta párty v pátek? Zase tam jako vždycky?</p>`},
+    {id:1, from:"googleplay-noreply@google.com", subject:"Aktualizace smluvních podmínek Google Play",  time:"18. 9.", body:`
+  <div style="background:#e5e7eb;padding:40px 20px;">
+    <div style="background:#ffffff;padding:24px;max-width:600px;margin:0 auto;box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+ <img src="google_play.png"
+alt="Google Play obrázek"
+style="width:20%; height:auto; display:block;">
+      <p style="font-size:15px;">
+        18. října provedeme určité změny ve smluvních podmínkách Google Play. Pomůžou vám porozumět, co od Google Play při používání našich služeb můžete očekávat.
+      </p>
+      <p style="font-size:15px;line-height:1.6;">
+        Nové smluvní podmínky naleznete <a href="https://play.google.com/intl/ALL_cz/about/play-terms/">zde</a>. Co aktualizace přináší:
+      </p>
+      <ul style="font-size:15px; padding-left:20px;line-height:1.6;">
+        <li><strong>Právo na odstoupení od smlouvy:</strong> Změnili jsme určité formulace ohledně práva na odstoupení od smlouvy v sekci Digitální obsah, aby bylo srozumitelnější, co můžete očekávat.</li>
+        <li><strong>Aktualizace adresy:</strong> Aktualizovali jsme adresu společnosti Google Commerce Limited.</li>
+      </ul>
+      <p style="font-size:15px;line-height:1.6;">
+        Pokud pomocí aplikace Family Link spravujete účet Google jiného uživatele, uvedené změny mu vysvětlete.</p>
+      <p style="font-size:15px;line-height:1.6;">
+        Děkujeme, že používáte Google Play!</p>
+
+        </div>
+    <p style="font-size:12px;color:#6b7280;text-align:center;">
+      <a href="https://mail.google.com/mail/u/0/#m_6919983739042851766_" style="color:#6b7280;text-decoration:none;">© 2025 Google Ireland Ltd, Gordon House, Barrow Street, Dublin 4, Ireland</a>
+    </p>
+    <p style="font-size:12px;color:#6b7280;text-align:center;">
+Tímto povinným e‑mailovým oznámením vás informujeme o důležitých změnách smluvních podmínek Google Play.</p>
+<p style="font-size:12px;color:#6b7280;text-align:center;">
+  Tato e‑mailová adresa nepřijímá odpovědi, na tento e‑mail proto prosím nereagujte. Pokud potřebujete podporu, navštivte <a href="https://support.google.com/googleplay/?hl=cs">centrum nápovědy Google Play.</a></p>
+  </div>
+`},
+
+      {id:4,
   from: "support-animal-jam@gmail.com",
   subject: "Nové tokeny do hry Animal Jam!",
   time: "12. 9.",
@@ -107,15 +137,15 @@ const messages = {
     </div>
 
     <p>
-      Tokeny si můžeš vyzvednout na této adrese: 
+      Tokeny si můžeš vyzvednout <strong>POUZE DNES</strong> na této adrese:
       <a href="FLAG(OdkazyVzdyKontroluj).html">www.animaljam.com/tokeny</a>
     </p>
   `
 },
-    {id:5,
+   
+{id:5,
   from: "jenda.benda@gmail.com",
   time: "6. 6.",
-  isPhish: false,
   thread: true,
   subject: "<bez předmětu>",
   conversation: [
@@ -128,7 +158,7 @@ const messages = {
 
 ],
   spam: [
-    {id:6, isPhish:true,from:"barborasterclova193992@gmail.com", subject:"VÝZVA K ÚHRADĚ DLUŽNÉHO PLNĚNÍ PŘED PROVEDENÍM EXEKUCE", time:"před 2 dny", body:`<p>Soudní exekutor JUDr. Dohnal, Antonín, Exekutorský úřad Jeseník město, IČ 65554929, se sídlem Otakara Březiny 104, 172 01 Jeseník pověřený provedením exekuce: č.j. 38 EXE 473/2014 -20, a exekučního titulu: Příkaz č.j. 095007/2014-256/čen/G V.výř., vás ve smyslu 446 odst. 6 z. č. 120/2001 Sb. (exekuční řád) v platném znění vyzývá k splnění označených povinností, které ukládá exekuční titul, jakož i povinnosti uhradit náklady exekuce a odměnu soudního exekutora, případně zálohu na náklady exekuce a odměnu soudního exekutora:</p>
+    {id:6, from:"barborasterclov992@gmail.com", subject:"VÝZVA K ÚHRADĚ DLUŽNÉHO PLNĚNÍ PŘED PROVEDENÍM EXEKUCE", time:"před 2 dny", body:`<p>Soudní exekutor JUDr. Dohnal, Antonín, Exekutorský úřad Jeseník město, IČ 65554929, se sídlem Otakara Březiny 104, 172 01 Jeseník pověřený provedením exekuce: č.j. 38 EXE 473/2014 -20, a exekučního titulu: Příkaz č.j. 095007/2014-256/čen/G V.výř., vás ve smyslu 446 odst. 6 z. č. 120/2001 Sb. (exekuční řád) v platném znění vyzývá k splnění označených povinností, které ukládá exekuční titul, jakož i povinnosti uhradit náklady exekuce a odměnu soudního exekutora, případně zálohu na náklady exekuce a odměnu soudního exekutora:</p>
 
 <p>Peněžitý nárok oprávněného včetně nákladů k dnešnímu dni: 8 200,00 Kč
 Záloha na odměnu exekutora (peněžité plnění): 1 164,00 Kč včetně DPH 21 %
@@ -142,8 +172,8 @@ Náklady exekuce paušálem: 6 116,00 Kč včetně DPH 21 %</p>
 
 Za správnost vyhotovení
 Barbora Šterclová</p>
-<a href="skodlivy_soubor.txt" download>Stáhnout přílohu vyzva_k_uhrade.pdf</a>`},
-    {id:7, isPhish:true,from:"covid19support@hsbc.com", subject:"Blahopřejeme od HSBC COVID-19 DONATIONS", time:"před 4 dny", body:`<p>Byli jste obdarováni částkou €1,000,000.00 EUR od WHO, prostřednictvím daru od HSBC Donations na podporu boje proti Covid-19.</p>
+<p>Stáhnout přílohu: <a href="skodlivy_soubor.txt" download>vyzva_k_uhrade.pdf</a></p>`},
+    {id:7,from:"covid19support@hsbc.com", subject:"Blahopřejeme od HSBC COVID-19 DONATIONS", time:"před 4 dny", body:`<p>Byli jste obdarováni částkou €1,000,000.00 EUR od WHO, prostřednictvím daru od HSBC Donations na podporu boje proti Covid-19.</p>
 
 <p>HSBC vám nabídla částku €1,000,000.00 EUR (jeden milion eur) jako součást našeho charitativního projektu na pomoc a zlepšení života obětí COVID-19.</p>
 
@@ -215,7 +245,7 @@ function renderList(){
   });
 }
 
-// otevření majlu po kliknutí - nahrazení textem majlu a přidání tlačítka zpět
+// otevření majlu po kliknutí–nahrazení textem majlu a přidání tlačítka zpět
 function openMessage(id){
 
 
@@ -287,7 +317,7 @@ const html = `
   if (reportSpam) {
     reportSpam.addEventListener('click', e => {
       e.preventDefault();
-      showIfSpam(msg.isPhish);
+      showIfSpam(msg.id);
     });
   }
 // simulace kliknutí na "odeslat údaje e-mailem"
@@ -313,46 +343,71 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// po nahlášení spamu zobrazí informaci jestli se jednalo a spam nebo ne(pouze v případě Jendy Bendy)
-function showIfSpam(isPhish) {
-  if (isPhish) {
-    content.innerHTML = `
-      <div class="message-card">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-          <div style="font-weight:700">Správně! Tato zpráva je phishing.</div>
-          <button class="back-btn" id="backFromResult">← Zpět</button>
-        </div>
-        <p>Znaky phishingového e-mailu:</p>
+// po nahlášení spamu zobrazí informaci jestli se jednalo o spam nebo ne (pouze v případě Jendy Bendy)
+function showIfSpam(messageId) {
+  const spamInfo = {
+    1: {
+      title: "Tato zpráva není phishing.",
+      details: `
         <ul>
-          <li>Adresa odesílatele používá běžnou doménu (např. @gmail.com) ačkoliv daná společnost má vlastní doménu (např. @cs.linkedin.com).</li>
-          <li>Odesílatel se snaží napodobit tuto legitimní doménu (např. @cs-linkedin-cs).</li>
-          <li>Obsahuje odkazy, které mohou vést ke stažení škodlivého softwaru nebo vedou na phishingové stránky.</li>
-          <li>Útočníci často nabízejí něco velmi lákavého (např. výhru v soutěži, nabídku skvělé práce) nebo naopak vyvolávají pocit naléhavosti (např. hrozba zablokování účtu).</li>
+          <li>Zpráva pochází z oficiální e-mailové adresy googleplay-noreply@google.com.</li>
+          <li>Odkazy vedou na legitimní stránky Google Play.</li>
+          <li>E-mail nevyzývá k žádné akci – pouze informuje o změnách.</li>
         </ul>
-        <p>Jak se chránit před phishingem:</p>
+
+      `
+    },
+    2: {
+      title: "Správně! Jedná se o phishingový e-mail.", 
+      details: `
+        <p>Tato zpráva se snaží napodobit LinkedIn a přimět Vás kliknout na falešný odkaz.</p>
         <ul>
-          <li>Zkontrolujte plnou e-mailovou adresu odesílatele (ne pouze jméno).</li>
-          <li>Před otevřením odkazu ověřte, kam skutečně vede (např. najetím myší nad odkaz).</li>
-          <li>Když si nejste jisti, kontaktujte společnost oficiálními kanály (tedy ne těmi, které jsou uvedeny v e-mailu).</li>
+          <li>Doména odesílatele napodobuje legitimní adresu, ale je falešná.</li>
+          <li>Text e-mailu vyvolává důvěru a láká k akci („nová pracovní nabídka“).</li>
+          <li>TODO</li>
         </ul>
-      </div>
-    `;
-    document.getElementById('backFromResult').addEventListener('click', () => renderList());
-  } else {
-    content.innerHTML = `
-      <div class="message-card">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-          <div style="font-weight:700">Tato zpráva není phishing</div>
-          <button class="back-btn" id="backFromResult">← Zpět</button>
-        </div>
+      `
+    },
+    3: {
+      title: "Tato zpráva není phishing",
+      details: `
         <p>Jenda Benda Vám už z této adresy psal a nikdy po Vás nechtěl žádné osobní údaje nebo kliknutí na odkaz.</p>
-      </div>
-    `;
+      `
+    },
+    4: {
+      title: "Správně! Tato zpráva je phishing.",
+      details: `
+        <ul>
+          <li>Zpráva se vydává za herní platformu a nabízí „dárek“, aby Vás přiměla kliknout na škodlivý odkaz.</li>
+          <li>Útočník se opět snaží vyvolat emoce – v tomto případě strach z promeškání příležitosti.</li>
+          <li>Odkaz může vést na falešnou stránku nebo stažení škodlivého souboru.</li>
+        </ul>
+      `
+    },
+  };
+
+  const info = spamInfo[messageId];
+
+  if (!info) {
     document.getElementById('backFromResult').addEventListener('click', () => renderList());
+    return;
   }
+
+  content.innerHTML = `
+    <div class="message-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <div style="font-weight:700">${info.title}</div>
+        <button class="back-btn" id="backFromResult">← Zpět</button>
+      </div>
+      ${info.details}
+    </div>
+  `;
+
+  document.getElementById('backFromResult').addEventListener('click', () => renderList());
 }
 
-// zobrazení textu po "podlehnutí" útoku TODO: jeden univerzální nebo rozdělit?
+
+// zobrazení textu po "podlehnutí" útoku TODO: rozepsat konkrétněji podle útoku
 function showResult(){
   content.innerHTML = `
     <div class="message-card">
@@ -365,6 +420,28 @@ function showResult(){
         <li>Najeďte myší nad odkaz a ověřte cílovou URL.</li>
         <li>Nikdy nezadávejte heslo nebo osobní údaje na stránkách z e-mailu.</li>
         <li>Když si nejste jisti, kontaktujte IT oficiálními kanály.</li>
+      </ul>
+    </div>
+  `;
+  document.getElementById('backFromResult').addEventListener('click', ()=> renderList());
+}
+
+// zobrazení textu po "podlehnutí" útoku HSBC Covid donations
+function showResultHSBC(){
+  content.innerHTML = `
+    <div class="message-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <div style="font-weight:700">Tímto jste útočníkovi poslali své osobní údaje.</div>
+        <button class="back-btn" id="backFromResult">← Zpět</button>
+      </div>
+      <p></p>
+      <ul>
+        <li>Útočník se snaží zaujmout nabídkou velké částky.</li>
+        <li>HSBC sice existuje, ale daruje peníze pouze charitativním organizacím.</li>
+        <li>Legitimní organizace by po Vás nikdy nechtěla osobní údaje prostřednictvím e-mailu. To uvádí také na svých oficiálních stránkách v sekci <a href="https://www.hsbc.com.au/help/security-centre/fraud/" target="_blank">Scam prevention</a>.</li>
+        <li>Kontaktní e-mailová adresa pro zaslání údajů je mimo doménu @hsbc.com, což je také podezřelé.</li>
+        <li>E-mail obsahuje divné formulace a gramatické chyby, jako například "€1,000,000.00 EUR".</li>
+        <li>Pokud si nejste jisti, vždy můžete společnost kontaktovat oficiálními kanály – tímto ji zároveň upozorníte, že je její jméno zneužíváno.</li>
       </ul>
     </div>
   `;
@@ -392,7 +469,7 @@ function responseOnPhis() {
           <input type="text" id="subjectField" value="Posílám Vám své osobní údaje" style="width:100%;padding:6px;border:1px solid #ccc;border-radius:6px"/>
         </label>
 <label>Zpráva:
-  <textarea id="bodyField" rows="10" style="width:100%;padding:6px;border:1px solid #ccc;border-radius:6px">
+  <textarea id="bodyField" rows="15" style="width:100%;padding:6px;border:1px solid #ccc;border-radius:6px">
 Dobrý den,
 
 Zde Vám zasílám všechny osobní údaje, které jste po mně požadovali:
@@ -416,10 +493,10 @@ Děkuji a přeji hezký den.
   // zavření formuláře
   document.getElementById('backCompose').addEventListener('click', () => renderList());
 
-  // odeslání = zobraz výukovou obrazovku
+  // odeslání = zobrazit řešení
   document.getElementById('composeForm').addEventListener('submit', e => {
     e.preventDefault();
-    showResult(); // TODO zobrazit obrazovku s konkrétním textem
+    showResultHSBC();
   });
 }
 
