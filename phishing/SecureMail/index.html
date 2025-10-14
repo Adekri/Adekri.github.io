@@ -66,8 +66,52 @@
 // složky pro inbox a spam
 const messages = {
   inbox: [
-{id:2, from:"hr-team-linkedln@cs-linkedln-cs.com", subject:"Na LinkedIn máte novou pracovní nabídku", time:"včera 15:20", body:`<p>TODO</p>`},
-    {id:3, from:"jenda.benda@gmail.com", subject:"(bez předmětu)", time:"sobota 10:53", body:`<p>Čauky,</p><p>Platí ta párty v pátek? Zase tam jako vždycky?</p>`},
+{
+  id:2,
+  from:"admin-linkedln@cs-linkedln-cs.com",
+  subject:"Bezpečnostní upozornění ohledně profilu LinkedIn",
+  time:"dnes 03:20",
+  body:`
+  <div style="background:#f3f2f0;padding:40px 16px;">
+    <div style="max-width:520px;margin:0 auto;background:#ffffff;rgba(0,0,0,0.05);padding:32px;">
+
+      <div style="text-align:left;margin-bottom:24px;">
+        <img src="linkedin_logo.png"
+             alt="LinkedIn"
+             style="width:20%;">
+      </div>
+
+
+      <p style="font-size:15px;line-height:1.8;margin-bottom:24px;">
+Dobrý den, Jan Srnka<br>
+
+Zaznamenali jsme podezřelou aktivitu na Vašem účtu. Včera v 02:14 bylo zjištěno přihlášení z nového zařízení v lokalitě: Arizona.
+<br><br>
+Abychom účet ochránili, je nyní uzamčen, dokud nepotvrdíte svou identitu. Pokud chcete účet znovu aktivovat, klikněte na tlačítko níže a proveďte ověření:
+      </p>
+
+      <div style="text-align:center;margin-bottom:24px;">
+        <a id="link1" href="odkaz_na_podvodny_web.html"
+           style="display:inline-block;background:#0077b5;color:#fff;text-decoration:none;padding:12px 28px;border-radius:4px;font-weight:600;">
+           Ověřit účet LinkedIn nyní
+        </a>
+      </div>
+
+      <p style="font-size:13px;line-height:1.6;margin-bottom:0;text-align:left;">
+Pokud nebudete reagovat, poskytování služeb vám bude dočasně pozastaveno.
+<br><br>
+Děkujeme,<br>
+Tým LinkedIn Security
+ </p>
+    </div>
+
+    <p style="font-size:12px;color:#777;text-align:center;margin-top:20px;">
+      © 2025 LinkedIn Ireland Unlimited, Wilton Plaza, Wilton Place, Dublin 2, Irsko. LinkedIn je registrovaný obchodní název pro společnost LinkedIn Ireland Unlimited. LinkedIn a logo LinkedIn jsou registrované obchodní známky LinkedIn.
+    </p>
+  </div>
+  `
+},
+  {id:3, from:"jenda.benda@gmail.com", subject:"(bez předmětu)", time:"sobota 10:53", body:`<p>Čauky,</p><p>Platí ta párty v pátek? Zase tam jako vždycky?</p>`},
     {id:1, from:"googleplay-noreply@google.com", subject:"Aktualizace smluvních podmínek Google Play",  time:"18. 9.", body:`
   <div style="background:#e5e7eb;padding:40px 20px;">
     <div style="background:#ffffff;padding:24px;max-width:600px;margin:0 auto;box-shadow:0 2px 8px rgba(0,0,0,0.05);">
@@ -303,7 +347,7 @@ const html = `
   if(back) back.addEventListener('click', ()=> renderList());
 
   //otevření výukového okna po kliknutí na odkazy v majlu
-  ['link1','link2','link3','link4'].forEach(id => {
+  ['link1'].forEach(id => {
     const el = document.getElementById(id);
     if(el) el.addEventListener('click', e=>{
       e.preventDefault();
@@ -332,7 +376,7 @@ if (composeLink) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  ['link1','link2','link3','link4'].forEach(id => {
+  ['link1'].forEach(id => {
     const el = document.getElementById(id);
     if (el) {
       el.addEventListener('click', e => {
@@ -361,9 +405,10 @@ function showIfSpam(messageId) {
       title: "Správně! Jedná se o phishingový e-mail.", 
       details: `
         <ul>
-          <li>Doména odesílatele napodobuje legitimní adresu, ale je falešná.</li>
-          <li>Text e-mailu vyvolává důvěru a láká k akci („nová pracovní nabídka“).</li>
-          <li>TODO</li>
+          <li>Adresa odesílatele napodobuje legitimní adresu (@cs.linkedin.com).</li>
+          <li>Při bližším zkoumání můžete zjistit, že v adrese jsou zaměněna písmena (l/L a I/i).</li>
+          <li>Zpráva vytváří pocit naléhavosti. Hrozí uzamčením účtu.</li>
+          <li>E-mail obsahuje odkaz, který nevede na stránku v doméně linkedin.com.</li>
         </ul>
       `
     },
@@ -406,20 +451,15 @@ function showIfSpam(messageId) {
 }
 
 
-// zobrazení textu po "podlehnutí" útoku TODO: rozepsat konkrétněji podle útoku
+// zobrazení textu po kliknutí na odkaz -- teď zbytečně přes list
 function showResult(){
   content.innerHTML = `
     <div class="message-card">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-        <div style="font-weight:700">Zpráva byla ukázkovým phishingem.</div>
+        <div style="font-weight:700">Právě jste klikli na odkaz ve phishingovém e-mailu.</div>
         <button class="back-btn" id="backFromResult">← Zpět</button>
       </div>
-      <ul>
-        <li>Zkontrolujte plnou e-mailovou adresu odesílatele (ne pouze jméno).</li>
-        <li>Najeďte myší nad odkaz a ověřte cílovou URL.</li>
-        <li>Nikdy nezadávejte heslo nebo osobní údaje na stránkách z e-mailu.</li>
-        <li>Když si nejste jisti, kontaktujte IT oficiálními kanály.</li>
-      </ul>
+      <p>Takový odkaz může vést na podvodné webové stránky napodobující legitimní služby. Zde se útočník obvykle snaží získat Vaše přihlašovací údaje.</p>
     </div>
   `;
   document.getElementById('backFromResult').addEventListener('click', ()=> renderList());
