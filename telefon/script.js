@@ -212,7 +212,7 @@ document.body.addEventListener('click', e => {
         const pass = document.getElementById('password').value.trim();
 
 
-        if (user === 'demo' && pass === '1234') {
+        if (user === '1092740' && pass === 'VelmiBezpecneHeslo123!') {
           status.textContent = 'Pozor! Tímto jste útočníkovi poskytli přihlašovací údaje k Vašemu bankovnictví! FLAG(VladniWebyMajiJednotnouDomenu)';
           status.style.color = 'red';
         } else {
