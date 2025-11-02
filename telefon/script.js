@@ -58,7 +58,9 @@ function showList(){
 document.querySelectorAll('.conversation').forEach(el=>{
   el.addEventListener('click',()=>showChat(el.dataset.chat));
 });
+//tlačítko zpět + přidána stejná reakce i na kliknutí "domů"
 document.getElementById('nav-back').addEventListener('click',()=>showList());
+document.getElementById('nav-home').addEventListener('click',()=>showList());
 
 // odesílání zpráv 
 sendBtn.addEventListener('click', ()=>{
@@ -180,7 +182,7 @@ document.body.addEventListener('click', e => {
     case 'moneta-login':
       headerTitle.textContent = 'www.moenta-login.online.net'; 
       content.innerHTML = `
-        <div style="padding:0 5%;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%; background: linear-gradient(135deg, #1b1464, #ff0033);margin-bottom:60%;">
+        <div style="padding:0 5%;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%; background: linear-gradient(135deg, #1b1464, #ff0033);margin-bottom:55%;">
           <div style="width:90%;max-width:320px;background:white;padding:20px;border-radius:16px;">
             <h2 style="text-align:center;margin-top:0;">Přihlášení</h2>
             <form id="login-form" style="display:flex;flex-direction:column;gap:12px;">
@@ -210,13 +212,19 @@ document.body.addEventListener('click', e => {
         e.preventDefault();
         const user = document.getElementById('username').value.trim();
         const pass = document.getElementById('password').value.trim();
+        
+        if (!user || !pass) {
+          status.textContent = 'Vyplňte prosím obě pole.';
+          status.style.color = '#c00';
+          return;
+        }
 
 
         if (user === '1092740' && pass === 'VelmiBezpecneHeslo123!') {
           status.textContent = 'Pozor! Tímto jste útočníkovi poskytli přihlašovací údaje k Vašemu bankovnictví! FLAG(VladniWebyMajiJednotnouDomenu)';
           status.style.color = 'red';
         } else {
-          status.textContent = 'Výborně! Odolali jste útoku. FLAG(VladniWebyMajiJednotnouDomenu)';
+          status.textContent = 'Výborně! Nezadali jste Vaše skutečné přihlašovací údaje a odolali jste útoku. FLAG(VladniWebyMajiJednotnouDomenu)';
           status.style.color = 'green';
         }
       });
