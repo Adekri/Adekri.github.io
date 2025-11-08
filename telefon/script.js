@@ -205,6 +205,7 @@ document.body.addEventListener('click', e => {
           </div>
         </div>
       `;
+
       const form = document.getElementById('login-form');
       const status = document.getElementById('login-status');
 
@@ -223,11 +224,13 @@ document.body.addEventListener('click', e => {
         if (user === '1092740' && pass === 'VelmiBezpecneHeslo123!') {
           status.textContent = 'Pozor! Tímto jste útočníkovi poskytli přihlašovací údaje k Vašemu bankovnictví! FLAG(VladniWebyMajiJednotnouDomenu)';
           status.style.color = 'red';
+          document.querySelectorAll('.hidden-until-flag').forEach(el => {el.classList.remove('hidden-until-flag');});
         } else {
           status.textContent = 'Výborně! Nezadali jste Vaše skutečné přihlašovací údaje a odolali jste útoku. FLAG(VladniWebyMajiJednotnouDomenu)';
           status.style.color = 'green';
+          document.querySelectorAll('.hidden-until-flag').forEach(el => {el.classList.remove('hidden-until-flag');});
         }
-      });
+    });
       break;
 
     default: //pokud se v html pouzije nazev který tady není, haha
