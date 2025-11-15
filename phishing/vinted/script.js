@@ -10,7 +10,9 @@
         },
         messages: [
           { from: "them", text: "Máte ještě mikinu?" },
-          { from: "me", text: "Ano, stále je k dispozici :)" }
+          { from: "me", text: "Ano, stále je k dispozici :)" },
+          { from: "them", text: "Skvělé! Zaplatila jsem a Vinted mi zobrazil tento QR kód. Naskenuj ho a vyzvedni si peníze." },
+          { from: "them", text: "qrkod.png" },
         ]
       },
       2: {
@@ -26,6 +28,22 @@
           { from: "them", text: "Kolik je poslední cena?" },
           { from: "me", text: "Nabízím za 450 Kč." },
 
+        ]
+      },
+      3: {
+        name: "Modré džíny Levi's",
+        obrazek: "dziny.jpeg",
+        info: {
+            location: "Polsko",
+            time: "před 2 dny",
+            text: "Ahoj, jsem Vinted team!",
+            reviews: "Žádné recenze"
+        },
+        messages: [
+            { from: "them", text: "Drahý Prodávající, tvůj předmět se úspěšně prodal." },
+            { from: "them", text: "Tvoje platba je momentálně pozastavená. Aby se ti prostředky uvolnily, musíš si v platebním systému aktivovat účet." },
+            { from: "them", text: "Proces aktivace můžeš začít na následujícím odkazu: https://vintd-order%2einfo/25332. Po dokončení aktivace ti půjdou přijímat platby a budeš moct na Vinted dál prodávat bez omezení." },
+            { from: "them", text: "Děkujeme za spolupráci a pochopení." }
         ]
       }
     };
@@ -67,7 +85,15 @@
       chat.messages.forEach(m => {
         const div = document.createElement("div");
         div.className = "msg " + m.from;
-        div.textContent = m.text;
+
+        if(m.text.endsWith(".png") || m.text.endsWith(".jpg") || m.text.endsWith(".jpeg")){
+          const img = document.createElement("img");
+          img.src = m.text;
+          img.style.maxWidth = "100px";
+          div.appendChild(img);
+        } else {
+          div.textContent = m.text;
+        }
         chatMessages.appendChild(div);
       });
       chatMessages.scrollTop = chatMessages.scrollHeight;

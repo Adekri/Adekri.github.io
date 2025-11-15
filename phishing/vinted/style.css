@@ -179,7 +179,6 @@ main {
 .chat-item img {
     width: 40px;
     height: 40px;
-    border-radius: 50%;
 }
 
 .chat-main {
@@ -208,6 +207,7 @@ main {
 .msg {
     margin-bottom: 12px;
     max-width: 70%;
+    width: fit-content;
     padding: 10px 14px;
     border-radius: 14px;
     border: 1px solid #eee;
