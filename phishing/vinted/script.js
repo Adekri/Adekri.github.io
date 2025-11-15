@@ -11,7 +11,7 @@
         messages: [
           { from: "them", text: "Máte ještě mikinu?" },
           { from: "me", text: "Ano, stále je k dispozici :)" },
-          { from: "them", text: "Skvělé! Zaplatila jsem a Vinted mi zobrazil tento QR kód. Naskenuj ho a vyzvedni si peníze." },
+          { from: "them", text: "Skvělé! Zaplatila jsem a Vinted mi zobrazil tento QR kód. Naskenujte ho a vyzvedněte si peníze." },
           { from: "them", text: "qrkod.png" },
         ]
       },
@@ -25,8 +25,8 @@
           reviews: "Žádné recenze"
         },
         messages: [
-          { from: "them", text: "Kolik je poslední cena?" },
-          { from: "me", text: "Nabízím za 450 Kč." },
+          { from: "them", text: "Ahoj, měl bych zájem sportovní kalhoty, které tady nabízíš. Bohužel se mi nějak nezobrazují přiložené fotografie." },
+          { from: "them", text: "Mohl bys mi prosím fotky poslat na e-mail mrjohnfraud@gmail.com?" },
 
         ]
       },
