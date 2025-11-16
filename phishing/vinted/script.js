@@ -45,6 +45,23 @@
             { from: "them", text: "Proces aktivace můžeš začít na následujícím odkazu: https://vintd-order%2einfo/25332. Po dokončení aktivace ti půjdou přijímat platby a budeš moct na Vinted dál prodávat bez omezení." },
             { from: "them", text: "Děkujeme za spolupráci a pochopení." }
         ]
+      },
+      4: {
+        name: "Batoh",
+        obrazek: "batoh.jpg",
+        info: {
+          location: "Ostrava, Česká republika",
+          time: "před 5 hodinami",
+          text: "Ahoj, jsem Tým Vinted!",
+          reviews: "Žádné recenze"
+        },
+        messages: [
+          { from: "them", text: "Tvůj předmět se právě prodal!" },
+          { from: "them", text: "Abys prodej potvrdil, pošli do tohoto chatu svoji e-mailovou adresu. Na tuto adresu ti poté přijde potvrzení s odkazem na přijetí platby." },
+          { from: "them", text: "Po potvrzení prodeje ti přijde štítek pro odeslání balíku." },
+          { from: "them", text: "Tvůj Vinted tým" },
+          
+        ]
       }
     };
 
