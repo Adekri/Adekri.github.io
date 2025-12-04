@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ukázkový E‑shop</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+    }
+
+    /* Hero banner */
+    .hero {
+      background: #e50000;
+      color: white;
+      padding: 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero h1 {
+      font-size: 48px;
+      font-weight: 900;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .hero p {
+      font-size: 22px;
+      margin-top: 10px;
+      text-transform: uppercase;
+    }
+
+    /* Product grid */
+    .products {
+      max-width: 1100px;
+      margin: 40px auto;
+      display: grid;
+      gap: 20px;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+
+    .product {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .product img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+
+    .product h3 {
+      margin: 15px 0 5px;
+    }
+
+    .product p {
+      margin: 0;
+      color: #444;
+    }
+
+    .price {
+      margin-top: 10px;
+      font-size: 20px;
+      font-weight: bold;
+      color: #e50000;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 40px;
+      color: #444;
+    }
+  </style>
+</head>
+<body>
+
+  <section class="hero">
+    <h1>Bombastická akce!</h1>
+    <p>Slevy až 95 % — pouze dnes!</p>
+  </section>
+
+  <!-- Navigační menu -->
+  <nav style="background:white; padding:15px 0; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
+    <ul style="list-style:none; display:flex; justify-content:center; gap:40px; margin:0; padding:0; font-size:20px; text-transform:uppercase; font-weight:bold;">
+      <li><a href="#" class="cat-link" data-cat="sperky" style="text-decoration:none; color:#e50000;">Šperky</a></li>
+      <li><a href="#" class="cat-link" data-cat="kabelky" style="text-decoration:none; color:#e50000;">Kabelky</a></li>
+      <li><a href="#" class="cat-link" data-cat="hodinky" style="text-decoration:none; color:#e50000;">Hodinky</a></li>
+      <li><a href="#" class="cat-link" data-cat="doplnky" style="text-decoration:none; color:#e50000;">Doplňky</a></li>
+    </ul>
+  </nav>
+
+  <section class="products">
+    <div class="product">
+      <img src="https://via.placeholder.com/300x200" alt="Produkt 1" />
+      <h3>Zlatý Náhrdelník</h3>
+      <p>Luxusní design</p>
+      <div class="price">1 499 Kč</div>
+    </div>
+
+    <div class="product">
+      <img src="https://via.placeholder.com/300x200" alt="Produkt 2" />
+      <h3>Elegantní Prsten</h3>
+      <p>Skvěle padne</p>
+      <div class="price">899 Kč</div>
+    </div>
+
+    <div class="product">
+      <img src="https://via.placeholder.com/300x200" alt="Produkt 3" />
+      <h3>Stříbrné Náušnice</h3>
+      <p>Moderní styl</p>
+      <div class="price">599 Kč</div>
+    </div>
+  </section>
+
+<script>
+  const productsAll = {
+    sperky: [
+      {name: 'Zlatý náhrdelník', img: 'https://via.placeholder.com/300x200', price: '1 499 Kč'},
+      {name: 'Stříbrné náušnice', img: 'https://via.placeholder.com/300x200', price: '599 Kč'},
+      {name: 'Luxusní prsten', img: 'https://via.placeholder.com/300x200', price: '899 Kč'}
+    ],
+    kabelky: [
+      {name: 'Kožená kabelka', img: 'https://via.placeholder.com/300x200', price: '2 199 Kč'},
+      {name: 'Elegantní crossbody', img: 'https://via.placeholder.com/300x200', price: '1 299 Kč'},
+      {name: 'Business taška', img: 'https://via.placeholder.com/300x200', price: '1 899 Kč'}
+    ],
+    hodinky: [
+      {name: 'Dámské hodinky Gold', img: 'https://via.placeholder.com/300x200', price: '1 499 Kč'},
+      {name: 'Pánské chronograf', img: 'https://via.placeholder.com/300x200', price: '2 499 Kč'},
+      {name: 'Sportovní hodinky', img: 'https://via.placeholder.com/300x200', price: '799 Kč'}
+    ],
+    doplnky: [
+      {name: 'Sluneční brýle', img: 'https://via.placeholder.com/300x200', price: '499 Kč'},
+      {name: 'Kožený pásek', img: 'https://via.placeholder.com/300x200', price: '399 Kč'},
+      {name: 'Šála Winter', img: 'https://via.placeholder.com/300x200', price: '299 Kč'}
+    ]
+  };
+
+  // načítání podle data-cat atributu
+  function loadProducts(categoryKey) {
+    const container = document.querySelector('.products');
+    container.innerHTML = '';
+    const list = productsAll[categoryKey];
+    if (!list) {
+      container.innerHTML = '<p style="grid-column:1/-1; text-align:center; color:#666;">Žádné produkty v této kategorii.</p>';
+      return;
+    }
+    list.forEach(p => {
+      container.innerHTML += `
+        <div class="product">
+          <img src="${p.img}" alt="${p.name}" />
+          <h3>${p.name}</h3>
+          <div class="price">${p.price}</div>
+        </div>`;
+    });
+  }
+
+  // připojení eventů na odkazy s identifikátorem (data-cat / třída)
+  document.querySelectorAll('.cat-link').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const key = a.dataset.cat; // používáme přímo data-cat
+      loadProducts(key);
+    });
+  });
+
+  // load default category on start
+  document.addEventListener('DOMContentLoaded', () => loadProducts('sperky'));
+</script>
+
+<footer class="footer">
+    © 2025 Ukázkový E-shop — Toto je pouze demonstrační stránka.<br>
+    <a href="#" style="color:#e50000; text-decoration:none;">Obchodní podmínky</a> |
+    <a href="#" style="color:#e50000; text-decoration:none;">Reklamační řád</a> |
+    <a href="#" style="color:#e50000; text-decoration:none;">Ochrana osobních údajů</a> |
+    <a href="#" style="color:#e50000; text-decoration:none;">Kontakt</a>
+  </footer>
+
+</body>
+</html>
