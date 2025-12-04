@@ -100,26 +100,7 @@
   </nav>
 
   <section class="products">
-    <div class="product">
-      <img src="https://via.placeholder.com/300x200" alt="Produkt 1" />
-      <h3>Zlatý Náhrdelník</h3>
-      <p>Luxusní design</p>
-      <div class="price">1 499 Kč</div>
-    </div>
-
-    <div class="product">
-      <img src="https://via.placeholder.com/300x200" alt="Produkt 2" />
-      <h3>Elegantní Prsten</h3>
-      <p>Skvěle padne</p>
-      <div class="price">899 Kč</div>
-    </div>
-
-    <div class="product">
-      <img src="https://via.placeholder.com/300x200" alt="Produkt 3" />
-      <h3>Stříbrné Náušnice</h3>
-      <p>Moderní styl</p>
-      <div class="price">599 Kč</div>
-    </div>
+    <!-- sem se načtnou jednotlivé produkty -->
   </section>
 
 <script>
@@ -136,7 +117,7 @@
     ],
     hodinky: [
       {name: 'Dámské hodinky Gold', img: 'https://via.placeholder.com/300x200', price: '1 499 Kč'},
-      {name: 'Pánské chronograf', img: 'https://via.placeholder.com/300x200', price: '2 499 Kč'},
+      {name: 'Pánské hodinky', img: 'https://via.placeholder.com/300x200', price: '2 499 Kč'},
       {name: 'Sportovní hodinky', img: 'https://via.placeholder.com/300x200', price: '799 Kč'}
     ],
     doplnky: [
@@ -165,11 +146,11 @@
     });
   }
 
-  // připojení eventů na odkazy s identifikátorem (data-cat / třída)
+  // připojení eventů na odkazy s identifikátorem 
   document.querySelectorAll('.cat-link').forEach(a => {
     a.addEventListener('click', e => {
       e.preventDefault();
-      const key = a.dataset.cat; // používáme přímo data-cat
+      const key = a.dataset.cat; 
       loadProducts(key);
     });
   });
@@ -179,7 +160,7 @@
 </script>
 
 <footer class="footer">
-    © 2025 Ukázkový E-shop — Toto je pouze demonstrační stránka.<br>
+    © 2025 <br>
     <a href="#" style="color:#e50000; text-decoration:none;">Obchodní podmínky</a> |
     <a href="#" style="color:#e50000; text-decoration:none;">Reklamační řád</a> |
     <a href="#" style="color:#e50000; text-decoration:none;">Ochrana osobních údajů</a> |
