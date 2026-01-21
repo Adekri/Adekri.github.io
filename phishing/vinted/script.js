@@ -58,9 +58,7 @@
           reviews: "4,9/5 (120 recenzí)"
         },
         messages: [
-          { from: "them", text: "Ahoj, měla bych zájem o fotoaparát, který nabízíš. Bylo by možné osobní předání v Jihlavě? Jestli ne, měla bych zájem i o zaslání poštou. Předem díky za zprávu." },
-
-          
+          { from: "them", text: "Ahoj, měla bych zájem o fotoaparát, který nabízíš. Bylo by možné osobní předání v Jihlavě? Jestli ne, měla bych zájem i o zaslání poštou. Předem díky za zprávu." },       
         ]
       },
       5: {
@@ -77,9 +75,9 @@
           { from: "them", text: "Abys prodej potvrdil, pošli do tohoto chatu svoji e-mailovou adresu. Na tuto adresu ti poté přijde potvrzení s odkazem na přijetí platby." },
           { from: "them", text: "Po potvrzení prodeje ti přijde štítek pro odeslání balíku." },
           { from: "them", text: "Tvůj Vinted tým" },
-          
+         
         ]
-      }
+      },
     };
 
     const chatList = document.getElementById("chatList");
