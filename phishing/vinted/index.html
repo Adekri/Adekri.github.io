@@ -5,16 +5,19 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Vinted – účet prodávajícího</title>
-  <link rel="icon" type="image/png" href="icon.png" />
+  <link rel="icon" type="image/png" href="images/icon.png" />
   <link type="text/css" rel="stylesheet" href="style.css" />
+  <link type="text/css" rel="stylesheet" href="style_banner.css" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 
 <body>
+  
+  <!-- záhlaví s ikonami a profilovým obrázkem, jen vizuální -->
   <header>
     <div class="container">
       <div class="header-top" role="banner">
-        <div class="logo"><img src="vinted_logo.png" alt="Vinted logo" /></div>
+        <div class="logo"><img src="images/vinted_logo.png" alt="Vinted logo" /></div>
         <div class="search" role="search"><input id="search" type="search" placeholder="Hledat předměty"></div>
         <nav class="nav-links" aria-label="Main navigation">
           <span class="material-icons" style="font-size:20px;color:var(--accent);">favorite</span>
@@ -42,49 +45,68 @@
   </header>
 
   <main class="container" id="main">
-    <!-- reklama pro účely dalšího úkolu-->
 
-    <div style="width:100%;margin:5px 0;text-align:center;">
-      <a href="../eshop/eshop.html" target="_blank"><img src="ad_banner.png" alt="Reklama" style="max-width:100%;border-radius:10px;" /></a>
+    <!-- reklama pro účely dalšího úkolu, stylové soubory ve zvláštním souboru style_banner.css -->
+    <div style="text-align:center; width:100%;">
+      <div class="ad-wrapper">
+        <span class="ad-label">reklama</span>
+        <div class="ad-container">
+          <!-- obrázek reklamy -->
+          <img src="images/ad_banner.png" alt="Reklama" onclick="window.location.href='captcha.html';" style="cursor: pointer;" />
+
+        <!-- ikona možností reklamy google  -->
+        <div class="ad-menu-toggle" onclick="showOverlay(this)"><img src="images/ad_choices.png" alt=""></div>
+
+        <!-- překrytí reklamy výběrem možností, tlačítka, lze stisknout ale nic neděla -->
+        <div class="ad-overlay">
+
+          <div class="back-arrow" onclick="hideOverlay(this)">←</div>
+          <img src="images/logo_google_ads.png" class="logo" alt="Logo" />
+          <button class="primary" onclick="alert('Tuto možnost pro vyřešení úkolu nepotřebujete');">Odešlete zpětnou vazbu</button>
+          <button onclick="alert('Tuto možnost pro vyřešení úkolu nepotřebujete');">Proč tato reklama?</button>
+        </div>
+
+        </div>
+      </div>
     </div>
 
+
+    <!-- prodávané položky a chaty se zájemci, pro přidání nového nutno zde i v další části -->
     <div class="chat-wrapper">
       <div class="chat-list" id="chatList">
         <div class="chat-item" data-chat="1">
-          <img src="mikina.jpeg" />
+          <img src="images/mikina.jpeg" />
           <div><strong>Zelená mikina JAKO</strong><br><span style="font-size:12px;color:#777">300 Kč</span></div>
         </div>
         <div class="chat-item" data-chat="2">
-          <img src="kalhoty.jpg" />
+          <img src="images/kalhoty.jpg" />
           <div><strong>Černé sportovní kalhoty</strong><br><span style="font-size:12px;color:#777">450 Kč</span></div>
         </div>
         <div class="chat-item" data-chat="3">
-          <img src="dziny.jpeg" />
+          <img src="images/dziny.jpeg" />
           <div><strong>Modré džíny Levi's</strong><br><span style="font-size:12px;color:#777">200 Kč</span></div>
         </div>
         <div class="chat-item" data-chat="4">
-          <img src="fotoaparat.jpg" />
+          <img src="images/fotoaparat.jpg" />
           <div><strong>Stará zrcadlovka</strong><br><span style="font-size:12px;color:#777">1200 Kč</span></div>
         </div>
         <div class="chat-item" data-chat="5">
-          <img src="batoh.jpg" />
+          <img src="images/batoh.jpg" />
           <div><strong>Batoh</strong><br><span style="font-size:12px;color:#777">150 Kč</span></div>
         </div>
       </div>
 
-
+      <!-- otevřená položka - při načtení stránky první položka, mění se při klikání -->
       <div class="chat-main">
         <div class="chat-header" id="chatHeader">
-          <img src="mikina.jpeg" style="width:40px;height:40px;" />
+          <img src="images/mikina.jpeg" style="width:40px;height:40px;" />
           <strong id="chatName">nazev zbozi</strong>
-        </div>
-
-
+      </div>
         <div class="chat-messages" id="chatMessages">
           detail konverzace
         </div>
 
-
+        <!-- možnost odeslat zprávu do chatu - využito pro získání FLAGu -->
         <div class="chat-input">
           <input type="text" id="chatInput" placeholder="Napsat zprávu..." />
           <button id="sendBtn">Odeslat</button>
@@ -93,6 +115,7 @@
     </div>
   </main>
 
+  <!-- obsahy chatů a další funkce obsluhuje skript -->
   <script src="script.js"></script>
 </body>
 

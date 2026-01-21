@@ -1,7 +1,9 @@
-    const chats = {
+   // jednotlivé chatové konverzace
+   // při přidání další třeba přidat zde i v index.html ve výpisu chatů - jinak nepůjde otevřít
+   const chats = {
       1: {
         name: "Zelená mikina JAKO",
-        obrazek: "mikina.jpeg",
+        obrazek: "images/mikina.jpeg",
         info: {
           location: "Praha, Česká republika",
           time: "před 3 hodinami",
@@ -12,12 +14,12 @@
           { from: "them", text: "Máte ještě mikinu?" },
           { from: "me", text: "Ano, stále je k dispozici :)" },
           { from: "them", text: "Skvělé! Zaplatila jsem a Vinted mi zobrazil tento QR kód. Naskenujte ho a vyzvedněte si peníze." },
-          { from: "them", text: "qrkod.png" },
+          { from: "them", text: "images/qrkod.png" },
         ]
       },
       2: {
         name: "Černé sportovní kalhoty",
-        obrazek: "kalhoty.jpg",
+        obrazek: "images/kalhoty.jpg",
         info: {
           location: "Brno, Česká republika",
           time: "před 1 hodinou",
@@ -32,7 +34,7 @@
       },
       3: {
         name: "Modré džíny Levi's",
-        obrazek: "dziny.jpeg",
+        obrazek: "images/dziny.jpeg",
         info: {
             location: "Polsko",
             time: "před 2 dny",
@@ -47,8 +49,23 @@
         ]
       },
       4: {
+        name: "Starý fotoaparát",
+        obrazek: "images/fotoaparat.jpg",
+        info: {
+          location: "Jihlava, Česká republika",
+          time: "před 1 dnem",
+          text: "Ahoj, jsem Lucie!",
+          reviews: "4,9/5 (120 recenzí)"
+        },
+        messages: [
+          { from: "them", text: "Ahoj, měla bych zájem o fotoaparát, který nabízíš. Bylo by možné osobní předání v Jihlavě? Jestli ne, měla bych zájem i o zaslání poštou. Předem díky za zprávu." },
+
+          
+        ]
+      },
+      5: {
         name: "Batoh",
-        obrazek: "batoh.jpg",
+        obrazek: "images/batoh.jpg",
         info: {
           location: "Ostrava, Česká republika",
           time: "před 5 hodinami",
@@ -73,6 +90,7 @@
     const sendBtn = document.getElementById("sendBtn");
     let activeChat = null;
 
+    //otevírání chatu při kliknutí
     chatList.addEventListener("click", e => {
       const item = e.target.closest(".chat-item");
       if(!item) return;
@@ -87,7 +105,7 @@
       chatHeader.querySelector("img").src = chat.obrazek;
       chatMessages.innerHTML = "";
 
-      // info card
+      // zobrazení úvofní vizitky uživatele - pro účely úkolu důležité počty hodnocení ale i jméno
       const info = document.createElement("div");
       info.style.padding = "14px";
       info.style.border = "1px solid #eee";
@@ -98,7 +116,7 @@
       <span style='color:#777;font-size:13px'><span class="material-icons" style="font-size:16px;vertical-align:middle">location_on</span> ${chat.info.location}</span><br>
       <span style='color:#777;font-size:13px'><span class="material-icons" style="font-size:16px;vertical-align:middle">visibility</span> ${chat.info.time}</span>`;
       chatMessages.appendChild(info);
-
+      // načtení obsahu zprávy včetně řešení zobrazení obrázků
       chat.messages.forEach(m => {
         const div = document.createElement("div");
         div.className = "msg " + m.from;
@@ -122,11 +140,39 @@
 
     chatInput.addEventListener("keydown", e => { if(e.key === "Enter") sendMessage(); });
 
+
+    // texty které se zobrazí po odeslání zprávy v chatech
+    const popupMessages = {
+      1: "Takto kupování na Vinted nefunguje. \nQR kód pravděpodobně povede na podvodné stránky, kde se útočník pokusí získat tvé platební údaje.",
+      2: "Touto technikou se útočníci snaží přesměrovat komunikaci mimo Vinted platformu, kde uživatelé nejsou Vintedem chráněni.",
+      3: "Útočníci občas vytváří účty, které napodobují oficiální Vinted účet. \n\nVinted ale nikdy uživatele takto nekontaktuje. Odkaz ve zprávě navíc neodkazuje na oficiální Vinted doménu ale zřejmě útočníkovu.",
+      4: "Výborně! Tento prodávající skuečně dosud vypadá důvěryhodně. \n\nFLAG(DuverujAleProveruj)",
+      5: "Útočníci občas vytváří účty, které napodobují oficiální Vinted účet. \n\nVinted ale nikdy uživatele takto nekontaktuje. Oficiální Vinted na tebe navíc údaje už má.\n\nTouto technikou se útočníci snaží přesměrovat komunikaci mimo Vinted platformu, kde uživatelé nejsou Vintedem chráněni. "  
+    };
+
+    // obsluha odesílání zpráv
     function sendMessage(){
       if(!activeChat) return;
+
       const text = chatInput.value.trim();
       if(!text) return;
-      chats[activeChat].messages.push({ from:"me", text });
+
+      chats[activeChat].messages.push({ from: "me", text });
       chatInput.value = "";
       loadChat(activeChat);
+
+      alert(popupMessages[activeChat] || "Zpráva byla odeslána.");
     }
+
+
+
+  // obsluha reklamy
+  function showOverlay(el) {
+    const container = el.closest('.ad-container');
+    container.querySelector('.ad-overlay').style.display = 'block';
+  }
+
+  function hideOverlay(el) {
+    const overlay = el.closest('.ad-overlay');
+    overlay.style.display = 'none';
+  }

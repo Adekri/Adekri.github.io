@@ -126,28 +126,6 @@ main {
     padding: 28px 0
 }
 
-
-/* responsive */
-@media (max-width:780px) {
-    .header-top {
-        flex-wrap: wrap;
-        align-items: flex-start
-    }
-
-    .sell-actions {
-        margin-left: 0;
-        width: 100%;
-        justify-content: flex-end
-    }
-
-    .nav-links {
-        order: 3;
-        width: 100%;
-        gap: 8px;
-        margin-top: 8px
-    }
-}
-
 .chat-wrapper {
     display: flex;
     height: 60vh;
@@ -246,3 +224,7 @@ main {
     color: white;
     cursor: pointer;
 }
+
+
+
+

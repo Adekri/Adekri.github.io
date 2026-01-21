@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Demo – Ověření uživatele</title>
+
+<style>
+:root {
+  --blue:#1a73e8;
+  --bg:#f3f4f6;
+  --card:#fff;
+  --text:#1f2937;
+  --muted:#6b7280;
+  --shadow:0 10px 30px rgba(0,0,0,.15);
+  --radius:10px;
+}
+
+html,body{
+  margin:0;
+  height:100%;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  background:var(--bg);
+}
+
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.35);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.modal{
+  width:420px;
+  background:var(--card);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+
+.header{
+  background:var(--blue);
+  color:#fff;
+  padding:14px 18px;
+  font-weight:600;
+}
+
+.body{
+  padding:18px;
+  color:var(--text);
+  font-size:14px;
+}
+
+.footer{
+  padding:14px 18px;
+  border-top:1px solid #e5e7eb;
+  display:flex;
+  justify-content:flex-end;
+}
+
+button{
+  border:none;
+  border-radius:6px;
+  padding:8px 14px;
+  font-size:14px;
+  cursor:pointer;
+}
+
+.primary{
+  background:var(--blue);
+  color:#fff;
+}
+
+.secondary{
+  background:#e5e7eb;
+}
+
+.checkbox{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-top:16px;
+}
+
+.spinner-wrap{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  padding:30px 0;
+}
+
+.spinner{
+  width:28px;
+  height:28px;
+  border:4px solid #e5e7eb;
+  border-top-color:var(--blue);
+  border-radius:50%;
+  animation:spin 1s linear infinite;
+}
+
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.hidden{display:none}
+
+ul{
+  padding-left:18px;
+}
+
+.badge{
+  display:inline-block;
+  margin-bottom:8px;
+  font-size:12px;
+  background:#d1fae5;
+  color:#065f46;
+  padding:4px 8px;
+  border-radius:999px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- KROK 1 -->
+<div class="overlay" id="step1">
+  <div class="modal">
+    <div class="header">Ověření uživatele</div>
+    <div class="body">
+      <span class="badge">DEMO</span>
+      <p>Potvrďte prosím, že jste člověk.</p>
+
+      <div class="checkbox">
+        <input type="checkbox" id="notRobot">
+        <label for="notRobot">Nejsem robot</label>
+      </div>
+    </div>
+    <div class="footer">
+      <button class="primary" onclick="startVerification()">Pokračovat</button>
+    </div>
+  </div>
+</div>
+
+<!-- LOADING -->
+<div class="overlay hidden" id="loading">
+  <div class="modal">
+    <div class="body spinner-wrap">
+      <div class="spinner"></div>
+      <div>Ověřování…</div>
+    </div>
+  </div>
+</div>
+
+<!-- KROK 2 -->
+<div class="overlay hidden" id="step2">
+  <div class="modal">
+    <div class="header">Dokončení ověření</div>
+    <div class="body">
+      <p>Postupujte podle instrukcí níže:</p>
+      <ul>
+        <li>Přečtěte si uvedené informace</li>
+        <li>Ujistěte se, že souhlasíte s podmínkami</li>
+        <li>Klikněte na tlačítko Verify</li>
+      </ul>
+    </div>
+    <div class="footer">
+      <button class="secondary" onclick="closeAll()">Zavřít</button>
+      <button class="primary" onclick="verify()">Verify</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function startVerification(){
+  if(!document.getElementById('notRobot').checked){
+    alert('Nejprve potvrďte, že nejste robot.');
+    return;
+  }
+  document.getElementById('step1').classList.add('hidden');
+  document.getElementById('loading').classList.remove('hidden');
+
+  setTimeout(()=>{
+    document.getElementById('loading').classList.add('hidden');
+    document.getElementById('step2').classList.remove('hidden');
+  },2000);
+}
+
+function verify(){
+  alert('Demo ověření dokončeno.');
+  closeAll();
+}
+
+function closeAll(){
+  document.getElementById('step1').classList.add('hidden');
+  document.getElementById('loading').classList.add('hidden');
+  document.getElementById('step2').classList.add('hidden');
+}
+</script>
+
+</body>
+</html>
