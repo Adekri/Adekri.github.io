@@ -49,7 +49,7 @@
         ]
       },
       4: {
-        name: "Starý fotoaparát",
+        name: "Stará zrcadlovka",
         obrazek: "images/fotoaparat.jpg",
         info: {
           location: "Jihlava, Česká republika",

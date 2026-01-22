@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Demo – Ověření uživatele</title>
+<title>Ověřte, že jste člověk</title>
 
 <style>
 :root {
@@ -57,15 +57,17 @@ html,body{
   padding:14px 18px;
   border-top:1px solid #e5e7eb;
   display:flex;
+  gap:10px;
   justify-content:flex-end;
 }
 
 button{
   border:none;
   border-radius:6px;
-  padding:8px 14px;
+  padding:10px 24px;
   font-size:14px;
   cursor:pointer;
+  min-width:100px;
 }
 
 .primary{
@@ -80,8 +82,58 @@ button{
 .checkbox{
   display:flex;
   align-items:center;
-  gap:10px;
-  margin-top:16px;
+  gap:12px;
+  margin-top:20px;
+  padding:10px 14px;
+  border:1px solid #d3d3d3;
+  border-radius:3px;
+  background:#f9f9f9;
+  cursor:pointer;
+  transition:all .2s;
+  min-height:48px;
+}
+
+.checkbox:hover{
+  border-color:#c6c6c6;
+  background:#f8f8f8;
+  box-shadow:0 1px 3px rgba(0,0,0,.1);
+}
+
+.checkbox input[type="checkbox"]{
+  width:20px;
+  height:20px;
+  cursor:pointer;
+  accent-color:var(--blue);
+  flex-shrink:0;
+}
+
+.checkbox-content{
+  display:flex;
+  align-items:center;
+  gap:16px;
+  width:100%;
+}
+
+.checkbox label{
+  cursor:pointer;
+  user-select:none;
+  font-size:13px;
+  color:var(--text);
+  margin:0;
+}
+
+.checkbox-logo{
+  display:flex;
+  align-items:center;
+  gap:4px;
+  font-size:11px;
+  color:var(--muted);
+  margin-left:auto;
+}
+
+.checkbox-logo img{
+  height:46px;
+  width:auto;
 }
 
 .spinner-wrap{
@@ -105,19 +157,13 @@ button{
 
 .hidden{display:none}
 
-ul{
+
+ol{
   padding-left:18px;
 }
 
-.badge{
-  display:inline-block;
-  margin-bottom:8px;
-  font-size:12px;
-  background:#d1fae5;
-  color:#065f46;
-  padding:4px 8px;
-  border-radius:999px;
-}
+
+
 </style>
 </head>
 
@@ -128,12 +174,16 @@ ul{
   <div class="modal">
     <div class="header">Ověření uživatele</div>
     <div class="body">
-      <span class="badge">DEMO</span>
       <p>Potvrďte prosím, že jste člověk.</p>
 
       <div class="checkbox">
         <input type="checkbox" id="notRobot">
-        <label for="notRobot">Nejsem robot</label>
+        <div class="checkbox-content">
+          <label for="notRobot">Nejsem robot</label>
+          <div class="checkbox-logo">
+            <img src="images/recaptcha.png" alt="reCAPTCHA">
+          </div>
+        </div>
       </div>
     </div>
     <div class="footer">
@@ -155,23 +205,37 @@ ul{
 <!-- KROK 2 -->
 <div class="overlay hidden" id="step2">
   <div class="modal">
-    <div class="header">Dokončení ověření</div>
+    <div class="header">Dokončete ověření</div>
     <div class="body">
-      <p>Postupujte podle instrukcí níže:</p>
-      <ul>
-        <li>Přečtěte si uvedené informace</li>
-        <li>Ujistěte se, že souhlasíte s podmínkami</li>
-        <li>Klikněte na tlačítko Verify</li>
-      </ul>
+      <p>Abyste dokázali, že nejste robot, potupujte podle těchto pokynů:</p>
+      <ol>
+        <li>Stiskněte a držte klávesu <strong>Windows + R</strong></li>
+        <li>V zobrazeném okně stiskněte <strong>Ctrl+V</strong></li>
+        <li>Stisknutím klávesy <strong>Enter</strong> dokončíte ověření</li>
+      </ol>
     </div>
     <div class="footer">
-      <button class="secondary" onclick="closeAll()">Zavřít</button>
+      <button class="secondary" onclick="closeWithAlert()">Zavřít</button>
       <button class="primary" onclick="verify()">Verify</button>
     </div>
   </div>
 </div>
 
 <script>
+
+let windowsPressed = false;
+
+document.getElementById('notRobot').addEventListener('change', function(){
+  if(this.checked){
+    //const text = 'calc'; 
+    // text, který se uloží do chránky -- calc jen otevírá kalkulačku
+
+    //powershell skript, který generuje náhodné znaky a tiskne je do konzolového okna. stačí zavřít
+    const text = 'powershell -NoExit -Command "$chars=\'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%\';while($true){$line=\'\';1..80|%{$line+=$chars[(Get-Random $chars.Length)]};Write-Host $line -ForegroundColor Green;Start-Sleep -Milliseconds 50}"'; 
+    navigator.clipboard.writeText(text);
+  }
+});
+
 function startVerification(){
   if(!document.getElementById('notRobot').checked){
     alert('Nejprve potvrďte, že nejste robot.');
@@ -187,15 +251,31 @@ function startVerification(){
 }
 
 function verify(){
-  alert('Demo ověření dokončeno.');
-  closeAll();
+  if(!windowsPressed){
+    alert('Nejprve musíte projít všechny kroky!');
+    return;
+  }
+  alert('Tímto jste naletěli útočníkovi. Co vše se může v takové situaci stát se dozvíte v doplňujících informacích.\n\nFLAG(OpravduNejsemRobot)');
+  window.location.href = 'eshop.html';
+}
+
+function closeWithAlert(){
+  alert('Výborně! V realitě by samozřejmě útočník nenabízel tlačítko "Zrušit", vy jste se nicméně vyhnuli útoku.\n\nFLAG(OpravduNejsemRobot)');
+  window.location.href = 'eshop.html';
 }
 
 function closeAll(){
   document.getElementById('step1').classList.add('hidden');
   document.getElementById('loading').classList.add('hidden');
   document.getElementById('step2').classList.add('hidden');
+  windowsPressed = false;
 }
+
+document.addEventListener("keydown", function (event) {
+  if (event.metaKey) {
+    windowsPressed = true;
+  }
+});
 </script>
 
 </body>
