@@ -1,0 +1,112 @@
+<!-- tento dokument je překopírovaný index.html - pouze je pro jednoduchost umožněno prohlížet pouze jeden chat -->
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link type ="text/css" rel="stylesheet" href="style.css" />
+<link rel="icon" type="image/png" href="images/icon.png" />
+<title>Telefon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Loved+by+the+King&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="phone">
+
+  
+  <div class="statusbar">
+    <span id="time">12:00</span>
+    <div class="statusbar-icons">
+      <span style="font-size: 10px;" class="material-icons">signal_cellular_4_bar</span>
+      <span style="font-size: 10px;" class="material-icons">wifi</span>
+      <span style="font-size: 10px;" class="material-icons">battery_std</span>
+    </div>
+  </div>
+
+  <div id="header" class="header">Zprávy</div>
+
+  <div id="list" class="conversation-list" style="display: none;">
+  </div>
+
+
+    <!-- detail konverzace -->
+  <div id="chat-roman" class="chat-wrapper">
+      <div class="messages-container">
+        <div class="message from-them">Čauky... tak co dneska děláš?</div> 
+        <div class="message from-me">Nic moc... hele... nemohl bys mi poslat fotku, kde držíš papír s dnešním datem a slovem "Kočkodlak"?</div>  
+        <div class="message from-them">😏😏</div>
+        <div class="message from-me">no ne.. víš jak to dneska je, tak abych měl jistotu, že nejsi nějaký podvodník 😆</div>
+        <div class="message from-them">jasný jasný, tak vteřinku...</div>
+        <!-- pro lepší efekt bylo datum z fotografie odstraněno a je přidáno až zde (dynamicky) -- nevypadá to přesně jako psaný text, případně je možné vyměnit za statickou fotografii (fotografie_staticka.jpg)  -->
+        <div class="message from-them">
+            <div class="photo-wrapper">
+                <img src="images/fotografie.png" style ="width:100%; max-width:400px;"><div class="photo-date">
+                <strong><span id="today-date"></span></strong></div>
+            </div>
+        </div>
+
+        <div class="message from-them">V pohodě?</div>
+        <div class="message from-me">Jasan, díky 😆👍</div>
+        <div class="message from-me">Hele, neříkal jsi, že rád cestuješ?</div>
+        <div class="message from-them">Jasně.. zbožňuju objevovat nový místa..</div>
+        <div class="message from-me">Byl jsi někdy v Kutný Hoře? Přemejšlíme, že bysme tam jeli na výlet..</div>
+        <div class="message from-them">Jasně, byl jsem tam. tam je to krásný, to určitě jeďte. Z loňska mám odtamtud i celkem hezký fotky. 👀</div>
+        <div class="message from-me">Pošli nějaký 🙏🙏</div>
+        <div class="message from-them">Jasně, jen chvíli...</div>
+        <div class="message from-them"><img style ="width:100%; max-width:400px;" src="images/kutna_hora.jpg" alt="Kutná Hora"></div>
+
+      </div>
+  </div>
+
+
+  <div class="input-bar" style="display:none;">
+    <input type="text" placeholder="Napiš zprávu...">
+    <button class="send-btn"><span class="material-icons">send</span></button>
+  </div>
+
+  <div class="bottom-nav">
+    <span style="font-size: 20px;" id="nav-back" class="nav-btn material-icons">arrow_back_ios</span>
+    <!-- tyhle tlacika nic nedelaji -->
+    <span style="font-size: 20px;" id="nav-home" class="nav-btn material-icons">home</span>
+    <span style="font-size: 20px;" class="nav-btn material-icons">menu</span>
+  </div>
+</div>
+
+<script src="script.js"></script>
+<script>
+  // Tento skript pouze zařídí načtení aktuálního data a zobrazení chatu s Romanem při načtení stránky
+  // skript je zde, aby nekolidoval s hlavním skriptem telefonu (script.js)
+  document.addEventListener('DOMContentLoaded', () => {
+    showChat('roman');
+    
+    // blokuje se tlačítko Home 
+    const homeBtn = document.getElementById('nav-home');
+    const backBtn = document.getElementById('nav-back');
+    homeBtn.replaceWith(homeBtn.cloneNode(true));
+    backBtn.replaceWith(backBtn.cloneNode(true));
+    
+    document.getElementById('nav-home').addEventListener('click', (e) => {
+      e.stopImmediatePropagation();
+      showChat('roman');
+    });
+    
+    document.getElementById('nav-back').addEventListener('click', (e) => {
+      e.stopImmediatePropagation();
+      showChat('roman');
+    });
+  });
+
+
+    function setTodayDate() {
+    const today = new Date();
+    const formatted = today.toLocaleDateString('cs-CZ');
+    const el = document.getElementById('today-date');
+    if (el) el.textContent = formatted;
+  }
+
+  document.addEventListener('DOMContentLoaded', setTodayDate);
+</script>
+</body>
+</html>

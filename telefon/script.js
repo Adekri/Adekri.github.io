@@ -8,7 +8,7 @@ const input = inputBar.querySelector('input');
 const sendBtn = inputBar.querySelector('button');
 
 
-//když tady tohle nebylo tak se muselo pokaždé vytvářet znovu dolní lišta pod chatem -- takhle je tam nonstop
+//když tady tohle nebylo tak se muselo pokaždé vytvářet znovu dolní lišta pod chatem -- takhle je tam stále
 function setChatPosition(chat) {
   const topOffset = header.offsetTop + header.offsetHeight;
    chat.style.top = topOffset + 'px';
@@ -76,6 +76,7 @@ sendBtn.addEventListener('click', ()=>{
   input.value = '';
   const msgs = chat.querySelector('.messages-container');
   msgs.scrollTop = msgs.scrollHeight;
+  // kontrola zprávy odeslané v chatu s Anetou -- zobrazuje FLAG
   if (chatId === 'aneta') {
     if (text.includes('920183')) {
       alert('Pozor! Odesláním tohoto kódu umožníte Anetě přístup k vašemu Google účtu. FLAG(DvoufazoveOvereniNeniVse).');
@@ -94,7 +95,7 @@ input.addEventListener('keypress', (e) => {
   }
 });
 
-//aktualizace času 
+//aktualizace času v horní liště
 function updateTime(){
   const now = new Date();
   const el = document.getElementById('time');
@@ -112,7 +113,7 @@ document.body.addEventListener('click', e => {
   e.preventDefault();
 
   //stranka se vybere podle atribudu data-page v odkazu
-  //takto se to pak použije v html
+  //takto se to pak použije v html:
   //<a href="#" class="sms-link" data-page="Login">Přihlásit se</a>
   const page = link.dataset.page;
   const headerTitle = document.getElementById('header');
@@ -262,7 +263,7 @@ const bankBtn = document.getElementById('bankovniIdentitaBtn');
     });
       break;
 
-    default: //pokud se v html pouzije nazev který tady není, haha
+    default: //pokud se v html pouzije nazev který tady není, hh
       content.innerHTML = `
         <h2>Error 404</h2>
         <p>Stránka nenalezena</p>

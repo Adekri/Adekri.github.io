@@ -171,3 +171,23 @@ body{
   display: none;
 }
 
+
+
+/* úprava data na fotografii -- mírné natočení, rozmazání, font, aby připomínal psaný text */
+
+.photo-wrapper {
+  position: relative;
+}
+
+
+.photo-date {
+  position: absolute;
+  bottom: 25%;
+  left: 45%;
+  transform: translateX(-50%) rotate(+4deg);
+  font-family: 'Loved by the King','Caveat', cursive;
+  font-size: 20px;
+  text-shadow: 0 0 2px rgba(0,0,0,0.2);
+  filter: blur(0.2px);
+  color: #171717;
+}
