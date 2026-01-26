@@ -48,7 +48,7 @@
             { from: "them", text: "Děkujeme za spolupráci a pochopení." }
         ]
       },
-      4: {
+      4: { // toto je ten jediný důvěryhodný chat
         name: "Stará zrcadlovka",
         obrazek: "images/fotoaparat.jpg",
         info: {
@@ -139,7 +139,7 @@
     chatInput.addEventListener("keydown", e => { if(e.key === "Enter") sendMessage(); });
 
 
-    // texty které se zobrazí po odeslání zprávy v chatech
+    // texty které se zobrazí po odeslání zprávy v chatech -- zde možnost měnit FLAG
     const popupMessages = {
       1: "Takto kupování na Vinted nefunguje. \nQR kód pravděpodobně povede na podvodné stránky, kde se útočník pokusí získat tvé platební údaje.\n\nV tomto případě vede QR kód na stránky, kde byl vytvořen. Můžete se tedy podívat, jak jednoduché to je.",
       2: "Touto technikou se útočníci snaží přesměrovat komunikaci mimo Vinted platformu, kde uživatelé nejsou Vintedem chráněni.",

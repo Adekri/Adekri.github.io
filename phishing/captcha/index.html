@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link type="text/css" rel="stylesheet" href="style.css" />
+<title>Ověřte, že jste člověk</title>
+
+</head>
+
+<body>
+
+<!-- Nejprve útočník donutí uživatele zaškrtnout políčko, čímž mu do schránky uloží PowerShell skript -->
+<div class="overlay" id="step1">
+  <div class="modal">
+    <div class="header">Ověření uživatele</div>
+    <div class="body">
+      <p>Potvrďte prosím, že jste člověk.</p>
+
+      <div class="checkbox">
+        <input type="checkbox" id="notRobot">
+        <div class="checkbox-content">
+          <label for="notRobot">Nejsem robot</label>
+          <div class="checkbox-logo">
+            <img src="images/recaptcha.png" alt="reCAPTCHA">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <button class="primary" onclick="startVerification()">Pokračovat</button>
+    </div>
+  </div>
+</div>
+
+<!-- jenom pro efekt je zde přidáno načítací kolečko -->
+<div class="overlay hidden" id="loading">
+  <div class="modal">
+    <div class="body spinner-wrap">
+      <div class="spinner"></div>
+      <div>Ověřování…</div>
+    </div>
+  </div>
+</div>
+
+<!-- dále útočník uživatele vyzve k provedení 3 kroků - těmito kroky spustí předem zkopírovaný skript -->
+<div class="overlay hidden" id="step2">
+  <div class="modal">
+    <div class="header">Dokončete ověření</div>
+    <div class="body">
+      <p>Abyste dokázali, že nejste robot, potupujte podle těchto pokynů:</p>
+      <ol>
+        <li>Stiskněte a držte klávesu <strong>Windows + R</strong></li>
+        <li>V zobrazeném okně stiskněte <strong>Ctrl+V</strong></li>
+        <li>Stisknutím klávesy <strong>Enter</strong> dokončíte ověření</li>
+      </ol>
+    </div>
+    <div class="footer">
+      <!-- zde je přidána možnost formulář zavřít bez provedení kroků což je správně - 
+       v realitě by spíše bylo nutno ze stránky odejít -- tlačítko verify kontroluje 
+       jestli byla stisknuta klávesa WIN další kroky bohužel kontrolovat nelze, protože
+       již není focus na prohlížeči -->
+      <button class="secondary" onclick="closeWithAlert()">Zavřít</button>
+      <button class="primary" onclick="verify()">Verify</button>
+    </div>
+  </div>
+</div>
+
+<!-- ce skriptu je řešeno co se stane po stisknutí tlačítek, zobrazení FLAGu, přesměrování na 
+ další stránku a také je tam PowerShell skript, který uživatel spustí, pokud podlehne útoku -->
+<script src="script.js"></script>
+
+</body>
+</html>
