@@ -78,7 +78,7 @@
     }));
   }
 
-  // ovládání panelu a modálu
+  // ovládání panelu -- zbytečně složitý pro tenhle úkol
   const cartPanel = document.getElementById('cartPanel');
   const openCartBtn = document.getElementById('openCart');
   const header = document.querySelector('.header');
@@ -324,20 +324,18 @@ jgventureslimited@gmail.com`
       }
     };
 
+    // otevírá reklamační řád, obchodní podmínky atd v okně místo produktů
     function openLegal(key){
       const doc = legalDocs[key];
       if (!doc) return;
       const products = document.querySelector('.products');
-      // render legal text inline in products area with back button
       products.innerHTML = `
         <div style="grid-column:1/-1; background:white; padding:20px; border-radius:8px; box-shadow:0 6px 18px rgba(0,0,0,0.08);">
           <h2 style="margin-top:0; color:#C9A45C;">${doc.title}</h2>
           <div style="white-space:pre-wrap; color:#3A2F2A; margin-top:10px;">${doc.text}</div>
         </div>`;
-      // hide cart panel while reading
-      if (cartPanel) cartPanel.style.display = 'none';
     }
-
+    //při kliknutí na odkaz v patičce
     document.querySelectorAll('.legal-link').forEach(a=> a.addEventListener('click', e=>{
       e.preventDefault();
       openLegal(a.dataset.doc);
