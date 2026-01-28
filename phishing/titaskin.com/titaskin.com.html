@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <title>titaskin.com</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- horní banner -->
+  <div class="top-bar">🎉 LIMITOVANÁ NABÍDKA! Sleva až 95 % — pouze dnes! 🎉</div>
+
+  <!-- panel s názvem webu a košíkem -->
+  <header class="header">
+    <div class="header-title">titaskin.com</div>
+    <button class="cart-btn" id="openCart">Košík (0)</button>
+  </header>
+
+  <div class="cart-panel" id="cartPanel" aria-hidden="true">
+    <h4 style="color:#3A2F2A;">Váš košík</h4>
+    <div id="cartItems"></div>
+    <div class="cart-total" id="cartTotal">Celkem: 0 Kč</div>
+    <div style="margin-top:10px; text-align:right;"><button id="payBtn" class="pay-btn">Zaplatit</button></div>
+  </div>
+
+  <section class="hero" style="background-image: url('images/banner2.png');"></section>
+
+    <!-- vyskakovací okno se zadáním údajů o platební kartě - v podstatě není potřeba pro tento úkol -->
+  <div class="modal-backdrop" id="modalBackdrop">
+    <div class="modal" role="dialog" aria-modal="true">
+      <h3>Platební údaje</h3>
+      <label style="color:#3A2F2A;">Číslo karty</label>
+      <input id="cardNumber" type="text" maxlength="19" placeholder="1234 5678 9012 3456" />
+      <label style="color:#3A2F2A;">Platnost (MM/YY)</label>
+      <input id="cardExp" type="text" maxlength="5" placeholder="MM/YY" />
+      <label style="color:#3A2F2A;">CVC</label>
+      <input id="cardCvc" type="text" maxlength="4" placeholder="CVC" />
+      <div class="actions">
+        <button id="cancelPay" style="background:#D8A7A1;color:white;border:none;padding:8px;border-radius:6px;cursor:pointer;">Zavřít</button>
+        <button id="submitPay" style="background:#C9A45C;color:white;border:none;padding:8px;border-radius:6px;cursor:pointer;">Odeslat</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- lišta s kategoriemi -->
+  <nav style="background:white; padding:15px 0; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
+    <ul style="list-style:none; display:flex; justify-content:center; gap:40px; margin:0; padding:0; font-size:20px; text-transform:uppercase; font-weight:bold;">
+      <li><a href="#" class="cat-link" data-cat="sperky" style="text-decoration:none; color:#C9A45C;">Šperky</a></li>
+      <li><a href="#" class="cat-link" data-cat="kabelky" style="text-decoration:none; color:#C9A45C;">Kabelky</a></li>
+      <li><a href="#" class="cat-link" data-cat="hodinky" style="text-decoration:none; color:#C9A45C;">Hodinky</a></li>
+      <li><a href="#" class="cat-link" data-cat="doplnky" style="text-decoration:none; color:#C9A45C;">Doplňky</a></li>
+    </ul>
+  </nav>
+
+  <section class="products">
+    <!-- sem se načtnou jednotlivé produkty -->
+  </section>
+
+
+  <!-- odkazy na obchodní podmínky, reklamační řád -->
+<footer class="footer">
+    © 2026 <br>
+    <a href="#" class="legal-link" data-doc="terms" style="color:#C9A45C; text-decoration:none;">Obchodní podmínky</a> |
+    <a href="#" class="legal-link" data-doc="refund" style="color:#C9A45C; text-decoration:none;">Reklamační řád</a> |
+    <a href="#" class="legal-link" data-doc="privacy" style="color:#C9A45C; text-decoration:none;">Ochrana osobních údajů</a> |
+    <a href="#" class="legal-link" data-doc="contact" style="color:#C9A45C; text-decoration:none;">Kontakt</a>
+  </footer>
+
+  <!-- sem se pak načítají ty texty -->
+  <div class="modal-backdrop" id="legalBackdrop" style="display:none; align-items:flex-start; padding-top:6vh;">
+    <div class="modal" role="dialog" aria-modal="true" id="legalModal" style="max-height:80vh; overflow:auto; width:720px;">
+      <h3 id="legalTitle">Dokument</h3>
+      <div id="legalContent" style="white-space:pre-wrap; color:#333;"></div>
+      <div style="text-align:right; margin-top:12px;"><button id="closeLegal" style="background:#ccc;border:none;padding:8px;border-radius:6px;">Zavřít</button></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

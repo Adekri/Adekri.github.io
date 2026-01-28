@@ -1,0 +1,198 @@
+    /* Teď tady jsou zbytečně věci navíc - TODO sjednotit tlačítka, ikony */
+body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #F3EFEA;
+      color: #3A2F2A;
+    }
+
+    /* Hero banner */
+    .hero {
+      background: #e50000;
+      color: white;
+      padding: 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      height: 300px;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .hero h1 {
+      font-size: 48px;
+      font-weight: 900;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .hero p {
+      font-size: 22px;
+      margin-top: 10px;
+      text-transform: uppercase;
+    }
+
+    /* Product grid */
+    .products {
+      max-width: 1100px;
+      margin: 40px auto;
+      display: grid;
+      gap: 20px;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+
+    .product {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .product img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+
+    .product h3 {
+      margin: 15px 0 5px;
+      color: #3A2F2A;
+    }
+
+    .product p {
+      margin: 0;
+      color: #7A6F68;
+    }
+
+    .price {
+      margin-top: 10px;
+      font-size: 20px;
+      font-weight: bold;
+      color: #C9A45C;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 40px;
+      color: #7A6F68;
+    }
+    /* Top bar with discount */
+    .top-bar {
+      background: #C9A45C;
+      color: #FFFFFF;
+      text-align: center;
+      padding: 10px 20px;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    /* Cart button in header */
+    .cart-btn {
+      background: #C9A45C;
+      color: #FFFFFF;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      z-index: 60;
+      transition: background 0.3s;
+    }
+
+    .cart-btn:hover {
+      background: #D8A7A1;
+    }
+
+    /* Add to cart button */
+    .add-btn {
+      background: #C9A45C;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    .add-btn:hover {
+      background: #D8A7A1;
+    }
+
+    /* Pay button */
+    .pay-btn {
+      background: #C9A45C;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    .pay-btn:hover {
+      background: #D8A7A1;
+    }
+
+    /* Header with logo and cart */
+    .header {
+      background: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .header-title {
+      font-size: 24px;
+      font-weight: bold;
+      color: #C9A45C;
+    }
+
+    .cart-panel {
+      position: absolute;
+      right: 30px;
+      top: 70px;
+      width: 320px;
+      max-height: 60vh;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      padding: 14px;
+      overflow: auto;
+      z-index: 50;
+      display: none;
+    }
+
+    .cart-item { display:flex; gap:10px; align-items:center; margin-bottom:10px; }
+    .cart-item img{ width:48px; height:48px; object-fit:cover; border-radius:6px }
+    .cart-total{ font-weight:800; margin-top:10px; color:#C9A45C }
+
+    /* Modal payment form */
+    .modal-backdrop{ position:fixed; inset:0; background:rgba(0,0,0,0.6); display:none; align-items:center; justify-content:center; z-index:80 }
+    .modal{ background:white; border-radius:10px; padding:20px; width:320px; box-shadow:0 8px 30px rgba(0,0,0,0.3) }
+    .modal h3{ margin-top:0; color:#3A2F2A; }
+    .modal input{ width:100%; padding:10px; margin:6px 0; box-sizing:border-box; border:1px solid #D8A7A1; }
+    .modal .actions{ display:flex; gap:8px; justify-content:flex-end; margin-top:8px }
+
+    /* Material Icons styling */
+    .material-icons {
+      font-family: 'Material Icons';
+      font-weight: normal;
+      font-style: normal;
+      font-size: 20px;
+      display: inline-block;
+      line-height: 1;
+      text-transform: none;
+      letter-spacing: normal;
+      word-wrap: normal;
+      white-space: nowrap;
+      direction: ltr;
+      vertical-align: -0.125em;
+      margin-right: 8px;
+    }
