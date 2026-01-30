@@ -33,12 +33,12 @@ function verify(){
     return;
   }
   alert('Tímto jste naletěli útočníkovi. Co vše se může v takové situaci stát se dozvíte v doplňujících informacích.\n\nFLAG(OpravduNejsemRobot)');
-  window.location.href = '../eshop/index.html';
+  window.location.href = '../eshop/';
 }
 
 function closeWithAlert(){
   alert('Výborně! V realitě by samozřejmě útočník nenabízel tlačítko "Zrušit", vy jste se nicméně vyhnuli útoku.\n\nFLAG(OpravduNejsemRobot)');
-  window.location.href = '../eshop/index.html';
+  window.location.href = '../eshop/';
 }
 
 function closeAll(){
