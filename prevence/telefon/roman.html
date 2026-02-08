@@ -34,28 +34,35 @@
     <!-- detail konverzace -->
   <div id="chat-roman" class="chat-wrapper">
       <div class="messages-container">
-        <div class="message from-them">Čauky... tak co dneska děláš?</div> 
-        <div class="message from-me">Nic moc... hele... nemohl bys mi poslat fotku, kde držíš papír s dnešním datem a slovem "Kočkodlak"?</div>  
-        <div class="message from-them">😏😏</div>
-        <div class="message from-me">no ne.. víš jak to dneska je, tak abych měl jistotu, že nejsi nějaký podvodník 😆</div>
-        <div class="message from-them">jasný jasný, tak vteřinku...</div>
+        <div class="message from-me" data-time="Předevčírem 18:02">Čauky... tak co dneska děláš?</div> 
+        <div class="message from-them" data-time="Předevčírem 18:03">Nic moc... hele... dneska konečně klid, tak relax...</div> 
+        <div class="message from-me" data-time="Předevčírem 18:03">Co tys vlastně říkal, že děláš za práci?</div> 
+        <div class="message from-them" data-time="Předevčírem 18:04">Spíš online věci... projekty, co se blbě popisujou.</div> 
+        <div class="message from-me" data-time="Předevčírem 18:04">Aha, a odkud jsi?</div> 
+        <div class="message from-them" data-time="Předevčírem 18:05">Aale, taková menší obec v okolí Brna... nic zajímavýho.</div>
+        
+        <div class="message from-me" data-time="Včera 14:06">Hele.. nemohl bys mi poslat fotku, kde držíš papír s dnešním datem a slovem "Kočkodlak"?</div>  
+        <div class="message from-them" data-time="Včera 14:06">😏😏</div>
+        <div class="message from-me" data-time="Včera 14:06">no ne.. víš jak to dneska je, tak abych měl jistotu, že nejsi nějaký podvodník 😆</div>
+        <div class="message from-them" data-time="Včera 14:07">no dobře no.. dej mi minutku...</div>
         <!-- pro lepší efekt bylo datum z fotografie odstraněno a je přidáno až zde (dynamicky) -- nevypadá to přesně jako psaný text, případně je možné vyměnit za statickou fotografii (fotografie_staticka.jpg)  -->
-        <div class="message from-them">
+        <div class="message from-them" data-time="Včera 14:58">
             <div class="photo-wrapper">
                 <img src="images/fotografie.png" style ="width:100%; max-width:400px;"><div class="photo-date">
                 <strong><span id="today-date"></span></strong></div>
             </div>
         </div>
 
-        <div class="message from-them">V pohodě?</div>
-        <div class="message from-me">Jasan, díky 😆👍</div>
-        <div class="message from-me">Hele, neříkal jsi, že rád cestuješ?</div>
-        <div class="message from-them">Jasně.. zbožňuju objevovat nový místa..</div>
-        <div class="message from-me">Byl jsi někdy v Kutný Hoře? Přemejšlíme, že bysme tam jeli na výlet..</div>
-        <div class="message from-them">Jasně, byl jsem tam. tam je to krásný, to určitě jeďte. Z loňska mám odtamtud i celkem hezký fotky. 👀</div>
-        <div class="message from-me">Pošli nějaký 🙏🙏</div>
-        <div class="message from-them">Jasně, jen chvíli...</div>
-        <div class="message from-them"><img style ="width:100%; max-width:400px;" src="images/kutna_hora.jpg" alt="Kutná Hora"></div>
+        <div class="message from-them" data-time="Včera 15:00">V pohodě?</div>
+        <div class="message from-me" data-time="Včera 15:01">Jo asi jo.. 👍</div>
+
+        <div class="message from-me" data-time="18:09">Hele, neříkal jsi, že rád cestuješ?</div>
+        <div class="message from-them" data-time="18:09">Jasně.. zbožňuju objevovat nový místa..</div>
+        <div class="message from-me" data-time="18:10">Byl jsi někdy v Kutný Hoře? Přemejšlíme, že bysme tam jeli na výlet..</div>
+        <div class="message from-them" data-time="18:11">Jasně, byl jsem tam. tam je to krásný, to určitě jeďte. Z loňska mám odtamtud i celkem hezký fotky. 👀</div>
+        <div class="message from-me" data-time="18:11">Pošli nějaký 🙏🙏</div>
+        <div class="message from-them" data-time="18:12">Jasně, jen chvíli...</div>
+        <div class="message from-them" data-time="18:32"><img style ="width:100%; max-width:400px;" src="images/kutna_hora.jpg" alt="Kutná Hora"></div>
 
       </div>
   </div>
@@ -101,7 +108,9 @@
 
     function setTodayDate() {
     const today = new Date();
-    const formatted = today.toLocaleDateString('cs-CZ');
+    const yesterday = new Date(today);
+    yesterday.setDate(today.getDate() - 1);
+    const formatted = yesterday.toLocaleDateString('cs-CZ');
     const el = document.getElementById('today-date');
     if (el) el.textContent = formatted;
   }
@@ -110,3 +119,4 @@
 </script>
 </body>
 </html>
+
