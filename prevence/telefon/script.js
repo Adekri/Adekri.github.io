@@ -7,6 +7,9 @@ const inputBar = document.querySelector('.input-bar');
 const input = inputBar.querySelector('input');
 const sendBtn = inputBar.querySelector('button');
 
+// sledování, zda už uživatel odpověděl v chatu s Anetou
+let anetaReplied = false;
+
 
 //když tady tohle nebylo tak se muselo pokaždé vytvářet znovu dolní lišta pod chatem -- takhle je tam stále
 function setChatPosition(chat) {
@@ -76,12 +79,18 @@ sendBtn.addEventListener('click', ()=>{
   input.value = '';
   const msgs = chat.querySelector('.messages-container');
   msgs.scrollTop = msgs.scrollHeight;
-  // kontrola zprávy odeslané v chatu s Anetou -- zobrazuje FLAG
+  // kontrola zprávy odeslané v chatu s Anetou 
   if (chatId === 'aneta') {
-    if (text.includes('920183')) {
-      alert('Pozor! Odesláním tohoto kódu umožníte Anetě přístup k vašemu Google účtu. FLAG(DvoufazoveOvereniNeniVse).');
-    } else {
-      alert('Výborně! Neposlali jste Anetě kód a tím jste odolali pokusu o obejití dvoufázového ověření. FLAG(DvoufazoveOvereniNeniVse).');
+    if (!anetaReplied) {
+      if (text.includes('920183')) {
+        anetaReplied = true;
+        alert('Pozor! Odesláním tohoto kódu umožníte Anetě přístup k vašemu Google účtu. FLAG(DvoufazoveOvereniNeniVse).');
+      } else {
+        alert('Výborně! Neposlali jste Anetě kód a tím jste odolali pokusu o obejití dvoufázového ověření. FLAG(DvoufazoveOvereniNeniVse).');
+      }
+
+    }else {
+        alert('Pozor! Odesláním tohoto kódu umožníte Anetě přístup k vašemu Google účtu. FLAG(DvoufazoveOvereniNeniVse).');
     }
   }
 
