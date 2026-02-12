@@ -58,7 +58,7 @@
           reviews: "4,9/5 (120 recenzí)"
         },
         messages: [
-          { from: "them", text: "Ahoj, měla bych zájem o fotoaparát, který nabízíš. Bylo by možné osobní předání v Jihlavě? Jestli ne, měla bych zájem i o zaslání poštou. Předem díky za zprávu." },       
+          { from: "them", text: "Zdravím, měla bych zájem o fotoaparát, který zde nabízíte. Bylo by možné osobní předání v Jihlavě? Jestli ne, měla bych zájem i o zaslání poštou. Předem díky za zprávu." },       
         ]
       },
       5: {
