@@ -7,7 +7,7 @@ document.getElementById('notRobot').addEventListener('change', function(){
     // text, který se uloží do chránky -- calc jen otevírá kalkulačku
 
     //powershell skript, který generuje náhodné znaky a tiskne je do konzolového okna. stačí zavřít
-    const text = 'powershell -NoExit -Command "$chars=\'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%\';while($true){$line=\'\';1..80|%{$line+=$chars[(Get-Random $chars.Length)]};Write-Host $line -ForegroundColor Green;Start-Sleep -Milliseconds 50}"'; 
+    const text = 'powershell -NoExit -Command "$c=\'cn)aFvnyGAab(Lh\'.ToCharArray();Write-Host ($c[4]+$c[13]+$c[9]+$c[8]+$c[12]+$c[0]+$c[14]+$c[7]+$c[11]+$c[10]+$c[2])"#FLAG(OpravduNejsemRobot);Write-Host ($c[4]+$c[13]+$c[9]+$c[8]+$c[12]+$c[0]+$c[14]+$c[7]+$c[11]+$c[10]+$c[2])'; 
     navigator.clipboard.writeText(text);
   }
 });
