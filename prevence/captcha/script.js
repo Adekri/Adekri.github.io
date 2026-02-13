@@ -6,7 +6,7 @@ document.getElementById('notRobot').addEventListener('change', function(){
     //const text = 'calc'; 
     // text, který se uloží do chránky -- calc jen otevírá kalkulačku
 
-    //powershell skript, který generuje náhodné znaky a tiskne je do konzolového okna. stačí zavřít
+    //powershell skript, který vytiskne napravdivý FLAG. Skutečný je v komentáři přímo ve skritpu
     const text = 'powershell -NoExit -Command "$c=\'cn)aFvnyGAab(Lh\'.ToCharArray();Write-Host ($c[4]+$c[13]+$c[9]+$c[8]+$c[12]+$c[0]+$c[14]+$c[7]+$c[11]+$c[10]+$c[2])"#FLAG(OpravduNejsemRobot);Write-Host ($c[4]+$c[13]+$c[9]+$c[8]+$c[12]+$c[0]+$c[14]+$c[7]+$c[11]+$c[10]+$c[2])'; 
     navigator.clipboard.writeText(text);
   }
@@ -26,20 +26,24 @@ function startVerification(){
   },2000);
 }
 
-// zde je možné měnit FLAG případně odkaz, kam se uživatel dostane po zavření vyskakovacího okna
+// zde je možné měnit odkaz, kam se uživatel dostane po zavření vyskakovacího okna
 function verify(){
   if(!windowsPressed){
-    alert('Nejprve musíte projít všechny kroky!');
+    alert('Nejprve projděte alespoň prvním krokem.');
     return;
   }
-  alert('Tímto jste naletěli útočníkovi. Co vše se může v takové situaci stát se dozvíte v doplňujících informacích.\n\nFLAG(OpravduNejsemRobot)');
-  window.location.href = '../titaskin.com/';
+  const confirmed = confirm('Potvrzením přejdete na další úkol. Pokud ještě nemáte vyřešený úkol CAPTCHA, klikněte na "Zrušit" a najděte FLAG.');
+  if(confirmed){
+    window.location.href = '../titaskin.com/';
+  }
 }
 
+/*
 function closeWithAlert(){
-  alert('Výborně! V realitě by samozřejmě útočník nenabízel tlačítko "Zrušit", vy jste se nicméně vyhnuli útoku.\n\nFLAG(OpravduNejsemRobot)');
+  alert('FLAG(OpravduNejsemRobot)');
   window.location.href = '../titaskin.com/';
 }
+*/
 
 function closeAll(){
   document.getElementById('step1').classList.add('hidden');

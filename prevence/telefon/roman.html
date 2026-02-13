@@ -34,27 +34,27 @@
     <!-- detail konverzace -->
   <div id="chat-roman" class="chat-wrapper">
       <div class="messages-container">
-        <div class="message from-me" data-time="Předevčírem 18:02">Čauky... tak co dneska děláš?</div> 
-        <div class="message from-them" data-time="Předevčírem 18:03">Nic moc... hele... dneska konečně klid, tak relax...</div> 
-        <div class="message from-me" data-time="Předevčírem 18:03">Co tys vlastně říkal, že děláš za práci?</div> 
-        <div class="message from-them" data-time="Předevčírem 18:04">Spíš online věci... projekty, co se blbě popisujou.</div> 
-        <div class="message from-me" data-time="Předevčírem 18:04">Aha, a odkud jsi?</div> 
-        <div class="message from-them" data-time="Předevčírem 18:05">Aale, taková menší obec v okolí Brna... nic zajímavýho.</div>
+        <div class="message from-me" data-time data-offset="-2" data-time-suffix="18:02">Čauky... tak co dneska děláš?</div> 
+        <div class="message from-them" data-time data-offset="-2" data-time-suffix="18:03">Nic moc... hele... dneska konečně klid, tak relax...</div> 
+        <div class="message from-me" data-time data-offset="-2" data-time-suffix="18:03">Co tys vlastně říkal, že děláš za práci?</div> 
+        <div class="message from-them" data-time data-offset="-2" data-time-suffix="18:04">Spíš online věci... projekty, co se blbě popisujou.</div> 
+        <div class="message from-me" data-time data-offset="-2" data-time-suffix="18:04">Aha, a odkud jsi?</div> 
+        <div class="message from-them" data-time data-offset="-2" data-time-suffix="18:05">Aale, taková menší obec v okolí Brna... nic zajímavýho.</div>
         
-        <div class="message from-me" data-time="Včera 14:06">Hele.. nemohl bys mi poslat fotku, kde držíš papír s dnešním datem a slovem "Kočkodlak"?</div>  
-        <div class="message from-them" data-time="Včera 14:06">😏😏</div>
-        <div class="message from-me" data-time="Včera 14:06">no ne.. víš jak to dneska je, tak abych měl jistotu, že nejsi nějaký podvodník 😆</div>
-        <div class="message from-them" data-time="Včera 14:07">no dobře no.. dej mi minutku...</div>
+        <div class="message from-me" data-time data-offset="-1" data-time-suffix="14:06">Hele.. nemohl bys mi poslat fotku, kde držíš papír s dnešním datem a slovem "Kočkodlak"?</div>  
+        <div class="message from-them" data-time data-offset="-1" data-time-suffix="14:06">😏😏</div>
+        <div class="message from-me" data-time data-offset="-1" data-time-suffix="14:06">no ne.. víš jak to dneska je, tak abych měl jistotu, že nejsi nějaký podvodník 😆</div>
+        <div class="message from-them" data-time data-offset="-1" data-time-suffix="14:07">no dobře no.. dej mi minutku...</div>
         <!-- pro lepší efekt bylo datum z fotografie odstraněno a je přidáno až zde (dynamicky) -- nevypadá to přesně jako psaný text, případně je možné vyměnit za statickou fotografii (fotografie_staticka.jpg)  -->
-        <div class="message from-them" data-time="Včera 14:58">
+        <div class="message from-them"data-time data-offset="-1" data-time-suffix="14:58">
             <div class="photo-wrapper">
                 <img src="images/fotografie.png" style ="width:100%; max-width:400px;"><div class="photo-date">
-                <strong><span id="today-date"></span></strong></div>
+                <strong><span id="yesterday-date"></span></strong></div>
             </div>
         </div>
 
-        <div class="message from-them" data-time="Včera 15:00">V pohodě?</div>
-        <div class="message from-me" data-time="Včera 15:01">Jo asi jo.. 👍</div>
+        <div class="message from-them" data-time data-offset="-1" data-time-suffix="15:00">V pohodě?</div>
+        <div class="message from-me" data-time data-offset="-1" data-time-suffix="15:01">Jo asi jo.. 👍</div>
 
         <div class="message from-me" data-time="18:09">Hele, neříkal jsi, že rád cestuješ?</div>
         <div class="message from-them" data-time="18:09">Jasně.. zbožňuju objevovat nový místa..</div>
@@ -85,8 +85,28 @@
 <script>
   // Tento skript pouze zařídí načtení aktuálního data a zobrazení chatu s Romanem při načtení stránky
   // skript je zde, aby nekolidoval s hlavním skriptem telefonu (script.js)
+  function setDate() {
+    const today = new Date();
+    const yesterday = new Date();
+    yesterday.setDate(today.getDate() - 1);
+    // nastavení fotografie
+    const el = document.getElementById('yesterday-date');
+    if (el) el.textContent = yesterday.toLocaleDateString('cs-CZ');
+
+    // nastavení časů ve zprávách
+    document.querySelectorAll('.message[data-offset]').forEach(msg => {
+      const offset = parseInt(msg.getAttribute('data-offset'));
+      const date = new Date(today);
+      date.setDate(today.getDate() + offset);
+      const timeSuffix = msg.getAttribute('data-time-suffix');
+      const formattedDate = date.toLocaleDateString('cs-CZ').split('.').slice(0, 2).join('.') + '.';
+      msg.setAttribute('data-time', formattedDate + ' ' + timeSuffix);
+    });
+  }
+
   document.addEventListener('DOMContentLoaded', () => {
     showChat('roman');
+    setDate();
     
     // blokuje se tlačítko Home 
     const homeBtn = document.getElementById('nav-home');
@@ -105,17 +125,6 @@
     });
   });
 
-
-    function setTodayDate() {
-    const today = new Date();
-    const yesterday = new Date(today);
-    yesterday.setDate(today.getDate() - 1);
-    const formatted = yesterday.toLocaleDateString('cs-CZ');
-    const el = document.getElementById('today-date');
-    if (el) el.textContent = formatted;
-  }
-
-  document.addEventListener('DOMContentLoaded', setTodayDate);
 </script>
 </body>
 </html>
