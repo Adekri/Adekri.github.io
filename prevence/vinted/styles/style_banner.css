@@ -1,4 +1,4 @@
-.ad-container {
+.fake-ad-container {
   position: relative;
   display: inline-block;
   border: 1px solid #ccc;
@@ -10,13 +10,13 @@
   overflow: hidden;
 }
 
-.ad-wrapper {
+.fake-ad-wrapper {
   position: relative;
   display: inline-block;
 }
 
 /* Text "reklama" */
-.ad-label {
+.fake-ad-label {
   position: absolute;
   left: 0;
   font-size: 12px;
@@ -30,13 +30,13 @@
 }
 
 /* obrázek reklamy */
-.ad-container img {
+.fake-ad-container img {
   display: block;
   max-width: 100%;
 }
 
 /* ikona pro otevření dalších možností ad_choices */
-.ad-menu-toggle {
+.fake-ad-menu-toggle {
   position: absolute;
   top: 6px;
   right: 6px;
@@ -54,7 +54,7 @@
 }
 
 /* překrytí výběrem možností */
-.ad-overlay {
+.fake-ad-overlay {
   display: none;
   position: absolute;
   top: 0;
@@ -68,13 +68,13 @@
 }
 
 /* logo reklam google */
-.ad-overlay .logo {
+.fake-ad-overlay .logo {
   max-width: 120px;
   margin-left: auto;
   margin-right: auto;
 }
 
-.ad-overlay .back-arrow {
+.fake-ad-overlay .back-arrow {
   position: absolute;
   top: 10px;
   left: 10px;
@@ -84,7 +84,7 @@
 }
 
 /* Tlačítka */
-.ad-overlay button {
+.fake-ad-overlay button {
   display: block;
   width: 90%;
   margin: 5px auto;
@@ -95,7 +95,7 @@
   cursor: pointer;
 }
 
-.ad-overlay button.primary {
+.fake-ad-overlay button.primary {
   background-color: #4285f4;
   color: white;
   border: none;

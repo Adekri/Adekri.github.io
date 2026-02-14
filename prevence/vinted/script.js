@@ -166,11 +166,11 @@
 
   // obsluha reklamy
   function showOverlay(el) {
-    const container = el.closest('.ad-container');
-    container.querySelector('.ad-overlay').style.display = 'block';
+    const container = el.closest('.fake-ad-container');
+    container.querySelector('.fake-ad-overlay').style.display = 'block';
   }
 
   function hideOverlay(el) {
-    const overlay = el.closest('.ad-overlay');
+    const overlay = el.closest('.fake-ad-overlay');
     overlay.style.display = 'none';
   }
