@@ -1,0 +1,267 @@
+    * {
+      box-sizing: border-box
+    }
+
+    /* Nejprve obshula prvků z html -- větší část je pak ve skriptu */
+    body {
+      font-family: Inter, Arial, sans-serif;
+      margin: auto;
+      background: #f5f7fb;
+      color: #111
+    }
+
+    header {
+      background: #fff;
+      border-bottom: 1px solid #e3e6ea;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center
+    }
+
+    .logo {
+      font-weight: 700;
+      color: #1d4ed8;
+      font-size: 18px
+    }
+
+
+
+    .app {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      height: calc(100vh - 80px)
+    }
+
+    .sidebar {
+      background: #fff;
+      border-right: 1px solid #e3e6ea;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    .folders {
+      padding: 12px;
+      border-bottom: 1px solid #e3e6ea
+    }
+
+    .folder {
+      padding: 10px;
+      margin-bottom: 16px;
+      border-radius: 6px;
+      cursor: pointer
+    }
+
+    .folder:hover {
+      background: #eef6ff
+    }
+
+    .folder.active {
+      background: #dbeafe;
+      color: #1d4ed8;
+      font-weight: 600
+    }
+
+    /* obsah na hlavní stránce - tedy před rozkliknutím majlu */
+    .content {
+      padding: 14px;
+      overflow: auto
+    }
+
+    .list-view .email-item {
+      background: #fff;
+      padding: 12px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      border: 1px solid #edf2f7
+    }
+
+    .email-item:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(16, 24, 40, 0.04)
+    }
+
+    .subject {
+      font-weight: 700;
+      margin-bottom: 10px
+    }
+
+    .meta {
+      font-size: 13px;
+      color: #6b7280;
+      display: flex;
+      justify-content: space-between
+    }
+
+
+
+    /* vzhled emailu a hlavně hlavičky -> gmail like*/
+    .message-card {
+      background: #fff;
+      border-radius: 8px;
+      padding: 16px;
+      border: 1px solid #edf2f7
+    }
+
+    .message-header {
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .gmail-header {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      margin-top: 24px;
+      margin-bottom: 16px
+    }
+
+    .gmail-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #dbeafe;
+      color: #1d4ed8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+
+    .gmail-meta {
+      flex: 1;
+      min-width: 0
+    }
+
+    .gmail-from-row {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      flex-wrap: wrap
+    }
+
+    .gmail-from {
+      color: #6b7280;
+      font-size: 13px
+    }
+
+    .gmail-name {
+      font-size: 16px;
+      font-weight: 700
+    }
+
+    .gmail-right {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 12px
+    }
+
+    .gmail-time {
+      font-size: 13px
+    }
+
+    .gmail-recipient {
+      margin-top: 2px;
+      color: #6b7280;
+      font-size: 13px
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      background: #fff;
+      cursor: pointer;
+      color: #6b7280;
+      border-style: none;
+      align-self: top;
+    }
+
+    .back-btn:hover {
+      background: #f0f6ff
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+
+      padding: 8px 12px;
+      border-radius: 6px;
+      background: #1d4ed8;
+      color: #fff;
+      text-decoration: none;
+      border-style: none;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    footer {
+      padding: 10px;
+      text-align: center;
+      background: #fff;
+      border-top: 1px solid #e3e6ea;
+      font-size: 13px;
+      color: #6b7280
+    }
+
+    /* pro účely vlákna */
+
+    .thread-item {
+      background: #fff;
+      border: 1px solid #edf2f7;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .thread-header {
+      display: flex;
+      gap: 12px;
+      padding: 16px;
+      cursor: pointer;
+    }
+
+    .thread-header:hover {
+      background: #f9fafb;
+    }
+
+    .thread-body {
+      padding: 16px 16px 16px 68px;
+      display: none;
+      border-top: 1px solid #edf2f7;
+    }
+
+    .thread-item.open .thread-body {
+      display: block;
+    }
+
+    /* otáčení šipky pro rozbalení emailu */
+
+    .thread-item.open .expand-icon {
+      transform: rotate(180deg);
+    }
+
+    .expand-icon {
+      font-size: 18px;
+      color: #6b7280;
+      transition: transform 0.2s ease;
+    }
+
+/* přesun navigace dolů, pokud je okno moc úzké */
+    @media (max-width:800px) {
+      .app {
+        grid-template-columns: 1fr
+      }
+
+      .sidebar {
+        order: 2;
+        border-right: 0;
+        border-top: 1px solid #e3e6ea
+      }
+    }
