@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="images/icon.ico" />
+  <title>Přihlášení k účtu</title>
+
+</head>
+
+<body>
+  <div class="background">
+    <div class="card">
+      
+      <div class="logo">
+        <img src="images/logo.svg" alt="Microsoft">
+      </div>
+
+      <h1 id="header">Přihlásit se</h1>
+
+      <form id="login-form">
+        <input 
+          type="text" 
+          id="address" 
+          placeholder="E-mail, telefon nebo Skype" 
+          required
+        />
+
+        <div class="links">
+          <p>Nemáte účet? <a href="#">Vytvořte si ho!</a></p>
+          <a href="#">Nezdařil se přístup k účtu?</a>
+        </div>
+
+        <div class="buttons">
+          <button type="button" class="secondary">Zpět</button>
+          <button type="submit" class="primary">Další</button>
+        </div>
+      </form>
+
+      <img id="ants" style="display: none;" src="images/ants.gif" alt="Divider">
+    <div id="storno-link" class="links" style="display: none;padding: 30px 0px 30px 0px;">
+        <a href="#">Storno</a>
+    </div>
+
+    </div>
+
+
+    <div class="login-options">
+        <img class="key-icon" src="images/key.svg" alt="Key">
+      Možnosti přihlášení
+    </div>
+
+  </div>
+
+
+<script>
+document.getElementById("login-form").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const email = document.getElementById("address").value.trim();
+  const header = document.getElementById("header");
+  const form = document.getElementById("login-form");
+  const loginOptions = document.querySelector(".login-options");
+  const stornoLink = document.getElementById("storno-link");
+  const ants = document.getElementById("ants");
+
+  if (!email.includes("@")) {
+    alert("Zadejte platnou e-mailovou adresu.");
+    return;
+  }
+
+  header.textContent = "Přesměrujeme vás na přihlašovací stránku vaší organizace.";
+  form.style.display = "none";
+  loginOptions.style.display = "none";
+  stornoLink.style.display = "block";
+    ants.style.display = "block";
+
+  setTimeout(function() {
+
+    window.location.href = "vut-login.html";
+
+  }, 2000);
+
+});
+</script>
+
+
+
+
+</body>
+</html>
