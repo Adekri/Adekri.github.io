@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Telefon – Testy</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .pass { color: #0a7f30; }
+    .fail { color: #c00; }
+    code { background: #f6f8fa; padding: 2px 4px; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <h1>Telefon – Testy</h1>
+  <div id="results"></div>
+
+  <!-- Load the application script under test -->
+  <script src="script.js"></script>
+  <script>
+    (async function () {
+      const resultsEl = document.getElementById('results');
+
+      function log(name, ok, details = '') {
+        const div = document.createElement('div');
+        div.className = ok ? 'pass' : 'fail';
+        div.textContent = (ok ? 'PASS: ' : 'FAIL: ') + name + (details ? ' — ' + details : '');
+        resultsEl.appendChild(div);
+      }
+
+      function assert(name, cond, details = '') {
+        log(name, !!cond, details);
+      }
+
+      function assertEqual(name, actual, expected) {
+        const ok = actual === expected;
+        log(name, ok, ok ? '' : `expected ${expected}, got ${actual}`);
+      }
+
+      // Wait a tick to ensure script.js is loaded.
+      await new Promise(r => setTimeout(r, 0));
+
+      try {
+        // Test: generateBase32Secret – length and alphabet
+        (function testGenerateBase32Secret() {
+          const alphabet = /^[A-Z2-7]+$/;
+          for (let i = 0; i < 5; i++) {
+            const s = generateBase32Secret(16);
+            assert('generateBase32Secret returns length 16', s.length === 16);
+            assert('generateBase32Secret alphabet is RFC4648', alphabet.test(s), s);
+          }
+        })();
+
+        // Test: base32ToBytes length for 16-char Base32 (80 bits -> 10 bytes)
+        (function testBase32ToBytesLength() {
+          const bytes = base32ToBytes('JBSWY3DPEHPK3PXP'); // 16 chars
+          assert('base32ToBytes returns Uint8Array', bytes instanceof Uint8Array);
+          assertEqual('base32ToBytes length is 10', bytes.length, 10);
+        })();
+
+        // Test: generateTOTP known vector (RFC 4226/HOTP counter=1 => 287082 with SHA-1)
+        // Using Base32 secret for ASCII "12345678901234567890": GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ
+        // For TOTP with 30s period, counter=1 corresponds to time 59s; we directly test counter=1.
+        (async function testGenerateTOTPVector() {
+          const secret = 'GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ';
+          try {
+            const code = await generateTOTP(secret, 1);
+            assertEqual('generateTOTP(secret,counter=1) == 287082', code, '287082');
+          } catch (e) {
+            log('generateTOTP threw error', false, e && e.message ? e.message : String(e));
+          }
+        })();
+
+      } catch (err) {
+        log('Unhandled test error', false, err && err.message ? err.message : String(err));
+      }
+    })();
+  </script>
+</body>
+</html>

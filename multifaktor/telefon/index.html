@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="cs">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link type="text/css" rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/png" href="images/icon.png" />
+  <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+  <title>Telefon</title>
+</head>
+
+<body>
+  <div class="phone">
+
+
+    <div class="statusbar">
+      <span id="time">12:00</span>
+      <div class="statusbar-icons">
+        <span style="font-size: 10px;" class="material-icons">signal_cellular_4_bar</span>
+        <span style="font-size: 10px;" class="material-icons">wifi</span>
+        <span style="font-size: 10px;" class="material-icons">battery_std</span>
+      </div>
+    </div>
+
+    <div id="header" class="header">Authenticator</div>
+
+    <div id="app-content" class="app-content">
+      <div id="account-list" class="account-list">
+
+      </div>
+
+      <div id="scan-screen" class="scan-screen hidden" tabindex="0">
+        <div class="scan-overlay">
+          <div class="scan-frame">
+            <img id="qr-image" src="" alt="">
+            <div id="qr-overlay-text">Align QR code within frame</div>
+          </div>
+        </div>
+
+        <div class="scan-footer">
+          <button id="manual-code-btn" class="primary-btn">
+            Enter code manually
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Floating QR tlačítko -->
+    <button id="add-account-btn" class="fab">
+      <span class="material-icons">qr_code_scanner</span>
+    </button>
+
+    <!-- Skener modal 
+      <div id="qr-modal" class="qr-modal hidden">
+        <div class="qr-box">
+          <div class="qr-title">Naskenuj QR kód</div>
+          <video id="qr-video"></video>
+          <button id="close-qr">Zavřít</button>
+        </div>
+      </div>-->
+
+    <!---
+      <div class="qr-modal hidden" id="qr-modal">
+        <div class="qr-box" id="qr-box">
+          <div class="qr-title">QR kód</div>
+          <img id="qr-image" src="" alt="QR Code" />
+          <button id="close-qr">Zavřít</button>
+          <div style="margin-top:8px; font-size:12px; color:#555;">
+            QR kód ze schránky vkládejte pouze stisknutím Ctrl+V.
+          </div>
+        </div>
+      </div>
+      -->
+    <!--
+    <div class="qr-modal hidden" id="qr-modal">
+      <div class="qr-box">
+        <div class="qr-title">Naskenujte QR kód</div>
+
+        
+        <div class="qr-scan-area">
+          <img id="qr-image" src="" alt="QR Code" />
+          <div class="qr-overlay" id="qr-overlay">Vložte QR kód (Ctrl+V)</div>
+        </div>
+
+        
+        <button id="confirm-qr" class="confirm-btn hidden">Potvrdit</button>
+
+        
+        <button id="manual-code-btn">Zadat kód manuálně</button>
+
+        <button id="close-qr" class="close-btn">&times;</button>
+      </div>
+    </div>
+-->
+
+<!--
+    <div class="qr-modal hidden" id="qr-modal">
+      <div class="authenticator-screen">
+
+    
+        <div class="auth-header">
+          <button id="close-qr" class="icon-btn material-icons">arrow_back</button>
+          <div class="auth-title">Scan QR Code</div>
+        </div>
+
+
+        <div class="auth-body">
+          <div class="camera-area">
+            <img id="qr-image" src="" alt="QR Code">
+            <div class="camera-overlay" id="qr-overlay">
+              Align QR code within frame
+            </div>
+          </div>
+        </div>
+
+  
+        <div class="auth-footer">
+          <button id="manual-code-btn" class="primary-btn">
+            Enter code manually
+          </button>
+        </div>
+
+      </div>
+    </div>
+-->
+
+
+
+    <div class="bottom-nav">
+      <span style="font-size: 20px;" id="nav-back" class="nav-btn material-icons">arrow_back_ios</span>
+      <!-- tyhle tlacika nic nedelaji -->
+      <span style="font-size: 20px;" id="nav-home" class="nav-btn material-icons">home</span>
+      <span style="font-size: 20px;" class="nav-btn material-icons">menu</span>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
