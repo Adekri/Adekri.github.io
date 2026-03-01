@@ -1342,6 +1342,7 @@ let totpVerified = false;
             if (autofocusElement) {
                 autofocusElement.focus();
             }
+            alert("Nápověda pro nastavení TOTP je k dispozici v zadání úkolu.");
         });
 
         // TOTP stepper navigation
@@ -1367,6 +1368,7 @@ let totpVerified = false;
                     const initialActive = stepper.querySelector('.step.active');
                     const initialStepNum = initialActive ? parseInt(initialActive.getAttribute('data-step')) : 1;
                     setButtonStateForStep(initialStepNum);
+                
 
                     if (nextBtn) {
                         nextBtn.addEventListener('click', async (e) => {
@@ -1379,9 +1381,6 @@ let totpVerified = false;
                                 const nextStep = stepper.querySelector(`[data-step="${nextStepNum}"]`);
                                 // pokud jsme na kroku 3 → ověř TOTP
 
-                                if (currentStepNum===1){
-                                    alert("Nápověda pro nastavení TOTP je k dispozici v zadání úkolu.");
-                                }
                                 if (currentStepNum === 3) {
                                     
                                     const valid = await verifyTotpInput();
