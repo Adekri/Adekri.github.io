@@ -1263,10 +1263,12 @@
                                 const scanModal = new bootstrap.Modal(scanEl);
                                 scanModal.show();
                                 // wait for user to press 'o' (or 'O') to simulate fingerprint
+
+                                alert("V této simulaci místo přiložení prstu stiskněte klávesu 'O'.");
                                 const onKey = (ev) => {
                                     if (ev.key === 'o' || ev.key === 'O') {
                                         scanModal.hide();
-                                        alert('Biometrické ověření úspěšné! FLAG(UmimNastavitMFA) )');
+                                        alert('Biometrické ověření úspěšné! FLAG(UmimNastavitMFA)');
 
                                         // Add new row to table
                                         const table = document.querySelector('table tbody');
