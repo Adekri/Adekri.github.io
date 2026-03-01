@@ -97,8 +97,10 @@ font-size: 16px;
   align-items: center;        /* vertikální zarovnání prvků */
   justify-content: flex-start; /* horizontální zarovnání */
   gap: 10px;        
-  
+  cursor: pointer;
 }
+
+
 
 .key-icon {
 width: 32px;
