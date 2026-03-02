@@ -1009,6 +1009,8 @@
             </div>
         </div>
     </div>
+-->
+
 
     <!-- Biometric scanning modal (fingerprint) -->
     <style>
@@ -1268,7 +1270,7 @@
                                 const onKey = (ev) => {
                                     if (ev.key === 'o' || ev.key === 'O') {
                                         scanModal.hide();
-                                        alert('Biometrické ověření úspěšné! FLAG(UmimNastavitMFA)');
+                                        alert('Biometrické ověření úspěšné! FLAG(XXXXXXXtavitMFA)');
 
                                         // Add new row to table
                                         const table = document.querySelector('table tbody');
@@ -1342,13 +1344,14 @@ let totpVerified = false;
             if (autofocusElement) {
                 autofocusElement.focus();
             }
-            alert("Nápověda pro nastavení TOTP je k dispozici v zadání úkolu.");
+
         });
 
         // TOTP stepper navigation
         (function () {
             const totpForm = document.getElementById('totpForm');
-            if (totpForm) {
+            if (totpForm) {            
+                
                 const stepper = totpForm.querySelector('.stepper');
                 if (stepper) {
                     const nextBtn = totpForm.querySelector('#totpNextBtn');
@@ -1380,6 +1383,10 @@ let totpVerified = false;
                                 const nextStepNum = currentStepNum + 1;
                                 const nextStep = stepper.querySelector(`[data-step="${nextStepNum}"]`);
                                 // pokud jsme na kroku 3 → ověř TOTP
+
+                                if (currentStepNum === 1) {
+                                    alert("Nápověda pro nastavení TOTP je k dispozici v zadání úkolu.");
+                                } 
 
                                 if (currentStepNum === 3) {
                                     
@@ -1469,6 +1476,7 @@ if(form) {
                     const deviceInput = document.getElementById('frm-totpForm-formTotp-device_name');
                     const deviceNameRaw = deviceInput?.value?.trim() || 'Nové zařízení';
                     const deviceName = escapeHtml(deviceNameRaw);
+                    alert('TOTP ověření úspěšné! FLAG(UmimNasXXXXXXXX)');
 
                     // append row to table
                     const tableBody = document.querySelector('table tbody');

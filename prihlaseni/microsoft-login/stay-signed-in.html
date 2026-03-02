@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="images/icon.ico" />
+  <title>Přihlášení k účtu</title>
+
+</head>
+
+<body>
+  <div class="background">
+    <div class="card">
+      
+      <div class="logo">
+        <img src="images/logo.svg" alt="Microsoft">
+      </div>
+
+      <h1 id="header">Zůstat přihlášen(a)?</h1>
+
+      <p class="info">Když to uděláte, snížíte počet výzev k přihlášen, které se vám budou zobrazovat.</p>
+    <div class="form-check" style="margin-bottom: 30px;margin-top: 15px;">
+    <input style="width: 18px; height: 18px;" type="checkbox" id="remember" name="remember">
+    <label for="remember">Příště už nezobrazovat</label>
+    </div>
+
+
+        <div class="buttons">
+          <button id="ne" style="padding-left:40px;padding-right: 40px;" type="button" class="secondary">Ne</button>
+          <button id="ano" style="padding-left:40px;padding-right: 40px;" type="submit" class="primary">Ano</button>
+        </div>
+
+
+      <img id="ants" style="display: none;" src="images/ants.gif" alt="Divider">
+    <div id="storno-link" class="links" style="display: none;padding: 30px 0px 30px 0px;">
+        <a href="#">Storno</a>
+    </div>
+
+    </div>
+
+  </div>
+
+
+<script>
+    document.getElementById("ne").addEventListener("click", function (e) {
+        e.preventDefault();
+        alert("Výboně! Ukládání relací do mezipaměti přestavuje bezpečnostní riziko. Více se dozvíte v doplňujících informacích.\n\n FLAG(NechciZustatPrihlasen)");
+    });
+
+    document.getElementById("ano").addEventListener("click", function (e) {
+        e.preventDefault();
+        alert("Pozor! Ukládání relací do mezipaměti přestavuje bezpečnostní riziko. Více se dozvíte v doplňujících informacích.\n\n FLAG(NechciZustatPrihlasen)");
+    });
+</script>
+
+
+
+
+</body>
+</html>
