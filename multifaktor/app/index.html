@@ -1382,7 +1382,6 @@ let totpVerified = false;
                                 const currentStepNum = parseInt(currentStep.getAttribute('data-step'));
                                 const nextStepNum = currentStepNum + 1;
                                 const nextStep = stepper.querySelector(`[data-step="${nextStepNum}"]`);
-                                // pokud jsme na kroku 3 → ověř TOTP
 
                                 if (currentStepNum === 1) {
                                     alert("Nápověda pro nastavení TOTP je k dispozici v zadání úkolu.");
