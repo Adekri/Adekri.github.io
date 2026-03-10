@@ -1,0 +1,460 @@
+
+body {
+    background-color:#f0f5f4;
+    background-image: url('images/tile.png');
+    background-repeat: repeat;
+    background-size: 14px;
+    font-family: Arial,"Segoe UI", sans-serif;
+    font-size: 0.9rem;
+}
+
+
+
+.background,
+.logo,
+.card {
+    position: relative;
+    z-index: 1;
+}
+
+.background {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 90px;
+}
+
+.info {
+    margin-top: 0px;
+}
+
+.logo {
+  position: fixed;  
+  top: 25px;        
+  left: 25px;     
+  z-index: 1000;   
+}
+
+
+@font-face {
+    font-family: 'VafleVUT';
+    src: url('fonts/VAFLE_VUT_LIGHT.OTF') format('opentype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'VafleVUT';
+    src: url('fonts/VAFLE_VUT_REGULAR.OTF') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'VafleVUT';
+    src: url('fonts/VAFLE_VUT_BOLD.OTF') format('opentype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+
+h1, h2 {
+    text-align: center;
+    color: #333;
+    font-family: 'VafleVUT', sans-serif;
+    font-weight: 400;
+    margin: 0px 0 10px 0;
+}
+
+h1 {
+    font-size: 1.75rem;
+}
+
+h2 {
+    font-size: 1.5rem;
+}
+
+.card {
+  width: 400px;
+  background: #f8f9fa;
+  box-shadow: 0 10px 10px rgba(0,0,0,0.2);
+}
+
+
+.form-divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #333;
+    font-size: 0.8rem;
+}
+
+.form-divider::before,
+.form-divider::after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid #ccc;
+}
+
+.form-divider span {
+    white-space: nowrap;
+    padding: 0 10px;
+}
+
+.username {
+    margin-bottom: 20px;
+}
+
+.part {
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+}
+
+
+button {
+    width: 100%;
+    padding: 10px;
+    font-size: 0.9rem;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+.links {
+    display: flex;
+    justify-content: space-between;
+}
+
+.links a {
+    color: #1676d0;
+    font-size: .875em;
+}
+
+.links a:hover {
+    color:#125ea6;
+}
+
+.links-bigger {
+    display: flex;
+    justify-content: space-between;
+}
+
+.links-bigger a {
+    color: #1676d0;
+    font-size: .9rem;
+}
+
+.links-bigger a:hover {
+    color:#125ea6;
+}
+
+/* PRIMARY */
+.primary {
+    background-color: #1676d0;
+    color: #fff;
+    border: none;
+}
+
+.primary:hover {
+    background-color: #125fa8;
+}
+
+
+/* SECONDARY */
+.secondary {
+    background-color: #f8f9fa;
+    color: #6c757d;
+    border: 1px solid #6c757d;
+    display: flex;           
+    align-items: center;    
+    justify-content: center;    
+    gap: 5px;
+}
+
+.secondary:hover {
+    background-color: #6c757d;
+    color:#f8f9fa;
+}
+
+/* Ikona uvnitř */
+.secondary .icon {
+    margin-right: 10px;
+    width: 16px;
+    height: 16px;
+}
+
+.input {
+    width: 100%;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+}
+
+
+.input-wrapper {
+  position: relative;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.input-password {
+  width: 100%;
+  padding-right: 40px; /* místo pro ikonku */
+  padding-left: 10px;
+  height: 40px;
+  box-sizing: border-box;
+  border-radius: 0px;
+    border: 1px solid #ccc;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 0px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #f8f9fa;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  font-size: 16px;
+    width: 40px; 
+    height: 40px;
+  padding: 5px 10px;
+}
+
+
+/* dekorativní vrstva */
+.decor {
+position: absolute;     /* bude držet pozici vůči viewportu */
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* všechny trojúhelníky */
+.tri {
+  position: absolute;
+}
+
+/* horní větší */
+.tri-top-1 {
+  top: 0;
+  right: 0;
+  width: 75vw;
+  height: 60vh;
+  background: rgba(0,0,0,0.05);
+  clip-path: polygon(100% 0, 0 0, 100% 100%);
+}
+
+/* horní menší překrytí */
+.tri-top-2 {
+  top: 0;
+  right: 0;
+  width: 20vw;
+  height: 90vh;
+  background: rgba(0,0,0,0.03);
+  clip-path: polygon(100% 0, 0 0, 100% 100%);
+}
+
+/* dolní větší */
+.tri-bottom-1 {
+  bottom: 0;
+  left: 0;
+  width: 65vw;
+  height: 12vh;
+  background: rgba(0,0,0,0.04);
+  clip-path: polygon(0 0, 0 100%, 100% 100%);
+}
+
+/* dolní menší překrytí */
+.tri-bottom-2 {
+  bottom: 0;
+  left: 0;
+  width: 30vw;
+  height: 10vh;
+  background: rgba(0,0,0,0.025);
+  clip-path: polygon(0 0, 0 100%, 100% 100%);
+}
+
+.form-select {
+    width: 100%;
+    padding: 10px;
+    font-size: 0.8rem;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    background-color: #f8f9fa;
+}
+
+
+/*Ověřování a kolečko*/
+.primary.loading {
+  background-color: #9fbad6;
+  cursor: not-allowed;
+  position: relative;
+}
+
+.primary:disabled {
+  opacity: 0.9;
+}
+
+/* spinner */
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255,255,255,0.4);
+  border-top: 2px solid white;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 8px;
+  animation: spin 0.8s linear infinite;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+
+
+/*modal*/
+
+
+.win-modal-overlay {
+  position: fixed;
+  top: 100px;    
+  left: 50%;
+  transform: translateX(-50%);
+  width: 450px;
+  background: none;
+  display: flex;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Modal */
+.win-modal {
+  width: 720px;
+  background: linear-gradient(180deg,#3a3a3a,#2f2f2f);
+  color: #fff;
+  border-radius: 6px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.win-modal-header {
+  padding: 28px 32px 10px 32px;
+}
+
+.win-security-title {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.win-main-title {
+  margin-top: 16px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+/* Body */
+.win-modal-body {
+  padding: 20px 32px;
+}
+
+
+.win-account-email {
+  font-size: 18px;
+  margin-left: 20px;
+}
+
+.win-account-sub {
+  font-size: 14px;
+  color: rgba(255,255,255,0.65);
+  margin-left: 20px;
+  margin-top: 6px;
+}
+
+/* Fingerprint section */
+.win-fingerprint {
+  text-align: center;
+  margin: 30px 0 30px 0;
+}
+
+.win-fingerprint svg {
+  width: 60px;
+  height: 60px;
+}
+
+.win-instruction {
+  font-size: 20px;
+  margin-top: 25px;
+}
+
+.win-link {
+  display: inline-block;
+  margin-top: 18px;
+  font-size: 16px;
+  color: #6cb8ff;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Footer info */
+.win-device-info {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-top: 50px;
+  font-size: 18px;
+}
+
+/* Footer buttons */
+.win-modal-footer {
+  background: rgba(0,0,0,0.25);
+  padding: 25px 32px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.win-btn {
+  padding: 12px 38px;
+  font-size: 16px;
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.7);
+  cursor: pointer;
+}
+
+.win-btn:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+.fp-anim {
+    animation: fp-pulse 1.6s infinite;
+}
+
+@keyframes fp-pulse {
+    0% {
+        transform: scale(0.9);
+        opacity: 0.85
+    }
+
+    50% {
+        transform: scale(1);
+        opacity: 1
+    }
+
+    100% {
+        transform: scale(0.9);
+        opacity: 0.85
+    }
+}
