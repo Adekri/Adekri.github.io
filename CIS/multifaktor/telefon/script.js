@@ -288,7 +288,7 @@ function renderAccount(account) {
       <div style="display:flex; align-items:center; gap:10px;">
         <div class="account-code">------</div>
         <div class="account-timer">30</div>
-        </div>
+      </div>
     </div>
   `;
 
@@ -297,16 +297,24 @@ function renderAccount(account) {
   const codeEl = div.querySelector(".account-code");
   const timerEl = div.querySelector(".account-timer");
 
+  let lastCounter = null;
+
   function update() {
     const epoch = Math.floor(Date.now() / 1000);
     const counter = Math.floor(epoch / 30);
     const secondsRemaining = 30 - (epoch % 30);
 
+    // timer běží každou sekundu
     timerEl.textContent = secondsRemaining;
 
-    generateTOTP(account.secret, counter).then(code => {
-      codeEl.textContent = code;
-    });
+    // kód se změní pouze když se změní 30s okno
+    if (counter !== lastCounter) {
+      lastCounter = counter;
+
+      generateTOTP(account.secret, counter).then(code => {
+        codeEl.textContent = code;
+      });
+    }
   }
 
   update();
