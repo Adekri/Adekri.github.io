@@ -1,0 +1,88 @@
+
+/*modal*/
+/* základ modalu */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  z-index: 2000;
+}
+
+.modal.show {
+  display: block;
+}
+
+.modal-dialog {
+  max-width: 400px;
+  margin: 120px auto;
+}
+
+/* vzhled modalu */
+.info-modal{
+  background:#f1f1f1;
+  font-family: Arial, Helvetica, sans-serif;
+  box-shadow:0 10px 30px rgba(0,0,0,0.3);
+}
+
+/* header */
+.info-header{
+  padding:20px 40px;
+  font-size: 32px;
+  letter-spacing:3px;
+  color:#2f3438;
+  border-bottom:1px solid #cfd3d6;
+  font-family: 'VafleVUT', sans-serif;
+}
+
+/* text */
+.info-body{
+  padding:20px 40px;
+  line-height:1.5;
+  color:#1f2d3d;
+  border-bottom:1px solid #cfd3d6;
+}
+
+/* footer */
+.info-footer{
+  padding:20px 40px;
+  display:flex;
+  justify-content:flex-end;
+}
+
+/* tlačítko */
+.info-btn{
+  background:#4f77a5;
+  border:none;
+  color:white;
+  cursor:pointer;
+  align-self: right;
+  width: 40%;
+  padding: 10px 20px;
+}
+
+.info-btn:hover{
+  background:#3e6590;
+}
+
+
+@font-face {
+    font-family: 'VafleVUT';
+    src: url('../fonts/VAFLE_VUT_LIGHT.OTF') format('opentype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'VafleVUT';
+    src: url('../fonts/VAFLE_VUT_REGULAR.OTF') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'VafleVUT';
+    src: url('../fonts/VAFLE_VUT_BOLD.OTF') format('opentype');
+    font-weight: 700;
+    font-style: normal;
+}
