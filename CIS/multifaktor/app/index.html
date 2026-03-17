@@ -6,7 +6,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/driver.js/dist/driver.css">
     <title>Multifaktorové ověření | Můj účet - VUT</title>
 
     <link rel="icon" href="../images/vut_logo.ico" type="image/x-icon">
@@ -17,7 +17,10 @@
     <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=computer,passkey" />
+    <link rel="stylesheet" href="./styles-biometric.css">
     <script type="text/javascript" nonce="">
+
+
         /*!
          * Color mode toggler for Bootstrap's docs (https://getbootstrap.com/)
          * Copyright 2011-2024 The Bootstrap Authors
@@ -101,13 +104,6 @@
         })()
     </script>
 
-    <!--<script defer="" src="./icons.ba815c25205aa4e53b3c.js" nonce=""></script>-->
-
-    <!--<link rel="prefetch" as="style" href="./89.d0ceed44d65cc57f2dc7.css">-->
-    <!--<link charset="utf-8" rel="prefetch" as="script" href="https://id.vut.cz/my-account/build/js/89.2739feaf4037e7304b6f.js">
-<link rel="stylesheet" type="text/css" href="./89.d0ceed44d65cc57f2dc7.css">
-<link charset="utf-8" rel="prefetch" as="script" href="https://id.vut.cz/my-account/build/js/699.a3e621bb921d2fe686b9.js">
-<link charset="utf-8" rel="prefetch" as="script" href="https://id.vut.cz/my-account/build/js/576.226198973c8abc26e312.js">-->
 </head>
 
 
@@ -145,7 +141,7 @@
                                 </a>
                             </div>
                             <div class="nav-item">
-                                <a class="nav-link elearning " >
+                                <a class="nav-link elearning ">
                                     <span class="fa-light fa-graduation-cap"></span><br>ELearning
                                 </a>
                             </div>
@@ -155,7 +151,7 @@
                                 </a>
                             </div>
                             <div class="nav-item">
-                                <a  class="nav-link idm active">
+                                <a class="nav-link idm active">
                                     <span class="fa-light fa-user-key"></span><br>Můj účet
                                 </a>
                             </div>
@@ -169,7 +165,7 @@
                                     <li><a class="dropdown-item">
                                             <span class="fa-light fa-desktop"></span><span>Apollo</span></a>
                                     </li>
-                                    <li><a class="dropdown-item" >
+                                    <li><a class="dropdown-item">
                                             <span class="fa-light fa-book-open-cover"></span><span>Uživatelská
                                                 dokumentace</span></a>
                                     </li>
@@ -250,7 +246,7 @@
                                                 </a>
                                             </div>
                                             <div class="nav-item ">
-                                                <a class="nav-link bg-secondary" >
+                                                <a class="nav-link bg-secondary">
                                                     <span class="fa-light fa-car"></span><br>
                                                     Pracovní cesty
                                                 </a>
@@ -300,8 +296,7 @@
 
                                 <ul class="dropdown-menu dropdown-menu-end">
                                     <li>
-                                        <a class="nav-link text-nowrap"
-                                           target="_blank">
+                                        <a class="nav-link text-nowrap" target="_blank">
                                             <span class="fa-light fa-question-circle"></span>
                                             <span class="vut-text d-inline-block">Nápověda</span>
                                         </a>
@@ -348,7 +343,7 @@
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                                                     Zůstat přihlášen
                                                 </button>
-                                                <a  class="btn btn-danger" role="button" data-bs-dismiss="modal">
+                                                <a class="btn btn-danger" role="button" data-bs-dismiss="modal">
                                                     Odhlásit se
                                                 </a>
                                             </div>
@@ -401,13 +396,13 @@
                                             <a class="stretched-link">Přehled údajů</a>
                                         </li>
                                         <li class="list-group-item vut-menu-item ">
-                                            <a  class="stretched-link">Změna hesla</a>
+                                            <a class="stretched-link">Změna hesla</a>
                                         </li>
                                         <li class="list-group-item vut-menu-item ">
-                                            <a  class="stretched-link">VUT Pin</a>
+                                            <a class="stretched-link">VUT Pin</a>
                                         </li>
                                         <li class="list-group-item vut-menu-item ">
-                                            <a  class="stretched-link">Přístup k API</a>
+                                            <a class="stretched-link">Přístup k API</a>
                                         </li>
                                         <li class="list-group-item vut-menu-item active">
                                             <a class="stretched-link">Multifaktorové ověření (MFA)</a>
@@ -476,8 +471,8 @@
                                         href="https://www.vut.cz/cis/jednotna-autentizace#mfa">zde</a>.
                                 </p>
 
-                                <a type="button" class="btn btn-outline-success" data-bs-toggle="collapse"
-                                    data-bs-target="#collapseMfaMethods" aria-expanded="false"
+                                <a type="button" id="addMFAbutton" class="btn btn-outline-success"
+                                    data-bs-toggle="collapse" data-bs-target="#collapseMfaMethods" aria-expanded="false"
                                     aria-controls="collapseMfaMethods">
                                     <span class="fa-solid fa-plus"></span>
                                     Přidat multifaktorové ověření
@@ -557,8 +552,7 @@
                     <div class="vut-main-content-shrink">
                         <h3>Preferovaná metoda MFA</h3>
 
-                        <form  id="defaultMfaMethodForm"
-                            novalidate="">
+                        <form id="defaultMfaMethodForm" novalidate="">
 
                             Nastavte si preferovanou metodu multifaktorového ověření pro přihlašování do VUTIS.
 
@@ -588,7 +582,7 @@
 
                     <h3>Seznam zařízení s multifaktorovým ověřením</h3>
                     <form id="postform"></form>
-                    <div class="table-responsive">
+                    <div class="table-responsive" id="table-of-devices">
                         <table class="table align-middle table-bordered">
                             <thead class="table-light">
                                 <tr>
@@ -600,7 +594,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-
+                                <!--mojeVUT
                                 <tr>
                                     <td>Moje VUT</td>
                                     <td>
@@ -634,11 +628,11 @@
                                             </span>
                                     </td>
                                 </tr>
-
+-->
                             </tbody>
                         </table>
                     </div>
-
+                    <!--
                     <div class="modal fade" id="mfaEditForm" data-bs-backdrop="static" tabindex="-1"
                         aria-labelledby="staticBackdropLabel">
                         <div class="modal-dialog modal-dialog-centered">
@@ -697,7 +691,7 @@
                             </div>
                         </div>
                     </div>
-
+-->
                     <div class="modal fade" id="confirmDelete" data-bs-backdrop="static" tabindex="-1"
                         aria-labelledby="staticBackdropLabel">
                         <div class="modal-dialog">
@@ -753,7 +747,7 @@
                                         </ol>
                                     </div>
 
-                                    <div class="modal-body" data-step="1">
+                                    <div id="step1" class="modal-body" data-step="1">
                                         <div class="row">
                                             <div class="form-group">
                                                 Stáhněte si ověřovací aplikaci na svůj telefon a nainstalujte ji.
@@ -782,7 +776,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="modal-body" data-step="2" style="display:none;">
+                                    <div id="step2" class="modal-body" data-step="2" style="display:none;">
                                         <form id="frm-totpForm-formTotp">
                                             <div class="row">
                                                 <div class="form-group">
@@ -799,9 +793,9 @@
                                             </div>
                                             <div class="row">
                                                 <div class="form-group align-items-center">
-                                                    <a class="collapsed" type="button" data-bs-toggle="collapse"
-                                                        data-bs-target="#collapsedArea" aria-expanded="false"
-                                                        aria-controls="collapsedArea">
+                                                    <a id="qr-failed" class="collapsed" type="button"
+                                                        data-bs-toggle="collapse" data-bs-target="#collapsedArea"
+                                                        aria-expanded="false" aria-controls="collapsedArea">
                                                         Nedaří se naskenovat QR kód?
                                                     </a>
                                                 </div>
@@ -833,9 +827,8 @@
                                         </form>
                                     </div>
 
-                                    <div class="modal-body" data-step="3" style="display:none;">
-                                        <form  id="frm-totpForm-formTotp" 
-                                             novalidate="">
+                                    <div id="step3" class="modal-body" data-step="3" style="display:none;">
+                                        <form id="frm-totpForm-formTotp" novalidate="">
 
                                             <p class="pb-3">Zadejte 6místný kód zobrazený v ověřovací aplikaci a
                                                 klikněte na <b>„Další“</b>.</p>
@@ -853,7 +846,7 @@
                                         </form>
                                     </div>
 
-                                    <div class="modal-body" data-step="4" style="display:none;">
+                                    <div id="step4" class="modal-body" data-step="4" style="display:none;">
                                         <form id="frm-totpForm-formTotp" novalidate="">
 
                                             <div class="row">
@@ -916,54 +909,7 @@
     </div>
 
 
-    <!--rozbalovací menu obsluha-->
-    <!-- Custom modal for biometric prompt -->
-    <style>
-        .win-prompt .modal-content {
-            background: #111214;
-            color: #fff;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-        }
-
-        .win-prompt .modal-header {
-            border-bottom: 0;
-            padding: 18px 20px;
-            background-color: #303030;
-        }
-
-        .win-prompt .modal-body {
-            padding: 8px 20px 18px;
-            background-color: #303030;
-        }
-
-        .win-prompt .modal-footer {
-            border-top: 0;
-            padding: 12px 20px;
-            background-color: #232323;
-        }
-
-        .win-prompt .win-title {
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 6px;
-        }
-
-        .win-prompt .win-sub {
-            color: rgba(255, 255, 255, 0.95);
-            margin-bottom: 12px
-        }
-
-        .win-prompt .win-icon {
-            font-size: 34px;
-            margin-right: 12px;
-            color: #4aa3ff
-        }
-
-
-    </style>
-
+    <!--modalové okno windows pro informaci o přidání biometriky-->
     <div class="modal fade win-prompt" id="biometricPromptModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -1006,56 +952,8 @@
             </div>
         </div>
     </div>
--->
 
 
-    <!-- Biometric scanning modal (fingerprint) -->
-    <style>
-        .fp-wrap {
-            text-align: center;
-            padding: 18px 30px 6px
-        }
-
-        .fingerprint {
-            width: 120px;
-            height: 120px;
-            margin: 18px auto;
-        }
-
-        .fp-ring {
-            stroke: #2b9cf5;
-            stroke-width: 3;
-            fill: none;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            opacity: 0.95
-        }
-
-        .fp-dot {
-            fill: #2b9cf5
-        }
-
-        .fp-anim {
-            animation: fp-pulse 1.6s infinite;
-        }
-
-        @keyframes fp-pulse {
-            0% {
-                transform: scale(0.9);
-                opacity: 0.85
-            }
-
-            50% {
-                transform: scale(1);
-                opacity: 1
-            }
-
-            100% {
-                transform: scale(0.9);
-                opacity: 0.85
-            }
-        }
-    </style>
 
     <!--modalové okno pro přiložení prstu-->
     <div class="modal fade win-prompt" id="biometricScanModal" tabindex="-1">
@@ -1075,12 +973,12 @@
                 </div>
 
                 <div class="modal-body">
-                    <div class="d-flex gap-3 align-items-start">
+                    <div id="biometricModalBody" class="d-flex gap-3 align-items-start">
 
                         <div style="flex:1">
                             <div class="win-device">
                                 <span class="material-symbols-outlined">passkey</span>
-                                123456@vut.cz
+                                123456@vutbr.cz
                                 <div style="margin-left: 30px; color:rgba(255,255,255,0.6)">Klíč pro id.vut.cz</div>
                             </div>
 
@@ -1111,7 +1009,7 @@
                                 <div style="font-size:20px; margin-top:6px; color:rgba(255,255,255,0.95)">Přiložte prst
                                     na
                                     čtečku otisků prstů.</div>
-                                <a  style="display:block; margin-top:8px; color:#66bdf7">Možnosti přihlášení</a>
+                                <a style="display:block; margin-top:8px; color:#66bdf7">Možnosti přihlášení</a>
                             </div>
 
                             <div
@@ -1131,12 +1029,13 @@
         </div>
     </div>
 
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 
 
 
-<!--Modalové okno pro přidání biometriky-->
+    <!--Modalové okno pro přidání biometriky-->
 
     <script>
             (function () {
@@ -1151,12 +1050,12 @@
 
                     // Example handler for confirm button – replace with real flow later
                     const confirmBtn = document.getElementById('biometricConfirmBtn');
-                    
+
                     confirmBtn?.addEventListener('click', async () => {
                         // close first modal and open scanning modal
                         confirmBtn.disabled = true;
                         confirmBtn.innerText = 'Probíhá ukládání...';
-                        setTimeout(async() => {
+                        setTimeout(async () => {
                             modal.hide();
                             confirmBtn.disabled = false;
                             confirmBtn.innerText = 'Pokračovat';
@@ -1165,16 +1064,36 @@
                             if (scanEl) {
                                 const scanModal = new bootstrap.Modal(scanEl);
                                 scanModal.show();
+                                const driverbiometric = driver({
+                                    popoverClass: "driverjs-theme",
+                                    stagePadding: 4,
+                                });
+                                setTimeout(() => {
+
+
+                                    driverbiometric.highlight({
+                                        element: "#biometricModalBody",
+                                        popover: {
+                                            side: "bottom",
+                                            title: "Postup",
+                                            description: "V této simulaci místo přiložení prstu stiskněte klávesu 'O'.",
+                                        }
+                                    })
+                                }, 500);
                                 // wait for user to press 'o' (or 'O') to simulate fingerprint
 
-                                showInfoModal("V této simulaci místo přiložení prstu stiskněte klávesu 'O'.");
+                                //showInfoModal("V této simulaci místo přiložení prstu stiskněte klávesu 'O'.");
                                 //showInfoModal("V této simulaci místo přiložení prstu stiskněte klávesu 'O'.");
                                 const onKey = (ev) => {
                                     if (ev.key === 'o' || ev.key === 'O') {
+                                        driverbiometric.destroy();
                                         scanModal.hide();
                                         const btnTotp = document.getElementById('btnTotp');
-                                        btnTotp.className='btn btn-outline-success';
+                                        btnTotp.className = 'btn btn-outline-success';
 
+
+                                        // add to localstorage
+                                        localStorage.setItem("doneBiometric", "true");
                                         // Add new row to table
                                         const table = document.querySelector('table tbody');
                                         if (table) {
@@ -1224,22 +1143,48 @@
 
     <script type="application/javascript" nonce="">
 
-let totpSecret = null;
-let totpVerified = false;
+        let totpSecret = null;
+        let totpVerified = false;
 
-        /*
-        ['mfaEditForm', 'totpForm', 'confirmDelete'].forEach(id => {
-            const modal = document.getElementById(id);
-            if (modal) {
-                modal.addEventListener('hidden.bs.modal', () => {
-                    if (id === 'totpForm') {
-                        window.location = window.location.origin + window.location.pathname;
-                    } else {
-                        window.history.replaceState({}, "", window.location.origin + window.location.pathname);
+        const btnTotp = document.getElementById('btnTotp');
+        btnTotp?.addEventListener('click', () => {
+            setTimeout(() => {
+
+                const driverObj = driver({
+                    popoverClass: "driverjs-theme",
+                    stagePadding: 4,
+                    onPopoverRender: (popover) => {
+                        const closeBtn = document.createElement("button");
+                        closeBtn.innerHTML = "✕";
+
+                        closeBtn.style.position = "absolute";
+                        closeBtn.style.top = "10px";
+                        closeBtn.style.right = "10px";
+                        closeBtn.style.background = "transparent";
+                        closeBtn.style.border = "none";
+                        closeBtn.style.fontSize = "18px";
+                        closeBtn.style.cursor = "pointer";
+
+                        closeBtn.addEventListener("click", () => {
+                            driverObj.destroy();
+                        });
+
+                        popover.wrapper.appendChild(closeBtn);
                     }
                 });
-            }
-        });*/
+
+                driverObj.highlight({
+                    element: "#step1",
+                    popover: {
+                        title: "Postup",
+                        description: "Na tomto místě jste vyzváni k instalaci ověřovací aplikace. Tu si samozřejmě nainstalovat můžete, ale pro účely úkolu si otevřete simulátor telefonu s touto aplikací. Odkaz na tento simulátor je v zadání úkolu.",
+                    }
+                });
+
+            }, 500);
+        });
+
+
 
         document.addEventListener('shown.bs.modal', (event) => {
             const modal = event.target;
@@ -1247,14 +1192,13 @@ let totpVerified = false;
             if (autofocusElement) {
                 autofocusElement.focus();
             }
-
         });
 
         // TOTP stepper navigation
         (function () {
             const totpForm = document.getElementById('totpForm');
-            if (totpForm) {            
-                
+            if (totpForm) {
+
                 const stepper = totpForm.querySelector('.stepper');
                 if (stepper) {
                     const nextBtn = totpForm.querySelector('#totpNextBtn');
@@ -1264,9 +1208,11 @@ let totpVerified = false;
                         if (stepNum === 4) {
                             if (nextBtn) nextBtn.style.display = 'none';
                             if (finishBtn) finishBtn.style.display = 'inline-block';
+
                         } else {
                             if (nextBtn) nextBtn.style.display = 'inline-block';
                             if (finishBtn) finishBtn.style.display = 'none';
+
                         }
                     };
 
@@ -1274,7 +1220,9 @@ let totpVerified = false;
                     const initialActive = stepper.querySelector('.step.active');
                     const initialStepNum = initialActive ? parseInt(initialActive.getAttribute('data-step')) : 1;
                     setButtonStateForStep(initialStepNum);
-                
+
+
+
 
                     if (nextBtn) {
                         nextBtn.addEventListener('click', async (e) => {
@@ -1286,12 +1234,82 @@ let totpVerified = false;
                                 const nextStepNum = currentStepNum + 1;
                                 const nextStep = stepper.querySelector(`[data-step="${nextStepNum}"]`);
 
+
                                 if (currentStepNum === 1) {
-                                    showInfoModal("Nápověda pro nastavení TOTP je k dispozici v zadání úkolu.");
-                                } 
+                                    setTimeout(() => {
+
+
+                                        const driver = window.driver.js.driver;
+
+                                        const tour = driver({
+                                            showProgress: true,
+                                            nextBtnText: "Další",
+                                            prevBtnText: "Zpět",
+                                            doneBtnText: "Hotovo",
+                                            allowClose: false,
+                                            steps: [
+                                                {
+                                                    element: "#step2",
+                                                    popover: {
+                                                        title: "Postup",
+                                                        description: "V tuto chvíli byste měli zobrazený QR kód naskenovat do Vaší nainstalované aplikace. V naší simulaci zkopírujte obrázek (pravé tlačítko myši a volba Kopírovat obrázek) a klávesovou zkratkou Ctrl+V jej vložte do telefonu."
+                                                    }
+                                                },
+                                                {
+                                                    element: "#qr-failed",
+                                                    popover: {
+                                                        title: "Postup",
+                                                        description: "Pokud se Vám v realitě nebo v naší simulaci nedaří QR kód nahrát, můžete využít manuálního zadání klíče. Tento klíč lze zobrazit kliknutím na tento odkaz."
+                                                    }
+                                                }
+                                            ]
+                                        });
+                                        tour.drive();
+
+
+                                    }, 500);
+                                }
+
+                                if (currentStepNum === 2) {
+                                    setTimeout(() => {
+
+                                        const driverObj = driver({
+                                            popoverClass: "driverjs-theme",
+                                            stagePadding: 4,
+                                            onPopoverRender: (popover) => {
+                                                const closeBtn = document.createElement("button");
+                                                closeBtn.innerHTML = "✕";
+
+                                                closeBtn.style.position = "absolute";
+                                                closeBtn.style.top = "10px";
+                                                closeBtn.style.right = "10px";
+                                                closeBtn.style.background = "transparent";
+                                                closeBtn.style.border = "none";
+                                                closeBtn.style.fontSize = "18px";
+                                                closeBtn.style.cursor = "pointer";
+
+                                                closeBtn.addEventListener("click", () => {
+                                                    driverObj.destroy();
+                                                });
+
+                                                popover.wrapper.appendChild(closeBtn);
+                                            }
+                                        });
+                                        driverObj.highlight({
+                                            element: "#step3",
+                                            popover: {
+                                                title: "Postup",
+                                                description: "Na závěr je ještě potřeba spojení potvrdit. To provedete zadáním jednorázového kódu, který se pravidelně obnovuje u přidaného účtu ve vašem telefonu.",
+                                            }
+                                        })
+
+
+                                    }, 500);
+                                }
 
                                 if (currentStepNum === 3) {
-                                    
+
+
                                     const valid = await verifyTotpInput();
                                     if (!valid) return;
                                     totpVerified = true;
@@ -1324,77 +1342,72 @@ let totpVerified = false;
 
 
 
-    function startTotpEnrollment(email) {
+        function startTotpEnrollment(email) {
 
-        totpSecret = generateBase32Secret(16);
-        totpVerified = false;
+            totpSecret = generateBase32Secret(16);
+            totpVerified = false;
 
-        const accountName = `VUT: ${email}`;
+            const accountName = `VUT: ${email}`;
 
-        document.getElementById("accountName").innerText = accountName;
-        document.getElementById("secret").innerText = totpSecret;
+            document.getElementById("accountName").innerText = accountName;
+            document.getElementById("secret").innerText = totpSecret;
 
-        // Vytvoř QR kód ve formátu: TAJNYTKLIC|jméno
-        const qrData = `${totpSecret}|${accountName}`;
-        generateQrImage(qrData);
-        
-        // Uloži data do localStorage pro komunikaci s telefonem
-        localStorage.setItem('mfa_pending', JSON.stringify({
-            secret: totpSecret,
-            email: email,
-            accountName: accountName,
-            timestamp: Date.now()
-        }));
-    }
+            // Vytvoř QR kód ve formátu: TAJNYTKLIC|jméno
+            const qrData = `${totpSecret}|${accountName}`;
+            generateQrImage(qrData);
+
+            // Uloži data do localStorage pro komunikaci s telefonem
+            localStorage.setItem('mfa_pending', JSON.stringify({
+                secret: totpSecret,
+                email: email,
+                accountName: accountName,
+                timestamp: Date.now()
+            }));
+        }
 
     </script>
 
     <script nonce="">
 
-const form = document.getElementById('totpForm');
+        const form = document.getElementById('totpForm');
 
-(function() {
-    const totpModalEl = document.getElementById('totpForm');
-    if (!totpModalEl) return;
+        (function () {
+            const totpModalEl = document.getElementById('totpForm');
+            if (!totpModalEl) return;
 
-    const resetStepper = () => {
-        const stepper = totpModalEl.querySelector('.stepper');
-        if (stepper) {
-            stepper.querySelectorAll('.step').forEach(s => s.classList.remove('active', 'completed'));
-            const first = stepper.querySelector('.step[data-step="1"]');
-            if (first) first.classList.add('active');
+            const resetStepper = () => {
+                const stepper = totpModalEl.querySelector('.stepper');
+                if (stepper) {
+                    stepper.querySelectorAll('.step').forEach(s => s.classList.remove('active', 'completed'));
+                    const first = stepper.querySelector('.step[data-step="1"]');
+                    if (first) first.classList.add('active');
+                }
+
+                totpModalEl.querySelectorAll('.modal-body').forEach(m => {
+                    m.style.display = m.getAttribute('data-step') === '1' ? 'block' : 'none';
+                });
+
+                const nextBtn = document.getElementById('totpNextBtn');
+                const finishBtnEl = document.getElementById('totpFinishBtn');
+                if (nextBtn) nextBtn.style.display = 'inline-block';
+                if (finishBtnEl) finishBtnEl.style.display = 'none';
+
+                totpModalEl.querySelectorAll('input').forEach(i => i.value = '');
+            };
+
+            totpModalEl.addEventListener('hidden.bs.modal', resetStepper);
+        })();
+
+
+        if (form) {
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+            });
         }
-
-        totpModalEl.querySelectorAll('.modal-body').forEach(m => {
-            m.style.display = m.getAttribute('data-step') === '1' ? 'block' : 'none';
-        });
-
-        const nextBtn = document.getElementById('totpNextBtn');
-        const finishBtnEl = document.getElementById('totpFinishBtn');
-        if (nextBtn) nextBtn.style.display = 'inline-block';
-        if (finishBtnEl) finishBtnEl.style.display = 'none';
-
-        totpModalEl.querySelectorAll('input').forEach(i => i.value = '');
-    };
-
-    totpModalEl.addEventListener('hidden.bs.modal', resetStepper);
-})();
-
-
-if(form) {
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-    });
-}
 
         (function () {
             const finishBtn = document.getElementById('totpFinishBtn');
-/*
-            if (!totpVerified) {
-                showInfoModal("Nejprve zadejte správný ověřovací kód.");
-                return;
-            }
-*/
+
             function escapeHtml(str) {
                 return String(str).replace(/[&<>"']/g, s => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": "&#39;" }[s]));
             }
@@ -1441,18 +1454,18 @@ if(form) {
 
                     // close modal
                     const modalEl = document.getElementById('totpForm');
-                    
+
                     if (modalEl && window.bootstrap) {
                         const bsModal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
                         bsModal.hide();
                     }
-                    
+
 
 
                     // reset stepper to step 1 and contents
 
 
-                    
+
                     const stepper = document.querySelector('#totpForm .stepper');
                     if (stepper) {
                         stepper.querySelectorAll('.step').forEach(s => { s.classList.remove('active'); s.classList.remove('completed'); });
@@ -1469,213 +1482,232 @@ if(form) {
 
                     // clear inputs in TOTP forms
                     document.querySelectorAll('[id^="frm-totpForm-formTotp"] input').forEach(i => i.value = '');
-                    
+
                 });
             }
         })();
 
-    async function verifyTotpInput() {
+        async function verifyTotpInput() {
 
-        let input = document
-                    .getElementById("frm-totpForm-formTotp-totp_code")
-                    .value.trim();
+            let input = document
+                .getElementById("frm-totpForm-formTotp-totp_code")
+                .value.trim();
 
-                // Pokud je input prázdný, zkus vzít kód z telefonu (localStorage)
-                if (!input) {
-                    const mfaData = localStorage.getItem('mfa_generated_code');
-                    if (mfaData) {
-                        try {
-                            const data = JSON.parse(mfaData);
-                            // Ověři, že je to z toho samého QR kódu (kontrola názvu)
-                            const pendingData = localStorage.getItem('mfa_pending');
-                            if (pendingData) {
-                                const pendingInfo = JSON.parse(pendingData);
-                                if (pendingInfo.accountName === data.name && pendingInfo.secret === data.secret) {
-                                    // Generuj TOTP kód z tajného klíče a ověř ho
-                                    const epoch = Math.floor(Date.now() / 1000);
-                                    const counter = Math.floor(epoch / 30);
+            // Pokud je input prázdný, zkus vzít kód z telefonu (localStorage)
+            if (!input) {
+                const mfaData = localStorage.getItem('mfa_generated_code');
+                if (mfaData) {
+                    try {
+                        const data = JSON.parse(mfaData);
+                        // Ověři, že je to z toho samého QR kódu (kontrola názvu)
+                        const pendingData = localStorage.getItem('mfa_pending');
+                        if (pendingData) {
+                            const pendingInfo = JSON.parse(pendingData);
+                            if (pendingInfo.accountName === data.name && pendingInfo.secret === data.secret) {
+                                // Generuj TOTP kód z tajného klíče a ověř ho
+                                const epoch = Math.floor(Date.now() / 1000);
+                                const counter = Math.floor(epoch / 30);
 
-                                    const validNow = await generateTOTP(data.secret, counter);
+                                const validNow = await generateTOTP(data.secret, counter);
 
-                                    // Tento kód máme z telefonu, takže ho budme ověřovat
-                                    // Vytvoř TOTP kód a vloží ho do inputu
-                                    const codeEl = document.getElementById("frm-totpForm-formTotp-totp_code");
-                                    codeEl.value = validNow;
-                                    input = validNow;
+                                // Tento kód máme z telefonu, takže ho budme ověřovat
+                                // Vytvoř TOTP kód a vloží ho do inputu
+                                const codeEl = document.getElementById("frm-totpForm-formTotp-totp_code");
+                                codeEl.value = validNow;
+                                input = validNow;
 
-                                    console.log("Kód z telefonu je: ", input);
-                                }
+                                console.log("Kód z telefonu je: ", input);
                             }
-                        } catch (e) {
-                            console.error("Chyba při čtení kódu z telefonu:", e);
                         }
+                    } catch (e) {
+                        console.error("Chyba při čtení kódu z telefonu:", e);
                     }
                 }
+            }
 
-                if (!/^\d{6}$/.test(input)) {
-                    showInfoModal("Kód musí mít 6 číslic.");
-                    return false;
-                }
-
-                const epoch = Math.floor(Date.now() / 1000);
-                const counter = Math.floor(epoch / 30);
-
-                const validNow = await generateTOTP(totpSecret, counter);
-                const validPrev = await generateTOTP(totpSecret, counter - 1);
-                const validNext = await generateTOTP(totpSecret, counter + 1);
-
-                if (input === validNow || input === validPrev || input === validNext) {
-                    return true;
-                }
-
-                
+            if (!/^\d{6}$/.test(input)) {
+                showInfoModal("Kód musí mít 6 číslic.");
                 return false;
             }
 
+            const epoch = Math.floor(Date.now() / 1000);
+            const counter = Math.floor(epoch / 30);
 
-        </script>
-    
+            const validNow = await generateTOTP(totpSecret, counter);
+            const validPrev = await generateTOTP(totpSecret, counter - 1);
+            const validNext = await generateTOTP(totpSecret, counter + 1);
+
+            if (input === validNow || input === validPrev || input === validNext) {
+                return true;
+            }
+
+
+            return false;
+        }
+
+
+    </script>
+
     <script src="../telefon/script.js"></script>
 
-<script>
-/* =========================
-   TOTP IMPLEMENTACE
-   ========================= */
+    <script>
+        /* =========================
+           TOTP IMPLEMENTACE
+           ========================= */
 
-function generateBase32Secret(length = 16) {
-    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
-    let secret = "";
-    for (let i = 0; i < length; i++) {
-        secret += chars[Math.floor(Math.random() * chars.length)];
-    }
-    return secret;
-}
+        function generateBase32Secret(length = 16) {
+            const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
+            let secret = "";
+            for (let i = 0; i < length; i++) {
+                secret += chars[Math.floor(Math.random() * chars.length)];
+            }
+            return secret;
+        }
 
-function base32ToBytes(base32) {
-    const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
-    let bits = "";
-    let bytes = [];
+        function base32ToBytes(base32) {
+            const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
+            let bits = "";
+            let bytes = [];
 
-    base32 = base32.replace(/=+$/, "");
+            base32 = base32.replace(/=+$/, "");
 
-    for (let i = 0; i < base32.length; i++) {
-        const val = alphabet.indexOf(base32[i].toUpperCase());
-        bits += val.toString(2).padStart(5, "0");
-    }
+            for (let i = 0; i < base32.length; i++) {
+                const val = alphabet.indexOf(base32[i].toUpperCase());
+                bits += val.toString(2).padStart(5, "0");
+            }
 
-    for (let i = 0; i + 8 <= bits.length; i += 8) {
-        bytes.push(parseInt(bits.substring(i, i + 8), 2));
-    }
+            for (let i = 0; i + 8 <= bits.length; i += 8) {
+                bytes.push(parseInt(bits.substring(i, i + 8), 2));
+            }
 
-    return new Uint8Array(bytes);
-}
+            return new Uint8Array(bytes);
+        }
 
-async function generateTOTP(secret, counter) {
-    const keyData = base32ToBytes(secret);
+        async function generateTOTP(secret, counter) {
+            const keyData = base32ToBytes(secret);
 
-    const cryptoKey = await crypto.subtle.importKey(
-        "raw",
-        keyData,
-        { name: "HMAC", hash: "SHA-1" },
-        false,
-        ["sign"]
-    );
+            const cryptoKey = await crypto.subtle.importKey(
+                "raw",
+                keyData,
+                { name: "HMAC", hash: "SHA-1" },
+                false,
+                ["sign"]
+            );
 
-    const buffer = new ArrayBuffer(8);
-    const view = new DataView(buffer);
-    view.setUint32(4, counter);
+            const buffer = new ArrayBuffer(8);
+            const view = new DataView(buffer);
+            view.setUint32(4, counter);
 
-    const hmac = await crypto.subtle.sign("HMAC", cryptoKey, buffer);
-    const hmacArray = new Uint8Array(hmac);
+            const hmac = await crypto.subtle.sign("HMAC", cryptoKey, buffer);
+            const hmacArray = new Uint8Array(hmac);
 
-    const offset = hmacArray[hmacArray.length - 1] & 0xf;
+            const offset = hmacArray[hmacArray.length - 1] & 0xf;
 
-    const code =
-        ((hmacArray[offset] & 0x7f) << 24) |
-        (hmacArray[offset + 1] << 16) |
-        (hmacArray[offset + 2] << 8) |
-        hmacArray[offset + 3];
+            const code =
+                ((hmacArray[offset] & 0x7f) << 24) |
+                (hmacArray[offset + 1] << 16) |
+                (hmacArray[offset + 2] << 8) |
+                hmacArray[offset + 3];
 
-    return (code % 1000000).toString().padStart(6, "0");
-}
+            return (code % 1000000).toString().padStart(6, "0");
+        }
 
-function generateQrImage(data) {
-    const qrContainer = document.getElementById("qrImage").parentElement;
-    qrContainer.innerHTML = "";
-    new QRCode(qrContainer, {
-        text: data,
-        width: 160,
-        height: 160
-    });
-}
-</script>
+        function generateQrImage(data) {
+            const qrContainer = document.getElementById("qrImage").parentElement;
+            qrContainer.innerHTML = "";
+            new QRCode(qrContainer, {
+                text: data,
+                width: 160,
+                height: 160
+            });
+        }
+    </script>
 
-<!--Vlastní modal - pro použití jinde stačí překopírovat tuto html, importovat bootstrap a skript část níže-->
-<div class="modal fade" id="infoModal" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
+    <!--Vlastní modal - pro použití jinde stačí překopírovat tuto html, importovat bootstrap a skript část níže-->
+    <div class="modal fade" id="infoModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
 
-      <div class="modal-header">
-        <h1 class="modal-title">Informace</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
+                <div class="modal-header">
+                    <h1 class="modal-title">Informace</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
 
-      <div class="modal-body" id="infoModalText">
-        Text
-      </div>
+                <div class="modal-body" id="infoModalText">
+                    Text
+                </div>
 
-      <div class="modal-footer">
-        <button class="btn btn-primary" data-bs-dismiss="modal">
-          Rozumím
-        </button>
-      </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" data-bs-dismiss="modal">
+                        Rozumím
+                    </button>
+                </div>
 
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 
-<script>
-    function showInfoModal(text){
+    <script>
+        function showInfoModal(text) {
 
-    const textEl = document.getElementById("infoModalText")
-    textEl.textContent = text
+            const textEl = document.getElementById("infoModalText")
+            textEl.textContent = text
 
-    const modalEl = document.getElementById("infoModal")
-    const modal = new bootstrap.Modal(modalEl)
+            const modalEl = document.getElementById("infoModal")
+            const modal = new bootstrap.Modal(modalEl)
 
-    modal.show()
-}
-</script>
+            modal.show()
+        }
+    </script>
 
 
 
-<!--Skript pro mazání řádku v tabulce-->
-<script>
-let rowToDelete = null;
-const tableBody = document.querySelector("table tbody");
+    <!-- prohlídka programu -->
+    <script src="https://cdn.jsdelivr.net/npm/driver.js/dist/driver.js.iife.js"></script>
 
-tableBody.addEventListener("click", function(e) {
-    const deleteBtn = e.target.closest(".btn-outline-danger"); // chytne tlačítko "Smazat" i nově přidané
-    if (!deleteBtn) return;
+    <script>
 
-    rowToDelete = deleteBtn.closest("tr");
-});
+        const driver = window.driver.js.driver;
 
-// tlačítko Ano v modalu
-document.getElementById("delete-from-table").addEventListener("click", function () {
-    if (rowToDelete) {
-        rowToDelete.remove();  // smaže celý řádek
-        rowToDelete = null;
-    }
+        /* =========================
+           TOUR 1 – po načtení stránky
+           ========================= */
 
-    const modalEl = document.getElementById('confirmDelete');
-    const modal = bootstrap.Modal.getInstance(modalEl);
-    modal.hide();
-});
-</script>
+        const tour = driver({
+            showProgress: true,
+            nextBtnText: "Další",
+            prevBtnText: "Zpět",
+            doneBtnText: "Hotovo",
+            allowClose: false,
+            steps: [
+                {
+                    element: "#addMFAbutton",
+                    popover: {
+                        title: "Postup",
+                        description: "Stisknutím tohoto tlačítka zobrazíte možnosti přidání nového způsobu ověření."
+                    }
+                },
+                {
+                    element: "#table-of-devices",
+                    popover: {
+                        title: "Postup",
+                        description: "Po úspěšném nastavení každé z metod se tato metoda přidá do tabulky. Zde tak můžete kontrolovat a spravovat aktivní způsoby ověření."
+                    }
+                }
+            ]
+        });
 
+        window.addEventListener("load", () => {
+            setTimeout(() => {
+                tour.drive();
+            }, 500);
+        });
+
+
+
+    </script>
+
+    <script src="script.js"></script>
 </body>
-
-
 
 </html>

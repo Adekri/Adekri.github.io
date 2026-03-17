@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="cs">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="images/icon.ico" />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=fingerprint,visibility" />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=fingerprint,passkey" />
+  <title>Jednotné přihlášení VUT</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/driver.js/dist/driver.css">
+</head>
+
+<body>
+
+
+  <div class="decor">
+    <div class="tri tri-top-1"></div>
+    <div class="tri tri-top-2"></div>
+    <div class="tri tri-bottom-1"></div>
+    <div class="tri tri-bottom-2"></div>
+  </div>
+
+
+  <div class="logo">
+    <picture>
+      <source srcset="images/logo_VUT_mobile.svg" media="(max-width: 950px)">
+      <img id="logo" src="images/logo_VUT.svg" alt="VUT" style="height:80px;">
+    </picture>
+  </div>
+  <div class="background">
+
+
+
+    <h1 id="header">Jednotné přihlášení VUT</h1>
+    <h2 id="subheader">Uživatelské jméno</h2>
+    <div class="card">
+
+      <form id="login-form" style="display: block;">
+
+        <div class="part">
+          <p class="info">Uživatelské jméno / osobní číslo</p>
+          <input type="text" class="input" id="username" required data-tour="username" />
+          <button type="submit" class="primary">Přejít k ověření</button>
+        </div>
+
+
+        <div class="form-divider">
+          <span>nebo použijte přístupový klíč</span>
+        </div>
+
+        <div class="part">
+          <button type="button" class="secondary">
+
+            <span style="font-size: 18px;" class="material-symbols-outlined">
+              fingerprint
+            </span>
+            Přihlásit</button>
+        </div>
+
+        <div class="form-divider"></div>
+
+        <div class="part">
+          <div class="links">
+            <a>Nemohu se přihlásit</a>
+            <a>English</a>
+          </div>
+        </div>
+      </form>
+
+
+      <form id="password-form" style="display: none;">
+
+        <div class="part">
+          <div class="links-bigger">
+            <p class="info">Uživatelské jméno</p>
+            <a class="link">Zvolit jiný účet</a>
+          </div>
+          <p id="username-display" style="font-weight: 600; margin-top: 0;">123456</p>
+          <div class="form-check" style="margin-bottom: 30px;margin-top: 15px;">
+            <input type="checkbox" id="remember" name="remember">
+            <label for="remember">Zapamatovat uživatelské jméno</label>
+          </div>
+
+          <p>Heslo</p>
+
+          <div class="input-wrapper">
+            <input type="password" class="input-password" id="password" required />
+            <button type="button" id="togglePassword" class="toggle-password">👁</button>
+          </div>
+
+          <button type="submit" class="primary" id="continueBtn">Přihlásit</button>
+
+        </div>
+
+        <div class="form-divider"> </div>
+
+        <div class="part">
+          <div class="links">
+            <a>Nemohu se přihlásit</a>
+            <a>English</a>
+          </div>
+        </div>
+      </form>
+
+
+      <form id="multifactor-form" style="display: none;">
+
+        <div class="part">
+          <span style="font-size: 64px;color: #1676d0; align-self: center;" class="material-symbols-outlined">
+            fingerprint</span>
+
+          <p>Váš operační systém vás vyzve k ověření pomocí klíče.</p>
+
+          <button type="submit" class="primary loading" id="verifyBtn" disabled="true">
+            <span class="btn-text">Ověřujeme</span>
+            <span class="spinner"></span>
+          </button>
+
+        </div>
+
+        <div class="form-divider">
+          <span>nebo zvolte jiný způsob</span>
+        </div>
+
+
+        <div class="part">
+          <select name="mfa_method" id="mfaMethod" class="form-select">
+            <option value="1" selected="">Další způsoby multifaktorové autentizace</option>
+            <option value="2">Ověřovací kódy</option>
+          </select>
+        </div>
+
+        <div class="form-divider"> </div>
+
+        <div class="part">
+          <div class="links">
+            <a>Nemohu se přihlásit</a>
+            <a>English</a>
+          </div>
+        </div>
+      </form>
+
+    </div>
+
+
+  </div>
+
+
+  <!-- Modal -->
+
+  <div style="display: none;" class="win-modal-overlay" id="winModal">
+    <div class="win-modal">
+
+      <div class="win-modal-header">
+        <div class="win-security-title">
+          <!-- Shield -->
+          <svg width="32" height="32" viewBox="0 0 24 24">
+            <path d="M12 1L3 5v6c0 5 3.7 9.7 9 11 5.3-1.3 9-6 9-11V5l-9-4z" fill="#5da9ff" />
+          </svg>
+          Zabezpečení Windows
+        </div>
+
+        <div class="win-main-title">Přihlášení pomocí klíče</div>
+      </div>
+
+      <div class="win-modal-body">
+
+        <div class="win-account">
+          <div style="display:flex; align-items:center; gap:12px;">
+            <span class="material-symbols-outlined">passkey</span>
+            <div>
+              <div class="win-account-email">123456@vut.cz</div>
+              <div class="win-account-sub">Klíč pro id.vut.cz</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="win-fingerprint">
+          <!-- Fingerprint -->
+          <svg class="fingerprint fp-anim" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+            <g id="SVGRepo_iconCarrier">
+              <path
+                d="M17.6573 5C16.1116 3.7492 14.1433 3 12 3C7.02944 3 3 7.02944 3 12C3 14.8273 3.64707 17.35 4.2051 19"
+                stroke="#2b9cf5" stroke-width="2" stroke-linecap="round"></path>
+              <path
+                d="M20.4879 9C20.8195 9.93834 21 10.9481 21 12C21 13.0519 20.4879 13.8115 20.4879 15C20.4879 15.6123 20.6238 16.3899 20.7556 17"
+                stroke="#2b9cf5" stroke-width="2" stroke-linecap="round"></path>
+              <path
+                d="M9 7.99834C9.49609 7.62618 10.0702 7.34071 10.7059 7.17038C13.3732 6.45567 16.1149 8.03858 16.8296 10.7059C17.5443 13.3732 16.5 14.5 16.5 15.5C16.5 17.3524 17.5 19 18 20"
+                stroke="#2b9cf5" stroke-width="2" stroke-linecap="round"></path>
+              <path d="M9 21C7.5 18 6.5 14.5 7 12" stroke="#2b9cf5" stroke-width="2" stroke-linecap="round"></path>
+              <path d="M14 21C12.5 18.5 10.5 14.5 12.5 12" stroke="#2b9cf5" stroke-width="2" stroke-linecap="round">
+              </path>
+            </g>
+          </svg>
+
+          <div class="win-instruction">
+            Přiložte prst na čtečku otisků prstů.
+          </div>
+
+          <div class="win-link">Možnosti přihlášení</div>
+        </div>
+
+        <div class="win-link">Vybrat jiný klíč</div>
+
+      </div>
+
+      <div class="win-modal-footer">
+        <button class="win-btn" onclick="closeWinModal()">Storno</button>
+      </div>
+
+    </div>
+  </div>
+
+
+  <div id="custom-modal"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    fetch("../../custom-modal/modal.html")
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById("custom-modal").innerHTML = html;
+
+
+        const script = document.createElement("script");
+        script.src = "../../custom-modal/script.js";
+        document.body.appendChild(script);
+      });
+  </script>
+
+
+
+
+
+  <script>
+    /* Zavření modalu */
+    function closeWinModal() {
+      document.getElementById("winModal").style.display = "none";
+    }
+
+
+
+    /* Zobrazení hesla */
+    const passwordInput = document.getElementById("password");
+    const toggleBtn = document.getElementById("togglePassword");
+
+    function showPassword() {
+      passwordInput.type = "text";
+    }
+
+    function hidePassword() {
+      passwordInput.type = "password";
+    }
+
+
+    toggleBtn.addEventListener("mousedown", showPassword);
+    toggleBtn.addEventListener("mouseup", hidePassword);
+    toggleBtn.addEventListener("mouseleave", hidePassword);
+    toggleBtn.addEventListener("touchstart", showPassword);
+    toggleBtn.addEventListener("touchend", hidePassword);
+
+
+    /* Odeslání formuláře se jménem*/
+    document.getElementById("login-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const username = document.getElementById("username").value.trim();
+      const subheader = document.getElementById("subheader");
+      const loginForm = document.getElementById("login-form");
+      const passwordForm = document.getElementById("password-form");
+
+      const name = username.includes('@') ? username.split('@')[0] : username;
+
+
+      subheader.textContent = "Heslo";
+      loginForm.style.display = "none";
+      passwordForm.style.display = "block";
+      document.getElementById("username-display").textContent = name;
+      setTimeout(() => {
+
+        const driverObj = driver({
+          popoverClass: "driverjs-theme",
+          stagePadding: 4,
+        });
+
+        driverObj.highlight({
+          element: "#password",
+          popover: {
+            side: "bottom",
+            title: "This is a title",
+            description: "This is a description",
+          }
+        })
+
+
+      }, 500);
+
+    });
+
+    const winModal = document.getElementById("winModal");
+
+    /* Odeslání formuláře s heslem*/
+    document.getElementById("password-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const passwordForm = document.getElementById("password-form");
+      const multifactorForm = document.getElementById("multifactor-form");
+      const subheader = document.getElementById("subheader");
+      const verifyBtn = document.getElementById("verifyBtn");
+
+      passwordForm.style.display = "none";
+      multifactorForm.style.display = "block";
+      subheader.textContent = "Multifaktorové přihlášení\n\n(MFA)";
+
+
+      /* Simulace načítání a následné zobrazení modalu */
+      setTimeout(() => {
+        winModal.style.display = "flex";
+        showInfoModal("Podobně jako v předchozím úkolu místo sejmutí otisku prstu stiskněte klávesu 'O'.");
+        document.addEventListener('keydown', handleKeyPress);
+      }, 1000);
+
+    });
+
+
+    const verifyBtn = document.getElementById("verifyBtn");
+
+    function handleKeyPress(ev) {
+      if (ev.key === 'o' || ev.key === 'O') {
+
+        closeWinModal();
+
+        verifyBtn.disabled = false;
+        verifyBtn.classList.remove('loading');
+        verifyBtn.querySelector('.btn-text').textContent = 'Prosím vyčkejte...';
+        verifyBtn.querySelector('.spinner').style.display = 'none';
+
+        document.removeEventListener('keydown', handleKeyPress);
+
+        setTimeout(() => {
+          window.location.href = "../microsoft-login/stay-signed-in.html";
+        }, 1000);
+      }
+    }
+
+
+
+  </script>
+
+
+  <!--Takhle se vkládá komentovaná prohlídka okna. když se má zobrazit až na základě něčeho, tak se dá jiný listener-->
+  <script src="https://cdn.jsdelivr.net/npm/driver.js/dist/driver.js.iife.js"></script>
+  <script>
+
+    const driver = window.driver.js.driver;
+
+    const tour = driver({
+      showProgress: true,
+      nextBtnText: "Další",
+      prevBtnText: "Zpět",
+      doneBtnText: "Hotovo",
+      steps: [
+        {
+          element: "#username",
+          popover: {
+            title: "Uživatelské jméno",
+            description: "Sem zadejte vaše VUT ID nebo osobní číslo."
+          }
+        },
+        {
+          element: "#login-form button.primary",
+          popover: {
+            title: "Pokračovat",
+            description: "Kliknutím přejdete na zadání hesla."
+          }
+        }
+      ]
+    });
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        tour.drive();
+      }, 500);
+    });
+
+
+
+  </script>
+
+</body>
+
+</html>
