@@ -37,21 +37,21 @@ closeQr.addEventListener("click", () => {
 */
 // Manuální zadání kódu
 
-
-manualBtn.addEventListener('click', () => {
-  const secret = prompt("Zadejte tajný klíč:");
-  if (secret) {
-    const name = prompt("Zadejte jméno účtu:");
-    if (name) {
-      addAccountFromManual(name, secret);
-      closeScan();
-      qrImage.src = '';
-      //qrOverlay.style.display = 'flex';
-      //confirmQrBtn.classList.add('hidden');
+if (manualBtn) {
+  manualBtn.addEventListener('click', () => {
+    const secret = prompt("Zadejte tajný klíč:");
+    if (secret) {
+      const name = prompt("Zadejte jméno účtu:");
+      if (name) {
+        addAccountFromManual(name, secret);
+        closeScan();
+        qrImage.src = '';
+        //qrOverlay.style.display = 'flex';
+        //confirmQrBtn.classList.add('hidden');
+      }
     }
-  }
-});
-
+  });
+}
 
 // Vložení QR obrázku ze schránky do modal
 /*
@@ -168,42 +168,44 @@ const addBtn = document.getElementById("add-account-btn");
 const scanScreen = document.getElementById("scan-screen");
 const accountList = document.getElementById("account-list");
 
+if (scanScreen) {
+  scanScreen.addEventListener('paste', async (e) => {
+    if (!e.clipboardData) return;
 
-scanScreen.addEventListener('paste', async (e) => {
-  if (!e.clipboardData) return;
+    const items = e.clipboardData.items;
+    let foundImage = false;
 
-  const items = e.clipboardData.items;
-  let foundImage = false;
+    for (const item of items) {
+      if (item.type.startsWith('image/')) {
+        foundImage = true;
+        const blob = item.getAsFile();
+        const url = URL.createObjectURL(blob);
 
-  for (const item of items) {
-    if (item.type.startsWith('image/')) {
-      foundImage = true;
-      const blob = item.getAsFile();
-      const url = URL.createObjectURL(blob);
+        qrImage.src = url;
 
-      qrImage.src = url;
+        qrImage.onload = () => {
+          decodeQRCode(qrImage);
+        };
 
-      qrImage.onload = () => {
-        decodeQRCode(qrImage);
-      };
-
-      break;
+        break;
+      }
     }
-  }
 
-  // Pokud nebyl nalezen žádný obrázek, upozorníme uživatele
-  if (!foundImage) {
-    alert("Schránka neobsahuje obrázek QR kódu. Zkuste zkopírovat správný QR obrázek nebo zadejte klíč manuálně.");
-  }
-});
+    // Pokud nebyl nalezen žádný obrázek, upozorníme uživatele
+    if (!foundImage) {
+      alert("Schránka neobsahuje obrázek QR kódu. Zkuste zkopírovat správný QR obrázek nebo zadejte klíč manuálně.");
+    }
+  });
+}
 
-addBtn.addEventListener("click", () => {
-  scanScreen.classList.remove("hidden");
-  header.textContent = "Scan QR Code";
-  addBtn.style.display = "none";
-  scanScreen.focus();  
-});
-
+if (addBtn) {
+  addBtn.addEventListener("click", () => {
+    scanScreen.classList.remove("hidden");
+    header.textContent = "Scan QR Code";
+    addBtn.style.display = "none";
+    scanScreen.focus();
+  });
+}
 function closeScan() {
   scanScreen.classList.add("hidden");
   header.textContent = "Authenticator";
@@ -246,7 +248,7 @@ function addAccountFromQR(name, secret) {
   };
 
   renderAccount(account);
-  
+
   // Uložit do localStorage pro komunikaci s webovkou
   localStorage.setItem('mfa_generated_code', JSON.stringify({
     name,
@@ -262,7 +264,7 @@ function addAccountFromManual(name, secret) {
   };
 
   renderAccount(account);
-  
+
   // Uložit do localStorage pro komunikaci s webovkou
   localStorage.setItem('mfa_generated_code', JSON.stringify({
     name,
@@ -313,6 +315,8 @@ function renderAccount(account) {
 
       generateTOTP(account.secret, counter).then(code => {
         codeEl.textContent = code;
+        localStorage.setItem("lastTOTP", localStorage.getItem("actualTOTP"))
+        localStorage.setItem("actualTOTP", code);
       });
     }
   }
@@ -380,12 +384,17 @@ function generateBase32Secret(length = 16) {
 }
   */
 
+
 const backBtn = document.getElementById("nav-back");
-backBtn.addEventListener("click", () => {
-  closeScan();
-});
+if (backBtn) {
+  backBtn.addEventListener("click", () => {
+    closeScan();
+  });
+}
 
 const homeBtn = document.getElementById("nav-home");
-homeBtn.addEventListener("click", () => {
-  closeScan();
-});
+if (homeBtn) {
+  homeBtn.addEventListener("click", () => {
+    closeScan();
+  });
+}

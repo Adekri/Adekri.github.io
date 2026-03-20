@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html lang="cs">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style_modal.css" />
   <link rel="icon" href="images/icon.ico" />
   <title>Přihlášení k účtu</title>
+
 
 </head>
 
 <body>
   <div class="background">
     <div class="card">
-      
+
       <div class="logo">
         <img src="images/logo.svg" alt="Microsoft">
       </div>
@@ -20,16 +23,11 @@
       <h1 id="header">Přihlásit se</h1>
 
       <form id="login-form">
-        <input 
-          type="text" 
-          id="address" 
-          placeholder="E-mail, telefon nebo Skype" 
-          required
-        />
+        <input type="text" id="address" placeholder="E-mail, telefon nebo Skype" required />
 
         <div class="links">
           <p>Nemáte účet? <a>Vytvořte si ho!</a></p>
-          <a >Nezdařil se přístup k účtu?</a>
+          <a>Nezdařil se přístup k účtu?</a>
         </div>
 
         <div class="buttons">
@@ -39,54 +37,90 @@
       </form>
 
       <img id="ants" style="display: none;" src="images/ants.gif" alt="Divider">
-    <div id="storno-link" class="links" style="display: none;padding: 30px 0px 30px 0px;">
+      <div id="storno-link" class="links" style="display: none;padding: 30px 0px 30px 0px;">
         <a>Storno</a>
-    </div>
+      </div>
 
     </div>
 
 
     <div class="login-options">
-        <img class="key-icon" src="images/key.svg" alt="Key">
+      <img class="key-icon" src="images/key.svg" alt="Key">
       Možnosti přihlášení
     </div>
 
   </div>
 
 
-<script>
-document.getElementById("login-form").addEventListener("submit", function(e) {
-  e.preventDefault();
+  <script>
+    document.getElementById("login-form").addEventListener("submit", function (e) {
+      e.preventDefault();
 
-  const email = document.getElementById("address").value.trim();
-  const header = document.getElementById("header");
-  const form = document.getElementById("login-form");
-  const loginOptions = document.querySelector(".login-options");
-  const stornoLink = document.getElementById("storno-link");
-  const ants = document.getElementById("ants");
+      const email = document.getElementById("address").value.trim();
+      const header = document.getElementById("header");
+      const form = document.getElementById("login-form");
+      const loginOptions = document.querySelector(".login-options");
+      const stornoLink = document.getElementById("storno-link");
+      const ants = document.getElementById("ants");
 
-  if (!email.includes("@")) {
-    alert("Zadejte platnou e-mailovou adresu.");
-    return;
-  }
+      if (email !== "123456@vut.cz" && email !== "123456@vutbr.cz") {
+        showInfoModal("Zadejte platnou e-mailovou adresu (123456@vut.cz).");
+        return;
+      }
 
-  header.textContent = "Přesměrujeme vás na přihlašovací stránku vaší organizace.";
-  form.style.display = "none";
-  loginOptions.style.display = "none";
-  stornoLink.style.display = "block";
-    ants.style.display = "block";
+      header.textContent = "Přesměrujeme vás na přihlašovací stránku vaší organizace.";
+      form.style.display = "none";
+      loginOptions.style.display = "none";
+      stornoLink.style.display = "block";
+      ants.style.display = "block";
 
-  setTimeout(function() {
+      setTimeout(function () {
 
-    window.location.href = "../vut-login/index.html";
+        window.location.href = "../vut-login/index.html";
 
-  }, 2000);
+      }, 2000);
 
-});
-</script>
+    });
+  </script>
 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <div class="modal" id="infoModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content info-modal">
+
+        <div class="info-header">
+          INFORMACE
+        </div>
+
+        <div class="info-body" id="infoModalText">
+          Text
+        </div>
+
+        <div class="info-footer">
+          <button class="info-btn" data-bs-dismiss="modal">
+            Rozumím
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function showInfoModal(text) {
+
+      const textEl = document.getElementById("infoModalText")
+      textEl.textContent = text
+
+      const modalEl = document.getElementById("infoModal")
+      const modal = new bootstrap.Modal(modalEl)
+
+      modal.show()
+    }
+  </script>
 
 
 
 </body>
+
 </html>

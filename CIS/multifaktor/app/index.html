@@ -102,6 +102,8 @@
                 }
             })
         })()
+
+
     </script>
 
 </head>
@@ -1093,7 +1095,7 @@
 
 
                                         // add to localstorage
-                                        localStorage.setItem("doneBiometric", "true");
+                                        localStorage.setItem("biometricDone", "true");
                                         // Add new row to table
                                         const table = document.querySelector('table tbody');
                                         if (table) {
@@ -1537,7 +1539,7 @@
             const validPrev = await generateTOTP(totpSecret, counter - 1);
             const validNext = await generateTOTP(totpSecret, counter + 1);
 
-            if (input === validNow || input === validPrev || input === validNext) {
+            if (input===localStorage.getItem("actualTOTP")||input===localStorage.getItem("lastTOTP")|| input === validNow || input === validPrev || input === validNext) {
                 return true;
             }
 
@@ -1698,9 +1700,46 @@
         });
 
         window.addEventListener("load", () => {
-            setTimeout(() => {
-                tour.drive();
-            }, 500);
+            if (!localStorage.getItem("startTour")) {
+                setTimeout(() => {
+                    tour.drive();
+                    localStorage.setItem("startTour", "true");
+                }, 500);
+            }
+
+            if (localStorage.getItem("biometricDone") === "true") {
+                const btnTotp = document.getElementById('btnTotp');
+                btnTotp.className = 'btn btn-outline-success';
+                const table = document.querySelector('table tbody');
+                if (table) {
+                    const newRow = document.createElement('tr');
+                    newRow.innerHTML = `
+                        <td>Biometrické ověření</td>
+                        <td>Windows</td>
+                        <td>${new Date().toLocaleString('cs-CZ')}</td>
+                        <td>
+                            <span class="fa-solid fa-check text-success" ></span> Aktivní
+                        </td>
+                        <td class="text-nowrap">
+                            <span data-bs-target="#mfaEditForm" data-bs-whatever="@mdo">
+                                <a class="btn btn-outline-secondary btn-sm" style="cursor: default;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Upravit">
+                                    <span class="fa-light fa-pencil"></span>
+                                </a>
+                            </span>
+                            <button class="btn btn-outline-danger btn-sm" style="cursor: default;" data-bs-toggle="tooltip" data-bs-title="Deaktivovat">
+                                <span class="fa-light fa-ban"></span>
+                            </button>
+                            <span data-bs-toggle="modal" data-bs-target="#confirmDelete" data-bs-whatever="@mdo">
+                                <a class="btn btn-outline-danger btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Smazat">
+                                    <span class="fa-light fa-trash"></span>
+                                </a>
+                            </span>
+                        </td>
+                    `;
+                    table.appendChild(newRow);
+                }
+
+            }
         });
 
 
