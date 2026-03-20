@@ -22,6 +22,7 @@ function startBiometricAuth() {
             nextBtnText: "Další",
             prevBtnText: "Zpět",
             doneBtnText: "Hotovo",
+            allowClose: false,
             onHighlighted: (element, step, { state }) => {
                 if (step.element === "#stornoBtn") {
                     allowBiometricKey = true;
@@ -106,7 +107,7 @@ mfaSelect.addEventListener("change", function () {
                 nextBtnText: "Další",
                 prevBtnText: "Zpět",
                 doneBtnText: "Hotovo",
-                
+                allowClose: false,
                 steps: [
                     {
                         element: "#totp-form",
