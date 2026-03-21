@@ -113,7 +113,7 @@ mfaSelect.addEventListener("change", function () {
                         element: "#totp-form",
                         popover: {
                             title: "Postup",
-                            description: "Podobně jako při nastavení přihlašování pomocí TOTP, zadejte kód, který se pravidelně obnovuje ve vašem telefonu.",
+                            description: "Podobně jako při nastavení přihlašování pomocí TOTP, zadejte kód, který se pravidelně obnovuje ve vašem telefonu. Pokud jste již okno s telefonem zavřeli, otevřete jej znovu odkazem v zadání a vytvořte přihlášení manuálně s libovolným tajným klíčem.",
                             side: "right",
                         }
                     }

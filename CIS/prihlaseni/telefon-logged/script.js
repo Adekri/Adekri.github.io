@@ -399,3 +399,14 @@ if (homeBtn) {
   });
 }
 
+// Přidání defaultního účtu po načtení stránky
+window.onload = () => {
+  const defaultName = "VUT: 123456@vutbr.cz";
+  const defaultSecret = "JBSWY3DPEHPK3PXP"; 
+  const accountListEl = document.getElementById("account-list");
+  if (!accountListEl) {
+    console.error("account-list element nenalezen!");
+    return;
+  }
+  addAccountFromManual(defaultName, defaultSecret);
+};
