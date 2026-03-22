@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KyberOsvěta: Neviditelná hrozba v obrázcích</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --danger: #dc2626;
+            --bg: #f8fafc;
+            --card: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: #1e293b;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .email-client {
+            background: var(--card);
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+        }
+
+        .email-header {
+            background: #f1f5f9;
+            padding: 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .email-body {
+            padding: 30px;
+            position: relative;
+        }
+
+        .placeholder-img {
+            width: 100%;
+            height: 200px;
+            background: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed #cbd5e1;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .placeholder-img:hover {
+            background: #d1d5db;
+        }
+
+        .pixel-alert {
+            display: none;
+            background: #fee2e2;
+            border-left: 4px solid var(--danger);
+            padding: 15px;
+            margin-top: 20px;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        .hidden { display: none; }
+        
+        .tracking-dot {
+            width: 1px;
+            height: 1px;
+            background: red;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+        }
+
+        .active-dot {
+            opacity: 1;
+            box-shadow: 0 0 10px 5px rgba(220, 38, 38, 0.5);
+            transition: all 0.5s;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>🕵️‍♂️ Detektiv v e-mailu</h1>
+        <p>Zjistěte, jak o vás firmy (a útočníci) sbírají data, aniž byste na cokoli klikli.</p>
+    </header>
+
+    <div class="email-client">
+        <div class="email-header">
+            <strong>Od:</strong> info@super-vyprodej-2026.cz <br>
+            <strong>Předmět:</strong> Gratulujeme! Vyhráli jste slevový kupón 💸
+        </div>
+        <div class="email-body">
+            <p>Dobrý den,</p>
+            <p>máme pro Vás exkluzivní nabídku. Stačí si prohlédnout náš nový katalog:</p>
+            
+            <div id="imageArea" class="placeholder-img" onclick="revealTracking()">
+                <span>🖼️ Obrázky jsou blokovány. <br> <strong>Klikněte pro zobrazení.</strong></span>
+            </div>
+
+            <div id="pixelContainer" class="tracking-dot"></div>
+
+            <p>Těšíme se na váš nákup!</p>
+
+            <div id="alertBox" class="pixel-alert">
+                <h3>🚨 Detekován Tracking Pixel!</h3>
+                <p>Právě jste odeslali odesílateli data, i když jste na nic neklikli. Podívejte se níže, co všechno se dozvěděl.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="dataReport" class="hidden">
+        <div class="info-grid">
+            <div class="card">
+                <h4>🕒 Čas otevření</h4>
+                <p>Odesílatel ví přesně, v kolik hodin si e-mail čtete. To mu pomůže plánovat další spam.</p>
+            </div>
+            <div class="card">
+                <h4>📍 Vaše poloha</h4>
+                <p>Díky vaší IP adrese vědí, v jakém městě (a někdy i čtvrti) se právě nacházíte.</p>
+            </div>
+            <div class="card">
+                <h4>📱 Zařízení</h4>
+                <p>Vědí, zda používáte iPhone, Android nebo Windows. Podle toho mohou upravit podvodné stránky.</p>
+            </div>
+        </div>
+        <div style="text-align:center; margin-top: 30px;">
+            <button onclick="location.reload()">Zkusit znovu a poučit se</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function revealTracking() {
+        // Změna placeholderu na "obrázek"
+        const imgArea = document.getElementById('imageArea');
+        imgArea.innerHTML = "<h4>Váš kupón: 🎟️ SLEVA50</h4><p>(Tento obrázek právě nahlásil vaši aktivitu)</p>";
+        imgArea.style.background = "#f0fdf4";
+        imgArea.style.borderColor = "#22c55e";
+
+        // Aktivace "neviditelného" pixelu
+        const dot = document.getElementById('pixelContainer');
+        dot.classList.add('active-dot');
+
+        // Zobrazení varování a reportu
+        document.getElementById('alertBox').style.display = 'block';
+        document.getElementById('dataReport').classList.remove('hidden');
+        
+        // Scroll na report
+        setTimeout(() => {
+            document.getElementById('dataReport').scrollIntoView({ behavior: 'smooth' });
+        }, 500);
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <title>Kyber-Laboratoř: Útok z jiné stránky (CSRF)</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; height: 100vh; background: #e2e8f0; }
+        
+        .tab { flex: 1; margin: 20px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); overflow: hidden; display: flex; flex-direction: column; }
+        .tab-header { padding: 15px; font-weight: bold; color: white; display: flex; justify-content: space-between; align-items: center; }
+        .tab-content { padding: 30px; background: white; flex: 1; position: relative; }
+        
+        /* Osobní banka */
+        .bank-tab .tab-header { background: #0369a1; }
+        .balance-box { background: #f0fdf4; border: 2px solid #22c55e; padding: 20px; border-radius: 8px; text-align: center; margin-bottom: 20px; }
+        .balance { font-size: 2.5rem; font-weight: bold; color: #15803d; }
+        .transaction-log { font-family: monospace; font-size: 0.9rem; color: #64748b; }
+        .transaction-log .alert { color: #dc2626; font-weight: bold; }
+
+        /* Vtipná videa (Útočník) */
+        .evil-tab .tab-header { background: #db2777; }
+        .video-player { background: #1e293b; height: 200px; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; position: relative; overflow: hidden; }
+        .play-btn { background: #ec4899; color: white; border: none; padding: 15px 30px; font-size: 1.2rem; border-radius: 50px; cursor: pointer; font-weight: bold; transition: transform 0.2s; z-index: 2; }
+        .play-btn:hover { transform: scale(1.05); }
+        
+        .hidden-code { 
+            position: absolute; bottom: 10px; left: 10px; font-family: monospace; font-size: 0.7rem; color: #fb7185; opacity: 0; transition: opacity 0.5s; 
+        }
+
+        /* Animace letícího požadavku */
+        .flying-request {
+            position: fixed; width: 40px; height: 40px; background: #dc2626; border-radius: 50%;
+            display: none; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: bold;
+            z-index: 1000; box-shadow: 0 0 20px rgba(220, 38, 38, 0.8);
+        }
+
+        @keyframes fly {
+            0% { right: 25%; top: 50%; transform: scale(1); opacity: 1; }
+            50% { top: 30%; transform: scale(1.5); }
+            100% { right: 75%; top: 50%; transform: scale(0.5); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="tab bank-tab">
+        <div class="tab-header">
+            <span>🏦 MojeBanka.cz</span>
+            <span style="font-size: 0.8rem; background: rgba(255,255,255,0.2); padding: 4px 8px; border-radius: 4px;">🟢 Přihlášen</span>
+        </div>
+        <div class="tab-content" id="bank-content">
+            <h2>Váš běžný účet</h2>
+            <div class="balance-box">
+                <div>Dostupný zůstatek</div>
+                <div class="balance" id="money">50 000 Kč</div>
+            </div>
+            <h3>Poslední transakce:</h3>
+            <div class="transaction-log" id="log">
+                [08:15] Přihlášení uživatele... OK<br>
+                [09:30] Platba kartou: Potraviny - 850 Kč<br>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab evil-tab">
+        <div class="tab-header">
+            <span>🐱 VtipnaKotyatka.cz</span>
+            <span style="font-size: 0.8rem;">(Nová záložka)</span>
+        </div>
+        <div class="tab-content">
+            <h2>Podívejte se na tohle vtipné video! 😂</h2>
+            <p>Zatímco jste přihlášeni v bance vedle, otevřeli jste si tento nevinně vypadající web.</p>
+            
+            <div class="video-player">
+                <button class="play-btn" onclick="triggerAttack()">▶ Přehrát video</button>
+                <div class="hidden-code" id="hacker-code">
+                    fetch('https://mojebanka.cz/prevod?komu=utocnik&castka=50000')
+                </div>
+            </div>
+
+            <div id="explanation" style="display: none; background: #fef2f2; border-left: 4px solid #dc2626; padding: 15px; margin-top: 20px;">
+                <strong>🚨 Co se právě stalo?</strong>
+                <p>Klikli jste na "Přehrát video", ale tlačítko mělo skrytou funkci. Odeslalo neviditelný požadavek vaší bance.</p>
+                <p>Protože jste v bance vedle <strong>stále přihlášeni</strong>, váš prohlížeč automaticky přiložil k požadavku vaši "virtuální občanku" (tzv. Session Cookie). Banka si myslela, že jste příkaz zadali vy!</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="request-anim" class="flying-request">$$$</div>
+
+<script>
+    function triggerAttack() {
+        // 1. Ukážeme, že se spouští zlý kód
+        document.getElementById('hacker-code').style.opacity = '1';
+        
+        // 2. Spustíme animaci letícího požadavku
+        const anim = document.getElementById('request-anim');
+        anim.style.display = 'flex';
+        anim.style.animation = 'fly 1.5s ease-in-out forwards';
+
+        // 3. Počkáme, až "požadavek" doletí do banky a provedeme změny
+        setTimeout(() => {
+            // Vykradení účtu
+            document.getElementById('money').innerText = '0 Kč';
+            document.getElementById('money').style.color = '#dc2626';
+            
+            // Přidání záznamu do logu banky
+            const log = document.getElementById('log');
+            const now = new Date().toLocaleTimeString();
+            log.innerHTML += `<span class="alert">[${now}] POZOR: PŘEVOD 50 000 Kč NA ÚČET 'ÚTOČNÍK' (Provedeno na pozadí)</span><br>`;
+            
+            // Zobrazení vysvětlení na útočné stránce
+            document.getElementById('explanation').style.display = 'block';
+            
+            // Skrytí animace
+            anim.style.display = 'none';
+        }, 1500);
+    }
+</script>
+
+</body>
+</html>

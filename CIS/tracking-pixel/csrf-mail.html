@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <title>Kyber-Laboratoř: Útok přes obrázek v e-mailu</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; display: flex; height: 100vh; background: #cbd5e1; }
+        
+        .panel { flex: 1; margin: 15px; border-radius: 10px; box-shadow: 0 8px 20px rgba(0,0,0,0.15); display: flex; flex-direction: column; overflow: hidden; background: white; }
+        .panel-header { padding: 15px; font-weight: bold; color: white; display: flex; justify-content: space-between; align-items: center; }
+        .panel-content { padding: 25px; position: relative; flex: 1; }
+
+        /* Strana 1: E-mail */
+        .email-panel .panel-header { background: #475569; }
+        .email-body { border: 1px solid #e2e8f0; border-radius: 6px; padding: 20px; margin-top: 15px; }
+        .blocker-alert { background: #fef08a; border: 1px solid #eab308; padding: 12px; margin-bottom: 20px; font-size: 0.9rem; display: flex; justify-content: space-between; align-items: center; border-radius: 4px; }
+        
+        button { background: #2563eb; color: white; border: none; padding: 8px 16px; border-radius: 4px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        button:hover { background: #1d4ed8; }
+
+        .image-placeholder { width: 100%; height: 150px; background: #f1f5f9; border: 2px dashed #94a3b8; display: flex; align-items: center; justify-content: center; color: #64748b; margin-top: 15px; flex-direction: column; text-align: center; padding: 10px; box-sizing: border-box; }
+        
+        .code-reveal { font-family: monospace; color: #dc2626; font-size: 0.8rem; margin-top: 10px; display: none; background: #fee2e2; padding: 5px; border-radius: 4px; }
+
+        /* Strana 2: Banka */
+        .bank-panel .panel-header { background: #059669; }
+        .account-status { background: #ecfdf5; border: 2px solid #34d399; padding: 20px; text-align: center; border-radius: 8px; margin-bottom: 20px; }
+        .balance { font-size: 2.5rem; font-weight: bold; color: #047857; transition: color 0.3s; }
+        .log-box { background: #f8fafc; border: 1px solid #e2e8f0; padding: 15px; border-radius: 6px; font-family: monospace; font-size: 0.85rem; height: 150px; overflow-y: auto; }
+        .log-alert { color: #dc2626; font-weight: bold; animation: flash 1s infinite alternate; }
+
+        /* Animace a vysvětlení */
+        .flying-payload {
+            position: fixed; width: 30px; height: 30px; background: #dc2626; border-radius: 50%;
+            display: none; align-items: center; justify-content: center; color: white; font-size: 16px; font-weight: bold;
+            z-index: 1000; box-shadow: 0 0 15px rgba(220, 38, 38, 0.8);
+        }
+
+        @keyframes fly {
+            0% { left: 25%; top: 50%; transform: scale(1); opacity: 1; }
+            50% { top: 30%; transform: scale(1.5); }
+            100% { left: 75%; top: 50%; transform: scale(0.5); opacity: 0; }
+        }
+
+        @keyframes flash {
+            from { background-color: transparent; }
+            to { background-color: #fee2e2; }
+        }
+
+        .explanation { display: none; background: #1e293b; color: white; padding: 20px; border-radius: 8px; margin-top: 20px; border-left: 5px solid #ef4444; }
+    </style>
+</head>
+<body>
+
+    <div class="panel email-panel">
+        <div class="panel-header">
+            <span>✉️ E-mailový klient</span>
+            <span style="font-size: 0.8rem;">Doručená pošta</span>
+        </div>
+        <div class="panel-content">
+            <div id="image-blocker" class="blocker-alert">
+                <span>⚠️ Z bezpečnostních důvodů byly obrázky zablokovány.</span>
+                <button onclick="allowImages()">Povolit obrázky</button>
+            </div>
+
+            <div class="email-body">
+                <strong>Od:</strong> soutez@nejlepsi-ceny.cz<br>
+                <strong>Předmět:</strong> Vyhráváte! Podívejte se na svůj dárkový poukaz!
+                <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 15px 0;">
+                <p>Gratulujeme! Klikli jste včas. Níže se načte váš dárkový poukaz:</p>
+                
+                <div id="image-container" class="image-placeholder">
+                    <span>[ Místo pro obrázek ]</span>
+                    <div id="evil-code" class="code-reveal">
+                        Útočník schoval do obrázku tento kód:<br>
+                        &lt;img src="https://banka.cz/odesli?castka=50000"&gt;
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel bank-panel">
+        <div class="panel-header">
+            <span>🏦 MojeBanka.cz</span>
+            <span style="font-size: 0.8rem;">🟢 Přihlášen</span>
+        </div>
+        <div class="panel-content">
+            <div class="account-status">
+                <div>Zůstatek na účtu:</div>
+                <div id="account-balance" class="balance">50 000 Kč</div>
+            </div>
+
+            <h4>Historie transakcí:</h4>
+            <div id="transaction-log" class="log-box">
+                [08:00] Přihlášení... Úspěšné<br>
+                [09:15] Příchozí platba: Výplata +50 000 Kč<br>
+            </div>
+
+            <div id="explanation-box" class="explanation">
+                <strong>🚨 Jak je to možné?!</strong>
+                <p>Když jste klikli na "Povolit obrázky", váš e-mail se pokusil načíst obrázek z adresy, kterou mu podstrčil útočník.</p>
+                <p>Tato adresa ale nebyla obrázek, byl to <strong>příkaz pro banku</strong>. Protože jste měli banku otevřenou ve vedlejší záložce, prohlížeč k tomuto příkazu automaticky přiložil vaše přihlášení. Banka poslechla příkaz, o kterém si myslela, že ho dáváte vy.</p>
+                <p><em>(Poznámka: V e-mailu místo obrázku vidíte jen prázdné místo nebo ikonku prasklého obrázku, protože banka nevrátila obrázek, ale potvrzení o platbě.)</em></p>
+            </div>
+        </div>
+    </div>
+
+    <div id="payload-anim" class="flying-payload">✉️</div>
+
+<script>
+function allowImages() {
+    // 1. Skryjeme žluté varování
+    const blocker = document.getElementById('image-blocker');
+    if (blocker) blocker.style.display = 'none';
+    
+    // 2. Najdeme kontejner a kód, který chceme zachovat
+    const imgContainer = document.getElementById('image-container');
+    const evilCode = document.getElementById('evil-code');
+
+    // 3. Nejdříve změníme vzhled kontejneru (místo přepsání celého innerHTML)
+    imgContainer.style.borderColor = '#dc2626';
+    imgContainer.style.color = '#dc2626';
+    imgContainer.querySelector('span').innerText = '❌ Obrázek se nepodařilo načíst';
+
+    // 4. Teď bezpečně zobrazíme skrytý kód útočníka
+    if (evilCode) {
+        evilCode.style.display = 'block';
+    }
+
+    // 5. Spustíme animaci "letícího požadavku"
+    const anim = document.getElementById('payload-anim');
+    anim.style.display = 'flex';
+    anim.style.animation = 'fly 1.5s ease-in forwards';
+
+    // 6. Reakce banky po "dopadu" požadavku
+    setTimeout(() => {
+        const balance = document.getElementById('account-balance');
+        if (balance) {
+            balance.innerText = '0 Kč';
+            balance.style.color = '#dc2626';
+        }
+
+        const log = document.getElementById('transaction-log');
+        if (log) {
+            const now = new Date().toLocaleTimeString();
+            log.innerHTML += `<div class="log-alert">[${now}] POZOR: PŘEVOD 50 000 Kč ZADANÝ PŘES SKRYTÝ ODKAZ!</div>`;
+            log.scrollTop = log.scrollHeight;
+        }
+
+        const expBox = document.getElementById('explanation-box');
+        if (expBox) expBox.style.display = 'block';
+        
+        anim.style.display = 'none';
+    }, 1500);
+}
+</script>
+
+</body>
+</html>
