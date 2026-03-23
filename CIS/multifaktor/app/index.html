@@ -15,7 +15,8 @@
     <link rel="stylesheet" title="Default Skin" media="all" type="text/css" href="./fonts.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=computer,passkey" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=computer,passkey" />
     <link rel="stylesheet" href="./styles-biometric.css">
     <script type="text/javascript" nonce="">
 
@@ -807,7 +808,7 @@
                                                     <div>
                                                         <b>Název účtu:</b> <span id="accountName">VUT:
                                                             123456@vut.cz</span>
-                                                            <!--
+                                                        <!--
                                                         <a type="button" class="btn-clipboard mt-0 me-0"
                                                             data-clipboard-target="#accountName"
                                                             data-bs-toggle="tooltip" data-bs-copied-title="Zkopírované!"
@@ -1139,6 +1140,15 @@
                     });
                 }
             })();
+
+
+        document.getElementById('qr-failed').addEventListener('click', function () {
+            if (driverObj) {
+                driverObj.destroy();
+                driverObj = null;
+            }
+        });
+
     </script>
 
 
@@ -1153,7 +1163,7 @@
         btnTotp?.addEventListener('click', () => {
             setTimeout(() => {
 
-                const driverObj = driver({
+                driverObj = driver({
                     popoverClass: "driverjs-theme",
                     stagePadding: 4,
                     onPopoverRender: (popover) => {
@@ -1167,6 +1177,7 @@
                         closeBtn.style.border = "none";
                         closeBtn.style.fontSize = "18px";
                         closeBtn.style.cursor = "pointer";
+                        closeBtn.style.color = "black";
 
                         closeBtn.addEventListener("click", () => {
                             driverObj.destroy();
@@ -1244,7 +1255,7 @@
 
                                         const driver = window.driver.js.driver;
 
-                                        const tour = driver({
+                                        driverObj = driver({
                                             showProgress: true,
                                             nextBtnText: "Další",
                                             prevBtnText: "Zpět",
@@ -1267,7 +1278,7 @@
                                                 }
                                             ]
                                         });
-                                        tour.drive();
+                                        driverObj.drive();
 
 
                                     }, 500);
@@ -1276,7 +1287,7 @@
                                 if (currentStepNum === 2) {
                                     setTimeout(() => {
 
-                                        const driverObj = driver({
+                                        driverObj = driver({
                                             popoverClass: "driverjs-theme",
                                             stagePadding: 4,
                                             onPopoverRender: (popover) => {
@@ -1290,6 +1301,7 @@
                                                 closeBtn.style.border = "none";
                                                 closeBtn.style.fontSize = "18px";
                                                 closeBtn.style.cursor = "pointer";
+                                                closeBtn.style.color = "black";
 
                                                 closeBtn.addEventListener("click", () => {
                                                     driverObj.destroy();
@@ -1540,7 +1552,7 @@
             const validPrev = await generateTOTP(totpSecret, counter - 1);
             const validNext = await generateTOTP(totpSecret, counter + 1);
 
-            if (input===localStorage.getItem("actualTOTP")||input===localStorage.getItem("lastTOTP")|| input === validNow || input === validPrev || input === validNext) {
+            if (input === localStorage.getItem("actualTOTP") || input === localStorage.getItem("lastTOTP") || input === validNow || input === validPrev || input === validNext) {
                 return true;
             }
 
@@ -1671,12 +1683,13 @@
     <script>
 
         const driver = window.driver.js.driver;
+        let driverObj = null;
 
         /* =========================
            TOUR 1 – po načtení stránky
            ========================= */
 
-        const tour = driver({
+        driverObj = driver({
             showProgress: true,
             nextBtnText: "Další",
             prevBtnText: "Zpět",
@@ -1703,7 +1716,7 @@
         window.addEventListener("load", () => {
             if (!localStorage.getItem("startTour")) {
                 setTimeout(() => {
-                    tour.drive();
+                    driverObj.drive();
                     localStorage.setItem("startTour", "true");
                 }, 500);
             }

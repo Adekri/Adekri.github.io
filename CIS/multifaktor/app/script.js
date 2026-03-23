@@ -1,5 +1,4 @@
 
-
 //Skript pro mazání řádku v tabulce
 let rowToDelete = null;
 const tableBody = document.querySelector("table tbody");
