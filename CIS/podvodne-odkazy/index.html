@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trénink: Analýza URL adres</title>
+    <title>Detekce podvodných odkazů</title>
     <style>
         :root {
             --bg-color: #f4f6f9;
@@ -263,8 +263,9 @@
         }
     ];
 
-    let currentLevel = 0;
     let answered = false;
+    let levelQueue = levels.map((_, i) => i);
+    let currentQueuePosition = 0;
 
     const urlDisplayEl = document.getElementById('url-display');
     const feedbackEl = document.getElementById('feedback');
@@ -278,9 +279,10 @@
         feedbackEl.innerText = '';
         nextBtn.style.display = 'none';
         
-        levelDisplayEl.innerText = `Postup: ${currentLevel + 1} / ${levels.length}`;
+        levelDisplayEl.innerText = `Postup: ${currentQueuePosition + 1} / ${levelQueue.length}`;
 
-        const level = levels[currentLevel];
+        const levelIndex = levelQueue[currentQueuePosition];
+        const level = levels[levelIndex];
         urlDisplayEl.innerText = level.url;
 
         optionButtons.forEach(btn => {
@@ -295,7 +297,8 @@
             
             answered = true;
             const selectedCategory = button.getAttribute('data-category');
-            const level = levels[currentLevel];
+            const levelIndex = levelQueue[currentQueuePosition];
+        const level = levels[levelIndex];
             
             optionButtons.forEach(btn => btn.disabled = true);
 
@@ -304,6 +307,9 @@
                 feedbackEl.className = 'feedback success';
                 feedbackEl.innerHTML = `<strong>Správně!</strong><br>${level.tip}`;
             } else {
+                // přidej chybnou úroveň na konec fronty
+                levelQueue.push(levelIndex);
+
                 button.classList.add('wrong');
                 
                 optionButtons.forEach(btn => {
@@ -324,8 +330,8 @@
     });
 
     nextBtn.onclick = () => {
-        currentLevel++;
-        if (currentLevel < levels.length) {
+        currentQueuePosition++;
+        if (currentQueuePosition < levelQueue.length) {
             loadLevel();
         } else {
             document.getElementById('options-container').style.display = 'none';
