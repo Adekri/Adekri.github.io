@@ -1,5 +1,6 @@
 
 // Skript pro mazání řádku v tabulce
+// Funkce je jednoduchá: klikneme na tlačítko Smazat -> uložíme řádek -> v modalu potvrdíme smazání.
 let selectedRowForDelete = null;
 const tableBody = document.querySelector("table tbody");
 

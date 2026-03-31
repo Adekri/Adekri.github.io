@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typosquatting</title>
+    <style>
+        :root {
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --text-color: #333;
+            --primary: #0066cc;
+            --success: #2ecc71;
+            --danger: #e74c3c;
+            --border-radius: 8px;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+
+        .instructions {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 15px;
+        }
+
+        .score-board {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-weight: bold;
+            font-size: 14px;
+            background: #eee;
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        .game-area {
+            background-color: #f9f9f9;
+            border: 2px solid #e0e0e0;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .url-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: #888;
+            margin-bottom: 5px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .url-display {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 22px;
+            letter-spacing: 0px; /* menší mezery mezi písmeny */
+            padding: 10px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            overflow-x: auto;
+        }
+
+        .fake-url span {
+            cursor: pointer;
+            padding: 2px 0px;
+            border-radius: 3px;
+            transition: all 0.2s;
+            user-select: none;
+        }
+
+        .fake-url span:hover {
+            background-color: #ffeaa7;
+        }
+
+        .fake-url span.selected {
+            background-color: #fab1a0;
+            border: 1px solid var(--danger);
+        }
+
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.2s;
+            width: 100%;
+        }
+
+        .btn:hover {
+            background-color: #0052a3;
+        }
+
+        .feedback {
+            margin-top: 15px;
+            font-weight: bold;
+            min-height: 24px;
+            padding: 10px;
+            border-radius: 4px;
+            display: none;
+        }
+
+        .feedback.success {
+            display: block;
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .feedback.error {
+            display: block;
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Trénink typosquattingu</h1>
+    <p class="instructions">Kliknutím v podvržené adrese označte písmena, která jsou změněná oproti originálu, a klikněte na "Ověřit".</p>
+
+    <div class="score-board">
+        <span id="level-display">Postup: 1 / 5</span>
+    </div>
+
+    <div class="game-area">
+        <div class="url-label">Podvržená adresa (Najděte chybu!)</div>
+        <div class="url-display fake-url" id="fake-url"></div>
+    </div>
+
+    <button class="btn" id="check-btn">Ověřit výsledek</button>
+    <div class="feedback" id="feedback"></div>
+</div>
+
+<script>
+    // Zde můžete snadno přidávat další příklady
+    const levels = [
+        {
+            legit: "microsoft.com",
+            fake: "rnicrosoft.com",
+            wrongIndices: [0, 1] // r a n tvoří dohromady vizuální m
+        },
+        {
+            legit: "google.com",
+            fake: "googIe.com",
+            wrongIndices: [4] // Velké "I" (Ičko) místo malého "l" (eLko)
+        },
+        {
+            legit: "facebook.com",
+            fake: "facebo0k.com",
+            wrongIndices: [6] // Nula místo písmene O
+        },
+        {
+            legit: "apple.com",
+            fake: "app|e.com",
+            wrongIndices: [3] // Svislá čára místo písmene L
+        },
+        {
+            legit: "seznam.cz",
+            fake: "seznarn.cz",
+            wrongIndices: [5, 6] // Opět "r" a "n" místo "m"
+        }
+    ];
+
+    let currentLevel = 0;
+    let selectedIndices = new Set();
+
+    const fakeEl = document.getElementById('fake-url');
+    const feedbackEl = document.getElementById('feedback');
+    const levelDisplayEl = document.getElementById('level-display');
+    const checkBtn = document.getElementById('check-btn');
+
+    function loadLevel() {
+        selectedIndices.clear();
+        feedbackEl.className = 'feedback';
+        feedbackEl.innerText = '';
+        checkBtn.innerText = "Ověřit výsledek";
+        checkBtn.onclick = checkAnswer;
+        
+        levelDisplayEl.innerText = `Postup: ${currentLevel + 1} / ${levels.length}`;
+
+        const level = levels[currentLevel];
+        
+
+        // Vykreslení falešné URL (rozsekané na klikatelné spany)
+        fakeEl.innerHTML = '';
+        for (let i = 0; i < level.fake.length; i++) {
+            const span = document.createElement('span');
+            span.innerText = level.fake[i];
+            span.dataset.index = i;
+            span.onclick = () => toggleCharacter(i, span);
+            fakeEl.appendChild(span);
+        }
+    }
+
+    function toggleCharacter(index, element) {
+        if (selectedIndices.has(index)) {
+            selectedIndices.delete(index);
+            element.classList.remove('selected');
+        } else {
+            selectedIndices.add(index);
+            element.classList.add('selected');
+        }
+    }
+
+    function checkAnswer() {
+        const level = levels[currentLevel];
+        const correctWrongIndices = level.wrongIndices;
+
+        // Ověříme, zda se pole shodují
+        const isCorrect = correctWrongIndices.length === selectedIndices.size &&
+            correctWrongIndices.every(idx => selectedIndices.has(idx));
+
+        if (isCorrect) {
+            feedbackEl.className = 'feedback success';
+            feedbackEl.innerText = 'Správně! Odhalili jste falešný znak.';
+            
+            checkBtn.innerText = currentLevel + 1 < levels.length ? "Další" : "FLAG()";
+            checkBtn.onclick = nextLevel;
+        } else {
+            feedbackEl.className = 'feedback error';
+            feedbackEl.innerText = 'Bohužel ne. Zkuste se podívat pozorněji, které znaky nesedí.';
+        }
+    }
+
+    function nextLevel() {
+        currentLevel++;
+        if (currentLevel < levels.length) {
+            loadLevel();
+        } else {
+            // Konec hry
+            document.querySelector('.game-area').style.display = 'none';
+            checkBtn.style.display = 'none';
+            feedbackEl.className = 'feedback success';
+            feedbackEl.style.display = 'block';
+            feedbackEl.innerText = `Skvělé! Dokončili jste trénink s celkovým skóre ${score} bodů.`;
+            levelDisplayEl.innerText = "Trénink dokončen!";
+        }
+    }
+
+    // Spuštění první úrovně
+    loadLevel();
+</script>
+
+</body>
+</html>
