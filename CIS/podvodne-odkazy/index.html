@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trénink: Analýza URL adres</title>
+    <style>
+        :root {
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --text-color: #333;
+            --primary: #0066cc;
+            --success: #2ecc71;
+            --danger: #e74c3c;
+            --border-radius: 8px;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .container {
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            max-width: 650px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+
+        .instructions {
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        .score-board {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-weight: bold;
+            font-size: 14px;
+            background: #eee;
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        .url-box {
+            background-color: #f9f9f9;
+            border: 2px solid #e0e0e0;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            margin-bottom: 25px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 20px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            color: #2d3436;
+            word-break: break-all;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 500px) {
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .option-btn {
+            background-color: #fff;
+            border: 2px solid #ddd;
+            border-radius: var(--border-radius);
+            padding: 15px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: #555;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            border-color: var(--primary);
+            background-color: #f0f7ff;
+            color: var(--primary);
+        }
+
+        .option-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .option-btn.correct {
+            border-color: var(--success) !important;
+            background-color: #eafaf1 !important;
+            color: #27ae60 !important;
+        }
+
+        .option-btn.wrong {
+            border-color: var(--danger) !important;
+            background-color: #fdedec !important;
+            color: #c0392b !important;
+        }
+
+        .feedback {
+            margin-top: 15px;
+            font-weight: bold;
+            padding: 15px;
+            border-radius: 4px;
+            display: none;
+            text-align: left;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .feedback.success {
+            display: block;
+            background-color: #d4edda;
+            color: #155724;
+            border-left: 5px solid var(--success);
+        }
+
+        .feedback.error {
+            display: block;
+            background-color: #f8d7da;
+            color: #721c24;
+            border-left: 5px solid var(--danger);
+        }
+
+        .next-btn {
+            margin-top: 20px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px 25px;
+            font-size: 16px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            display: none;
+            transition: background 0.2s;
+        }
+
+        .next-btn:hover {
+            background-color: #0052a3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Detekce podvodných odkazů</h1>
+    <p class="instructions">
+        Prohlédněte si níže uvedenou URL adresu a rozhodněte, o jaký typ odkazu se jedná. Kliknutím na příslušnou kategorii ověříte svůj tip.
+    </p>
+
+    <div class="score-board">
+        <span id="level-display">Postup: 1 / 9</span>
+    </div>
+
+    <div class="url-box" id="url-display">Nahrávám...</div>
+
+    <div class="options-grid" id="options-container">
+        <button class="option-btn" data-category="ok">
+            <span>🟢 V pořádku</span>
+            <small style="font-weight: normal; font-size: 11px;">Legitimní adresa</small>
+        </button>
+        <button class="option-btn" data-category="typo">
+            <span>🔤 Typosquatting</span>
+            <small style="font-weight: normal; font-size: 11px;">Záměna znaků / překlep</small>
+        </button>
+        <button class="option-btn" data-category="domain">
+            <span>🌐 Podvodná doména</span>
+            <small style="font-weight: normal; font-size: 11px;">Úplně cizí nebo jiný web</small>
+        </button>
+        <button class="option-btn" data-category="shortener">
+            <span>🔗 Skrytá adresa</span>
+            <small style="font-weight: normal; font-size: 11px;">Zkracovač (TinyURL, Bit.ly...)</small>
+        </button>
+    </div>
+
+    <div class="feedback" id="feedback"></div>
+    <button class="next-btn" id="next-btn">Další</button>
+</div>
+
+<script>
+    const levels = [
+        {
+            url: "rnicrosoft.com",
+            category: "typo",
+            tip: "Klasický typosquatting. Znaky 'r' a 'n' napsané těsně vedle sebe opticky napodobují písmeno 'm'."
+        },
+        {
+            url: "postaonline-cz.com",
+            category: "domain",
+            tip: "Tohle je podvodná doména. Oficiální pošta používá doménu postaonline.cz (bez pomlčky a s koncovkou .cz)."
+        },
+        {
+            url: "seznam.cz",
+            category: "ok",
+            tip: "Tato adresa je naprosto v pořádku."
+        },
+        {
+            url: "tinyurl.com/mironet-sleva",
+            category: "shortener",
+            tip: "Zkracovače adres sice šetří místo, ale ve firemním e-mailu jsou nebezpečné, protože schovávají skutečný cíl odkazu."
+        },
+        {
+            url: "idnes.cz.overeni-prihlaseni.com",
+            category: "domain",
+            tip: "Tohle je finta s klamavou subdoménou. Lidé čtou zleva doprava a vidí 'idnes.cz', ale skutečná doména je až část před koncem: 'overeni-prihlaseni.com'."
+        },
+        {
+            url: "googIe.com",
+            category: "typo",
+            tip: "Místo malého 'l' (el) bylo v názvu použito velké 'I' (i). Častý trik u známých značek."
+        },
+        {
+            url: "netflix-platba.com",
+            category: "domain",
+            tip: "Technika zvaná Combosquatting. Útočník vezme známé jméno a přidá k němu slovo jako 'platba' nebo 'podpora', aby vyvolal důvěru."
+        },
+        {
+            url: "https://google.com/bit.ly/login",
+            category: "shortener",
+            tip: "Toto už tak jednoduché nebylo, stále je ale třeba pamatovat, že hlavní doména se nachází v poslední části URL."
+        },
+        {
+            url: "csob-overeni.online",
+            category: "domain",
+            tip: "Banka by nikdy nepoužila pro své kritické systémy podivnou koncovku jako .online. Vždy si hlídá svou hlavní doménu."
+        },
+        {
+            url: "csob.cz-----------login.com",
+            category: "domain",
+            tip: "Tzv. URL padding. Na mobilu se díky pomlčkám schová skutečná doména (.com) a uživatel vidí jen csob.cz na začátku."
+        }
+    ];
+
+    let currentLevel = 0;
+    let answered = false;
+
+    const urlDisplayEl = document.getElementById('url-display');
+    const feedbackEl = document.getElementById('feedback');
+    const levelDisplayEl = document.getElementById('level-display');
+    const nextBtn = document.getElementById('next-btn');
+    const optionButtons = document.querySelectorAll('.option-btn');
+
+    function loadLevel() {
+        answered = false;
+        feedbackEl.className = 'feedback';
+        feedbackEl.innerText = '';
+        nextBtn.style.display = 'none';
+        
+        levelDisplayEl.innerText = `Postup: ${currentLevel + 1} / ${levels.length}`;
+
+        const level = levels[currentLevel];
+        urlDisplayEl.innerText = level.url;
+
+        optionButtons.forEach(btn => {
+            btn.className = 'option-btn';
+            btn.disabled = false;
+        });
+    }
+
+    optionButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            if (answered) return;
+            
+            answered = true;
+            const selectedCategory = button.getAttribute('data-category');
+            const level = levels[currentLevel];
+            
+            optionButtons.forEach(btn => btn.disabled = true);
+
+            if (selectedCategory === level.category) {
+                button.classList.add('correct');
+                feedbackEl.className = 'feedback success';
+                feedbackEl.innerHTML = `<strong>Správně!</strong><br>${level.tip}`;
+            } else {
+                button.classList.add('wrong');
+                
+                optionButtons.forEach(btn => {
+                    if (btn.getAttribute('data-category') === level.category) {
+                        btn.classList.add('correct');
+                    }
+                });
+
+                feedbackEl.className = 'feedback error';
+                feedbackEl.innerHTML = `<strong>To nebylo správně.</strong><br>${level.tip}`;
+            }
+
+            nextBtn.style.display = 'block';
+            if (currentLevel + 1 === levels.length) {
+                nextBtn.innerText = "Dokončit školení";
+            }
+        });
+    });
+
+    nextBtn.onclick = () => {
+        currentLevel++;
+        if (currentLevel < levels.length) {
+            loadLevel();
+        } else {
+            document.getElementById('options-container').style.display = 'none';
+            urlDisplayEl.style.display = 'none';
+            nextBtn.style.display = 'none';
+            
+            feedbackEl.className = 'feedback success';
+            feedbackEl.style.display = 'block';
+            feedbackEl.innerHTML = `<strong>Výborně!</strong> Podařilo se Vám odhalit všechny typy podvodných odkazů. FLAG()`;
+            levelDisplayEl.innerText = "Trénink dokončen!";
+        }
+    };
+
+    loadLevel();
+</script>
+
+</body>
+</html>
