@@ -22,6 +22,7 @@ function startBiometricAuth() {
             nextBtnText: "Další",
             prevBtnText: "Zpět",
             doneBtnText: "Hotovo",
+            progressText: '{{current}}/{{total}}',
             allowClose: false,
             onHighlighted: (element, step, { state }) => {
                 if (step.element === "#stornoBtn") {
@@ -107,6 +108,7 @@ mfaSelect.addEventListener("change", function () {
                 nextBtnText: "Další",
                 prevBtnText: "Zpět",
                 doneBtnText: "Hotovo",
+                progressText: '{{current}}/{{total}}',
                 allowClose: false,
                 steps: [
                     {
@@ -200,15 +202,22 @@ const winModal = document.getElementById("winModal");
 /* Odeslání formuláře s heslem*/
 document.getElementById("password-form").addEventListener("submit", function (e) {
     e.preventDefault();
+
+    const passwordInput = document.getElementById("password");
+    const password = passwordInput.value;
     const passwordForm = document.getElementById("password-form");
     const multifactorForm = document.getElementById("multifactor-form");
     const subheader = document.getElementById("subheader");
     const verifyBtn = document.getElementById("verifyBtn");
 
+    if (password !== "M3!0un3k") {
+        showInfoModal("Nesprávné heslo. Zadejte heslo M3!0un3k.");
+        return;
+    }
+
     passwordForm.style.display = "none";
     multifactorForm.style.display = "block";
     subheader.textContent = "Multifaktorová autentizace\n\n(MFA)";
-
 
     /* Simulace načítání a následné zobrazení modalu */
     setTimeout(startBiometricAuth, 1000);
