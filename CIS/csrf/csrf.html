@@ -110,6 +110,43 @@
             color: #a4262c;
             text-align: left;
         }
+
+        /* Tooltip pro obrázky */
+        .image-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .image-tooltip {
+            visibility: hidden;
+            background-color: #323130;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 10px 15px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            width: 200px;
+            font-size: 12px;
+            white-space: normal;
+            word-break: break-all;
+        }
+
+        .image-container:hover .image-tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .blocked-image {
+            filter: blur(5px);
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
     </style>
 </head>
 <body>
@@ -126,7 +163,10 @@
     </div>
 
     <div class="email-body">
-        <img id="logo-real" src="https://vut.cz/wikipedia/commons/3/3a/Clockify_logo.png" alt="Clockify" class="real-img" style="width: 150px;">
+        <div class="image-container">
+            <img id="logo-csrf" alt="Clockify" class="real-img blocked-image" style="width: 150px;">
+            <span class="image-tooltip" id="tooltip-csrf">csrf útok - skrytý obrázek z útočníka</span>
+        </div>
 
         <h1>Tried extra features?</h1>
         
@@ -136,25 +176,45 @@
 
         <p></p>
 
-        <img id="logo-real" src="https://vut.cz/wikipedia/commons/3/3a/Clockify_logo.png" alt="Scheduling" class="real-img" style="width: 150px;">
-
+        <div class="image-container">
+            <img id="logo-scheduling" alt="Scheduling" class="real-img blocked-image" style="width: 150px;">
+            <span class="image-tooltip" id="tooltip-scheduling">https://img.icons8.com/color/480/000000/calendar.png</span>
+        </div>
 
         <p><small>Invoicing • Expenses • Budgeting • Approvals</small></p>
 
     </div>
 
     <script>
+        let imagesUnblocked = false;
+
         function showImages() {
- 
+            imagesUnblocked = true;
+            
+            // Zobrazí Scheduling
+            document.getElementById('logo-scheduling').src = 'https://img.icons8.com/color/480/000000/calendar.png';
+            document.getElementById('logo-scheduling').classList.remove('blocked-image');
+            
+            // Clockify zůstane skrytý (CSRF útok)
+            document.getElementById('logo-csrf').classList.add('blocked-image');
             
             // Skryje varovnou lištu
             document.getElementById('banner').style.opacity = '0.5';
+            
+            // Otevře nové okno s bankovní simulací a proveďe CSRF útok
+            performCsrfAttack();
         }
 
         function performCsrfAttack() {
-            // Zobrazí vysvětlení útoku
-            document.getElementById('csrf-alert').style.display = 'block';
-            console.log("Fiktivní CSRF požadavek odeslán na pozadí...");
+            // Simulace CSRF útoku - otevření nového okna s bankovní aplikací
+            // Parametry v URL simulují převod
+            const transferAmount = 5000;
+            const recipientAccount = 'CSRF_ATTACKER_123';
+            const timestamp = new Date().getTime();
+            
+            const bankUrl = 'bank.html?amount=' + transferAmount + '&recipient=' + recipientAccount + '&timestamp=' + timestamp + '&victim_bank_account=VICTIM_ACCOUNT_456';
+            
+            window.open(bankUrl, 'bank_window', 'width=900,height=600,left=100,top=100');
         }
     </script>
 

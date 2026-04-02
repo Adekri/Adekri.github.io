@@ -36,6 +36,7 @@ A samotný kód (je možné vložit i do samostatného souboru):
             nextBtnText: "Další",
             prevBtnText: "Zpět",
             doneBtnText: "Hotovo",
+            progressText: '{{current}}/{{total}}',
             allowClose: false,
             steps: [
                 {
@@ -102,7 +103,9 @@ Vysvětlivky:
 
 ### Přidání křížku do rohu driver okna + nový typ driver okna
 
-Níže lze vidět, jak lze uprvait základní vzhled a funkčnost okna driveru. V případě highlight okna se přidává do sekce **onPopoverRender**. Sem se přidá i akci při kliknutí, což je zavření driveru. Typ driveru Highlight je vhodnější pokud máme v daném okně pouze jednu věc, kterou chceme zvýraznit.
+**POZOR**: místo toho prvního způsobu by se měl používat až ten následující ([tady](#modifikace-standartní-tour-jako-jeden-krok)).
+
+Níže lze vidět, jak lze uprvait základní vzhled a funkčnost okna driveru. V případě highlight okna se přidává do sekce **onPopoverRender**. Sem se přidá i akci při kliknutí, což je zavření driveru. Typ driveru Highlight je vhodnější pokud máme v daném okně pouze jednu věc, kterou chceme zvýraznit. 
 
 **POZOR**
 
@@ -111,6 +114,7 @@ Níže lze vidět, jak lze uprvait základní vzhled a funkčnost okna driveru. 
     driverObj = driver({
         popoverClass: "driverjs-theme",
         stagePadding: 4,
+        progressText: '{{current}}/{{total}}',
         onPopoverRender: (popover) => {
             const closeBtn = document.createElement("button");
             closeBtn.innerHTML = "✕";
@@ -139,6 +143,30 @@ Níže lze vidět, jak lze uprvait základní vzhled a funkčnost okna driveru. 
         }
     })
 
+#### Modifikace standartní tour jako jeden krok
+Případně asi lepší řešení je jen modifikovat standartní tour takto:
+
+        const driverbiometric = driver({
+            popoverClass: "driverjs-theme",
+            stagePadding: 4,
+            showProgress: true,
+            doneBtnText: "Hotovo",
+            showButtons: ['next'],
+            progressText: '{{current}}/{{total}}',
+            steps: [
+                {
+                    element: "#biometricModalBody",
+                    popover: {
+                        side: "bottom",
+                        title: "Postup",
+                        description: "V této simulaci místo přiložení prstu stiskněte klávesu 'O'.",
+                    }
+                }
+            ],
+        });
+        setTimeout(() => {
+            driverbiometric.drive();
+        }, 500);
 
 
 ## Jak používat custom vyskakovací okno s fontem a stylem VUT

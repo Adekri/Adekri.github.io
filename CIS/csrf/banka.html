@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bankovní aplikace - Detaily převodu</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .alert {
+            background-color: #fee9e9;
+            border-left: 4px solid #d13438;
+            padding: 15px 20px;
+            margin: 20px;
+            color: #a4262c;
+            font-size: 14px;
+            border-radius: 4px;
+        }
+
+        .alert strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .content {
+            padding: 30px 20px;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #201f1e;
+            margin-top: 20px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 14px;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            color: #605e5c;
+            font-weight: 500;
+        }
+
+        .detail-value {
+            color: #201f1e;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            word-break: break-all;
+            text-align: right;
+            max-width: 50%;
+        }
+
+        .amount-highlight {
+            font-size: 32px;
+            font-weight: bold;
+            color: #d13438;
+            text-align: center;
+            margin: 20px 0;
+            padding: 20px;
+            background-color: #f3f2f1;
+            border-radius: 8px;
+        }
+
+        .transaction-status {
+            background-color: #fee9e9;
+            border: 2px solid #d13438;
+            padding: 15px;
+            margin: 20px;
+            border-radius: 6px;
+            text-align: center;
+            color: #a4262c;
+            font-weight: bold;
+        }
+
+        .url-info {
+            background-color: #f3f2f1;
+            border: 1px solid #d2d0ce;
+            padding: 12px;
+            margin: 20px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            color: #605e5c;
+            word-break: break-all;
+            max-height: 100px;
+            overflow-y: auto;
+        }
+
+        .footer {
+            background-color: #f3f2f1;
+            padding: 20px;
+            text-align: center;
+            font-size: 12px;
+            color: #605e5c;
+        }
+
+        .close-btn {
+            background-color: #d13438;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .close-btn:hover {
+            background-color: #a4262c;
+        }
+
+        .warning-icon {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="warning-icon">⚠️</div>
+            <h1>Detekován CSRF Útok</h1>
+            <p>Byla zaznamenána podezřelá aktivita na vašem účtu</p>
+        </div>
+
+        <div class="alert">
+            <strong>UPOZORNĚNÍ O BEZPEČNOSTI!</strong>
+            Byla detekována neautorizovaná transakce iniciovaná skrz CSRF útok. Údaje níže ukazují, co se stalo:
+        </div>
+
+        <div class="content">
+            <div class="transaction-status">
+                PŘEVOD PROVEDEN - CSRF ÚTOK SIMULOVÁN
+            </div>
+
+            <div class="amount-highlight" id="transfer-amount">
+                --- Kč
+            </div>
+
+            <div class="section-title">📋 Detaily Transakce</div>
+            
+            <div class="detail-row">
+                <span class="detail-label">Váš účet:</span>
+                <span class="detail-value" id="victim-account">---</span>
+            </div>
+
+            <div class="detail-row">
+                <span class="detail-label">Účet příjemce:</span>
+                <span class="detail-value" id="recipient-account">---</span>
+            </div>
+
+            <div class="detail-row">
+                <span class="detail-label">Částka:</span>
+                <span class="detail-value" id="amount-detail">---</span>
+            </div>
+
+            <div class="detail-row">
+                <span class="detail-label">Čas transakce:</span>
+                <span class="detail-value" id="transaction-time">---</span>
+            </div>
+
+            <div class="detail-row">
+                <span class="detail-label">Status:</span>
+                <span class="detail-value" style="color: #d13438;">KOMPLETOVÁN</span>
+            </div>
+
+            <div class="section-title">🔍 Co se stalo?</div>
+            <p style="font-size: 14px; color: #605e5c; line-height: 1.6; margin-bottom: 15px;">
+                Útočník vás přivedl na stránku s skrytou žádostí o převod peněz. Bez vašeho vědomí byla vytvořena HTTP požadavek, 
+                která obsahovala parametry převodu v URL adrese. Toto je klasický CSRF (Cross-Site Request Forgery) útok.
+            </p>
+
+            <div class="section-title">🔗 URL Požadavek</div>
+            <div class="url-info" id="url-display">
+                ---
+            </div>
+
+            <div class="section-title">💡 Jak se chránit?</div>
+            <p style="font-size: 14px; color: #605e5c; line-height: 1.6;">
+                ✓ Vždy se podívejte na URL adresu<br>
+                ✓ Neotevírejte podezřelé emaily<br>
+                ✓ Používejte CSRF tokeny<br>
+                ✓ Aktualizujte prohlížeč<br>
+                ✓ Nevěřte cizím odkazům
+            </p>
+
+            <button class="close-btn" onclick="window.close()">Zavřít okno</button>
+        </div>
+
+        <div class="footer">
+            Toto je simulace bezpečnostního útoku. Ve skutečné bankovní aplikaci by byla takto taková transakce blokována.
+        </div>
+    </div>
+
+    <script>
+        // Parsování URL parametrů
+        function getUrlParameter(name) {
+            const params = new URLSearchParams(window.location.search);
+            return params.get(name);
+        }
+
+        // Načtení a zobrazení dat z URL
+        window.addEventListener('load', function() {
+            const amount = getUrlParameter('amount') || 'NEZNÁMÁ ČÁSTKA';
+            const recipient = getUrlParameter('recipient') || 'NEZNÁMÝ ÚČET';
+            const victim = getUrlParameter('victim_bank_account') || 'YOUR_ACCOUNT_123456';
+            const timestamp = getUrlParameter('timestamp') || new Date().getTime();
+
+            // Formátování data a času
+            const date = new Date(parseInt(timestamp));
+            const timeString = date.toLocaleString('cs-CZ');
+
+            // Naplnění detailů
+            document.getElementById('transfer-amount').textContent = amount + ' Kč';
+            document.getElementById('amount-detail').textContent = amount + ' Kč';
+            document.getElementById('recipient-account').textContent = recipient;
+            document.getElementById('victim-account').textContent = victim;
+            document.getElementById('transaction-time').textContent = timeString;
+
+            // Zobrazení URL
+            const currentUrl = window.location.href;
+            document.getElementById('url-display').textContent = currentUrl;
+        });
+    </script>
+</body>
+</html>

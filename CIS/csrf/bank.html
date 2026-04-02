@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bankovní aplikace - Potvrzení transakce</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f5f5f5;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            max-width: 700px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .header {
+            background-color: #1565c0;
+            color: white;
+            padding: 25px 30px;
+        }
+
+        .header h1 {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+
+        .alert {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px 20px;
+            margin: 20px;
+            color: #856404;
+            font-size: 13px;
+            border-radius: 4px;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .section-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #333;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .section-title:first-of-type {
+            margin-top: 0;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 14px;
+        }
+
+        .detail-row:last-of-type {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            color: #666;
+            font-weight: 500;
+        }
+
+        .detail-value {
+            color: #333;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            text-align: right;
+            word-break: break-all;
+            max-width: 50%;
+        }
+
+        .amount-section {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 25px 0;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+        }
+
+        .amount-label {
+            font-size: 12px;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .amount-value {
+            font-size: 36px;
+            font-weight: 300;
+            color: #1565c0;
+        }
+
+        .transaction-status {
+            background-color: #e8f5e9;
+            border: 1px solid #4caf50;
+            padding: 12px 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+            text-align: center;
+            color: #2e7d32;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .url-info {
+            background-color: #f5f5f5;
+            border: 1px solid #ddd;
+            padding: 12px;
+            margin: 20px 0;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            color: #666;
+            word-break: break-all;
+            max-height: 100px;
+            overflow-y: auto;
+        }
+
+        .footer {
+            background-color: #f9f9f9;
+            padding: 20px 30px;
+            text-align: center;
+            font-size: 12px;
+            color: #999;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .close-btn {
+            background-color: #1565c0;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .close-btn:hover {
+            background-color: #1043a7;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Potvrzení transakce</h1>
+            <p>Detaily převodu peněz</p>
+        </div>
+
+        <div class="alert">
+            ⚠️ Vaše bankovní aplikace zaznamenala novou transakci. Zkontrolujte detaily níže.
+        </div>
+
+        <div class="content">
+            <div class="transaction-status">
+                ✓ TRANSAKCE VYKONČENA ÚSPĚŠNĚ
+            </div>
+
+            <div class="amount-section">
+                <div class="amount-label">Převedená částka</div>
+                <div class="amount-value" id="transfer-amount">---</div>
+            </div>
+
+            <div class="section-title">Zdroj Prostředků</div>
+            
+            <div class="detail-row">
+                <span class="detail-label">Číslo účtu:</span>
+                <span class="detail-value" id="victim-account">---</span>
+            </div>
+
+            <div class="section-title">Příjemce</div>
+
+            <div class="detail-row">
+                <span class="detail-label">Číslo účtu:</span>
+                <span class="detail-value" id="recipient-account">---</span>
+            </div>
+
+            <div class="section-title">Detaily Transakce</div>
+            
+            <div class="detail-row">
+                <span class="detail-label">Datum a čas:</span>
+                <span class="detail-value" id="transaction-time">---</span>
+            </div>
+
+            <div class="detail-row">
+                <span class="detail-label">Referenční číslo:</span>
+                <span class="detail-value" id="reference-number">---</span>
+            </div>
+
+            <div class="detail-row">
+                <span class="detail-label">Typ transakce:</span>
+                <span class="detail-value">Převod peněz</span>
+            </div>
+
+            <div class="section-title">Zdrojové URL</div>
+            <div class="url-info" id="url-display">
+                ---
+            </div>
+
+            <button class="close-btn" onclick="window.close()">Zavřít</button>
+        </div>
+
+        <div class="footer">
+            Tato transakce byla iniciována z externího zdroje. Pokud si ji nepamatujete, kontaktujte podporu banky.
+        </div>
+    </div>
+
+    <script>
+        // Parsování URL parametrů
+        function getUrlParameter(name) {
+            const params = new URLSearchParams(window.location.search);
+            return params.get(name);
+        }
+
+        // Generování referenčního čísla
+        function generateReferenceNumber() {
+            return 'REF' + Math.random().toString(36).substring(2, 15).toUpperCase();
+        }
+
+        // Načtení a zobrazení dat z URL
+        window.addEventListener('load', function() {
+            const amount = getUrlParameter('amount') || '5000';
+            const recipient = getUrlParameter('recipient') || 'UNKNOWN';
+            const victim = getUrlParameter('victim_bank_account') || 'ACCOUNT_123456789';
+            const timestamp = getUrlParameter('timestamp') || new Date().getTime();
+
+            // Formátování data a času
+            const date = new Date(parseInt(timestamp));
+            const timeString = date.toLocaleString('cs-CZ');
+
+            // Naplnění detailů
+            document.getElementById('transfer-amount').textContent = amount + ' Kč';
+            document.getElementById('recipient-account').textContent = recipient;
+            document.getElementById('victim-account').textContent = victim;
+            document.getElementById('transaction-time').textContent = timeString;
+            document.getElementById('reference-number').textContent = generateReferenceNumber();
+
+            // Zobrazení URL
+            const currentUrl = window.location.href;
+            document.getElementById('url-display').textContent = currentUrl;
+        });
+    </script>
+</body>
+</html>
+
