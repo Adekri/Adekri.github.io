@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulace Outlook - Bezpečnostní ukázka</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f3f2f1;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* Outlook Banner */
+        .outlook-banner {
+            background-color: #fff;
+            border: 1px solid #d2d0ce;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            font-size: 13px;
+            color: #323130;
+            margin-bottom: 20px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .info-icon {
+            background-color: #605e5c;
+            color: white;
+            border-radius: 50%;
+            width: 30px;
+            height: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-weight: bold;
+        }
+
+        .banner-buttons {
+            margin-left: auto;
+        }
+
+        .banner-btn {
+            background: #fff;
+            border: 1px solid #8a8886;
+            padding: 4px 8px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-left: 5px;
+        }
+
+        .banner-btn:hover {
+            background-color: #f3f2f1;
+        }
+
+        /* Tělo e-mailu */
+        .email-body {
+            background-color: #ffffff;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 40px;
+            text-align: center;
+            border: 1px solid #e1dfdd;
+        }
+
+        .placeholder-img {
+            background-color: #f3f2f1;
+            border: 1px dashed #a19f9d;
+            color: #605e5c;
+            padding: 20px;
+            margin: 20px auto;
+            display: block;
+            width: 200px;
+            text-decoration: none;
+        }
+
+        .real-img {
+            max-width: 100%;
+            height: auto;
+            margin: 20px 0;
+        }
+
+        h1 { color: #201f1e; font-size: 28px; }
+        p { color: #605e5c; line-height: 1.5; }
+
+        .btn-trial {
+            background-color: #4bb3fd;
+            color: white;
+            padding: 12px 30px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 20px;
+            border: none;
+            cursor: default;
+            font-size: 16px;
+        }
+
+        /* Simulace útoku */
+        #csrf-alert {
+            display: none;
+            background-color: #fee9e9;
+            border: 2px solid #d13438;
+            padding: 15px;
+            margin-top: 20px;
+            color: #a4262c;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="outlook-banner" id="banner">
+        <div class="info-icon">i</div>
+        <div>
+            Některé části v této zprávě jsou zablokované, protože odesílatele nemáte v seznamu bezpečných odesílatelů.
+        </div>
+        <div class="banner-buttons">
+            <button class="banner-btn" onclick="showImages()">Důvěřovat odesílateli</button>
+            <button class="banner-btn" onclick="showImages()">Zobrazit blokovaný obsah</button>
+        </div>
+    </div>
+
+    <div class="email-body">
+        <img id="logo-real" src="https://vut.cz/wikipedia/commons/3/3a/Clockify_logo.png" alt="Clockify" class="real-img" style="width: 150px;">
+
+        <h1>Tried extra features?</h1>
+        
+        <p>Clockify is more than just a time tracker. Our additional features help you better manage projects and teammates. Try out the PRO features for free.</p>
+
+        <button class="btn-trial">Start Free Trial</button>
+
+        <p></p>
+
+        <img id="logo-real" src="https://vut.cz/wikipedia/commons/3/3a/Clockify_logo.png" alt="Scheduling" class="real-img" style="width: 150px;">
+
+
+        <p><small>Invoicing • Expenses • Budgeting • Approvals</small></p>
+
+    </div>
+
+    <script>
+        function showImages() {
+ 
+            
+            // Skryje varovnou lištu
+            document.getElementById('banner').style.opacity = '0.5';
+        }
+
+        function performCsrfAttack() {
+            // Zobrazí vysvětlení útoku
+            document.getElementById('csrf-alert').style.display = 'block';
+            console.log("Fiktivní CSRF požadavek odeslán na pozadí...");
+        }
+    </script>
+
+</body>
+</html>

@@ -1071,18 +1071,23 @@
                                 const driverbiometric = driver({
                                     popoverClass: "driverjs-theme",
                                     stagePadding: 4,
+                                    showProgress: true,
+                                    doneBtnText: "Hotovo",
+                                    showButtons: ['next'],
+                                    progressText: '{{current}}/{{total}}',
+                                    steps: [
+                                        {
+                                            element: "#biometricModalBody",
+                                            popover: {
+                                                side: "bottom",
+                                                title: "Postup",
+                                                description: "V této simulaci místo přiložení prstu stiskněte klávesu 'O'.",
+                                            }
+                                        }
+                                    ],
                                 });
                                 setTimeout(() => {
-
-
-                                    driverbiometric.highlight({
-                                        element: "#biometricModalBody",
-                                        popover: {
-                                            side: "bottom",
-                                            title: "Postup",
-                                            description: "V této simulaci místo přiložení prstu stiskněte klávesu 'O'.",
-                                        }
-                                    })
+                                    driverbiometric.drive();
                                 }, 500);
                                 // wait for user to press 'o' (or 'O') to simulate fingerprint
 
@@ -1166,34 +1171,24 @@
                 driverObj = driver({
                     popoverClass: "driverjs-theme",
                     stagePadding: 4,
-                    onPopoverRender: (popover) => {
-                        const closeBtn = document.createElement("button");
-                        closeBtn.innerHTML = "✕";
+                    showProgress: true,
+                    doneBtnText: "Hotovo",
+                    showButtons: ['next'],
+                    progressText: '{{current}}/{{total}}',
+                    steps: [
+                        {
+                            element: "#step1",
+                            popover: {
+                                title: "Postup",
+                                description: "Na tomto místě jste vyzváni k instalaci ověřovací aplikace. Tu si samozřejmě nainstalovat můžete, ale pro účely úkolu si otevřete simulátor telefonu s touto aplikací. Odkaz na tento simulátor je v zadání úkolu.",
+                            }
+                        }
+                    ]
 
-                        closeBtn.style.position = "absolute";
-                        closeBtn.style.top = "10px";
-                        closeBtn.style.right = "10px";
-                        closeBtn.style.background = "transparent";
-                        closeBtn.style.border = "none";
-                        closeBtn.style.fontSize = "18px";
-                        closeBtn.style.cursor = "pointer";
-                        closeBtn.style.color = "black";
 
-                        closeBtn.addEventListener("click", () => {
-                            driverObj.destroy();
-                        });
-
-                        popover.wrapper.appendChild(closeBtn);
-                    }
                 });
 
-                driverObj.highlight({
-                    element: "#step1",
-                    popover: {
-                        title: "Postup",
-                        description: "Na tomto místě jste vyzváni k instalaci ověřovací aplikace. Tu si samozřejmě nainstalovat můžete, ale pro účely úkolu si otevřete simulátor telefonu s touto aplikací. Odkaz na tento simulátor je v zadání úkolu.",
-                    }
-                });
+                driverObj.drive();
 
             }, 500);
         });
@@ -1260,6 +1255,7 @@
                                             nextBtnText: "Další",
                                             prevBtnText: "Zpět",
                                             doneBtnText: "Hotovo",
+                                            progressText: '{{current}}/{{total}}',
                                             allowClose: false,
                                             steps: [
                                                 {
@@ -1290,33 +1286,22 @@
                                         driverObj = driver({
                                             popoverClass: "driverjs-theme",
                                             stagePadding: 4,
-                                            onPopoverRender: (popover) => {
-                                                const closeBtn = document.createElement("button");
-                                                closeBtn.innerHTML = "✕";
+                                            showProgress: true,
+                                            doneBtnText: "Hotovo",
+                                            showButtons: ['next'],
+                                            progressText: '{{current}}/{{total}}',
+                                            steps: [
+                                                {
+                                                    element: "#step3",
+                                                    popover: {
+                                                        title: "Postup",
+                                                        description: "Na závěr je ještě potřeba spojení potvrdit. To provedete zadáním jednorázového kódu, který se pravidelně obnovuje u přidaného účtu ve vašem telefonu.",
+                                                    }
+                                                }
+                                            ]
 
-                                                closeBtn.style.position = "absolute";
-                                                closeBtn.style.top = "10px";
-                                                closeBtn.style.right = "10px";
-                                                closeBtn.style.background = "transparent";
-                                                closeBtn.style.border = "none";
-                                                closeBtn.style.fontSize = "18px";
-                                                closeBtn.style.cursor = "pointer";
-                                                closeBtn.style.color = "black";
-
-                                                closeBtn.addEventListener("click", () => {
-                                                    driverObj.destroy();
-                                                });
-
-                                                popover.wrapper.appendChild(closeBtn);
-                                            }
                                         });
-                                        driverObj.highlight({
-                                            element: "#step3",
-                                            popover: {
-                                                title: "Postup",
-                                                description: "Na závěr je ještě potřeba spojení potvrdit. To provedete zadáním jednorázového kódu, který se pravidelně obnovuje u přidaného účtu ve vašem telefonu.",
-                                            }
-                                        })
+                                        driverObj.drive();
 
 
                                     }, 500);
@@ -1694,6 +1679,7 @@
             nextBtnText: "Další",
             prevBtnText: "Zpět",
             doneBtnText: "Hotovo",
+            progressText: '{{current}}/{{total}}',
             allowClose: false,
             steps: [
                 {

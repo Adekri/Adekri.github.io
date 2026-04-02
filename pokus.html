@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trénink: Analýza e-mailů</title>
+    <style>
+        :root {
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --text-color: #333;
+            --primary: #0066cc;
+            --success: #2ecc71;
+            --danger: #e74c3c;
+            --border-radius: 8px;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            max-width: 700px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+
+        .instructions {
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        .score-board {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-weight: bold;
+            font-size: 14px;
+            background: #eee;
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        /* Styl simulované e-mailové schránky */
+        .email-client {
+            border: 2px solid #ddd;
+            border-radius: var(--border-radius);
+            text-align: left;
+            margin-bottom: 25px;
+            background-color: #fff;
+            overflow: hidden;
+        }
+
+        .email-header {
+            background-color: #f1f3f4;
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .email-header-row {
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .email-header-row strong {
+            color: #555;
+            display: inline-block;
+            width: 60px;
+        }
+
+        .email-body {
+            padding: 20px;
+            font-size: 15px;
+            line-height: 1.6;
+            color: #222;
+            min-height: 120px;
+        }
+
+        .email-attachment {
+            margin: 15px 20px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border: 1px dashed #ccc;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+        }
+
+        /* Možnosti výběru */
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 550px) {
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .option-btn {
+            background-color: #fff;
+            border: 2px solid #ddd;
+            border-radius: var(--border-radius);
+            padding: 15px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            color: #555;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            border-color: var(--primary);
+            background-color: #f0f7ff;
+            color: var(--primary);
+        }
+
+        .option-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .option-btn.correct {
+            border-color: var(--success) !important;
+            background-color: #eafaf1 !important;
+            color: #27ae60 !important;
+        }
+
+        .option-btn.wrong {
+            border-color: var(--danger) !important;
+            background-color: #fdedec !important;
+            color: #c0392b !important;
+        }
+
+        .feedback {
+            margin-top: 15px;
+            font-weight: bold;
+            padding: 15px;
+            border-radius: 4px;
+            display: none;
+            text-align: left;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .feedback.success {
+            display: block;
+            background-color: #d4edda;
+            color: #155724;
+            border-left: 5px solid var(--success);
+        }
+
+        .feedback.error {
+            display: block;
+            background-color: #f8d7da;
+            color: #721c24;
+            border-left: 5px solid var(--danger);
+        }
+
+        .next-btn {
+            margin-top: 20px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px 25px;
+            font-size: 16px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            display: none;
+            transition: background 0.2s;
+        }
+
+        .next-btn:hover {
+            background-color: #0052a3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🛡️ Detektor podvodných e-mailů</h1>
+    <p class="instructions">
+        Prohlédněte si příchozí e-mail. Zaměřte se na odesílatele, tón zprávy a přílohy. Rozhodněte, o jaký typ e-mails se jedná.
+    </p>
+
+    <div class="score-board">
+        <span id="level-display">Úroveň: 1 / 5</span>
+        <span id="score-display">Skóre: 0</span>
+    </div>
+
+    <div class="email-client">
+        <div class="email-header">
+            <div class="email-header-row"><strong>Od:</strong> <span id="email-from"></span></div>
+            <div class="email-header-row"><strong>Předmět:</strong> <span id="email-subject" style="font-weight: bold;"></span></div>
+        </div>
+        <div class="email-body" id="email-body"></div>
+        <div class="email-attachment" id="email-attachment" style="display: none;">
+            <span>📎</span> <span id="attachment-name"></span>
+        </div>
+    </div>
+
+    <div class="options-grid" id="options-container">
+        <button class="option-btn" data-category="ok">
+            <span>🟢 Bezpečný e-mail</span>
+            <small style="font-weight: normal; font-size: 11px;">Běžná komunikace</small>
+        </button>
+        <button class="option-btn" data-category="phishing">
+            <span>🎣 Phishing (Hromadný)</span>
+            <small style="font-weight: normal; font-size: 11px;">Útok na tisíce lidí naráz</small>
+        </button>
+        <button class="option-btn" data-category="spear">
+            <span>🎯 Spear-phishing</span>
+            <small style="font-weight: normal; font-size: 11px;">Cílený útok (např. jménem šéfa)</small>
+        </button>
+        <button class="option-btn" data-category="malware">
+            <span>☣️ Škodlivá příloha</span>
+            <small style="font-weight: normal; font-size: 11px;">E-mail s virem (Malware)</small>
+        </button>
+    </div>
+
+    <div class="feedback" id="feedback"></div>
+    <button class="next-btn" id="next-btn">Další úroveň</button>
+</div>
+
+<script>
+    const levels = [
+        {
+            from: "podpora@microsoft-security-hub.com",
+            subject: "UPOZORNĚNÍ: Váš účet byl zablokován!",
+            body: "Vážený zákazníku,<br><br>zjistili jsme neobvyklou aktivitu na vašem účtu Office 365. Přihlášení proběhlo z IP adresy v Rusku. Pokud jste to nebyli vy, okamžitě obnovte svůj přístup kliknutím na odkaz níže.<br><br><a href='#'>[ Odkaz na obnovení účtu ]</a><br><br>Pokud tak neučiníte do 24 hodin, váš účet bude trvale smazán.",
+            category: "phishing",
+            tip: "Typický hromadný phishing: Vyvolává paniku (zablokovaný účet), hrozí časovým limitem (24 hodin) a používá obecné oslovení 'Vážený zákazníku'."
+        },
+        {
+            from: "p.dvorak@vasedomena.cz (Skutečný e-mail ředitele)",
+            subject: "Spěchá: Proplacení faktury v příloze",
+            body: "Ahoj Petro,<br><br>jsem teď na celodenním jednání a nemám přístup do banky. Prosím tě o urgentní proplacení této faktury zahraničnímu dodavateli. Spěchá to, materiál potřebujeme zítra na stavbě.<br><br>Díky, Pavel.",
+            attachment: "faktura_prikaz_k_uhrade.pdf.exe",
+            category: "malware",
+            tip: "Pozor na přílohy! I když se e-mail tváří, že je od ředitele, soubor končí příponou .exe (spustitelný program), nikoliv .pdf. Kliknutím byste si nainstalovali virus."
+        },
+        {
+            from: "it-podpora@vasedomena.cz",
+            subject: "Plánovaná údržba interního systému (Sobota 22:00)",
+            body: "Dobrý den všem,<br><br>v sobotu od 22:00 do 24:00 proběhne plánovaná údržba docházkového systému. V této době může docházet k výpadkům. Žádná akce z vaší strany není nutná.<br><br>S pozdravem, IT oddělení.",
+            category: "ok",
+            tip: "Tento e-mail je v pořádku. Nechce po vás žádné heslo, nevyhrožuje a pouze informuje o plánované aktivitě."
+        },
+        {
+            from: "pavel.novotny.ceo@gmail.com",
+            subject: "Důvěrné: Převod prostředků",
+            body: "Dobrý den, Jano,<br><br>mám na Vás prosbu. Právě dokončuji akvizici a potřebuji diskrétně odeslat 150 000 Kč na účet našeho právního zastoupení. Číslo účtu Vám pošlu obratem. Nikomu o tom prosím zatím neříkejte, je to v režimu utajení.<br><br>Pavel Novotný, CEO",
+            category: "spear",
+            tip: "Tohle je Spear-phishing (konkrétně CEO fraud). Útočník si zjistil jméno účetní i ředitele. Zneužívá autoritu šéfa a žádá porušení firemních procesů pod záminkou tajné operace. E-mail navíc přišel z Gmailu, ne z firemní adresy."
+        },
+        {
+            from: "info@ceskaposta-servis.online",
+            subject: "Zásilka č. 45879652 - Chybějící údaje",
+            body: "Vážený zákazníku,<br><br>Vaše zásilka nemohla být doručena, protože na balíku chybí číslo popisné. Prosíme o aktualizaci údajů a uhrazení manipulačního poplatku 14,50 Kč, aby mohl být balík uvolněn k doručení.<br><br><a href='#'>[ Doplnit údaje a zaplatit ]</a>",
+            category: "phishing",
+            tip: "Klasický phishing zneužívající zvědavost. Lidé často čekají balíčky a malá částka (14 Kč) nevypadá podezřele. Cílem je ale získat údaje z vaší platební karty!"
+        }
+    ];
+
+    let currentLevel = 0;
+    let score = 0;
+    let answered = false;
+
+    const fromEl = document.getElementById('email-from');
+    const subjectEl = document.getElementById('email-subject');
+    const bodyEl = document.getElementById('email-body');
+    const attachmentEl = document.getElementById('email-attachment');
+    const attachmentNameEl = document.getElementById('attachment-name');
+    
+    const feedbackEl = document.getElementById('feedback');
+    const levelDisplayEl = document.getElementById('level-display');
+    const scoreDisplayEl = document.getElementById('score-display');
+    const nextBtn = document.getElementById('next-btn');
+    const optionButtons = document.querySelectorAll('.option-btn');
+
+    function loadLevel() {
+        answered = false;
+        feedbackEl.className = 'feedback';
+        feedbackEl.innerText = '';
+        nextBtn.style.display = 'none';
+        
+        levelDisplayEl.innerText = `Úroveň: ${currentLevel + 1} / ${levels.length}`;
+        scoreDisplayEl.innerText = `Skóre: ${score}`;
+
+        const level = levels[currentLevel];
+        
+        // Načtení dat do e-mailu
+        fromEl.innerText = level.from;
+        subjectEl.innerText = level.subject;
+        bodyEl.innerHTML = level.body;
+
+        if (level.attachment) {
+            attachmentEl.style.display = 'flex';
+            attachmentNameEl.innerText = level.attachment;
+        } else {
+            attachmentEl.style.display = 'none';
+        }
+
+        optionButtons.forEach(btn => {
+            btn.className = 'option-btn';
+            btn.disabled = false;
+        });
+    }
+
+    optionButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            if (answered) return;
+            
+            answered = true;
+            const selectedCategory = button.getAttribute('data-category');
+            const level = levels[currentLevel];
+            
+            optionButtons.forEach(btn => btn.disabled = true);
+
+            if (selectedCategory === level.category) {
+                score += 10;
+                scoreDisplayEl.innerText = `Skóre: ${score}`;
+                button.classList.add('correct');
+                feedbackEl.className = 'feedback success';
+                feedbackEl.innerHTML = `<strong>Správně!</strong><br>${level.tip}`;
+            } else {
+                button.classList.add('wrong');
+                
+                optionButtons.forEach(btn => {
+                    if (btn.getAttribute('data-category') === level.category) {
+                        btn.classList.add('correct');
+                    }
+                });
+
+                feedbackEl.className = 'feedback error';
+                feedbackEl.innerHTML = `<strong>To nebylo správně.</strong><br>${level.tip}`;
+            }
+
+            nextBtn.style.display = 'block';
+            if (currentLevel + 1 === levels.length) {
+                nextBtn.innerText = "Dokončit školení";
+            }
+        });
+    });
+
+    nextBtn.onclick = () => {
+        currentLevel++;
+        if (currentLevel < levels.length) {
+            loadLevel();
+        } else {
+            document.getElementById('options-container').style.display = 'none';
+            document.querySelector('.email-client').style.display = 'none';
+            nextBtn.style.display = 'none';
+            
+            feedbackEl.className = 'feedback success';
+            feedbackEl.style.display = 'block';
+            feedbackEl.innerHTML = `🎉 <strong>Skvělé!</strong> Dokončili jste trénink analýzy e-mailů s celkovým skóre ${score} bodů.`;
+            levelDisplayEl.innerText = "Trénink dokončen!";
+        }
+    };
+
+    loadLevel();
+</script>
+
+</body>
+</html>
