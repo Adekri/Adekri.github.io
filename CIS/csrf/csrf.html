@@ -124,14 +124,12 @@
             text-align: center;
             border-radius: 6px;
             padding: 10px 15px;
-            position: absolute;
+            position: fixed;
             z-index: 1;
-            bottom: 125%;
-            left: 50%;
-            margin-left: -100px;
+            bottom: 1%;
+            left: 1%;
             opacity: 0;
             transition: opacity 0.3s;
-            width: 200px;
             font-size: 12px;
             white-space: normal;
             word-break: break-all;
@@ -165,7 +163,7 @@
     <div class="email-body">
         <div class="image-container">
             <img id="logo-csrf" alt="Clockify" class="real-img blocked-image" style="width: 150px;">
-            <span class="image-tooltip" id="tooltip-csrf">csrf útok - skrytý obrázek z útočníka</span>
+            <span class="image-tooltip" id="tooltip-csrf">GET bank.html?amount=5000&recipient=CSRF_ATTACKER_123&victim_bank_account=VICTIM_ACCOUNT_456</span>
         </div>
 
         <h1>Tried extra features?</h1>
@@ -178,7 +176,7 @@
 
         <div class="image-container">
             <img id="logo-scheduling" alt="Scheduling" class="real-img blocked-image" style="width: 150px;">
-            <span class="image-tooltip" id="tooltip-scheduling">https://img.icons8.com/color/480/000000/calendar.png</span>
+            <span class="image-tooltip" id="tooltip-scheduling">GET https://img.icons8.com/color/480/000000/calendar.png</span>
         </div>
 
         <p><small>Invoicing • Expenses • Budgeting • Approvals</small></p>
@@ -212,7 +210,7 @@
             const recipientAccount = 'CSRF_ATTACKER_123';
             const timestamp = new Date().getTime();
             
-            const bankUrl = 'bank.html?amount=' + transferAmount + '&recipient=' + recipientAccount + '&timestamp=' + timestamp + '&victim_bank_account=VICTIM_ACCOUNT_456';
+            const bankUrl = 'internetbanka.html?amount=' + transferAmount + '&recipient=' + recipientAccount + '&timestamp=' + timestamp + '&victim_bank_account=VICTIM_ACCOUNT_456';
             
             window.open(bankUrl, 'bank_window', 'width=900,height=600,left=100,top=100');
         }
