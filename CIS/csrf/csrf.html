@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulace Outlook - Bezpečnostní ukázka</title>
+    <title>Simulace Outlook</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -124,8 +124,8 @@
             text-align: center;
             border-radius: 6px;
             padding: 10px 15px;
-            position: fixed;
-            z-index: 1;
+            position:relative;
+            z-index: 3;
             bottom: 1%;
             left: 1%;
             opacity: 0;
@@ -141,10 +141,9 @@
         }
 
         .blocked-image {
-            filter: blur(5px);
-            cursor: not-allowed;
-            opacity: 0.6;
+            cursor:zoom-in;
         }
+
     </style>
 </head>
 <body>
@@ -163,7 +162,7 @@
     <div class="email-body">
         <div class="image-container">
             <img id="logo-csrf" alt="Clockify" class="real-img blocked-image" style="width: 150px;">
-            <span class="image-tooltip" id="tooltip-csrf">GET bank.html?amount=5000&recipient=CSRF_ATTACKER_123&victim_bank_account=VICTIM_ACCOUNT_456</span>
+            <span style="background-color: #d13438;" class="image-tooltip" id="tooltip-csrf">GET MojeBanka?částka=5000&příjemce=ÚČET_ÚTOČNÍKA&odesílatel=ÚČET_OBĚTI</span>
         </div>
 
         <h1>Tried extra features?</h1>
@@ -176,7 +175,7 @@
 
         <div class="image-container">
             <img id="logo-scheduling" alt="Scheduling" class="real-img blocked-image" style="width: 150px;">
-            <span class="image-tooltip" id="tooltip-scheduling">GET https://img.icons8.com/color/480/000000/calendar.png</span>
+            <span style="background-color:darkgreen;" class="image-tooltip" id="tooltip-scheduling">GET https://google.images.com/calendar.png</span>
         </div>
 
         <p><small>Invoicing • Expenses • Budgeting • Approvals</small></p>
@@ -206,11 +205,8 @@
         function performCsrfAttack() {
             // Simulace CSRF útoku - otevření nového okna s bankovní aplikací
             // Parametry v URL simulují převod
-            const transferAmount = 5000;
-            const recipientAccount = 'CSRF_ATTACKER_123';
-            const timestamp = new Date().getTime();
             
-            const bankUrl = 'internetbanka.html?amount=' + transferAmount + '&recipient=' + recipientAccount + '&timestamp=' + timestamp + '&victim_bank_account=VICTIM_ACCOUNT_456';
+            const bankUrl = 'mojebanka.html?částka=5000&příjemce=ÚČET_ÚTOČNÍKA&odesílatel=ÚČET_OBĚTI';
             
             window.open(bankUrl, 'bank_window', 'width=900,height=600,left=100,top=100');
         }

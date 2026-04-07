@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Internetové bankovnictví | Potvrzení</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
     <style>
         :root {
             --primary-blue: #002f6c; /* Typická bankovní modř */
@@ -137,15 +137,6 @@
             text-align: right;
         }
 
-        /* Debug sekce s URL - skrytá jako "Technické detaily" */
-        .debug-info {
-            margin-top: 25px;
-            background: #eee;
-            padding: 15px;
-            border-radius: 8px;
-            font-size: 11px;
-            color: #888;
-        }
 
         .btn-container {
             padding: 20px 30px 40px;
@@ -200,17 +191,17 @@
 
             <div class="amount-display">
                 <div class="amount-label">Celková částka</div>
-                <div class="amount-value" id="transfer-amount">0,00 Kč</div>
+                <div class="amount-value" id="transfer-amount">5 000 Kč</div>
             </div>
 
             <div class="details-grid">
                 <div class="detail-item">
                     <span class="label">Z účtu:</span>
-                    <span class="value" id="victim-account">---</span>
+                    <span class="value" id="victim-account">CZ40 ÚČET ÚTOČ NÍK0 1234 5678</span>
                 </div>
                 <div class="detail-item">
                     <span class="label">Na účet:</span>
-                    <span class="value" id="recipient-account">---</span>
+                    <span class="value" id="recipient-account">CZ40 ÚČET OBĚŤ I000 1234 5678</span>
                 </div>
                 <div class="detail-item">
                     <span class="label">Datum transakce:</span>
@@ -218,7 +209,7 @@
                 </div>
                 <div class="detail-item">
                     <span class="label">Referenční číslo:</span>
-                    <span class="value" id="reference-number">---</span>
+                    <span class="value" id="reference-number">FLAG(ObrazkyZakazuj)</span>
                 </div>
                 <div class="detail-item">
                     <span class="label">Typ platby:</span>
@@ -231,10 +222,6 @@
             </div>
         </div>
 
-        <div class="debug-info">
-            <strong>Systémové informace:</strong><br>
-            <span id="url-display">---</span>
-        </div>
 
         <div class="security-footer">
             © 2024 Vaše Banka, a.s. | Tato stránka je chráněna šifrováním TLS.
@@ -242,32 +229,17 @@
     </div>
 
     <script>
-        function getUrlParameter(name) {
-            const params = new URLSearchParams(window.location.search);
-            return params.get(name);
-        }
 
-        function generateReferenceNumber() {
-            return 'ID-' + Math.floor(Math.random() * 1000000000);
-        }
+
 
         window.addEventListener('load', function() {
-            const amount = getUrlParameter('amount') || '0';
-            const recipient = getUrlParameter('recipient') || 'Nespecifikováno';
-            const victim = getUrlParameter('victim_bank_account') || 'CZ40 0800 0000 0000 1234 5678';
-            const timestamp = getUrlParameter('timestamp') || new Date().getTime();
+
+            const timestamp = new Date().getTime();
 
             const date = new Date(parseInt(timestamp));
             const timeString = date.toLocaleString('cs-CZ');
 
-            // Formátování měny pro realističnost
-            const formattedAmount = Number(amount).toLocaleString('cs-CZ') + ' Kč';
-
-            document.getElementById('transfer-amount').textContent = formattedAmount;
-            document.getElementById('recipient-account').textContent = recipient;
-            document.getElementById('victim-account').textContent = victim;
             document.getElementById('transaction-time').textContent = timeString;
-            document.getElementById('reference-number').textContent = generateReferenceNumber();
             document.getElementById('url-display').textContent = window.location.href;
         });
     </script>
