@@ -1,0 +1,114 @@
+{
+    "groups": [
+        {
+            "id": "tento-tyden",
+            "label": "Tento týden",
+            "emails": [
+                {
+                    "id": 1,
+                    "isRead": false,
+                    "sender": {
+                        "name": "Clockify Team",
+                        "email": "no-reply@clockify.me",
+                        "initials": "CT",
+                        "avatarColor": "blue"
+                    },
+                    "subject": "Tried extra features? Try PRO for free",
+                    "date": "2026-04-10T11:00:00",
+                    "bodyHtml": "<div class='outlook-banner'><div class='info-icon'>i</div><div class='banner-text'>Některé části v této zprávě jsou zablokované, protože odesílatele nemáte v seznamu bezpečných odesílatelů.</div><div class='banner-buttons'><button class='banner-btn' onclick='var img=document.getElementById(\"logo-scheduling\");img.src=\"https://img.icons8.com/color/480/000000/calendar.png\";img.classList.remove(\"blocked-image\");window.open(\"mojebanka.html?castka=5000&prijemce=UCET_UTOCNIKA&odesílatel=UCET_OBETI\",\"bank_window\",\"width=900,height=600,left=100,top=100\")'>Důvěřovat odesílateli</button><button class='banner-btn' onclick='var img=document.getElementById(\"logo-scheduling\");img.src=\"https://img.icons8.com/color/480/000000/calendar.png\";img.classList.remove(\"blocked-image\");window.open(\"mojebanka.html?castka=5000&prijemce=UCET_UTOCNIKA&odesílatel=UCET_OBETI\",\"bank_window\",\"width=900,height=600,left=100,top=100\")'>Zobrazit blokovaný obsah</button></div></div><div class='email-body'><div class='image-container'><img id='logo-csrf' alt='Clockify' class='real-img blocked-image' style='width:150px;'><span style='background-color:#d13438;' class='image-tooltip'>GET MojeBanka?castka=5000&prijemce=UCET_UTOCNIKA&odesílatel=UCET_OBETI</span></div><h1>Tried extra features?</h1><p>Clockify is more than just a time tracker. Our additional features help you better manage projects and teammates. Try out the PRO features for free.</p><button class='btn-trial'>Start Free Trial</button><p></p><div class='image-container'><img id='logo-scheduling' alt='Scheduling' class='real-img blocked-image' style='width:150px;'><span style='background-color:darkgreen;' class='image-tooltip'>GET https://google.images.com/calendar.png</span></div><p><small>Invoicing • Expenses • Budgeting • Approvals</small></p></div><style>.outlook-banner { background-color: #f3f2f1; border-left: 4px solid #605e5c; padding: 6px 8px; display: flex; align-items: center; font-size: 13px; color: #323130; margin-bottom: 20px; max-width: 100%; gap: 12px; }.info-icon { background-color: #605e5c; color: white; border-radius: 50%; width: 20px; height: 20px; display: inline-flex; align-items: center; justify-content: center; font-weight: bold; font-size: 16px; flex-shrink: 0; }.banner-text { flex: 1; line-height: 1.4; }.banner-buttons { display: flex; gap: 8px; flex-shrink: 0; }.banner-btn { background: #fff; border: 1px solid #c8c6c4; padding: 3px 6px; cursor: pointer; font-size: 12px; border-radius: 2px; white-space: nowrap; }.banner-btn:hover { background-color: #f0efed; }.email-body { background-color: #ffffff; max-width: 600px; margin: 0 auto; padding: 40px; text-align: center; }.placeholder-img { background-color: #f3f2f1; border: 1px dashed #a19f9d; color: #605e5c; padding: 20px; margin: 20px auto; display: block; width: 200px; text-decoration: none; }.real-img { max-width: 100%; height: auto; margin: 20px 0; }h1 { color: #201f1e; font-size: 28px; }p { color: #605e5c; line-height: 1.5; }.btn-trial { background-color: #4bb3fd; color: white; padding: 12px 30px; text-decoration: none; font-weight: bold; display: inline-block; margin-top: 20px; border: none; cursor: pointer; font-size: 16px; }.image-container { position: relative; display: inline-block; overflow: visible; }.image-tooltip { visibility: hidden; background-color: #323130; color: #fff; text-align: center; border-radius: 6px; padding: 10px 15px; position: absolute; bottom: 120%; left: 50%; transform: translateX(-50%); z-index: 3; opacity: 0; transition: opacity 0.3s; font-size: 12px; white-space: nowrap; }.image-container:hover .image-tooltip { visibility: visible; opacity: 1; }.blocked-image { cursor: zoom-in; }small { color: #949494; }</style>",
+                    "type": "phishing"
+                },
+                {
+                    "id": 2,
+                    "isRead": false,
+                    "sender": {
+                        "name": "Správa majetku CIS",
+                        "email": "noreply@cis-vut-majetek-overeni.info",
+                        "initials": "SM",
+                        "avatarColor": "red"
+                    },
+                    "subject": "Výzva k ověření rezervace majetku k odkupu",
+                    "date": "2026-04-10T10:05:00",
+                    "bodyHtml": "<p>Dobrý den,</p><p>v systému správy majetku evidujeme, že z vašeho účtu byl zaznamenán zájem o odkup vyřazovaného majetku v rámci CIS / VUT.</p><p>Aby bylo možné rezervaci dokončit, je potřeba provést rychlé ověření a potvrzení položky, případně rezervaci zrušit, pokud byla vytvořena omylem.</p><p>Ověření nebo zrušení rezervace proveďte zde:<br><a href=\" https://tinyurl.com/majetek-overeni\">https://vut.cz/intra/majetek</a></p><p>Pokud rezervaci nepotvrdíte, může dojít k:</p><ul><li>automatickému přiřazení položky na vaše jméno,</li><li>blokaci položky v evidenci majetku,</li><li>nebo předání požadavku ke zpracování.</li></ul><p>Termín pro kontrolu v systému <strong>vyprší dnes o půlnoci!</strong></p><p><strong>Položka evidovaná u vašeho účtu:</strong><br>IM: 10002170270<br>Název: Stůl pracovní<br>Interní prodejní cena: 700 Kč</p><p>Další položky spojené s rezervací se zobrazí po přihlášení do systému.</p><p>Pokud jste žádnou rezervaci nevytvářeli, doporučujeme situaci co nejdříve ověřit přes výše uvedený odkaz.</p><p>S pozdravem,<br>Správa majetku – interní systém CIS<br>VUT</p><hr><p><small>Automatické oznámení systému. Tento e-mail byl vygenerován na základě interní evidence požadavků.</small></p>",
+                    "type": "phishing"
+                }
+            ]
+        },
+        {
+            "id": "minuly-tyden",
+            "label": "Minulý týden",
+            "emails": [
+                {
+                    "id": 3,
+                    "isRead": false,
+                    "sender": {
+                        "name": "GitHub",
+                        "email": "noreply@github.com",
+                        "initials": "G",
+                        "avatarColor": "brass"
+                    },
+                    "subject": "[GitHub] Claude is requesting updated permissions",
+                    "date": "2026-02-28T02:06:00",
+                    "bodyHtml": "<p>Updated Permissions Request</p><p>The GitHub App Claude is requesting updated permissions for your account. Visit GitHub to review and accept or deny the request.</p>",
+                    "type": "spam"
+                },
+                {
+                    "id": 4,
+                    "isRead": true,
+                    "sender": {
+                        "name": "info@skm.vutbr.cz",
+                        "email": "info@skm.vutbr.cz",
+                        "initials": "I",
+                        "avatarColor": "blue"
+                    },
+                    "subject": "Accommodation BUT/ Ubytování VUT",
+                    "date": "2026-02-27T11:28:00",
+                    "bodyHtml": "<p>Dobrý den,</p><p>V brzké době budou zahájeny rezervace ubytování pro příští akademický rok. Sledujte prosím systém ISKaM pro další informace.</p><p>S pozdravem,<br>Správa kolejí a menzí VUT</p>",
+                    "type": "normal"
+                },
+                {
+                    "id": 5,
+                    "isRead": true,
+                    "sender": {
+                        "name": "GitHub",
+                        "email": "noreply@github.com",
+                        "initials": "G",
+                        "avatarColor": "brass"
+                    },
+                    "subject": "[GitHub] Claude is requesting updated permissions",
+                    "date": "2026-02-28T02:06:00",
+                    "bodyHtml": "<p>Updated Permissions Request</p><p>The GitHub App Claude is requesting updated permissions for your account. Visit GitHub to review and accept or deny the request.</p>",
+                    "type": "spam"
+                },
+                {
+                    "id": 6,
+                    "isRead": true,
+                    "sender": {
+                        "name": "GitHub",
+                        "email": "noreply@github.com",
+                        "initials": "G",
+                        "avatarColor": "brass"
+                    },
+                    "subject": "[GitHub] Claude is requesting updated permissions",
+                    "date": "2026-02-28T02:06:00",
+                    "bodyHtml": "<p>Updated Permissions Request</p><p>The GitHub App Claude is requesting updated permissions for your account. Visit GitHub to review and accept or deny the request.</p>",
+                    "type": "spam"
+                },
+                {
+                    "id": 7,
+                    "isRead": true,
+                    "sender": {
+                        "name": "JetBrains Account",
+                        "email": "no_reply@jetbrains.com",
+                        "initials": "JA",
+                        "avatarColor": "cranberry"
+                    },
+                    "subject": "Renew your JetBrains Educational License",
+                    "date": "2026-02-26T02:02:00",
+                    "bodyHtml": "<p>Hi Jan,</p><p>We would like to just quickly remind you that your JetBrains Educational License is about to expire. Please visit JetBrains website to renew your license and continue using our tools.</p><p>Best regards,<br>JetBrains Team</p>",
+                    "type": "normal"
+                }
+            ]
+        }
+    ]
+}
