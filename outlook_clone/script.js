@@ -9,14 +9,14 @@
 
     /* ── Selectors for the reading pane ────────────────────────── */
     const SEL = {
-        subject:        '#reading-pane-subject',
-        senderAvatar:   '#reading-pane-sender-avatar',
+        subject: '#reading-pane-subject',
+        senderAvatar: '#reading-pane-sender-avatar',
         senderInitials: '#reading-pane-sender-initials',
-        senderName:     '#reading-pane-sender-name',
-        date:           '#reading-pane-date',
-        body:           '#reading-pane-body',
-        listContainer:  '#emailListContainer',
-        mailList:       '#MailList',
+        senderName: '#reading-pane-sender-name',
+        date: '#reading-pane-date',
+        body: '#reading-pane-body',
+        listContainer: '#emailListContainer',
+        mailList: '#MailList',
     };
 
     /* ── Base color classes that every initials span keeps ──────── */
@@ -24,19 +24,19 @@
 
     /* ── Avatar color name → CSS class pair mapping ────────────── */
     const AVATAR_COLOR_MAP = {
-        cranberry:  'fg9gses f1lwxszt',
-        red:        'f23f7i0 f1q9qhfq',
-        peach:      'fknu15p f1b9nr51',
-        marigold:   'f9603vw f3z4w6d',
-        brass:      'f28g5vo f4w2gd0',
-        teal:       'f135dsb4 f6hvv1p',
-        steel:      'f151dlcp f1lnp8zf',
-        blue:       'f1rjv50u f1ggcpy6',
-        grape:      'f1fiiydq f1o4k8oy',
-        lilac:      'f1res9jt f1x6mz1o',
-        pink:       'fv3fbbi fydlv6t',
-        beige:      'f1ntv3ld f101elhj',
-        anchor:     'f1f3ti53 fu4yj0j',
+        cranberry: 'fg9gses f1lwxszt',
+        red: 'f23f7i0 f1q9qhfq',
+        peach: 'fknu15p f1b9nr51',
+        marigold: 'f9603vw f3z4w6d',
+        brass: 'f28g5vo f4w2gd0',
+        teal: 'f135dsb4 f6hvv1p',
+        steel: 'f151dlcp f1lnp8zf',
+        blue: 'f1rjv50u f1ggcpy6',
+        grape: 'f1fiiydq f1o4k8oy',
+        lilac: 'f1res9jt f1x6mz1o',
+        pink: 'fv3fbbi fydlv6t',
+        beige: 'f1ntv3ld f101elhj',
+        anchor: 'f1f3ti53 fu4yj0j',
     };
 
     /* ── Czech day-of-week abbreviations ───────────────────────── */
@@ -608,7 +608,7 @@
 
         if (allCorrect) {
             title.textContent = 'Gratulujeme!';
-            text.innerHTML = 'Správně jste identifikovali všechny nebezpečné e-maily. Výborná práce!';
+            text.innerHTML = 'Správně jste identifikovali všechny nebezpečné e-maily. Výborná práce! FLAG(UmimPoznatPhishing)';
             title.style.color = '#0e700e';
         } else {
             title.textContent = 'Zkuste to znovu';
@@ -689,3 +689,48 @@
     }
 
 })();
+
+
+/* =========================
+   TOUR 1 – po načtení stránky
+   ========================= */
+
+const driver = window.driver.js.driver;
+let driverObj = null;
+
+
+driverObj = driver({
+    showProgress: true,
+    nextBtnText: "Další",
+    prevBtnText: "Zpět",
+    doneBtnText: "Hotovo",
+    progressText: '{{current}}/{{total}}',
+    allowClose: false,
+    onDestroy: function() {
+        localStorage.setItem("startTour", "true");
+    },
+    steps: [
+        {
+            element: "#email-1",
+            popover: {
+                title: "Postup",
+                description: "Toto je pokus"
+            }
+        },
+        {
+            element: "#emailListContainer",
+            popover: {
+                title: "Postup",
+                description: "Toto je pokus"
+            }
+        }
+    ]
+});
+
+window.addEventListener("load", () => {
+    if (!localStorage.getItem("startTour")) {
+        setTimeout(() => {
+            driverObj.drive();
+        }, 500);
+    }
+});
