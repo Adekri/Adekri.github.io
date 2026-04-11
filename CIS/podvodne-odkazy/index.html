@@ -2,6 +2,7 @@
 <html lang="cs">
 
 <head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20,400,0,0" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detekce podvodných odkazů | VUT</title>
@@ -59,7 +60,7 @@
             max-width: 650px;
             width: 100%;
             text-align: center;
-            border-top: 5px solid var(--primary); /* Typická VUT horní linka */
+            border-top: 5px solid var(--primary);
         }
 
 
@@ -94,11 +95,11 @@
         .url-box {
             background-color: #fafafa;
             border: 2px solid #eaeaea;
-            border-left: 4px solid var(--primary); /* Zvýraznění aktivního prvku */
+            border-left: 4px solid var(--primary);
             border-radius: var(--border-radius);
             padding: 25px;
             margin-bottom: 25px;
-            font-family: 'Courier New', Courier, monospace; /* Ponechán neproporcionální font pro URL */
+            font-family: 'Courier New', Courier, monospace; 
             font-size: 20px;
             font-weight: bold;
             letter-spacing: 0.5px;
@@ -118,49 +119,49 @@
                 grid-template-columns: 1fr;
             }
         }
+.option-btn {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 18px 15px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: #444;
+    position: relative;
+}
 
-        .option-btn {
-            background-color: #fff;
-            border: 2px solid #eaeaea;
-            border-radius: var(--border-radius);
-            padding: 15px;
-            font-size: 15px;
-            font-weight: 700;
-            font-family: 'VafleVUT', 'Segoe UI', sans-serif;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            color: var(--text-color);
-        }
+/* Styl pro Material Icon uvnitř tlačítka */
+.option-btn .material-symbols-outlined {
+    font-size: 28px;
+    color: #888; /* Neutrální šedá v základu */
+    transition: color 0.2s ease;
+}
 
-        .option-btn:hover:not(:disabled) {
-            border-color: var(--primary);
-            background-color: #fff5f5; /* Jemný červený nádech */
-            color: var(--primary);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(229, 0, 0, 0.1);
-        }
+.option-btn:hover:not(:disabled) {
+    border-color: var(--primary);
+    background-color: #fffafa;
+}
 
-        .option-btn:disabled {
-            cursor: not-allowed;
-            opacity: 0.5;
-        }
+.option-btn:hover:not(:disabled) .material-symbols-outlined {
+    color: var(--primary); /* Ikona zčervená při hoveru */
+}
 
-        .option-btn.correct {
-            border-color: var(--success) !important;
-            background-color: #f0fdf4 !important;
-            color: #166534 !important;
-        }
+/* Stavy po kliknutí */
+.option-btn.correct .material-symbols-outlined { color: #166534 !important; }
+.option-btn.wrong .material-symbols-outlined { color: #991b1b !important; }
 
-        .option-btn.wrong {
-            border-color: var(--danger) !important;
-            background-color: #fef2f2 !important;
-            color: var(--danger) !important;
-        }
-
+.option-btn small {
+    font-weight: 400;
+    font-size: 11px;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
         .feedback {
             margin-top: 20px;
             font-weight: 400;
@@ -238,24 +239,31 @@
 
         <div class="url-box" id="url-display">Nahrávám...</div>
 
-        <div class="options-grid" id="options-container">
-            <button class="option-btn" data-category="ok">
-                <span>🟢 V pořádku</span>
-                <small style="font-weight: 300; font-size: 12px; color: #666;">Legitimní adresa</small>
-            </button>
-            <button class="option-btn" data-category="typo">
-                <span>🔤 Typosquatting</span>
-                <small style="font-weight: 300; font-size: 12px; color: #666;">Záměna znaků / překlep</small>
-            </button>
-            <button class="option-btn" data-category="domain">
-                <span>🌐 Podvodná doména</span>
-                <small style="font-weight: 300; font-size: 12px; color: #666;">Úplně cizí nebo jiný web</small>
-            </button>
-            <button class="option-btn" data-category="shortener">
-                <span>🔗 Skrytá adresa</span>
-                <small style="font-weight: 300; font-size: 12px; color: #666;">Zkracovač (TinyURL, Bit.ly...)</small>
-            </button>
-        </div>
+<div class="options-grid" id="options-container">
+    <button class="option-btn" data-category="ok">
+        <span class="material-symbols-outlined">check_circle</span>
+        <span>V pořádku</span>
+        <small>Legitimní web</small>
+    </button>
+    
+    <button class="option-btn" data-category="typo">
+        <span class="material-symbols-outlined">spellcheck</span>
+        <span>Typosquatting</span>
+        <small>Záměna znaků</small>
+    </button>
+    
+    <button class="option-btn" data-category="domain">
+        <span class="material-symbols-outlined">public_off</span>
+        <span>Podvodná doména</span>
+        <small>Cizí adresa</small>
+    </button>
+    
+    <button class="option-btn" data-category="shortener">
+        <span class="material-symbols-outlined">link_off</span>
+        <span>Skrytá adresa</span>
+        <small>Zkracovač URL</small>
+    </button>
+</div>
 
         <div class="feedback" id="feedback"></div>
         <button class="next-btn" id="next-btn">Další adresa</button>
