@@ -146,7 +146,7 @@ Níže lze vidět, jak lze uprvait základní vzhled a funkčnost okna driveru. 
 #### Modifikace standartní tour jako jeden krok
 Případně asi lepší řešení je jen modifikovat standartní tour takto:
 
-        const driverbiometric = driver({
+        const driverObj = driver({
             popoverClass: "driverjs-theme",
             stagePadding: 4,
             showProgress: true,
@@ -165,7 +165,7 @@ Případně asi lepší řešení je jen modifikovat standartní tour takto:
             ],
         });
         setTimeout(() => {
-            driverbiometric.drive();
+            driverObj.drive();
         }, 500);
 
 

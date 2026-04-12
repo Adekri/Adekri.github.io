@@ -4,6 +4,12 @@
  * Reads emails.json → renders the email list dynamically → handles click-to-read.
  */
 
+
+/* globální nastavení pro zobrazování nápovědy*/
+const driver = window.driver.js.driver;
+let driverObj = null;
+
+
 (function () {
     'use strict';
 
@@ -307,6 +313,33 @@
             if (!isNaN(emailId)) {
                 selectEmail(emailId);
             }
+
+
+            driverObj = driver({
+                popoverClass: "driverjs-theme",
+                stagePadding: 4,
+                allowClose: true,
+                showProgress: false,
+                doneBtnText: "Hotovo",
+                showButtons: ['next'],
+                progressText: '{{current}}/{{total}}',
+                steps: [
+                    {
+                        element: "#moreItemsBtn",
+                        popover: {
+                            side: "left",
+                            align: "start",
+                            title: "Postup",
+                            description: "Po rozkliknutí tří teček můžete volbou 'Nahlásit' označit email jako spam nebo phishing.",
+                        }
+                    }
+                ],
+            });
+
+            setTimeout(() => {
+                driverObj.drive();
+            }, 500);
+
         });
     }
 
@@ -432,6 +465,7 @@
                 submenu.style.right = (window.innerWidth - menuRect.left + 2) + 'px';
                 submenu.style.left = 'auto';
                 submenu.classList.add('open');
+
             });
             nahlasitItem.addEventListener('mouseleave', function () {
                 _subTimer = setTimeout(function () {
@@ -695,37 +729,25 @@
    TOUR 1 – po načtení stránky
    ========================= */
 
-const driver = window.driver.js.driver;
-let driverObj = null;
-
-
 driverObj = driver({
-    showProgress: true,
-    nextBtnText: "Další",
-    prevBtnText: "Zpět",
+    popoverClass: "driverjs-theme",
+    stagePadding: 4,
+    showProgress: false,
     doneBtnText: "Hotovo",
+    showButtons: ['next'],
     progressText: '{{current}}/{{total}}',
-    allowClose: false,
-    onDestroy: function() {
-        localStorage.setItem("startTour", "true");
-    },
     steps: [
-        {
-            element: "#email-1",
-            popover: {
-                title: "Postup",
-                description: "Toto je pokus"
-            }
-        },
         {
             element: "#emailListContainer",
             popover: {
+                side: "bottom",
                 title: "Postup",
-                description: "Toto je pokus"
+                description: "Podobně jako v reálném Outlooku, kliknutím na libovolný e-mail jej otevřete v pravém panelu."
             }
         }
-    ]
+    ],
 });
+
 
 window.addEventListener("load", () => {
     if (!localStorage.getItem("startTour")) {
