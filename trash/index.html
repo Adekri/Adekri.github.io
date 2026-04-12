@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="cs">
+
+<head>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20,400,0,0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detekce podvodných odkazů | VUT</title>
+    <style>
+        @font-face {
+            font-family: 'VafleVUT';
+            src: url('./fonts/VAFLE_VUT_LIGHT.OTF') format('opentype');
+            font-weight: 300;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'VafleVUT';
+            src: url('./fonts/VAFLE_VUT_REGULAR.OTF') format('opentype');
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'VafleVUT';
+            src: url('./fonts/VAFLE_VUT_BOLD.OTF') format('opentype');
+            font-weight: 700;
+            font-style: normal;
+        }
+
+        :root {
+            --bg-color: #f0f2f5;
+            --card-bg: #ffffff;
+            --text-color: #1a1a1a;
+            --primary: #E50000;
+            --primary-hover: #CC0000;
+            --success: #27ae60;
+            --success-bg: #f0fdf4;
+            --danger: #E50000;
+            --danger-bg: #fef2f2;
+            --border-radius: 2px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'VafleVUT', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            overflow-y: scroll;
+        }
+
+        /* Progress bubble v rohu */
+        .score-badge {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: white;
+            border: 3px solid var(--primary);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(229, 0, 0, 0.15);
+            z-index: 100;
+            cursor: help;
+            transition: all 0.3s ease;
+        }
+
+        .score-badge:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 16px rgba(229, 0, 0, 0.25);
+        }
+
+        .score-badge-number {
+            font-size: 18px;
+            color: var(--primary);
+            line-height: 0.8;
+        }
+
+        .score-badge-label {
+            font-size: 9px;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        @media (max-width: 640px) {
+            .score-badge {
+                top: 10px;
+                right: 10px;
+                width: 50px;
+                height: 50px;
+                border-width: 2px;
+            }
+            
+            .score-badge-number {
+                font-size: 14px;
+            }
+            
+            .score-badge-label {
+                font-size: 7px;
+            }
+        }
+
+        .container {
+            background-color: var(--card-bg);
+            padding: 40px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.1);
+            max-width: 700px;
+            width: 100%;
+            text-align: center;
+            border-top: 5px solid var(--primary);
+        }
+
+        h1 {
+            color: var(--text-color);
+            margin: 0 0 8px 0;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .instructions {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 15px;
+            line-height: 1.6;
+            font-weight: 300;
+        }
+
+        .url-box {
+            background-color: #f9f9f9;
+            border: 2px dashed #ddd;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-bottom: 30px;
+            font-family: 'Courier New', 'Monaco', monospace;
+            font-size: 18px;
+            font-weight: bold;
+            color: #000;
+            word-break: break-all;
+            line-height: 1.5;
+            transition: all 0.3s ease;
+        }
+
+        /* Layout pro tlačítka - 4 nahoře, OK dole na střed */
+        .options-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        /* Podvodná tlačítka - již nejsou potřeba speciální sekce */
+        .fraud-section-label {
+            display: none;
+        }
+
+        .fraud-grid {
+            display: contents;
+        }
+
+        .option-btn,
+        .option-ok {
+            background-color: #fff;
+            border: 1px solid #e0e0e0;
+            padding: 18px 10px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: #444;
+            border-radius: var(--border-radius);
+            text-align: center;
+            box-sizing: border-box;
+            min-height: 110px;
+            justify-content: center;
+        }
+
+        .option-btn .material-symbols-outlined,
+        .option-ok .material-symbols-outlined {
+            font-size: 24px;
+            color: #666;
+        }
+
+        .option-btn small,
+        .option-ok small {
+            font-weight: 400;
+            font-size: 9px;
+            color: #999;
+            text-transform: uppercase;
+        }
+
+        /* OK tlačítko - přes všechny sloupce */
+        .option-ok {
+            grid-column: 1 / -1;
+        }
+
+        .option-ok .material-symbols-outlined {
+            color: #666;
+        }
+
+        .option-ok:hover:not(:disabled) {
+            border-left: 3px solid var(--success);
+            border-color: var(--success);
+            background-color: #f0fff4;
+            box-shadow: inset 0 0 0 1px var(--success);
+        }
+
+        .option-ok:hover:not(:disabled) .material-symbols-outlined {
+            color: var(--success);
+        }
+
+        /* Podvodná tlačítka - červená levá linka na hover */
+        .option-btn:hover:not(:disabled) {
+            border-left: 3px solid var(--primary);
+            background-color: #fffbfb;
+            box-shadow: inset 0 0 0 1px var(--primary);
+        }
+
+        .option-btn:hover:not(:disabled) .material-symbols-outlined {
+            color: var(--primary);
+        }
+
+        /* Správně/špatně tlačítko */
+        .option-btn.correct {
+            background-color: var(--success) !important;
+            border-color: var(--success) !important;
+        }
+
+        .option-btn.correct * {
+            color: white !important;
+        }
+
+        .option-btn.wrong {
+            background-color: var(--primary) !important;
+            border-color: var(--primary) !important;
+        }
+
+        .option-btn.wrong * {
+            color: white !important;
+        }
+
+        .option-btn:disabled {
+            cursor: default;
+            opacity: 0.7;
+        }
+
+        /* Feedback box - PEVNÁ VÝŠKA aby se okno neposkakovalo */
+        .feedback-container {
+            min-height: 120px;
+            margin-bottom: 20px;
+        }
+
+        .feedback {
+            font-weight: 400;
+            padding: 18px;
+            border-radius: var(--border-radius);
+            display: none;
+            text-align: left;
+            font-size: 15px;
+            line-height: 1.6;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feedback strong {
+            font-family: 'VafleVUT', sans-serif;
+            font-weight: 700;
+            font-size: 17px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .feedback.success {
+            display: block;
+            background-color: var(--success-bg);
+            color: #166534;
+            border-left: 5px solid var(--success);
+        }
+
+        .feedback.error {
+            display: block;
+            background-color: var(--danger-bg);
+            color: #991b1b;
+            border-left: 5px solid var(--primary);
+        }
+
+        /* Next button */
+        .next-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px 24px;
+            font-size: 15px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-family: 'VafleVUT', sans-serif;
+            font-weight: 700;
+            width: 100%;
+            display: none;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            box-sizing: border-box;
+        }
+
+        .next-btn:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(229, 0, 0, 0.2);
+        }
+
+        .next-btn:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        .next-btn:disabled {
+            opacity: 0.6;
+            cursor: default;
+        }
+
+        /* Responsivní design */
+        @media (max-width: 900px) {
+            .options-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .url-box {
+                font-size: 15px;
+                padding: 16px;
+                margin-bottom: 24px;
+            }
+
+            .options-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .option-btn,
+            .option-ok {
+                padding: 12px 8px;
+                font-size: 11px;
+                min-height: 100px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .container {
+                padding: 20px 15px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            .url-box {
+                font-size: 13px;
+                padding: 12px;
+                margin-bottom: 20px;
+            }
+
+            .options-container {
+                grid-template-columns: 1fr;
+            }
+
+            .option-btn,
+            .option-ok {
+                padding: 12px 8px;
+                font-size: 10px;
+                min-height: 90px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Progress bubble v rohu -->
+    <div class="score-badge">
+        <div class="score-badge-number" id="level-display">1/9</div>
+        <div class="score-badge-label">Postup</div>
+    </div>
+
+    <div class="container">
+        <h1>Detekce podvodných odkazů</h1>
+        <p class="instructions">
+            Prohlédněte si níže uvedenou URL adresu a rozhodněte, zda je bezpečná nebo se jedná o podvod.
+        </p>
+
+        <div class="url-box" id="url-display">Nahrávám...</div>
+
+        <div class="options-container" id="options-container">
+            <!-- 4 tlačítka podvodů v horní řadě -->
+            <button class="option-btn" data-category="typo">
+                <span class="material-symbols-outlined">edit_notifications</span>
+                <span>Překlep</span>
+                <small>Typosquatting</small>
+            </button>
+
+            <button class="option-btn" data-category="domain">
+                <span class="material-symbols-outlined">language</span>
+                <span>Cizí doména</span>
+                <small>Falešný web</small>
+            </button>
+
+            <button class="option-btn" data-category="shortener">
+                <span class="material-symbols-outlined">link_off</span>
+                <span>Zkracovač</span>
+                <small>Skrytý cíl</small>
+            </button>
+
+            <button class="option-btn" data-category="malware">
+                <span class="material-symbols-outlined">warning</span>
+                <span>Malware</span>
+                <small>Nebezpečný soubor</small>
+            </button>
+
+            <!-- OK tlačítko dole na střed -->
+            <button class="option-ok" data-category="ok">
+                <span class="material-symbols-outlined">verified_user</span>
+                <span>V pořádku</span>
+                <small>Legitimní</small>
+            </button>
+        </div>
+
+        <!-- Feedback s pevnou výškou -->
+        <div class="feedback-container">
+            <div class="feedback" id="feedback"></div>
+        </div>
+
+        <button class="next-btn" id="next-btn">Další adresa</button>
+    </div>
+
+    <script>
+        const levels = [
+            {
+        url: "id.vut.cz",
+        category: "ok",
+        tip: "Tohle je v pořádku. Jedná se o oficiální centrální autentizační službu VUT."
+    },
+    {
+        url: "vnt.cz",
+        category: "typo",
+        tip: "Všimněte si písmene 'n' místo 'u'. Optický klam, který v rychlosti snadno přehlédnete."
+    },
+    {
+        url: "is.vut-br.cz/dokumenty/nove_smernice.pdf.exe",
+        category: "malware",
+        tip: "Dvojitá koncovka. Útočník spoléhá na to, že si všimnete '.pdf', ale ve skutečnosti spouštíte .exe program."
+    },
+    {
+        url: "is.vut.cz.potvrzeni-studia.com",
+        category: "domain",
+        tip: "Klasický podvod. Skutečná doména je 'potvrzeni-studia.com'. To, že je na začátku 'is.vut.cz', je jen trik se subdoménou."
+    },
+    {
+        url: "vutbr.cz",
+        category: "ok",
+        tip: "V pořádku. VUT oficiálně používá i tuto kratší doménu (často pro weby fakult nebo hlavní rozcestník)."
+    },
+    {
+        url: "http://185.199.108.153/vut/login",
+        category: "domain",
+        tip: "Použití přímé IP adresy místo doménového jména. Seriózní instituce pro přihlašování IP adresy takto nikdy nepoužívají."
+    },
+    {
+        url: "bit.ly/vut-stipendium-2024",
+        category: "shortener",
+        tip: "Zkracovače v oficiálních e-mailech z VUT nečekejte. Nikdy nevíte, kam vás takový odkaz skutečně přesměruje."
+    },
+    {
+        url: "ls.vut.cz",
+        category: "typo",
+        tip: "Záměna malého 'L' za velké 'I'. V adresním řádku vypadá 'ls' (jako IS) téměř identicky."
+    },
+    {
+        url: "storage.googleapis.com/vut-is-zaloha/Cisco_VPN_klient.exe",
+        category: "malware",
+        tip: "Zneužití důvěryhodné služby. Útočník nahrál virus na veřejný cloud Googlu. Adresa neobsahuje podvodnou doménu a snadno oklame i filtry."
+    },
+    {
+        url: "vut-mail.cz",
+        category: "domain",
+        tip: "Podvodná doména. VUT používá pro poštu doménu vut.cz, nikoliv verze s pomlčkami a jinou koncovkou."
+    },
+    {
+        url: "vut.cz/login",
+        category: "ok",
+        tip: "Naprosto legitimní cesta k přihlášení na hlavní doméně univerzity."
+    },
+    {
+        url: "is.vut.cz@prihlaseni-student.com/login",
+        category: "domain",
+        tip: "Trik se zavináčem (Basic Auth). Vše před zavináčem prohlížeč ignoruje jako uživatelské jméno. Skutečná doména je až 'prihlaseni-student.com'."
+    },
+    {
+        url: "vut.cz.security-update.net",
+        category: "domain",
+        tip: "Skutečným vlastníkem webu je 'security-update.net'. Část 'vut.cz' na začátku má jen vyvolat falešný pocit bezpečí."
+    },
+    {
+        url: "intra.vut.cz---------prihlaseni.com",
+        category: "domain",
+        tip: "Tzv. URL padding. Pomlčky mají za úkol odsunout skutečnou doménu (.com) mimo viditelnou část prohlížeče, zejména na mobilu."
+    },
+    {
+        url: "vut.cz/logout?redirect=http://zla-domena.cz/login",
+        category: "domain",
+        tip: "Tzv. Open Redirect. Odkaz začíná na správné doméně, ale po kliknutí vás automaticky přesměruje na podvodnou stránku."
+    },
+    {
+        url: "vut-office365.online",
+        category: "domain",
+        tip: "VUT sice Office 365 používá, ale přihlášení probíhá vždy přes univerzitní brány. Doména .online je u VUT podezřelá."
+    },
+    {
+        url: "tinyurl.com/vut-heslo-reset",
+        category: "shortener",
+        tip: "Další zkracovač. Útočníci je milují, protože maskují cílovou phishingovou stránku."
+    },
+            {
+                url: "id.vut.cz",
+                category: "ok",
+                tip: "Tohle je v pořádku. Jedná se o oficiální centrální autentizační službu VUT."
+            },
+            {
+                url: "vnt.cz",
+                category: "typo",
+                tip: "Všimněte si písmene 'n' místo 'u'. Optický klam, který v rychlosti snadno přehlédnete."
+            },
+            {
+                url: "is.vut.cz.potvrzeni-studia.com",
+                category: "domain",
+                tip: "Klasický podvod. Skutečná doména je 'potvrzeni-studia.com'. To, že je na začátku 'is.vut.cz', je jen trik se subdoménou."
+            },
+            {
+                url: "vutbr.cz",
+                category: "ok",
+                tip: "V pořádku. VUT oficiálně používá i tuto kratší doménu (často pro weby fakult nebo hlavní rozcestník)."
+            },
+            {
+                url: "bit.ly/vut-stipendium-2024",
+                category: "shortener",
+                tip: "Zkracovače v oficiálních e-mailech z VUT nečekejte. Nikdy nevíte, kam vás takový odkaz skutečně přesměruje."
+            },
+            {
+                url: "ls.vut.cz",
+                category: "typo",
+                tip: "Záměna malého 'L' za velké 'I'. V adresním řádku vypadá 'ls' (jako IS) téměř identicky."
+            },
+            {
+                url: "vut-mail.cz",
+                category: "domain",
+                tip: "Podvodná doména. VUT používá pro poštu doménu vut.cz, nikoliv verze s pomlčkami a jinou koncovkou."
+            },
+            {
+                url: "vut.cz/login",
+                category: "ok",
+                tip: "Naprosto legitimní cesta k přihlášení na hlavní doméně univerzity."
+            },
+            {
+                url: "vut.cz.security-update.net",
+                category: "domain",
+                tip: "Skutečným vlastníkem webu je 'security-update.net'. Část 'vut.cz' na začátku má jen vyvolat falešný pocit bezpečí."
+            },
+            {
+                url: "intra.vut.cz---------prihlaseni.com",
+                category: "domain",
+                tip: "Tzv. URL padding. Pomlčky mají za úkol odsunout skutečnou doménu (.com) mimo viditelnou část prohlížeče, zejména na mobilu."
+            },
+            {
+                url: "vut-office365.online",
+                category: "domain",
+                tip: "VUT sice Office 365 používá, ale přihlášení probíhá vždy přes univerzitní brány. Doména .online je u VUT podezřelá."
+            },
+            {
+                url: "tinyurl.com/vut-heslo-reset",
+                category: "shortener",
+                tip: "Další zkracovač. Útočníci je milují, protože maskují cílovou phishingovou stránku."
+            },
+            {
+                url: "rnicrosoft.com",
+                category: "typo",
+                tip: "Klasický typosquatting. Znaky 'r' a 'n' napsané těsně vedle sebe opticky napodobují písmeno 'm'."
+            },
+            {
+                url: "postaonline-cz.com",
+                category: "domain",
+                tip: "Tohle je podvodná doména. Oficiální pošta používá doménu postaonline.cz (bez pomlčky a s koncovkou .cz)."
+            },
+            {
+                url: "seznam.cz",
+                category: "ok",
+                tip: "Tato adresa je naprosto v pořádku."
+            },
+            {
+                url: "tinyurl.com/mironet-sleva",
+                category: "shortener",
+                tip: "Zkracovače adres sice šetří místo, ale ve firemním e-mailu jsou nebezpečné, protože schovávají skutečný cíl odkazu. Více se o nich dozvíte v dalším úkolu."
+            },
+            {
+                url: "idnes.cz.overeni-prihlaseni.com",
+                category: "domain",
+                tip: "Tohle je finta s klamavou subdoménou. Lidé čtou zleva doprava a vidí 'idnes.cz', ale skutečná doména je až část před koncem: 'overeni-prihlaseni.com'."
+            },
+            {
+                url: "googIe.com",
+                category: "typo",
+                tip: "Místo malého 'l' (el) bylo v názvu použito velké 'I' (i). Častý trik u známých značek."
+            },
+            {
+                url: "netflix-platba.com",
+                category: "domain",
+                tip: "Technika zvaná Combosquatting. Útočník vezme známé jméno a přidá k němu slovo jako 'platba' nebo 'podpora', aby vyvolal důvěru."
+            },
+            {
+                url: "https://google.com/bit.ly/login",
+                category: "shortener",
+                tip: "Toto už tak jednoduché nebylo, stále je ale třeba pamatovat, že hlavní doména se nachází v poslední části URL a je tedy schovaná za zkracovačem."
+            },
+            {
+                url: "csob-overeni.online",
+                category: "domain",
+                tip: "Banka by nikdy nepoužila pro své kritické systémy podivnou koncovku jako .online. Vždy si hlídá svou hlavní doménu."
+            },
+            {
+                url: "csob.cz-----------login.com",
+                category: "domain",
+                tip: "Tzv. URL padding. Na mobilu se díky pomlčkám schová skutečná doména (.com) a uživatel vidí jen csob.cz na začátku."
+            }
+        ];
+
+        let answered = false;
+        let levelQueue = levels.map((_, i) => i);
+        let currentQueuePosition = 0;
+
+        const urlDisplayEl = document.getElementById('url-display');
+        const feedbackEl = document.getElementById('feedback');
+        const levelDisplayEl = document.getElementById('level-display');
+        const nextBtn = document.getElementById('next-btn');
+        const optionButtons = document.querySelectorAll('.option-ok, .option-btn');
+
+        function loadLevel() {
+            answered = false;
+            feedbackEl.className = 'feedback';
+            feedbackEl.innerText = '';
+            nextBtn.style.display = 'none';
+
+            const totalLevels = levelQueue.length;
+            const currentLevel = currentQueuePosition + 1;
+            levelDisplayEl.innerHTML = `${currentLevel}/${totalLevels}`;
+
+            const levelIndex = levelQueue[currentQueuePosition];
+            const level = levels[levelIndex];
+            urlDisplayEl.innerText = level.url;
+
+            optionButtons.forEach(btn => {
+                btn.classList.remove('correct', 'wrong');
+                btn.disabled = false;
+            });
+        }
+
+        optionButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                if (answered) return;
+
+                answered = true;
+                const selectedCategory = button.getAttribute('data-category');
+                const levelIndex = levelQueue[currentQueuePosition];
+                const level = levels[levelIndex];
+
+                optionButtons.forEach(btn => btn.disabled = true);
+
+                if (selectedCategory === level.category) {
+                    button.classList.add('correct');
+                    feedbackEl.className = 'feedback success';
+                    feedbackEl.innerHTML = `<strong>✓ Správně!</strong> ${level.tip}`;
+                } else {
+                    levelQueue.push(levelIndex);
+                    button.classList.add('wrong');
+
+                    optionButtons.forEach(btn => {
+                        if (btn.getAttribute('data-category') === level.category) {
+                            btn.classList.add('correct');
+                        }
+                    });
+
+                    feedbackEl.className = 'feedback error';
+                    feedbackEl.innerHTML = `<strong>✗ Pozor!</strong> ${level.tip}`;
+                }
+
+                feedbackEl.style.display = 'block';
+                nextBtn.style.display = 'block';
+
+                if (currentQueuePosition + 1 === levelQueue.length) {
+                    nextBtn.innerText = "Dokončit školení";
+                } else {
+                    nextBtn.innerText = "Další adresa";
+                }
+            });
+        });
+
+        nextBtn.onclick = () => {
+            currentQueuePosition++;
+            if (currentQueuePosition < levelQueue.length) {
+                loadLevel();
+            } else {
+                document.getElementById('options-container').style.display = 'none';
+                urlDisplayEl.style.display = 'none';
+                nextBtn.style.display = 'none';
+
+                feedbackEl.className = 'feedback success';
+                feedbackEl.style.display = 'block';
+                feedbackEl.innerHTML = `<strong>🎉 Výborně!</strong> Podařilo se Vám odhalit všechny typy podvodných odkazů.<br><br>Máte ostre oko a budete bezpečnější v digitálním světě!<br><br>FLAG(NaOdkazSeNenachytam)`;
+                levelDisplayEl.innerText = "✓ Hotovo!";
+            }
+        };
+
+        // Načíst první úroveň
+        loadLevel();
+    </script>
+
+</body>
+
+</html>
