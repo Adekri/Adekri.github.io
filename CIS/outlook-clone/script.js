@@ -334,11 +334,16 @@ let driverObj = null;
                         }
                     }
                 ],
+                onDestroyed: () => {
+                    localStorage.setItem("tour2Done", "true");
+                },
             });
 
-            setTimeout(() => {
-                driverObj.drive();
-            }, 500);
+            if (!localStorage.getItem("tour2Done")) {
+                setTimeout(() => {
+                    driverObj.drive();
+                }, 500);
+            }
 
         });
     }
@@ -746,11 +751,14 @@ driverObj = driver({
             }
         }
     ],
+    onDestroyed: () => {
+        localStorage.setItem("tour1Done", "true");
+    },
 });
 
 
 window.addEventListener("load", () => {
-    if (!localStorage.getItem("startTour")) {
+    if (!localStorage.getItem("tour1Done")) {
         setTimeout(() => {
             driverObj.drive();
         }, 500);

@@ -307,7 +307,7 @@
         </div>
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
             <h1>Detekce odkazů</h1>
-            <div id="level-display" style="font-weight: bold; color: var(--primary); font-size: 14px;">1 / 15</div>
+            <div id="level-display" style="font-weight: bold; color: var(--primary); font-size: 14px;">1 / 9</div>
         </div>
 
         <p class="instructions">Prohlédněte si níže uvedenou URL adresu a rozhodněte, o jaký typ odkazu se jedná.
@@ -360,7 +360,6 @@
                 url: "is.vut-br.cz/dokumenty/nove_smernice.pdf.exe",
                 category: "malware",
                 highlight: ".exe",
-                accepted: ["malware", "domain"],
                 tip: "Dvojitá koncovka. Útočník spoléhá na to, že si všimnete '.pdf', ale ve skutečnosti spouštíte .exe program."
             },
             {
@@ -514,20 +513,13 @@
 
                 optionButtons.forEach(btn => btn.disabled = true);
 
-                const accepted = level.accepted || [level.category];
-                const isCorrect = accepted.includes(selectedCategory);
+                const isCorrect = selectedCategory === level.category;
 
                 // Zvýrazni URL po odpovědi
                 renderUrl(level.url, level.highlight, level.category === 'ok');
 
                 if (isCorrect) {
                     button.classList.add('correct');
-                    // Zvýrazni zeleně i ostatní přijatelná tlačítka
-                    optionButtons.forEach(btn => {
-                        if (accepted.includes(btn.getAttribute('data-category')) && btn !== button) {
-                            btn.classList.add('correct');
-                        }
-                    });
                     feedbackEl.className = 'feedback success';
                     feedbackEl.innerHTML = `<strong>Správně!</strong><br>${level.tip}`;
                 } else {
@@ -535,7 +527,7 @@
                     levelQueue.push(levelIndex);
 
                     optionButtons.forEach(btn => {
-                        if (accepted.includes(btn.getAttribute('data-category'))) {
+                        if (btn.getAttribute('data-category') === level.category) {
                             btn.classList.add('correct');
                         }
                     });
