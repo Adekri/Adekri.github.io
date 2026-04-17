@@ -323,7 +323,7 @@
             </button>
             <button class="option-btn" data-category="typo">
                 <span class="material-symbols-outlined">spellcheck</span>
-                <span>Překlep</span>
+                <span>Typosquatting</span>
                 <small>Záměna znaků</small>
             </button>
             <button class="option-btn" data-category="domain">
@@ -351,93 +351,94 @@
     <script>
         const levels = [
             {
-                url: "vnt.cz",
-                category: "typo",
-                highlight: "n",
-                tip: "Všimněte si písmene 'n' místo 'u'. Optický klam, který v rychlosti snadno přehlédnete."
-            },
-            {
-                url: "is.vut-br.cz/dokumenty/nove_smernice.pdf.exe",
+                url: "https://is.vut-br.cz/dokumenty/nove_smernice.pdf.exe",
                 category: "malware",
                 highlight: ".exe",
                 accepted: ["malware", "domain"],
                 tip: "Dvojitá koncovka. Útočník spoléhá na to, že si všimnete '.pdf', ale ve skutečnosti spouštíte .exe program."
             },
             {
-                url: "http://185.199.108.153/vut/login",
+                url: "https://www-vut.cz/login",
                 category: "domain",
-                highlight: "185.199.108.153",
-                tip: "Použití přímé IP adresy místo doménového jména. Seriózní instituce pro přihlašování IP adresy takto nikdy nepoužívají."
+                accepted: ["domain", "typo"],
+                highlight: "w-v",
+                tip: "Záměna pomlčky za tečku. Skutečná doména je 'www-vut.cz', což není oficiální doména."
             },
             {
-                url: "bit.ly/vut-stipendium-2024",
+                url: "https://bit.ly/vut-stipendium-2024",
                 category: "shortener",
                 highlight: "bit.ly",
                 tip: "Zkracovače adres sice šetří místo, ale ve firemním e-mailu jsou nebezpečné, protože schovávají skutečný cíl odkazu. Více se o nich dozvíte v dalším úkolu."
             },
             {
-                url: "ld.vut.cz",
+                url: "https://vul.cz",
                 category: "typo",
-                highlight: "ld",
-                tip: "Záměna malého 'L' za velké 'I'. V adresním řádku vypadá 'ld' (jako ID) téměř identicky."
+                highlight: "l",
+                tip: "Záměna malého 'L' za písmeno 'T'. V adresním řádku je lze snadno zaměnit."
             },
             {
-                url: "storage.googleapis.com/vut-is-zaloha/Cisco_VPN_klient.exe",
+                url: "https://storage.googleapis.com/vut-is-zaloha/Cisco_VPN_klient.exe",
                 category: "malware",
                 highlight: ".exe",
                 tip: "Zneužití důvěryhodné služby. Útočník nahrál virus na veřejný cloud Googlu. Adresa neobsahuje podvodnou doménu a snadno oklame i filtry."
             },
             {
-                url: "id-vut.cz",
+                url: "https://id-vut.cz",
                 category: "domain",
                 highlight: "d-v",
                 tip: "Podvodná doména. VUT používá doménu id.vut.cz, nikoliv verze s pomlčkami ani jinou koncovkou."
             },
             {
-                url: "vut.cz/login",
+                url: "https://vut.cz/login",
                 category: "ok",
                 tip: "Naprosto legitimní cesta k přihlášení na hlavní doméně univerzity."
             },
             {
-                url: "id.vut.cz@prihlaseni-student.com/login",
+                url: "https://id.vut.cz@prihlaseni-student.com/login",
                 category: "domain",
                 highlight: "@",
                 tip: "Trik se zavináčem (Basic Auth). Vše před zavináčem prohlížeč ignoruje jako uživatelské jméno. Skutečná doména je až 'prihlaseni-student.com'."
             },
             {
-                url: "id.vut.cz.potvrzeni-studia.com",
+                url: "https://id.vut.cz.potvrzeni-studia.com",
                 category: "domain",
                 highlight: "potvrzeni-studia.com",
                 tip: "Klasický podvod. Skutečná doména je 'potvrzeni-studia.com'. To, že je na začátku 'id.vut.cz', je jen trik se subdoménou."
             },
             {
-                url: "id.vut.cz",
+                url: "https://id.vut.cz",
                 category: "ok",
                 tip: "Tohle je v pořádku. Jedná se o oficiální centrální autentizační službu VUT."
             },
             {
-                url: "googIe.com",
+                url: "https://secure-login.cz?vut.cz",
+                category: "domain",
+                highlight: "?",
+                tip: "Otazník funguje přesně opačně než zavináč. Vše za otazníkem bere prohlížeč jako parametry a skutečná doména je pouze 'secure-login.cz'."
+            },
+            {
+                url: "https://googIe.com",
                 category: "typo",
                 highlight: "I",
                 tip: "Místo malého 'l' (el) bylo v názvu použito velké 'I' (i). Častý trik u známých značek."
             },
             {
-                url: "netflix-platba.com",
+                url: "https://netflix-platba.com",
                 category: "domain",
                 highlight: "netflix-platba.com",
                 tip: "Technika zvaná Combosquatting. Útočník vezme známé jméno a přidá k němu slovo jako 'platba' nebo 'podpora', aby vyvolal důvěru."
             },
             {
-                url: "https://google.com/tinyurl.com/login",
-                category: "shortener",
-                highlight: "tinyurl.com",
-                tip: "Toto už tak jednoduché nebylo, stále je ale třeba pamatovat, že hlavní doména se nachází v poslední části URL a je tedy schovaná za zkracovačem."
+                url: "https://moje-prihlaseni.online/id.vut.cz/login",
+                category: "domain",
+                highlight: "moje-prihlaseni.online",
+                tip: "Skutečná doména je zde 'moje-prihlaseni.online'. Za lomítkem se pak nachází podstránka s názvem 'id.vut.cz'."
             },
             {
-                url: "vut.cz-----------login.com",
-                category: "domain",
-                highlight: "cz-----------login.com",
-                tip: "Tzv. URL padding. Na mobilu se díky pomlčkám schová skutečná doména (cz-----------login.com) a uživatel vidí jen vut.cz na začátku."
+                url: "https://tinyurl.com/securenet-com/google.com",
+                category: "shortener",
+                highlight: "tinyurl.com",
+                tip: "Skutečná doména bude ta, na kterou Vás TinyURL přesměruje. Na této doméně pak bude podstránka s názvem google.com."
             }
         ];
 
