@@ -1,3 +1,6 @@
+V tomto souboru je pouze vysvětlené vytváření průvodce programem a vyskakovacího informačního okna, které jsou použité v některých podadresářích. Tento dokument je proto vhodný pouze pro případnou replikaci těchto částí v jiné aplikaci. 
+
+
 # TOC
 
 1. [Jak používat Driver.js tour po programu](#jak-používat-driverjs-tour-po-programu)

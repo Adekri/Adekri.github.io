@@ -1,0 +1,1 @@
+V tomto adresáři se nachází asset s kvízem zaměřeným na odhalování podvodných odkazů. 

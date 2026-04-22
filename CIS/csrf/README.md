@@ -1,0 +1,1 @@
+V tomto adresáři je pouze zvlášť uveden asset, který je v tomto scénáři integrován přímo do simulátoru Outlooku.

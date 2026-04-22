@@ -1,0 +1,1 @@
+V tomto assetu je do přihlašovacího okna VUT přidáno vyskakovací okno správce hesel pro ilustraci odhalení podvodné přihlašovací stránky. V tomto přihlašovacím okně je deaktivována možnost vkládání textu protože to není předmětem úkolu.

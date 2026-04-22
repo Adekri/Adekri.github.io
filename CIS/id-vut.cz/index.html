@@ -272,7 +272,7 @@
     </div>
   </div>
 
-  <!-- Modal -->
+  <!-- Modal s otiskem prstu -->
 
   <div style="display: none;" class="win-modal-overlay" id="winModal">
     <div class="win-modal">
@@ -406,16 +406,15 @@
     toggleBtn.addEventListener("touchend", hidePassword);
 
 
-    /* Odeslání formuláře se jménem*/
+    /* Odeslání formuláře se jménem -- upraveno tak, aby nebylo možné*/
     document.getElementById("login-form").addEventListener("submit", function (e) {
       const usernameInput = document.getElementById("username");
       const username = usernameInput.value.trim();
 
-      // NOVÁ KONTROLA: Pokud je pole prázdné, nepustíme ho dál
+      // Pokud je pole prázdné, nepustíme uživatele dál
       if (username === "") {
         e.preventDefault(); // Zastaví odeslání
 
-        // Vizuální zpětná vazba (volitelné)
         usernameInput.style.borderColor = "red";
 
         // Automaticky otevřeme správce hesel, aby uživatel věděl, co má dělat
@@ -425,7 +424,6 @@
         return;
       }
 
-      // Zbytek tvého původního kódu pro přepnutí na heslo...
       e.preventDefault();
       const subheader = document.getElementById("subheader");
       const loginForm = document.getElementById("login-form");
@@ -440,7 +438,7 @@
 
     const winModal = document.getElementById("winModal");
 
-    /* Odeslání formuláře s heslem*/
+    /* Odeslání formuláře s heslem -- zde není potřeba */
     document.getElementById("password-form").addEventListener("submit", function (e) {
       e.preventDefault();
       const passwordForm = document.getElementById("password-form");
@@ -483,7 +481,7 @@
 
 
 
-    /* Logika pro zobrazení simulace Proton Pass */
+    /* Logika pro zobrazení simulace správce hesel*/
     const protonTrigger = document.getElementById('proton-trigger');
     const protonPopup = document.getElementById('proton-popup');
     const usernameInput = document.getElementById('username');
