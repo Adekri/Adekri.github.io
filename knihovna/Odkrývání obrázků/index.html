@@ -1,358 +1,294 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-  <meta charset="UTF-8" />
-  <title>Interaktivní galerie</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background: url('images/pozadi.png') no-repeat center center fixed;
-      background-size: cover;
-      /* Přidána mírná průhlednost přes overlay */
-      position: relative;
-    }
-    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tkalcovna | VIRGO-CZ</title>
 
-    /* Záložky */
-    .tabs {
-      display: flex;
-      background: rgba(0,0,0,0.6);
-      backdrop-filter: blur(6px);
-    }
+    <meta name="description" content="VIRGO-CZ: Tradiční česká rodinná tkalcovna. Zakázková froté výroba reklamních ručníků, tkaní látek z přírodních materiálů — len, konopí, bavlna.">
+    <meta name="keywords" content="VIRGO-CZ, tkalcovna, česká tkalcovna, přírodní materiály, len, konopí, reklamní ručníky, zakázková výroba">
+    <meta name="robots" content="index,follow">
 
-    .tab {
-      flex: 1;
-      padding: 15px;
-      text-align: center;
-      color: #bbb;
-      cursor: pointer;
-      user-select: none;
-    }
-
-    .tab.active {
-      background: rgba(255,255,255,0.9);
-      color: #222;
-      font-weight: bold;
-    }
-
-    /* Stránky */
-    .page {
-      display: none;
-      padding: 30px;
-      position: relative;
-      min-height: 70vh;
-      /* Obsah plave přímo nad pozadím */
-      /*background: rgba(255,255,255,0.2); /* lehce zprůhledněný overlay */
-      /*backdrop-filter: blur(1px);*/
-    }
-
-    .page.active {
-      display: block;
-    }
-
-    /* Obrázky – RUČNÍ POZICOVÁNÍ */
-    .image-card {
-      position: absolute;
-      cursor: pointer;
-      transform: scale(1);
-      transition: transform 0.3s ease;
-    }
-
-    .image-card:active {
-      transform: scale(0.95);
-    }
-
-/* OBRÁZEK – skrytý před klikem */
-.image-card img {
-  width: 100%;
-  height: auto;
-  display: block;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-}
-
-.cover {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-}
-
-/* KOLEČKO */
-.cover::before {
-  content: attr(data-number);
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: #ff8800;
-  color: white;
-  font-size: 18px;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 6px 14px rgba(0,0,0,0.4);
-  transition: transform 0.4s ease, opacity 0.4s ease;
-}
-
-/* po kliknutí kolečko zmizí */
-.image-card.revealed .cover::before {
-  transform: scale(0);
-  opacity: 0;
-}
-
-
-/* po kliknutí */
-.image-card.revealed img {
-  opacity: 1;
-}
-
-
-    @keyframes pop {
-      0%   { transform: scale(0.6) rotate(-8deg); }
-      60%  { transform: scale(1.25) rotate(6deg); }
-      100% { transform: scale(1) rotate(0deg); }
-    }
-
-    /* Konfety */
-    .confetti {
-      position: absolute;
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      animation: fly 1300ms ease-out forwards;
-      pointer-events: none;
-    }
-
-    @keyframes fly {
-      from {
-        transform: translate(0,0) scale(1.2);
-        opacity: 1;
-      }
-      to {
-        transform: translate(var(--x), var(--y)) scale(0.2) rotate(720deg);
-        opacity: 0;
-      }
-    }
-
-    .background-overlay {
-      min-height: 100vh;
-      position: relative;
-    }
-
-    .fullscreen {
-      max-width: fit-content;
-      flex: 1;
-      padding: 15px;
-      text-align: center;
-      color: #bbb;
-      cursor: pointer;
-      user-select: none;
-    }
-    
-  </style>
+    <link rel="icon" href="images/favicon.png" type="image/png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" defer></script>
+    <script src="script.js" defer></script>
 </head>
+
 <body>
-  <div class="background-overlay">
 
-    <div class="tabs">
-      <div class="tab active" data-page="page1">1</div>
-      <div class="tab" data-page="page2">2</div>
-      <div class="tab" data-page="page3">3</div>
-      <div class="tab" data-page="page4">4</div>
-      <div class="tab" data-page="page5">5</div>
-      <div class="fullscreen" onclick="toggleFullScreen()">Fullscreen</div>
+    <!-- ========================================================
+         NAVIGACE
+         ======================================================== -->
+    <nav id="navbar" aria-label="Hlavní navigace">
+        <div class="container nav-wrapper">
+            <a href="index.html" class="logo" aria-label="Tkalcovna VIRGO — domů">
+                TKALCOVNA<span>.VIRGO</span>
+            </a>
+
+            <button class="hamburger" id="hamburger" aria-label="Otevřít menu" aria-expanded="false" aria-controls="navLinks">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+
+            <ul class="nav-links" id="navLinks" role="list">
+                <li><a href="#kdojsme">Kdo jsme</a></li>
+                <li><a href="#materialy">Materiály</a></li>
+                <li><a href="#vyroba">Výroba</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="#kontakt" class="btn-contact">Kontakt</a></li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <!-- ========================================================
+         HERO
+         ======================================================== -->
+    <header class="hero" role="banner">
+        <div class="container">
+            <div class="hero-content reveal">
+                <span class="eyebrow">Nejmenší žakárová tkalcovna v České republice</span>
+                <h1>Tkáme látky.<br><span class="accent">Pořádně.</span></h1>
+                <p>Jsme malá tkalcovna v Rohozné u Svitav. Děláme froté a tkaniny z přírodních materiálů — zakázkově i v sérii.</p>
+                <div class="cta-group">
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <!-- ========================================================
+         O ŘEMESLE
+         ======================================================== -->
+    <section id="kdojsme" class="section container" aria-labelledby="remeslo-title">
+        <div class="grid-2">
+            <div class="reveal">
+                <span class="eyebrow">Kdo jsme</span>
+                <h2 class="section-title" id="remeslo-title">Rodinná firma ze Řetové</h2>
+                <p>Tkalcovnu jsme založili v roce 1998. Od té doby ji vedeme rodinně — bez velkých slov, ale s tím, že každý kus, který od nás odejde, musí být hotový dobře.</p>
+                <p style="margin-top: 16px;">Stavy Dornier a Saurer, žakáry Grosse a Stäubli, dokončovací stroje Schmale — máme solidní techniku, ale výsledek pořád závisí na lidech, kteří u toho stojí.</p>
+
+                <div class="stats-container">
+                    <div class="stat-item">
+                        <span class="stat-number">100%</span>
+                        <span class="stat-label">Přírodní materiály</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">1998</span>
+                        <span class="stat-label">Rok založení</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">30+</span>
+                        <span class="stat-label">Typů vazeb</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="image-box reveal">
+                <img
+                    src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=1400&auto=format&fit=crop"
+                    alt="Detail tkaniny z lněného vlákna"
+                    loading="lazy"
+                    width="700" height="520">
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ========================================================
+         MATERIÁLY
+         ======================================================== -->
+    <section id="materialy" class="section bg-slate" aria-labelledby="materialy-title">
+        <div class="container">
+            <div class="reveal">
+                <span class="eyebrow" style="text-align:center; display:block;">Materiály</span>
+                <h2 class="section-title centered" id="materialy-title">S čím pracujeme</h2>
+            </div>
+
+            <div class="materials-grid reveal">
+
+                <article class="material-card">
+                    <div class="mat-img" style="background-image: url('https://images.unsplash.com/photo-1616431101491-554c0932ea40?q=80&w=900&auto=format&fit=crop');" role="img" aria-label="Bavlněná tkanina"></div>
+                    <h3>Bavlna</h3>
+                    <p>Měkká, savá, snadno udržovatelná. Základ pro froté výrobu a většinu zakázek.</p>
+                </article>
+
+                
+                <article class="material-card">
+                    <div class="mat-img" style="background-image: url('https://plus.unsplash.com/premium_photo-1670518644993-bc82e37bc0bc?q=80&w=900&auto=format&fit=crop');" role="img" aria-label="Konopná tkanina"></div>
+                    <h3>Konopí</h3>
+                    <p>Odolné vlákno s přirozeně antibakteriálními vlastnostmi. Vhodné tam, kde záleží na trvanlivosti.</p>
+                </article>
+
+                <article class="material-card">
+                    <div class="mat-img" style="background-image: url('https://plus.unsplash.com/premium_photo-1701157946903-57c2821d71b7?q=80&w=900&auto=format&fit=crop');" role="img" aria-label="Lněná tkanina"></div>
+                    <h3>Len</h3>
+                    <p>Prodyšný, pevný, dobře se pere. S každým praním trochu změkne. Používáme ho nejčastěji.</p>
+                </article>
+
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ========================================================
+         VÝROBA
+         ======================================================== -->
+    <section id="vyroba" class="section container reveal" aria-labelledby="vyroba-title">
+        <div class="blog-header">
+            <span class="eyebrow">Co děláme</span>
+            <h2 class="section-title" id="vyroba-title">Tkaní látek a froté výroba</h2>
+        </div>
+
+        <!-- ── ŽAKÁROVÉ TKANÍ ─────────────────────────────────── -->
+        <div class="grid-2" style="align-items: flex-start; gap: 48px; margin-top: 44px;">
+            <div class="production-main">
+                <span class="eyebrow" style="margin-bottom: 12px;">Tkaní látek</span>
+                <p class="lead-text">
+                    Hlavní část naší výroby tvoří tkaní látek na žakárových stavech.
+                    Žakár umožňuje vytvářet vzory přímo ve struktuře tkaniny —
+                    bez tisku, bez přenosu, jen vazbou nití.
+                </p>
+
+                <div class="product-features">
+                    <div class="feature-item">
+                        <h5>Žakárové tkaniny</h5>
+                        <p>Dekorativní a oděvní látky s vzory tkanými přímo do struktury. Vzor je součástí vazby — nevybledne ani po letech praní.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h5>Bytový textil</h5>
+                        <p>Ubrusy, prostírání, utěrky. Tkáme na zakázku podle zadaných rozměrů a barevnosti.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h5>Reklamní froté ručníky</h5>
+                        <p>Standardní rozměry: 50×90, 50×95, 50×100 cm. Na přání i prodloužené saunové délky (50×110 cm).</p>
+                    </div>
+                    <div class="feature-item">
+                        <h5>Reklamní froté osušky</h5>
+                        <p>Rozměry: 70×100, 70×120, 70×140 cm. Pro wellness a sauny zakázkové rozměry až do 200 cm.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="production-side">
+                <div class="tech-card">
+                    <h4>Stroje</h4>
+                    <p>Tkáme na stavech <strong>Dornier</strong> a <strong>Saurer</strong> vybavených elektronickými žakáry <strong>Grosse</strong> a <strong>Stäubli</strong>. Žakár řídí zdvih každé nitě osnovy samostatně — díky tomu lze tkat prakticky libovolně složité vzory bez omezení rapportem. Dokončovací práce zajišťují poloautomaty <strong>Schmale</strong>.</p>
+                </div>
+                <div class="dark-card">
+                    <h4>Další froté program</h4>
+                    <ul>
+                        <li>Pracovní ručníky (froté, vaflové i keprové)</li>
+                        <li>Froté pro domácnosti a kanceláře</li>
+                        <li>Klasické i vaflové utěrky</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ========================================================
+         B2B — SPOLUPRÁCE
+         ======================================================== -->
+    <section id="b2b" class="section bg-slate" aria-labelledby="b2b-title">
+        <div class="container reveal">
+            <div class="b2b-card">
+                <div class="b2b-content">
+                    <span class="eyebrow" style="color: var(--med);">Zakázky</span>
+                    <h2 id="b2b-title">Potřebujete tkaninu nebo froté na míru?</h2>
+                    <p>Pracujeme s firmami i jednotlivci. Stačí nám vědět, co potřebujete — rozměry, materiál, množství — a odpovíme s konkrétní nabídkou.</p>
+                    <p>Napište na
+                       <a href="mailto:tkalcovna@virgo-cz.cz" class="email-intext-link">tkalcovna@virgo-cz.cz</a>
+                       nebo zavolejte.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ========================================================
+         BLOG PREVIEW
+         ======================================================== -->
+    <section id="blog" class="section container" aria-labelledby="blog-title">
+        <div class="blog-header reveal">
+            <span class="eyebrow">Blog</span>
+            <h2 class="section-title" id="blog-title">Z tkalcovny</h2>
+        </div>
+
+        <div id="blog-grid" class="blog-bento" aria-live="polite"></div>
+
+        <div id="blog-actions">
+            <a href="blog.html" class="btn-copper">Všechny články</a>
+        </div>
+    </section>
+
+
+    <!-- ========================================================
+         ARTICLE VIEWER (sdílená komponenta)
+         ======================================================== -->
+    <div id="articleViewer" class="article-viewer" role="dialog" aria-modal="true" aria-labelledby="viewTitle" hidden>
+        <div class="viewer-inner container">
+            <div class="viewer-header">
+                <span id="viewTag" class="viewer-tag"></span>
+                <button class="close-viewer" id="closeViewer" aria-label="Zavřít článek">
+                    ✕ Zavřít
+                </button>
+            </div>
+            <h2 id="viewTitle" class="viewer-title">Načítám&hellip;</h2>
+            <div id="viewBody" class="markdown-body" aria-live="polite"></div>
+        </div>
     </div>
 
-        <!-- Tlačítko pro fullscreen -->
-    <script>
-    function toggleFullScreen() {
-      const el = document.documentElement; // celý dokument
-      if (!document.fullscreenElement) {
-        el.requestFullscreen().catch(err => {
-          console.error(`Chyba při aktivaci fullscreen: ${err.message}`);
-        });
-      } else {
-        document.exitFullscreen();
-      }
-    }
-    </script>
 
-    <!-- STRÁNKA 1 Červená karkulka -->
-    <div id="page1" class="page active">
+    <!-- ========================================================
+         PATIČKA / KONTAKT
+         ======================================================== -->
+    <footer id="kontakt" class="footer" aria-labelledby="footer-heading">
+        <div class="container footer-grid">
+            <div class="footer-col">
+                <h4 id="footer-heading">Sídlo &amp; fakturace</h4>
+                <address>
+                    <strong>VIRGO-CZ s.r.o.</strong><br>
+                    Řetová 250, Řetová<br>
+                    561 41
+                </address>
+                <div class="legal-info">
+                    <span>IČO: 25289233</span>
+                    <span>DIČ: CZ25289233</span>
+                </div>
+            </div>
 
-      <div class="image-card" style="left: 70%; top: 25%; width: 250px;">
-        <img src="images/myslivec.png" />
-        <div class="cover" data-number="1"></div>
-      </div>
+            <div class="footer-col">
+                <h4>Tkalcovna</h4>
+                <address>
+                    <strong>Provozovna Rohozná</strong><br>
+                    Rohozná<br>
+                    Svitavy
+                </address>
+            </div>
 
-      <div class="image-card" style="left: 42%; top: 35%; width: 220px;">
-        <img src="images/vlk.png" />
-        <div class="cover" data-number="3"></div>
-      </div>
-            
-      <div class="image-card" style="left: 10%; top: 25%; width: 300px;">
-        <img src="images/cepecek.png" />
-        <div class="cover" data-number="4"></div>
-      </div>
+            <div class="footer-col">
+                <h4>Kontakt</h4>
+                <div class="contact-links">
+                    <a href="tel:+420602145157">+420 602 145 157</a>
+                    <a href="tel:+420604180171">+420 604 180 171</a>
+                    <a href="mailto:tkalcovna@virgo-cz.cz" class="email-link">tkalcovna@virgo-cz.cz</a>
+                </div>
+            </div>
 
-      <div class="image-card" style="left: 40%; top: 75%; width: 350px;">
-        <img src="images/kosik.png" />
-        <div class="cover" data-number="2"></div>
-      </div>
+        </div>
 
+        <div class="footer-bottom container">
+            <div class="copyright">© 2026 VIRGO-CZ s.r.o. Všechna práva vyhrazena.</div>
+        </div>
+    </footer>
 
-    </div>
-
-    <!-- STRÁNKA 2 Perníková chaloupka -->
-    <div id="page2" class="page">
-
-      <div class="image-card" style="left: 40%; top: 30%; width: 300px;">
-        <img src="images/pernikova_chaloupka.png" />
-        <div class="cover" data-number="5"></div>
-      </div>
-
-      <div class="image-card" style="left: 75%; top: 70%; width: 250px;">
-        <img src="images/jenicek a marenka.png" />
-        <div class="cover" data-number="4"></div>
-      </div>
-
-      <div class="image-card" style="left: 60%; top: 40%; width: 200px;">
-        <img src="images/jezibaba.png" />
-        <div class="cover" data-number="3"></div>
-      </div>
-
-      <div class="image-card" style="left: 30%; top: 80%; width: 300px;">
-        <img src="images/pernicky.png" />
-        <div class="cover" data-number="1"></div>
-      </div>
-
-
-      <div class="image-card" style="left: 13%; top: 30%; width: 180px;">
-        <img src="images/lopata.png" />
-        <div class="cover" data-number="2"></div>
-      </div>
-
-    </div>
-
-     <!-- STRÁNKA 3 Jak tahali řepu -->
-    <div id="page3" class="page">
-
-      <div class="image-card" style="left: 40%; top: 10%; width: 700px;">
-        <img src="images/repa.png" />
-        <div class="cover" data-number="4"></div>
-      </div>
-
-      <div class="image-card" style="left: 15%; top: 65%; width: 160px;">
-        <img src="images/mys.png" />
-        <div class="cover" data-number="3"></div>
-      </div>
-
-      <div class="image-card" style="left: 40%; top: 40%; width: 350px;">
-        <img src="images/deda.png" />
-        <div class="cover" data-number="1"></div>
-      </div>
-
-            <div class="image-card" style="left: 22%; top: 60%; width: 250px;">
-        <img src="images/pes.png" />
-        <div class="cover" data-number="2"></div>
-      </div>
-
-
-    </div>
-
-         <!-- STRÁNKA 4 Spongebob -->
-    <div id="page4" class="page">
-
-
-      <div class="image-card" style="left: 10%; top: 50%; width: 160px;">
-        <img src="images/spongebob1.png" />
-        <div class="cover" data-number="3"></div>
-      </div>
-
-      <div class="image-card" style="left: 30%; top: 30%; width: 200px;">
-        <img src="images/burger.png" />
-        <div class="cover" data-number="1"></div>
-      </div>
-
-      <div class="image-card" style="left: 60%; top: 20%; width: 250px;">
-        <img src="images/spongebob2.png" />
-        <div class="cover" data-number="2"></div>
-      </div>
-
-      <div class="image-card" style="left: 35%; top: 70%; width: 160px;">
-        <img src="images/spogebob3.png" />
-        <div class="cover" data-number="4"></div>
-      </div>
-
-
-    </div>
-
-
-             <!-- STRÁNKA 5 Popelka -->
-    <div id="page5" class="page">
-
-      <div class="image-card" style="left: 75%; top: 80%; width: 250px;">
-        <img src="images/strevic.png" />
-        <div class="cover" data-number="2"></div>
-      </div>
-
-      <div class="image-card" style="left: 30%; top: 20%; width: 400px;">
-        <img src="images/macecha.png" />
-        <div class="cover" data-number="1"></div>
-      </div>
-
-      <div class="image-card" style="left: 15%; top: 70%; width: 300px;">
-        <img src="images/orisky.png" />
-        <div class="cover" data-number="4"></div>
-      </div>
-
-      <div class="image-card" style="left: 70%; top: 20%; width: 350px;">
-        <img src="images/saty.png" />
-        <div class="cover" data-number="3"></div>
-      </div>
-
-
-
-    </div>
-
-    <script>
-      // Záložky
-      document.querySelectorAll('.tab').forEach(tab => {
-        tab.addEventListener('click', () => {
-          document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-          document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-          tab.classList.add('active');
-          document.getElementById(tab.dataset.page).classList.add('active');
-          document.body.style.backgroundImage = "url('images/pozadi"+tab.dataset.page.charAt(tab.dataset.page.length-1)+".png')";
-        });
-      });
-
-      // Klikání + konfety
-      document.querySelectorAll('.image-card').forEach(card => {
-        card.addEventListener('click', () => {
-          if (card.classList.contains('revealed')) return;
-          card.classList.add('revealed');
-
-          for (let i = 0; i < 40; i++) {
-            const c = document.createElement('div');
-            c.className = 'confetti';
-            c.style.background = `hsl(${Math.random()*360}, 90%, 60%)`;
-            c.style.left = '50%';
-            c.style.top = '50%';
-            c.style.setProperty('--x', `${(Math.random()-0.5)*280}px`);
-            c.style.setProperty('--y', `${(Math.random()-0.5)*280}px`);
-            card.appendChild(c);
-            setTimeout(() => c.remove(), 1300);
-          }
-        });
-      });
-    </script>
-
-  </div>
 </body>
 </html>

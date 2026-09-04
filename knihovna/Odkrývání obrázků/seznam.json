@@ -1,0 +1,44 @@
+[
+  {
+    "id": "kalkulator-prevodu-prize",
+    "tag": "Průvodce",
+    "title": "Převody jednotek příze: tex, Nm, denier a další",
+    "perex": "Tex, dtex, Nm, denier nebo Ne — každé odvětví mluví trochu jinak. Interaktivní kalkulačka a přehled, co která jednotka znamená.",
+    "image": "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?q=80&w=1200&auto=format&fit=crop"
+  },
+  {
+    "id": "jak-poznat-kvalitni-len",
+    "tag": "Průvodce",
+    "title": "Jak poznat kvalitní len",
+    "perex": "Tajemství pevnosti tkví v délce vlákna a hustotě dostavy. Naučte se číst tkaninu pohledem i hmatem.",
+    "image": "https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?q=80&w=1200&auto=format&fit=crop"
+  },
+  {
+    "id": "fascinujici-historie-tkalcovstvi",
+    "tag": "Historie",
+    "title": "Fascinující historie tkalcovství v České republice",
+    "perex": "Věděli jste, že textilní průmysl byl jedním z hlavních zdrojů kapitálu, který umožnil vznik železniční sítě?",
+    "image": "https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=1200&auto=format&fit=crop"
+  },
+  {
+    "id": "textilni-prumysl-na-svitavsku",
+    "tag": "Historie",
+    "title": "Textilní průmysl na Svitavsku",
+    "perex": "Svitavsko bylo srdcem českého textilního průmyslu, kde tkalcovství formovalo ekonomiku i kulturu celého regionu.",
+    "image": "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?q=80&w=1200&auto=format&fit=crop"
+  },
+  {
+    "id": "zivot-stavy-za-scénou",
+    "tag": "Zákulisí",
+    "title": "Život u stavů: za scénou naší tkalcovny",
+    "perex": "Jak vypadá běžný den v Rohozné? Provedeme vás od ranního rozběhu strojů až po kontrolu finálního výrobku.",
+    "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1200&auto=format&fit=crop"
+  },
+  {
+    "id": "frote-savost-rucniku",
+    "tag": "Průvodce",
+    "title": "Froté: co rozhoduje o savosti ručníku",
+    "perex": "Gramáž, výška smyčky a složení vlákna — tři parametry, které z obyčejného ručníku dělají luxusní zážitek.",
+    "image": "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=1200&auto=format&fit=crop"
+  }
+]
