@@ -13797,7 +13797,8 @@ body::-webkit-scrollbar-thumb:horizontal {
     flex-direction: column;
     min-width: 0;
     flex: 1;
-    width: 100%
+    width: 100%;
+    position: relative
 }
 
 .RcCNh {
@@ -27658,6 +27659,325 @@ source[src="data:,"] {
 
 .report-modal-btn-secondary:hover {
     background: #f5f5f5;
+}
+
+/* ── Calendar workspace ─────────────────────────────────────── */
+.calendar-view {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    color: #424242;
+    z-index: 4;
+}
+
+.calendar-view[hidden],
+.copilot-panel[hidden] {
+    display: none;
+}
+
+.calendar-toolbar {
+    min-height: 92px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 12px 16px 10px;
+    border-bottom: 1px solid #e1dfdd;
+    background: #fff;
+}
+
+.calendar-toolbar-left,
+.calendar-toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.calendar-toolbar-left h1 {
+    margin: 0 2px 0 10px;
+    font-size: 20px;
+    font-weight: 600;
+    color: #424242;
+}
+
+.calendar-toolbar button {
+    border: 1px solid transparent;
+    background: transparent;
+    color: #424242;
+    font: inherit;
+    cursor: pointer;
+}
+
+.calendar-today,
+.calendar-filter-button,
+.calendar-view-button {
+    min-height: 34px;
+    padding: 0 14px;
+    border-color: #e1dfdd !important;
+    border-radius: 4px;
+    background: #fff !important;
+}
+
+.calendar-view-button.is-selected {
+    background: #f0f0f0 !important;
+    border-color: #9a9a9a !important;
+}
+
+.calendar-nav-button,
+.calendar-chevron {
+    width: 28px;
+    height: 32px;
+    font-size: 23px !important;
+    line-height: 1;
+}
+
+.calendar-share-button {
+    color: #0f6cbd !important;
+    font-weight: 600 !important;
+    padding: 8px;
+}
+
+.calendar-copilot-slot {
+    display: flex;
+    align-items: center;
+    min-height: 46px;
+}
+
+.calendar-copilot-slot #copilot-dab-main-button {
+    width: 52px;
+    height: 46px;
+    padding: 7px 10px;
+    border: 1px solid #e1dfdd;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,.08);
+    cursor: pointer;
+}
+
+.calendar-copilot-slot #copilot-dab-main-button:hover {
+    background: #f5f5f5;
+}
+
+.calendar-copilot-slot #copilot-dab-main-button img {
+    width: 30px;
+    height: 30px;
+}
+
+.calendar-copilot-trigger {
+    min-height: 46px;
+    padding: 0 16px;
+    border: 1px solid #e1dfdd !important;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.08);
+    font-weight: 600 !important;
+}
+
+.calendar-copilot-trigger:hover,
+.calendar-toolbar button:hover {
+    background: #f5f5f5 !important;
+}
+
+.copilot-mark {
+    color: #6a4df5;
+    font-size: 19px;
+    margin-right: 4px;
+}
+
+.calendar-content-shell {
+    display: flex;
+    min-height: 0;
+    flex: 1;
+}
+
+.calendar-grid-wrap {
+    min-width: 0;
+    flex: 1;
+    overflow: auto;
+    padding: 0 16px 16px;
+}
+
+.calendar-weekdays,
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(100px, 1fr));
+    min-width: 700px;
+}
+
+.calendar-weekdays {
+    border: 1px solid #e1dfdd;
+    border-bottom: 0;
+    background: #fafafa;
+}
+
+.calendar-weekdays span {
+    padding: 9px 8px;
+    border-right: 1px solid #e1dfdd;
+    font-size: 12px;
+}
+
+.calendar-grid {
+    grid-template-rows: repeat(5, minmax(118px, 1fr));
+    height: calc(100vh - 210px);
+    min-height: 480px;
+    border-left: 1px solid #e1dfdd;
+}
+
+.calendar-day {
+    position: relative;
+    padding: 8px;
+    border-right: 1px solid #e1dfdd;
+    border-bottom: 1px solid #e1dfdd;
+    background: #fff;
+    font-size: 13px;
+}
+
+.calendar-day.is-muted {
+    color: #777;
+    background: #fcfcfc;
+}
+
+.calendar-day-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 24px;
+    height: 24px;
+}
+
+.calendar-day.is-today .calendar-day-number {
+    color: #fff;
+    border-radius: 50%;
+    background: #0f6cbd;
+}
+
+.calendar-event {
+    display: block;
+    margin-top: 38px;
+    padding: 4px 6px;
+    border: 1px dashed #d85b5b;
+    border-radius: 4px;
+    background: #fff7f7;
+    color: #666;
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.copilot-panel {
+    width: min(450px, 42vw);
+    flex: 0 0 min(450px, 42vw);
+    border-left: 1px solid #e1dfdd;
+    background: #fff;
+    box-shadow: -4px 0 14px rgba(0,0,0,.05);
+    overflow: auto;
+}
+
+.copilot-panel-header,
+.copilot-panel-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 20px 8px;
+}
+
+.copilot-panel-header button,
+.copilot-panel-actions button {
+    border: 0;
+    background: transparent;
+    color: #616161;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.copilot-panel-actions {
+    justify-content: flex-start;
+    gap: 18px;
+    padding-top: 15px;
+    font-size: 16px;
+}
+
+.copilot-panel-actions button { margin-left: auto; }
+.copilot-safe { color: #388e3c; }
+
+.copilot-welcome {
+    padding: 32px 26px 76px;
+    text-align: center;
+    font-size: 22px;
+    font-weight: 700;
+    color: #242424;
+}
+
+.copilot-prompt {
+    margin: 0 18px 24px;
+    padding: 14px;
+    border: 1px solid #d1d1d1;
+    border-radius: 16px;
+    box-shadow: 0 2px 5px rgba(0,0,0,.1);
+    color: #707070;
+    font-size: 14px;
+}
+
+.copilot-prompt div {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 12px;
+}
+
+.copilot-prompt button {
+    border: 0;
+    background: transparent;
+    color: #616161;
+    font-size: 20px;
+}
+
+.copilot-suggestions {
+    display: flex;
+    gap: 12px;
+    padding: 0 18px;
+}
+
+.copilot-suggestions button {
+    flex: 1;
+    min-height: 104px;
+    padding: 12px;
+    border: 1px solid #e1dfdd;
+    border-radius: 9px;
+    background: #fff;
+    color: #424242;
+    text-align: left;
+    cursor: pointer;
+}
+
+.copilot-suggestions b {
+    display: block;
+    margin-bottom: 12px;
+    color: #4b8bea;
+}
+
+.copilot-suggestions span { font-size: 13px; font-weight: 600; line-height: 18px; }
+.copilot-suggestions em { color: #0f6cbd; font-style: normal; }
+
+.copilot-more {
+    display: block;
+    margin: 16px 18px 0 auto;
+    border: 0;
+    background: transparent;
+    color: #616161;
+    cursor: pointer;
+}
+
+@media (max-width: 800px) {
+    .calendar-toolbar { flex-wrap: wrap; }
+    .calendar-toolbar-right { width: 100%; justify-content: flex-end; }
+    .calendar-share-button span { display: none; }
+    .copilot-panel { width: 100%; flex-basis: 100%; }
+    .calendar-content-shell:has(.copilot-panel:not([hidden])) .calendar-grid-wrap { display: none; }
 }
 
 

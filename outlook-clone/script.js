@@ -417,6 +417,123 @@ let driverObj = null;
             .replace(/>/g, '&gt;');
     }
 
+    const calendarState = { year: 2026, month: 5 };
+
+    function renderCalendar() {
+        const grid = document.getElementById('calendarGrid');
+        const label = document.getElementById('calendarMonthLabel');
+        if (!grid || !label) return;
+
+        const monthNames = ['leden', 'únor', 'březen', 'duben', 'květen', 'červen', 'červenec', 'srpen', 'září', 'říjen', 'listopad', 'prosinec'];
+        const firstDay = new Date(calendarState.year, calendarState.month, 1);
+        const mondayOffset = (firstDay.getDay() + 6) % 7;
+        const daysInMonth = new Date(calendarState.year, calendarState.month + 1, 0).getDate();
+        const previousMonthDays = new Date(calendarState.year, calendarState.month, 0).getDate();
+        const cells = [];
+
+        label.textContent = `${monthNames[calendarState.month]} ${calendarState.year}`;
+        for (let index = 0; index < 35; index += 1) {
+            const dayNumber = index - mondayOffset + 1;
+            let displayNumber = dayNumber;
+            let muted = false;
+            if (dayNumber < 1) {
+                displayNumber = previousMonthDays + dayNumber;
+                muted = true;
+            } else if (dayNumber > daysInMonth) {
+                displayNumber = dayNumber - daysInMonth;
+                muted = true;
+            }
+            const isToday = calendarState.year === 2026 && calendarState.month === 5 && dayNumber === 23;
+            const event = calendarState.year === 2026 && calendarState.month === 5 && dayNumber === 30
+                ? '<span class="calendar-event">13:00 Technologický čtvrte</span>' : '';
+            cells.push(`<div class="calendar-day${muted ? ' is-muted' : ''}${isToday ? ' is-today' : ''}"><span class="calendar-day-number">${displayNumber}</span>${event}</div>`);
+        }
+        grid.innerHTML = cells.join('');
+    }
+
+    function toggleCopilot(open) {
+        const panel = document.getElementById('copilotPanel');
+        const trigger = document.getElementById('copilot-dab-main-button');
+        if (!panel || !trigger) return;
+        panel.hidden = !open;
+        trigger.setAttribute('aria-expanded', String(open));
+    }
+
+    function moveCopilotButton(toCalendar) {
+        const button = document.getElementById('copilot-dab-main-button');
+        const slot = document.getElementById('calendarCopilotSlot');
+        const ribbon = document.getElementById('RibbonRoot');
+        if (!button || !slot || !ribbon) return;
+
+        if (toCalendar) {
+            slot.appendChild(button);
+            button.classList.add('calendar-copilot-existing');
+            ribbon.hidden = true;
+        } else {
+            const ribbonCopilotGroup = ribbon.querySelector('.f1atq3b4');
+            if (ribbonCopilotGroup) ribbonCopilotGroup.appendChild(button);
+            button.classList.remove('calendar-copilot-existing');
+            ribbon.hidden = false;
+            toggleCopilot(false);
+        }
+    }
+
+    function setAppView(view) {
+        const calendar = document.getElementById('calendarView');
+        const mail = document.querySelector('.RcCNh');
+        if (!calendar || !mail) return;
+        const isCalendar = view === 'calendar';
+        calendar.hidden = !isCalendar;
+        mail.style.display = isCalendar ? 'none' : '';
+        moveCopilotButton(isCalendar);
+        document.querySelectorAll('.left-rail-item[data-app-view]').forEach((item) => {
+            item.classList.toggle('active', item.dataset.appView === view);
+        });
+        if (view === 'copilot') {
+            setAppView('calendar');
+            toggleCopilot(true);
+        }
+    }
+
+    function setupCalendarWorkspace() {
+        const calendar = document.getElementById('calendarView');
+        if (!calendar) return;
+        renderCalendar();
+
+        const copilotButton = document.getElementById('copilot-dab-main-button');
+        if (copilotButton) {
+            copilotButton.addEventListener('click', (event) => {
+                event.preventDefault();
+                toggleCopilot(true);
+            });
+        }
+
+        document.querySelectorAll('[data-view-trigger]').forEach((trigger) => {
+            trigger.addEventListener('click', (event) => {
+                event.preventDefault();
+                setAppView(trigger.dataset.viewTrigger);
+            });
+        });
+
+        calendar.addEventListener('click', (event) => {
+            const action = event.target.closest('[data-calendar-action]')?.dataset.calendarAction;
+            if (action === 'previous' || action === 'next') {
+                calendarState.month += action === 'next' ? 1 : -1;
+                if (calendarState.month < 0) { calendarState.month = 11; calendarState.year -= 1; }
+                if (calendarState.month > 11) { calendarState.month = 0; calendarState.year += 1; }
+                renderCalendar();
+            } else if (action === 'today') {
+                calendarState.year = 2026;
+                calendarState.month = 5;
+                renderCalendar();
+            } else if (action === 'copilot') {
+                toggleCopilot(true);
+            } else if (action === 'close-copilot') {
+                toggleCopilot(false);
+            }
+        });
+    }
+
     /* ================================================================
        Three-dot menu (More items) logic
        ================================================================ */
@@ -714,6 +831,7 @@ let driverObj = null;
             setupMoreItemsMenu();
             setupReportModals();
             setupEvaluation();
+            setupCalendarWorkspace();
 
         } catch (err) {
             console.error('Outlook clone init error:', err);
