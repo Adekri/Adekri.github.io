@@ -10,7 +10,7 @@
 
     const FLAG = 'FLAG(NestahujCoNeznas)';
     const TOTAL_STEPS = 13; // kroky na obou stránkách dohromady
-    const PHOTOSHOP_URL = '../photoshop/freephotoshop.html';
+    const PHOTOSHOP_URL = '../photoshop/index.html';
     const VENDOR_ROWS_SHOWN = 12; // kolik řádků seznamu antivirů průvodce zvýrazní
 
     const NO_PROGRESS = ' '; // driver.js neumí počítadlo u jednoho kroku vypnout, tak ho nahradíme mezerou
