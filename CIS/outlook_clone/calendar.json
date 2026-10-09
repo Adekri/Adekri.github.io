@@ -1,0 +1,195 @@
+{
+    "_popis": "Kalendář zobrazuje vždy aktuální měsíc. Umístění události: \"week\" = řádek mřížky měsíce (2–4 leží vždy celé v měsíci), \"weekday\" = den v týdnu (1 = pondělí … 5 = pátek). status: accepted | tentative | declined. \"copilot\" u události = otázky v jejím detailu a odpovědi na ně (HTML). \"copilot\" na konci = návrhy v panelu Copilot; \"events\" = id událostí, na které odpověď odkazuje.",
+    "events": [
+        {
+            "id": 1,
+            "title": "Porada oddělení CIS",
+            "week": 2,
+            "weekday": 1,
+            "start": "09:00",
+            "end": "10:00",
+            "location": "CVIS zasedací místnost E512",
+            "organizer": { "name": "Svoboda Petr", "initials": "SP", "avatarColor": "teal" },
+            "status": "accepted",
+            "description": "Pravidelná týdenní porada oddělení – stav úkolů, plánování na další týden.",
+            "copilot": {
+                "Jaká jsou klíčová témata k diskuzi?": "<p>Na poradě se bude mluvit hlavně o:</p><ul><li>stavu rozpracovaných úkolů,</li><li>plánu práce na další týden,</li><li>aktuálních provozních záležitostech oddělení.</li></ul>",
+                "Co bude obsahem této schůzky?": "<p>Pravidelná pondělní porada oddělení CIS v zasedací místnosti E512. Vede ji Petr Svoboda. Projde se stav úkolů a naplánuje se další týden.</p>",
+                "Jaké jsou očekávané výsledky?": "<p>Po poradě by měl mít každý jasno, na čem tento týden pracuje, a případné problémy by měly mít přiděleného řešitele.</p>"
+            }
+        },
+        {
+            "id": 2,
+            "title": "Konzultace semestrálního projektu",
+            "week": 2,
+            "weekday": 3,
+            "start": "13:00",
+            "end": "14:00",
+            "location": "Schůzka v Microsoft Teams",
+            "organizer": { "name": "Novák Jan", "initials": "NJ", "avatarColor": "blue" },
+            "status": "accepted",
+            "online": true,
+            "description": "Průběžná konzultace k semestrálnímu projektu – návrh architektury a harmonogram.",
+            "copilot": {
+                "Jaká jsou klíčová témata k diskuzi?": "<p>Konzultace se zaměří na:</p><ul><li>návrh architektury semestrálního projektu,</li><li>harmonogram dalších prací.</li></ul>",
+                "Co bude obsahem této schůzky?": "<p>Průběžná konzultace k semestrálnímu projektu v Microsoft Teams, kterou vede Jan Novák. Připravte si aktuální návrh architektury.</p>"
+            }
+        },
+        {
+            "id": 3,
+            "title": "Porada oddělení CIS",
+            "week": 3,
+            "weekday": 1,
+            "start": "09:00",
+            "end": "10:00",
+            "location": "CVIS zasedací místnost E512",
+            "organizer": { "name": "Svoboda Petr", "initials": "SP", "avatarColor": "teal" },
+            "status": "accepted",
+            "description": "Pravidelná týdenní porada oddělení – stav úkolů, plánování na další týden.",
+            "copilot": {
+                "Jaká jsou klíčová témata k diskuzi?": "<p>Na poradě se bude mluvit hlavně o:</p><ul><li>stavu rozpracovaných úkolů,</li><li>plánu práce na další týden,</li><li>aktuálních provozních záležitostech oddělení.</li></ul>",
+                "Co bude obsahem této schůzky?": "<p>Pravidelná pondělní porada oddělení CIS v zasedací místnosti E512. Vede ji Petr Svoboda. Projde se stav úkolů a naplánuje se další týden.</p>",
+                "Jaké jsou očekávané výsledky?": "<p>Po poradě by měl mít každý jasno, na čem tento týden pracuje, a případné problémy by měly mít přiděleného řešitele.</p>"
+            }
+        },
+        {
+            "id": 4,
+            "title": "Školení: Bezpečná práce s e-mailem",
+            "week": 3,
+            "weekday": 2,
+            "start": "10:00",
+            "end": "11:30",
+            "location": "Schůzka v Microsoft Teams",
+            "organizer": { "name": "Bezpečnost CIS", "initials": "BC", "avatarColor": "red" },
+            "status": "accepted",
+            "online": true,
+            "description": "Povinné školení zaměstnanců – rozpoznání phishingu a hlášení podezřelých zpráv.",
+            "copilot": {
+                "Jaká jsou klíčová témata k diskuzi?": "<p>Školení se věnuje hlavně:</p><ul><li>rozpoznání phishingových e-mailů,</li><li>správnému nahlášení podezřelé zprávy.</li></ul>",
+                "Co bude obsahem této schůzky?": "<p>Povinné školení pro zaměstnance o bezpečné práci s e-mailem. Probíhá online v Microsoft Teams, organizuje ho Bezpečnost CIS.</p>",
+                "Jaké jsou očekávané výsledky?": "<p>Po školení byste měli umět poznat podezřelý e-mail a vědět, jak ho v Outlooku nahlásit jako phishing.</p>"
+            }
+        },
+        {
+            "id": 5,
+            "title": "Oběd s týmem",
+            "week": 3,
+            "weekday": 4,
+            "start": "11:30",
+            "end": "12:30",
+            "location": "Menza Kolejní",
+            "organizer": { "name": "Vodstrčilová Eva", "initials": "VE", "avatarColor": "grape" },
+            "status": "accepted",
+            "description": "",
+            "copilot": {
+                "Co bude obsahem této schůzky?": "<p>Neformální oběd s týmem v menze Kolejní. Pozvánka nemá žádný program – jde hlavně o společné setkání.</p>"
+            }
+        },
+        {
+            "id": 6,
+            "title": "Porada oddělení CIS",
+            "week": 4,
+            "weekday": 1,
+            "start": "09:00",
+            "end": "10:00",
+            "location": "CVIS zasedací místnost E512",
+            "organizer": { "name": "Svoboda Petr", "initials": "SP", "avatarColor": "teal" },
+            "status": "accepted",
+            "description": "Pravidelná týdenní porada oddělení – stav úkolů, plánování na další týden.",
+            "copilot": {
+                "Jaká jsou klíčová témata k diskuzi?": "<p>Na poradě se bude mluvit hlavně o:</p><ul><li>stavu rozpracovaných úkolů,</li><li>plánu práce na další týden,</li><li>aktuálních provozních záležitostech oddělení.</li></ul>",
+                "Co bude obsahem této schůzky?": "<p>Pravidelná pondělní porada oddělení CIS v zasedací místnosti E512. Vede ji Petr Svoboda. Projde se stav úkolů a naplánuje se další týden.</p>",
+                "Jaké jsou očekávané výsledky?": "<p>Po poradě by měl mít každý jasno, na čem tento týden pracuje, a případné problémy by měly mít přiděleného řešitele.</p>"
+            }
+        },
+        {
+            "id": 7,
+            "title": "Technologický čtvrtek - DevOps - Konica Minolta",
+            "week": 4,
+            "weekday": 4,
+            "start": "13:00",
+            "end": "14:30",
+            "location": "CVIS Velká zasedací místnost E525; Schůzka v Microsoft Teams",
+            "organizer": { "name": "VUT CIS ředitel", "initials": "VŘ", "avatarColor": "pink" },
+            "status": "tentative",
+            "online": true,
+            "description": "Přednáška společnosti Konica Minolta o zavádění DevOps: CI/CD pipeline, automatizace nasazení a monitoring. Po přednášce prostor pro dotazy.",
+            "copilot": {
+                "Jaká jsou klíčová témata k diskuzi?": "<p>Přednáška společnosti Konica Minolta se týká zavádění DevOps:</p><ul><li>CI/CD pipeline,</li><li>automatizace nasazení,</li><li>monitoring.</li></ul>",
+                "Co bude obsahem této schůzky?": "<p>Technologický čtvrtek – přednáška o DevOps od společnosti Konica Minolta, po ní prostor pro dotazy. Můžete přijít do velké zasedací místnosti E525, nebo se připojit v Teams.</p><p>Účast máte zatím jen předběžnou.</p>"
+            }
+        },
+        {
+            "id": 8,
+            "title": "Obhajoby bakalářských prací",
+            "week": 4,
+            "weekday": 2,
+            "start": "08:30",
+            "end": "12:00",
+            "location": "Učebna E104",
+            "organizer": { "name": "Fakulta informačních technologií", "initials": "FI", "avatarColor": "steel" },
+            "status": "accepted",
+            "description": "Člen komise – obhajoby bakalářských prací, 6 studentů.",
+            "copilot": {
+                "Co bude obsahem této schůzky?": "<p>Jste členem komise u obhajob bakalářských prací v učebně E104. Obhajovat bude 6 studentů.</p>",
+                "Jaké jsou očekávané výsledky?": "<p>Na konci komise ohodnotí všech 6 obhajob. Je dobré mít předem přečtené posudky prací.</p>"
+            }
+        },
+        {
+            "id": 9,
+            "title": "Den otevřených dveří",
+            "week": 4,
+            "weekday": 5,
+            "allDay": true,
+            "location": "Areál Božetěchova",
+            "organizer": { "name": "VUT CIS ředitel", "initials": "VŘ", "avatarColor": "pink" },
+            "status": "accepted",
+            "description": "Celodenní akce pro uchazeče – stánek CIS v přízemí.",
+            "copilot": {
+                "Co bude obsahem této schůzky?": "<p>Celodenní akce pro uchazeče o studium v areálu Božetěchova. CIS má stánek v přízemí.</p>"
+            }
+        }
+    ],
+    "copilot": [
+        {
+            "prompt": "Shrň můj kalendář na tento měsíc.",
+            "answer": "<p>Tento měsíc máte v kalendáři 9 událostí:</p><ul><li><strong>každé pondělí 9:00–10:00</strong> – porada oddělení CIS,</li><li><strong>2. týden</strong> – ve středu konzultace semestrálního projektu,</li><li><strong>3. týden</strong> – v úterý školení Bezpečná práce s e-mailem, ve čtvrtek oběd s týmem,</li><li><strong>4. týden</strong> – v úterý obhajoby bakalářských prací, ve čtvrtek Technologický čtvrtek (účast zatím předběžná) a v pátek Den otevřených dveří.</li></ul>",
+            "events": [
+                4,
+                8,
+                7,
+                9
+            ]
+        },
+        {
+            "prompt": "Na jaké tři nejdůležitější věci se teď mám zaměřit?",
+            "answer": "<p>Tyto tři věci stojí za pozornost:</p><h4>1. Školení: Bezpečná práce s e-mailem</h4><p>Školení je povinné – nezapomeňte se v úterý připojit.</p><h4>2. Obhajoby bakalářských prací</h4><p>Jste členem komise, přečtěte si předem posudky všech 6 prací.</p><h4>3. Technologický čtvrtek</h4><p>Účast máte zatím jen předběžnou – potvrďte ji nebo odmítněte.</p>",
+            "events": [
+                4,
+                8,
+                7
+            ]
+        },
+        {
+            "prompt": "Kdy je porada oddělení?",
+            "answer": "<p>Porada oddělení CIS je <strong>každé pondělí od 9:00 do 10:00</strong> v zasedací místnosti CVIS E512. Organizuje ji Petr Svoboda.</p>",
+            "events": [
+                3
+            ]
+        },
+        {
+            "prompt": "Kdy jsou obhajoby bakalářských prací?",
+            "answer": "<p>Obhajoby jsou <strong>ve 4. týdnu v úterý od 8:30 do 12:00</strong> v učebně E104. Obhajovat bude 6 studentů.</p>",
+            "events": [
+                8
+            ]
+        },
+        {
+            "prompt": "Kdy je školení o bezpečné práci s e-mailem?",
+            "answer": "<p>Školení je <strong>ve 3. týdnu v úterý od 10:00 do 11:30</strong> online v Microsoft Teams. Je povinné pro všechny zaměstnance.</p>",
+            "events": [
+                4
+            ]
+        }
+    ]
+}

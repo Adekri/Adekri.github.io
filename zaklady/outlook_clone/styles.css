@@ -1,0 +1,1731 @@
+/* ==================================================================
+   OUTLOOK CLONE – STYLY
+
+    1. Fonty
+    2. Proměnné a základ stránky
+    3. Ikony
+    4. Hlavička (modrá lišta)
+    5. Levý panel aplikací
+    6. Pás karet (menu + panel akcí)
+    7. Navigační podokno (složky)
+    8. Seznam zpráv
+    9. Podokno pro čtení
+   10. Kontextová nabídka
+   11. Modální okna
+   ================================================================== */
+
+
+/* ------------------------------------------------------------------
+   1. FONTY
+   Segoe UI se bere ze systému (Windows), soubory v ../fonts jsou
+   záloha pro ostatní systémy. Ikony jsou z fontů Fluent/MDL2.
+   ------------------------------------------------------------------ */
+
+@font-face {
+    font-family: "Segoe UI Web";
+    src: local("Segoe UI"), url("../fonts/SegoeUIWebWestEuropean400.woff2") format("woff2");
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "Segoe UI Web";
+    src: local("Segoe UI SemiBold"), url("../fonts/SegoeUIWebWestEuropean600.woff2") format("woff2");
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: "Segoe UI Web";
+    src: local("Segoe UI Bold"), url("../fonts/SegoeUIWebWestEuropean700.woff2") format("woff2");
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: "Segoe UI Variable Text";
+    src: local("Segoe UI Variable Text");
+    font-weight: 100 900;
+}
+
+@font-face {
+    font-family: "Fluent Icons";
+    src: url("../fonts/FluentSystemIcons.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Fluent Icons Regular";
+    src: url("../fonts/FluentSystemIconsRegular.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Shell Icons";
+    src: url("../fonts/ShellFabricMDL2IconsLite.woff") format("woff");
+}
+
+@font-face {
+    font-family: "Shell Icons Full";
+    src: url("../fonts/ShellFabricMDL2Icons.woff") format("woff");
+}
+
+
+/* ------------------------------------------------------------------
+   2. PROMĚNNÉ A ZÁKLAD STRÁNKY
+   ------------------------------------------------------------------ */
+
+:root {
+    --brand: #0072c6;
+    --brand-hover: #0c5ea5;
+    --brand-link: #005da1;
+    --accent: #1883d3;
+    --text: #242424;
+    --text-primary: #424242;
+    --text-secondary: #616161;
+    --text-muted: #808080;
+    --border: #e0e0e0;
+    --surface: #ffffff;
+    --surface-alt: #f5f5f5;
+    --surface-rail: #f0f0f0;
+    --hover-blue: #ebf3fc;
+    --selected-blue: #cfe4fa;
+    --shadow: 0 0 2px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.14);
+
+    --font: "Segoe UI Web", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+    --font-ui: "Segoe UI", "Segoe UI Web", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+    --font-system-icons: "Segoe Fluent Icons", "Segoe MDL2 Assets", sans-serif;
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+body {
+    min-width: 418px;
+    font-family: var(--font);
+    font-size: 16px;
+    color: #000;
+    cursor: default;
+    user-select: none;
+    overflow-wrap: break-word;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+button,
+input {
+    font: inherit;
+    color: inherit;
+}
+
+button {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+}
+
+/* Hlavní rozvržení: hlavička nahoře, pod ní panel aplikací + pracovní plocha */
+.app {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.app-body {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+}
+
+.workspace {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+    background: var(--surface-alt);
+}
+
+.panes {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+    margin-left: 1px;
+}
+
+/* Tenký posuvník, který se ukáže jen při najetí myší */
+.thin-scroll {
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+    transition: scrollbar-color 0.2s;
+}
+
+/* Posuvník ve stylu Outlooku (podokno pro čtení) */
+.fluent-scroll {
+    overflow: auto;
+}
+
+.fluent-scroll::-webkit-scrollbar {
+    width: 18px;
+    height: 18px;
+}
+
+.fluent-scroll::-webkit-scrollbar:disabled {
+    display: none;
+}
+
+.fluent-scroll::-webkit-scrollbar-track,
+.fluent-scroll::-webkit-scrollbar-corner,
+.fluent-scroll::-webkit-scrollbar-button {
+    background: transparent;
+}
+
+.fluent-scroll::-webkit-scrollbar-button:single-button {
+    border: 5px solid transparent;
+    background-repeat: no-repeat;
+}
+
+.fluent-scroll::-webkit-scrollbar-button:vertical {
+    width: 18px;
+    height: 16px;
+}
+
+.fluent-scroll::-webkit-scrollbar-button:horizontal {
+    width: 16px;
+    height: 18px;
+}
+
+.fluent-scroll::-webkit-scrollbar-button:single-button:vertical:decrement {
+    background: conic-gradient(at 50% 50%, transparent 135deg, var(--text-muted) 0, var(--text-muted) 225deg, transparent 0) no-repeat;
+}
+
+.fluent-scroll::-webkit-scrollbar-button:vertical:increment {
+    background: conic-gradient(at 50% 50%, var(--text-muted) 45deg, transparent 0, transparent 315deg, var(--text-muted) 0) no-repeat;
+}
+
+.fluent-scroll::-webkit-scrollbar-button:horizontal:decrement {
+    background: conic-gradient(at 50% 50%, transparent 45deg, var(--text-muted) 0, var(--text-muted) 135deg, transparent 0) no-repeat;
+}
+
+.fluent-scroll::-webkit-scrollbar-button:horizontal:increment {
+    background: conic-gradient(at 50% 50%, transparent 0 225deg, var(--text-muted) 225deg 315deg, transparent 0) no-repeat;
+}
+
+.fluent-scroll::-webkit-scrollbar-thumb {
+    min-height: 50px;
+    border: 6px solid transparent;
+    border-radius: 9px;
+    background-clip: content-box;
+    background-color: var(--text-muted);
+}
+
+.fluent-scroll::-webkit-scrollbar-thumb:hover {
+    background-color: var(--text-secondary);
+}
+
+@supports not (selector(::-webkit-scrollbar)) {
+    .fluent-scroll {
+        scrollbar-width: thin;
+        scrollbar-color: var(--text-muted) transparent;
+    }
+}
+
+
+/* ------------------------------------------------------------------
+   3. IKONY
+   <i class="icon icon-xxx"> – glyf určuje třída icon-xxx.
+   Ikony s variantou "filled" ji ukážou při najetí na tlačítko.
+   ------------------------------------------------------------------ */
+
+.icon {
+    display: block;
+    flex-shrink: 0;
+    font-family: "Fluent Icons";
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
+    text-align: center;
+}
+
+.icon::before {
+    display: block;
+}
+
+.icon-16 { width: 16px; height: 16px; font-size: 16px; }
+.icon-20 { width: 20px; height: 20px; font-size: 20px; }
+
+.icon-compose::before          { content: "\e575"; }
+.icon-delete::before           { content: "\e62b"; }
+.icon-archive::before          { content: "\e07f"; }
+.icon-report::before           { content: "\ef87"; }
+.icon-sweep::before            { content: "\e2c4"; }
+.icon-move::before             { content: "\e891"; }
+.icon-reply::before            { content: "\e12b"; }
+.icon-reply-all::before        { content: "\e12d"; }
+.icon-forward::before          { content: "\e0f9"; }
+.icon-flash::before            { content: "\e863"; }
+.icon-mail-read::before        { content: "\eb66"; }
+.icon-tag::before              { content: "\f1a7"; }
+.icon-flag::before             { content: "\e857"; }
+.icon-pin::before              { content: "\edc9"; }
+.icon-clock::before            { content: "\e4cc"; }
+.icon-archive-settings::before { content: "\e085"; }
+.icon-print::before            { content: "\ee2f"; }
+.icon-apps::before             { content: "\e067"; }
+.icon-undo::before             { content: "\e197"; }
+.icon-chevron-down::before     { content: "\e450"; }
+.icon-search::before           { content: "\ef1d"; }
+.icon-alert::before            { content: "\e027"; }
+.icon-settings::before         { content: "\ef51"; }
+.icon-select-all::before       { content: "\ef2f"; }
+.icon-jump::before             { content: "\e0c5"; }
+.icon-filter::before           { content: "\e847"; }
+.icon-sort::before             { content: "\e141"; }
+.icon-summary::before          { content: "\f250"; }
+.icon-emoji::before            { content: "\e7ed"; }
+.icon-more::before             { content: "\ebcc"; }
+.icon-inbox::before            { content: "\eb46"; }
+.icon-inbox-filled::before     { content: "\eb45"; }
+.icon-sent::before             { content: "\ef3b"; }
+.icon-drafts::before           { content: "\e781"; }
+.icon-trash::before            { content: "\e62b"; }
+.icon-junk::before             { content: "\e8ad"; }
+.icon-notes::before            { content: "\ec0a"; }
+.icon-folder::before           { content: "\e88b"; }
+.icon-folder-search::before    { content: "\e8af"; }
+.icon-groups::before           { content: "\ecdb"; }
+
+/* Varianty "filled" při najetí na tlačítko v záhlaví zprávy */
+.message-actions button:hover .icon-emoji::before    { content: "\e7ec"; }
+.message-actions button:hover .icon-reply::before    { content: "\e12a"; }
+.message-actions button:hover .icon-reply-all::before { content: "\e12c"; }
+.message-actions button:hover .icon-forward::before  { content: "\e0f8"; }
+.message-actions button:hover .icon-apps::before     { content: "\e066"; }
+.message-actions button:hover .icon-more::before     { content: "\ebcb"; }
+
+.icon-more-apps {
+    font-family: "Fluent Icons Regular";
+}
+
+.icon-more-apps::before { content: "\f123"; }
+
+.icon-chat {
+    font-family: "Shell Icons", "Shell Icons Full";
+}
+
+.icon-chat::before { content: "\f70f"; }
+
+/* Systémové ikony Windows (Segoe Fluent Icons) */
+.icon-hamburger,
+.icon-ellipsis {
+    font-family: var(--font-system-icons);
+}
+
+.icon-hamburger::before { content: "\e700"; }
+.icon-ellipsis::before  { content: "\e712"; }
+
+/* Barvy ikon */
+.icon-green  { color: #498205; }
+.icon-red    { color: #a4262c; }
+.icon-blue   { color: #0078d4; }
+.icon-brand  { color: var(--brand); }
+.icon-gray   { color: var(--text-secondary); }
+.icon-purple { color: #881798; }
+.icon-gold   { color: #aa8413; }
+
+
+/* ------------------------------------------------------------------
+   4. HLAVIČKA (MODRÁ LIŠTA)
+   ------------------------------------------------------------------ */
+
+.header {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: space-between;
+    height: 48px;
+    background: var(--brand);
+    color: #fff;
+}
+
+.header-left,
+.header-center,
+.header-right {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.header-left {
+    width: 260px;
+}
+
+.header-center {
+    flex: 1;
+    padding-left: 12px;
+}
+
+.header-right {
+    gap: 2px;
+}
+
+.header-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    cursor: pointer;
+    transition: background-color 0.1s;
+}
+
+.header-btn:hover {
+    background: var(--brand-hover);
+}
+
+.header-btn svg {
+    display: block;
+    width: 20px;
+    height: 20px;
+}
+
+.header-btn.app-launcher svg {
+    width: 16px;
+    height: 16px;
+}
+
+.header-btn .icon-chat {
+    font-size: 16px;
+}
+
+.tenant-logo {
+    display: flex;
+    align-items: center;
+    margin: 0 14px 0 8px;
+}
+
+.tenant-logo img {
+    display: block;
+    max-width: 200px;
+    max-height: 48px;
+}
+
+.brand-link {
+    margin: 0 30px 0 20px;
+    color: #fff;
+    font-weight: 600;
+    line-height: 48px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    width: 335px;
+    height: 32px;
+    margin-left: 22px;
+    padding: 0 8px;
+    border-radius: 4px;
+    background: #fff;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.search-box .icon {
+    margin-right: 6px;
+    color: rgba(0, 0, 0, 0.85);
+}
+
+.search-input {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #000;
+    font-size: 14px;
+}
+
+.search-input::placeholder {
+    color: var(--text-primary);
+    opacity: 1;
+}
+
+.search-box:hover .search-input::placeholder,
+.search-box:focus-within .search-input::placeholder {
+    color: var(--text-muted);
+}
+
+.profile-btn {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 0 8px;
+    cursor: pointer;
+}
+
+.profile-initials {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.875);
+    border-radius: 50%;
+    background: var(--brand);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+
+/* ------------------------------------------------------------------
+   5. LEVÝ PANEL APLIKACÍ
+   ------------------------------------------------------------------ */
+
+.app-rail {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    width: 48px;
+    padding: 12px 0;
+    background: var(--surface-rail);
+}
+
+.app-rail ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.app-rail li {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.app-rail a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 33px;
+    border-radius: 4px;
+    color: var(--text-muted);
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.1s, color 0.1s;
+}
+
+.app-rail a:hover {
+    background: #fff;
+}
+
+.app-rail img {
+    display: block;
+    width: 20px;
+    height: 20px;
+}
+
+.app-rail .icon-more-apps {
+    color: var(--text-secondary);
+    font-size: 24px;
+}
+
+.app-rail li.active a {
+    color: var(--brand);
+}
+
+/* Modrý proužek u aktivní aplikace */
+.app-rail li.active::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 2px;
+    width: 2px;
+    height: 34px;
+    border-radius: 0 2px 2px 0;
+    background: var(--brand);
+    transform: translateY(-50%);
+}
+
+
+/* ------------------------------------------------------------------
+   6. PÁS KARET (MENU + PANEL AKCÍ)
+   ------------------------------------------------------------------ */
+
+.ribbon {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    padding: 0 19px 0 4px;
+}
+
+/* Řádek s "Soubor" a záložkami */
+.ribbon-tabs {
+    display: flex;
+    align-items: center;
+    height: 36px;
+    padding: 0 8px 0 6px;
+    background: var(--surface-alt);
+}
+
+.ribbon-file {
+    display: flex;
+    align-items: center;
+    margin-right: 8px;
+}
+
+.ribbon-tabs button {
+    height: 36px;
+    border-radius: 4px;
+    color: var(--text-primary);
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.1s;
+}
+
+.ribbon-tabs button:hover {
+    background: #fff;
+}
+
+.ribbon-tabs .nav-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    color: var(--text-muted);
+    font-size: 20px;
+}
+
+.ribbon-tabs .nav-toggle:hover {
+    background: var(--surface-alt);
+}
+
+.ribbon-tabs .nav-toggle .icon {
+    font-style: normal;
+    line-height: normal;
+}
+
+.ribbon-tabs .file-btn {
+    margin-left: 2px;
+    padding: 0 6px;
+}
+
+.ribbon-tabs [role="tablist"] {
+    display: flex;
+    height: 100%;
+}
+
+.ribbon-tabs [role="tab"] {
+    position: relative;
+    padding: 0 10px;
+    border-radius: 0;
+}
+
+.ribbon-tabs [role="tab"][aria-selected="true"] {
+    font-weight: 600;
+}
+
+.ribbon-tabs [role="tab"][aria-selected="true"]::after {
+    content: "";
+    position: absolute;
+    right: 8px;
+    bottom: 6px;
+    left: 8px;
+    height: 2px;
+    background: var(--brand);
+}
+
+.ribbon-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Bílý panel s tlačítky akcí */
+.toolbar {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    gap: 4px;
+    box-sizing: border-box;
+    min-width: 0;
+    height: 40px;
+    margin: 8px 0 8px 2px;
+    padding: 0 8px;
+    overflow: hidden;
+    border-bottom: 1px solid #e1dfdd;
+    border-radius: 9px;
+    background: #fff;
+    box-shadow: var(--shadow);
+    white-space: nowrap;
+}
+
+.toolbar-btn {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    height: 32px;
+    padding: 0 6px;
+    border-radius: 4px;
+    color: var(--text-primary);
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.1s;
+}
+
+.toolbar-btn:hover {
+    background: var(--surface-alt);
+}
+
+.toolbar-btn:active {
+    background: var(--surface-rail);
+}
+
+.toolbar-btn .label {
+    padding-left: 4px;
+}
+
+/* Tlačítko s ikonou a šipkou rozbalovací nabídky */
+.toolbar-btn.menu {
+    gap: 4px;
+    padding: 0 6px 0 8px;
+}
+
+.toolbar-btn .chevron {
+    font-size: 14px;
+}
+
+.toolbar-btn:hover .chevron {
+    color: #000;
+}
+
+.toolbar-btn[aria-disabled="true"] {
+    cursor: default;
+}
+
+.toolbar-btn[aria-disabled="true"]:hover,
+.toolbar-btn[aria-disabled="true"]:active {
+    background: transparent;
+}
+
+.toolbar-btn[aria-disabled="true"] .icon {
+    opacity: 0.4;
+}
+
+/* Rozdělené tlačítko (hlavní akce + šipka) */
+.split-btn {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+}
+
+.split-btn .toolbar-btn:first-child {
+    border-radius: 4px 0 0 4px;
+}
+
+.split-btn .toolbar-btn:last-child {
+    box-sizing: border-box;
+    width: 22px;
+    padding: 0;
+    border-radius: 0 4px 4px 0;
+}
+
+.split-btn .toolbar-btn:last-child .icon {
+    font-size: 14px;
+}
+
+.split-btn.primary .toolbar-btn {
+    background: var(--accent);
+    color: #fff;
+}
+
+.split-btn.primary .toolbar-btn:hover {
+    background: var(--brand);
+}
+
+.split-btn.primary .toolbar-btn:first-child {
+    padding: 0 8px;
+}
+
+.split-btn.primary .toolbar-btn:first-child .label {
+    padding: 0 4px;
+}
+
+.split-btn.primary .toolbar-btn:last-child {
+    border-left: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.split-btn.primary .toolbar-btn:last-child:hover .icon {
+    color: #000;
+}
+
+.split-btn.outline .toolbar-btn {
+    box-sizing: border-box;
+    border: 1px solid #d1d1d1;
+    background: #fff;
+    color: var(--text);
+}
+
+.split-btn.outline .toolbar-btn:hover {
+    background: var(--surface-rail);
+}
+
+.split-btn.outline .toolbar-btn:first-child {
+    padding: 0 5px;
+}
+
+.split-btn.outline .toolbar-btn:first-child .label {
+    padding: 0;
+}
+
+.split-btn.outline .toolbar-btn:last-child {
+    border-left: none;
+}
+
+.split-btn.outline .toolbar-btn:last-child:hover .icon {
+    color: #000;
+}
+
+.toolbar-separator {
+    flex-shrink: 0;
+    width: 1px;
+    height: 24px;
+    background: #d1d1d1;
+}
+
+.toolbar-btn .teams-logo {
+    display: block;
+    width: 16px;
+    height: 16px;
+}
+
+.toolbar-btn .icon-ellipsis {
+    color: #000;
+    font-size: 16px;
+}
+
+/* Kulaté tlačítko Copilot vpravo */
+.copilot-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 44px;
+    height: 44px;
+    border: 1px solid transparent;
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+}
+
+.copilot-btn:hover {
+    background: var(--surface-alt);
+}
+
+.copilot-btn img {
+    display: block;
+    width: 30px;
+    height: 30px;
+}
+
+
+/* ------------------------------------------------------------------
+   7. NAVIGAČNÍ PODOKNO (SLOŽKY)
+   ------------------------------------------------------------------ */
+
+.folder-pane {
+    display: flex;
+    flex: 0 0 246px;
+    margin-top: 8px;
+    border-radius: 4px 0 0;
+    background: var(--surface-alt);
+}
+
+.folder-pane:hover {
+    scrollbar-color: rgba(0, 0, 0, 0.5) transparent;
+}
+
+.folder-tree {
+    flex: 1;
+    min-width: 0;
+    padding: 0 8px;
+}
+
+.folder-section {
+    padding-bottom: 12px;
+}
+
+.folder-section-header,
+.folder {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    height: 36px;
+    padding-right: 8px;
+    overflow: hidden;
+    border-radius: 4px;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.folder-section-header {
+    padding-bottom: 3px;
+}
+
+.folder-section-header .toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    color: var(--text);
+}
+
+.folder-section-header .icon-chevron-down {
+    font-size: 14px;
+}
+
+.folder-section-header .title {
+    flex-grow: 1;
+    padding-left: 2px;
+    overflow: hidden;
+    color: var(--text);
+    font-weight: 600;
+    text-overflow: ellipsis;
+}
+
+.folder-section-header:hover .title {
+    color: #000;
+}
+
+.folder:hover {
+    background: #ebebeb;
+}
+
+.folder.selected {
+    background: #f4f9fd;
+}
+
+.folder.selected:hover {
+    background: #ebebeb;
+}
+
+.folder .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 100%;
+    padding: 0 6px 0 26px;
+    color: var(--text);
+    font-size: 20px;
+}
+
+.folder .title {
+    flex-grow: 1;
+    overflow: hidden;
+    color: var(--text);
+    font-size: 14px;
+    text-overflow: ellipsis;
+}
+
+.folder.selected .title {
+    font-weight: 600;
+}
+
+.folder.link .icon,
+.folder.link .title {
+    color: var(--brand-link);
+}
+
+/* Počet nepřečtených u "Doručená pošta" (vkládá script.js) */
+.unread-badge {
+    margin: 0 8px 0 auto;
+    color: var(--accent);
+    font-size: 13px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+
+/* ------------------------------------------------------------------
+   8. SEZNAM ZPRÁV
+   ------------------------------------------------------------------ */
+
+.message-list-pane {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    width: 350px;
+    margin: 8px 3px 0 0;
+    overflow: hidden;
+    border-left: 1px solid var(--border);
+    border-radius: 4px 4px 0 0;
+    box-shadow: var(--shadow);
+}
+
+/* Záhlaví seznamu: záložky Prioritní/Další a nástroje */
+.message-list-header {
+    position: relative;
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    height: 44px;
+    padding: 0 24px 0 64px;
+    border-bottom: 1px solid var(--border);
+    background: #fff;
+}
+
+.message-list-tabs {
+    display: flex;
+    align-self: flex-end;
+    gap: 4px;
+    margin-bottom: 8px;
+}
+
+.message-list-tabs button {
+    position: relative;
+    padding: 8px;
+    border-radius: 4px;
+    color: var(--text-primary);
+    font-size: 16px;
+    line-height: 16px;
+    cursor: pointer;
+}
+
+.message-list-tabs button:hover {
+    background: var(--surface-alt);
+    color: var(--text);
+}
+
+.message-list-tabs button[aria-selected="true"] {
+    color: #000;
+    font-weight: 600;
+}
+
+/* Modré podtržení vybrané záložky */
+.message-list-tabs button[aria-selected="true"]::before {
+    content: "";
+    position: absolute;
+    right: 14px;
+    bottom: 0;
+    left: 14px;
+    height: 2px;
+    border-radius: 2px 2px 0 0;
+    background: var(--brand);
+    transition: left 0.267s cubic-bezier(0.1, 0.25, 0.75, 0.9), right 0.267s cubic-bezier(0.1, 0.25, 0.75, 0.9);
+}
+
+.message-list-tabs button[aria-selected="true"]:hover::before {
+    right: 6px;
+    left: 6px;
+}
+
+.message-list-tools {
+    position: absolute;
+    top: 6px;
+    left: 210px;
+    display: flex;
+    background: #fff;
+}
+
+.message-list-tools button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    color: var(--text);
+    cursor: pointer;
+}
+
+.message-list-tools button:hover {
+    background: var(--surface-alt);
+}
+
+.message-list-tools .icon-select-all {
+    margin-bottom: 1px;
+}
+
+.message-list-tools .icon-sort {
+    margin-top: 2px;
+}
+
+/* Samotný seznam (plní script.js) */
+.message-list {
+    flex: 1;
+    background: var(--surface-alt);
+    will-change: scroll-position;
+}
+
+.message-list:hover {
+    scrollbar-color: rgba(0, 0, 0, 0.25) transparent;
+}
+
+.message-group-header {
+    display: flex;
+    align-items: center;
+    height: 36px;
+    padding: 0 24px 0 40px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface-alt);
+    color: var(--text);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.message-group-header:hover {
+    background: var(--hover-blue);
+    color: #000;
+}
+
+.message-group-header .icon-chevron-down {
+    margin-right: 16px;
+}
+
+.message-group-header .title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Tlačítko "…" v záhlaví skupiny – viditelné jen při najetí */
+.message-group-header .more-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 24px;
+    height: 24px;
+    margin-left: auto;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: var(--text-secondary);
+    opacity: 0;
+    transition: opacity 0.12s;
+}
+
+.message-group-header:hover .more-btn {
+    opacity: 1;
+}
+
+.message-group-header .more-btn:hover {
+    color: var(--text);
+}
+
+/* Jedna zpráva v seznamu */
+.message-item {
+    display: flex;
+    padding-bottom: 12px;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
+    background: #fff;
+}
+
+.message-item:hover {
+    background: var(--hover-blue);
+}
+
+/* Modrý proužek vlevo u nepřečtené zprávy (obsah neposouvá) */
+.message-item.unread {
+    box-shadow: inset 3px 0 0 var(--accent);
+}
+
+.message-item:focus,
+.message-item:active {
+    outline: 1px solid var(--accent);
+    outline-offset: -1px;
+}
+
+.message-item.selected,
+.message-item.selected:hover {
+    background: var(--selected-blue);
+}
+
+.message-item .avatar {
+    margin: 12px 8px 0 28px;
+}
+
+.message-item-text {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+    color: var(--text);
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.message-item-text > div {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.message-item .sender {
+    padding-top: 8px;
+}
+
+.message-item .sender span,
+.message-item .subject,
+.message-item .preview {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.message-item .subject {
+    flex-grow: 1;
+}
+
+.message-item .date {
+    flex-shrink: 0;
+    padding-left: 16px;
+    font-size: 12px;
+    line-height: normal;
+    text-align: right;
+}
+
+.message-item .preview {
+    color: var(--text-secondary);
+}
+
+/* Prostor pro ikony akcí vpravo (v klonu prázdný) */
+.message-item::after {
+    content: "";
+    flex: 0 0 24px;
+}
+
+.message-item.unread .sender span,
+.message-item.unread .subject,
+.message-item.unread .date {
+    font-weight: 600;
+}
+
+.message-item.unread .subject,
+.message-item.unread .date {
+    color: var(--accent);
+}
+
+/* Avatar s iniciálami */
+.avatar {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 32px;
+    height: 32px;
+    border: 1px solid transparent;
+    border-radius: 50%;
+    font-family: var(--font-ui);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 14px;
+}
+
+.avatar.large {
+    width: 40px;
+    height: 40px;
+}
+
+.avatar.cranberry { color: #6e0811; background: #eeacb2; }
+.avatar.red       { color: #751d1f; background: #f1bbbc; }
+.avatar.peach     { color: #8f4e00; background: #ffddb3; }
+.avatar.marigold  { color: #835b00; background: #f9e2ae; }
+.avatar.brass     { color: #553e06; background: #e0cea2; }
+.avatar.teal      { color: #02494c; background: #9bd9db; }
+.avatar.steel     { color: #00333f; background: #94c8d4; }
+.avatar.blue      { color: #004377; background: #a9d3f2; }
+.avatar.grape     { color: #4c0d55; background: #d9a7e0; }
+.avatar.lilac     { color: #63276d; background: #e6bfed; }
+.avatar.pink      { color: #80215d; background: #f7c0e3; }
+.avatar.beige     { color: #444241; background: #d7d4d4; }
+.avatar.anchor    { color: #202427; background: #bcc3c7; }
+
+
+/* ------------------------------------------------------------------
+   9. PODOKNO PRO ČTENÍ
+   ------------------------------------------------------------------ */
+
+.reading-pane {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 370px;
+    overflow: hidden;
+}
+
+/* Prázdný stav – není vybraná žádná zpráva */
+.reading-pane-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    background: var(--surface-alt);
+}
+
+.reading-pane-empty img {
+    width: 200px;
+    height: 200px;
+}
+
+.reading-pane-empty .title {
+    margin: 0 0 6px;
+    color: var(--text);
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.reading-pane-empty .subtitle {
+    margin: 0;
+    color: #707070;
+    font-size: 14px;
+}
+
+/* Otevřená zpráva */
+.reading-pane-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    margin-left: 8px;
+    color: var(--text);
+    font-family: var(--font-ui);
+    font-size: 14px;
+}
+
+.subject-bar {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: 5px;
+    box-sizing: border-box;
+    height: 48px;
+    margin: 8px 19px 8px 2px;
+    padding: 0 12px 0 10px;
+    overflow: hidden;
+    border-radius: 4px;
+    background: #fff;
+    box-shadow: var(--shadow);
+    font-size: 16px;
+    font-weight: 600;
+    white-space: nowrap;
+    user-select: text;
+    cursor: auto;
+}
+
+.subject-bar h2 {
+    min-width: 0;
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.summarize-btn {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    min-width: 108px;
+    height: 26px;
+    margin-right: 4px;
+    padding: 0 8px 0 6px;
+    border: 1px solid #d1d1d1;
+    border-radius: 6px;
+    background: #fff;
+    color: var(--text);
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.summarize-btn:hover {
+    background: var(--surface-alt);
+}
+
+.summarize-btn span {
+    padding: 0 0 2px 6px;
+}
+
+/* Posuvná oblast se zprávou */
+.message-scroll {
+    flex: 1;
+    min-height: 0;
+    padding-bottom: 16px;
+    scrollbar-gutter: stable;
+    overflow-wrap: break-word;
+    will-change: scroll-position;
+}
+
+.message-card {
+    margin: 2px;
+    padding: 6px 12px 12px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    background: #fff;
+    box-shadow: var(--shadow);
+    color: #000;
+    transition: box-shadow 0.2s ease-in-out, border 0.2s ease-in-out;
+}
+
+/* Záhlaví zprávy: odesílatel vlevo, nástroje a datum vpravo */
+.message-header {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    min-height: 72px;
+    user-select: text;
+}
+
+.sender {
+    display: flex;
+}
+
+.sender .avatar {
+    margin: 10px 8px 0 0;
+}
+
+.sender-info {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 5;
+    margin-left: 4px;
+    padding-top: 6px;
+    overflow: hidden;
+    color: var(--text);
+    white-space: nowrap;
+}
+
+.sender-name {
+    display: block;
+    word-break: break-word;
+    white-space: normal;
+}
+
+.sender-email {
+    display: block;
+    color: var(--text-primary);
+}
+
+.recipients {
+    margin-top: 2px;
+    color: var(--text-primary);
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+.recipients .name {
+    color: var(--text);
+    font-weight: 600;
+}
+
+.recipients .name.extra {
+    padding-left: 2.6em;
+}
+
+.recipients .more-link {
+    color: var(--text);
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Nástroje zprávy vpravo nahoře */
+.message-actions {
+    display: flex;
+    flex: 1 0 auto;
+    align-items: center;
+    justify-content: flex-end;
+    min-width: 60px;
+    height: 20px;
+    padding-top: 6px;
+}
+
+.message-actions button {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    height: 28px;
+    border-radius: 4px;
+    color: var(--text-primary);
+}
+
+.message-actions button:hover {
+    background: var(--surface-alt);
+    color: var(--text);
+}
+
+.message-actions .icon-btn {
+    width: 28px;
+    border: 1px solid transparent;
+}
+
+.message-actions .text-btn {
+    width: 32px;
+    padding: 2px 6px;
+}
+
+.message-actions .apps-btn {
+    width: 28px;
+    padding: 2px 4px;
+}
+
+.message-actions .icon-btn:hover .icon-more {
+    color: var(--accent);
+}
+
+.message-actions .divider {
+    flex-grow: 1;
+    box-sizing: border-box;
+    max-width: 1px;
+    height: 20px;
+    padding: 0 8px;
+}
+
+.message-actions .divider::before {
+    content: "";
+    display: block;
+    height: 100%;
+    border-right: 1px solid var(--border);
+}
+
+.message-date {
+    position: absolute;
+    top: 36px;
+    right: 20px;
+    color: var(--text-primary);
+    font-size: 12px;
+    text-align: right;
+}
+
+/* Tělo e-mailu */
+.message-body {
+    margin: 12px 16px 0 52px;
+    padding-bottom: 2px;
+    color: var(--text);
+    font-size: 15px;
+    user-select: text;
+    cursor: auto;
+}
+
+/* Tlačítka Odpovědět / Odpovědět všem / Přeposlat pod zprávou */
+.message-footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 12px 16px 0 48px;
+}
+
+.message-footer button {
+    display: flex;
+    align-items: center;
+    margin: 4px 0 0 4px;
+    padding: 5px 12px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: #fff;
+    color: var(--text);
+    font-size: 14px;
+    line-height: 20px;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.message-footer button:hover {
+    background: var(--surface-alt);
+}
+
+.message-footer .icon {
+    margin-right: 6px;
+}
+
+
+/* ------------------------------------------------------------------
+   10. KONTEXTOVÁ NABÍDKA (tři tečky u zprávy)
+   ------------------------------------------------------------------ */
+
+.context-menu {
+    position: fixed;
+    z-index: 10000;
+    display: none;
+    min-width: 180px;
+    max-height: calc(100vh - 40px);
+    padding: 4px 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.14), 0 2px 8px rgba(0, 0, 0, 0.08);
+    color: var(--text);
+    font-family: var(--font-ui);
+    font-size: 14px;
+}
+
+.context-menu.open {
+    display: block;
+}
+
+.context-menu-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 10px;
+    line-height: 20px;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.context-menu-item:hover {
+    background: var(--surface-alt);
+}
+
+.context-menu-item.disabled {
+    cursor: default;
+}
+
+.context-menu-item .arrow {
+    margin-left: 16px;
+    color: var(--text-secondary);
+    font-size: 20px;
+    line-height: 1;
+}
+
+.context-menu hr {
+    height: 1px;
+    margin: 4px 12px;
+    border: 0;
+    background: var(--border);
+}
+
+
+/* ------------------------------------------------------------------
+   11. MODÁLNÍ OKNA
+   ------------------------------------------------------------------ */
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10001;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.modal-overlay.open {
+    display: flex;
+}
+
+.modal {
+    min-width: 400px;
+    max-width: 480px;
+    padding: 24px;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 25px 65px rgba(0, 0, 0, 0.18);
+    font-family: var(--font-ui);
+}
+
+.modal-title {
+    margin: 0 0 12px;
+    color: var(--text);
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.modal-text {
+    margin: 20px 0 22px;
+    color: var(--text);
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.modal-btn {
+    padding: 6px 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+    cursor: pointer;
+}
+
+.modal-btn.primary {
+    border-color: #0f6cbd;
+    background: #0f6cbd;
+    color: #fff;
+}
+
+.modal-btn.primary:hover {
+    border-color: #115ea3;
+    background: #115ea3;
+}
+
+.modal-btn.secondary {
+    border-color: #d1d1d1;
+    background: #fff;
+    color: var(--text);
+}
+
+.modal-btn.secondary:hover {
+    background: var(--surface-alt);
+}
+
+/* Výsledek vyhodnocení */
+.eval-mistakes {
+    margin-top: 8px;
+    padding-left: 20px;
+}
+
+.eval-flag {
+    margin-top: 16px;
+    padding: 12px 16px;
+    border: 2px solid #0e700e;
+    border-radius: 6px;
+    background: #f0faf0;
+    text-align: center;
+}
+
+.eval-flag-label {
+    margin-bottom: 4px;
+    color: #555;
+    font-size: 11px;
+}
+
+.eval-flag-value {
+    color: #0e700e;
+    font-family: monospace;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    user-select: text;
+    cursor: text;
+}
+

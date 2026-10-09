@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VirusTotal - Home</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/driver.js@1/dist/driver.css">
+    <link rel="stylesheet" href="../tour.css">
+    <link rel="icon" type="image/png" href="logo-icon.png">
+</head>
+
+<body>
+     <!-- svg ikony, které se pak používají dále-->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+        <symbol id="i-search" viewBox="0 0 24 24">
+            <circle cx="10.5" cy="10.5" r="6" fill="none" stroke="currentColor" stroke-width="2" />
+            <path d="M15 15l5.5 5.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+        </symbol>
+        <symbol id="i-upload" viewBox="0 0 24 24">
+            <path d="M12 16V4M7 8.5L12 3.5l5 5M4 16v4h16v-4" fill="none" stroke="currentColor" stroke-width="2" />
+        </symbol>
+        <symbol id="i-chat" viewBox="0 0 24 24">
+            <path d="M3 4h18v13H8l-5 4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+        </symbol>
+        <symbol id="i-help" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="2" />
+            <path d="M9.2 9.5a2.9 2.9 0 1 1 4.3 2.5c-1 .6-1.5 1.1-1.5 2.3" fill="none" stroke="currentColor" stroke-width="2" />
+            <circle cx="12" cy="17.3" r="1.2" fill="currentColor" />
+        </symbol>
+        <symbol id="i-moon" viewBox="0 0 24 24">
+            <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+        </symbol>
+        <symbol id="i-bad" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.8" />
+            <path d="M12 6.5v7" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            <circle cx="12" cy="17" r="1.2" fill="currentColor" />
+        </symbol>
+        <symbol id="i-ok" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.8" />
+            <path d="M7.5 12.5l3 3 6-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </symbol>
+        <symbol id="i-info" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.8" />
+            <path d="M12 10.5v7" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            <circle cx="12" cy="7" r="1.2" fill="currentColor" />
+        </symbol>
+        <symbol id="i-unrated" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.8" />
+            <path d="M9.2 9.5a2.9 2.9 0 1 1 4.3 2.5c-1 .6-1.5 1.1-1.5 2.3" fill="none" stroke="currentColor" stroke-width="1.8" />
+            <circle cx="12" cy="17.3" r="1.1" fill="currentColor" />
+        </symbol>
+        <symbol id="i-reload" viewBox="0 0 24 24">
+            <path d="M19 12a7 7 0 1 1-2.2-5.1M19 4v4h-4" fill="none" stroke="currentColor" stroke-width="1.8" />
+        </symbol>
+        <symbol id="i-chevron" viewBox="0 0 24 24">
+            <path d="M5 9l7 7 7-7" fill="none" stroke="currentColor" stroke-width="1.8" />
+        </symbol>
+        <symbol id="i-globe" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="1.6" />
+            <path d="M2.5 12h19M12 2.5c-6 6-6 13 0 19M12 2.5c6 6 6 13 0 19M4.5 6.5h15M4.5 17.5h15" fill="none" stroke="currentColor" stroke-width="1.6" />
+        </symbol>
+        <symbol id="i-multi" viewBox="0 0 24 24">
+            <path d="M9 5H6.5v5L4 12l2.5 2v5H9M15 5h2.5v5L20 12l-2.5 2v5H15M12 2.5v19M9.5 12h5" fill="none" stroke="currentColor" stroke-width="2" />
+        </symbol>
+        <symbol id="globe-shape" viewBox="0 0 120 84">
+            <circle cx="60" cy="42" r="38" />
+            <ellipse cx="60" cy="42" rx="17" ry="38" />
+            <path d="M60 4v76M22 42h76M28 22h64M28 62h64" />
+        </symbol>
+        <symbol id="i-code" viewBox="0 0 24 24">
+            <path d="M8 6l-6 6 6 6M16 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" />
+        </symbol>
+        <symbol id="i-window" viewBox="0 0 24 24">
+            <path d="M3 4h18v16H3zM3 8.5h18M10 12l-2.5 2.5L10 17M14 12l2.5 2.5L14 17" fill="none" stroke="currentColor" stroke-width="1.6" />
+        </symbol>
+        <symbol id="i-pin" viewBox="0 0 24 24">
+            <path d="M12 21.5s-7-6.3-7-11.5a7 7 0 0 1 14 0c0 5.2-7 11.5-7 11.5z" fill="none" stroke="currentColor" stroke-width="1.6" />
+            <circle cx="12" cy="10" r="2.6" fill="none" stroke="currentColor" stroke-width="1.6" />
+        </symbol>
+        <symbol id="i-resize" viewBox="0 0 24 24">
+            <path d="M3 8V3h5M21 8V3h-5M3 16v5h5M21 16v5h-5M9 15l6-6M11 9h4v4" fill="none" stroke="currentColor" stroke-width="1.6" />
+        </symbol>
+        <symbol id="i-cookie" viewBox="0 0 24 24">
+            <path d="M12 2.5a9.5 9.5 0 1 0 9.5 9.5 4.5 4.5 0 0 1-5-4.5 4.5 4.5 0 0 1-4.5-5z" fill="none" stroke="currentColor" stroke-width="1.6" />
+            <circle cx="8.5" cy="11" r="1.2" fill="currentColor" /><circle cx="12.5" cy="15.5" r="1.2" fill="currentColor" />
+            <circle cx="8.5" cy="16" r="1" fill="currentColor" />
+        </symbol>
+        <symbol id="i-file" viewBox="0 0 24 24">
+            <path d="M6 2.5h8l4.5 4.5v14.5H6zM14 2.5V7h4.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" />
+        </symbol>
+    </svg>
+
+    <header class="topbar">
+        <a href="#/" class="topbar-logo" aria-label="VirusTotal home">
+            <img src="logo-icon.png" alt="">
+        </a>
+        <form class="topbar-search" id="topSearchForm">
+            <svg><use href="#i-search" /></svg>
+            <input type="text" id="topSearchInput" placeholder="URL, IP address, domain or file hash" autocomplete="off" spellcheck="false">
+        </form>
+        <span class="topbar-sep"></span>
+        <button class="icon-btn" title="Upload file" data-goto-tab="file"><svg><use href="#i-upload" /></svg></button>
+        <button class="icon-btn has-dot" title="Notifications"><svg><use href="#i-chat" /></svg></button>
+        <button class="icon-btn" title="Help"><svg><use href="#i-help" /></svg></button>
+        <button class="icon-btn" title="Dark mode" id="themeBtn"><svg><use href="#i-moon" /></svg></button>
+        <span class="topbar-sep"></span>
+        <a href="#/" class="signin">Sign in</a>
+        <a href="#/" class="signup">Sign up</a>
+    </header>
+
+    <!-- ============ HOME ============ -->
+    <main id="view-home" class="view">
+        <img class="home-logo" src="logo.png" alt="VirusTotal">
+        <p class="home-lead">Analyse suspicious files, domains, IPs and URLs to detect malware and other
+            breaches, automatically share them with the security community.</p>
+
+        <div class="home-tabs" role="tablist">
+            <button class="home-tab" role="tab" data-tab="file">FILE</button>
+            <button class="home-tab" role="tab" data-tab="url" data-tour="tab-url">URL</button>
+            <button class="home-tab" role="tab" data-tab="search">SEARCH</button>
+            <span class="home-tab-icon" title="Multi-search"><svg><use href="#i-multi" /></svg></span>
+        </div>
+
+        <section class="home-panel" data-panel="file">
+            <svg class="panel-icon"><use href="#i-file" /></svg>
+            <label class="btn-outline">Choose file<input type="file" id="fileInput" hidden></label>
+            <p class="panel-msg" id="fileMsg"></p>
+        </section>
+
+        <section class="home-panel" data-panel="url">
+            <svg class="panel-icon globe-icon" viewBox="0 0 120 84">
+                <defs>
+                    <clipPath id="globeTop"><rect x="0" y="0" width="120" height="30" /></clipPath>
+                    <clipPath id="globeBottom"><rect x="0" y="30" width="120" height="54" /></clipPath>
+                </defs>
+                <g clip-path="url(#globeBottom)"><use href="#globe-shape" class="globe-bottom" /></g>
+                <g clip-path="url(#globeTop)"><use href="#globe-shape" class="globe-top" /></g>
+                <path class="globe-line" d="M1 30h118" />
+            </svg>
+            <form class="panel-form" id="urlForm">
+                <input type="text" id="urlInput" placeholder="Search or scan a URL" autocomplete="off" spellcheck="false">
+                <button type="submit" class="btn-outline">Search</button>
+            </form>
+        </section>
+
+        <section class="home-panel" data-panel="search">
+            <svg class="panel-icon search-icon" viewBox="0 0 108 92">
+                <g class="fingerprint">
+                    <circle cx="34" cy="34" r="7" stroke-dasharray="30 14" />
+                    <circle cx="34" cy="34" r="13" stroke-dasharray="46 10 18 8" />
+                    <circle cx="34" cy="34" r="19" stroke-dasharray="60 12 30 18" />
+                    <circle cx="34" cy="34" r="25" stroke-dasharray="80 16 40 22" />
+                    <circle cx="34" cy="34" r="31" stroke-dasharray="70 30 60 35" />
+                </g>
+                <circle class="lens" cx="60" cy="48" r="26" />
+                <path class="handle" d="M80 68l5-5 20 20-5 5z" />
+            </svg>
+            <p class="search-lead">Search for a hash, domain, IP address, URL or gain additional context and threat
+                landscape visibility with <a href="#/">OUR THREAT INTELLIGENCE OFFERING</a>.</p>
+            <form class="panel-form" id="searchForm">
+                <input type="text" id="searchInput" placeholder="URL, IP address, domain, or file hash" autocomplete="off" spellcheck="false">
+                <button type="submit" class="btn-outline">Search</button>
+            </form>
+        </section>
+
+        <p class="home-terms">By submitting data above, you are agreeing to our <a href="#/">Terms of Service</a> and
+            <a href="#/">Privacy Notice</a>, and to the <strong>sharing of your URL submission with the security
+                community.</strong> Please do not submit any personal information; we are not responsible for the
+            contents of your submission. <a href="#/">Learn more.</a></p>
+
+        <div class="home-api"><svg><use href="#i-info" /></svg> Want to automate submissions? <a href="#/">Check our
+                API</a>, or access your <a href="#/">API key</a>.</div>
+    </main>
+
+    <!-- ============ LOADING ============ -->
+    <main id="view-loading" class="view" hidden>
+        <div class="spinner"></div>
+        <p>Analysing…</p>
+    </main>
+
+    <!-- ============ NOT FOUND ============ -->
+    <main id="view-notfound" class="view" hidden>
+        <svg class="panel-icon"><use href="#i-search" /></svg>
+        <h2>No matches found</h2>
+        <p class="nf-query" id="nfQuery"></p>
+        <p class="nf-hint">Tato výuková kopie zná jen adresy použité v úkolu. Zkontrolujte, že jste zkopírovali
+            celou adresu odkazu z tlačítka pro stažení.</p>
+        <a href="#/" class="btn-outline">Try another search</a>
+    </main>
+
+    <!-- ============ REPORT ============ -->
+    <main id="view-report" class="view" hidden>
+        <div class="report-head">
+            <div class="score-card" data-tour="score">
+                <div class="gauge">
+                    <svg viewBox="0 0 100 100">
+                        <circle class="gauge-track" cx="50" cy="50" r="45" />
+                        <circle class="gauge-value" id="gaugeValue" cx="50" cy="50" r="45" />
+                    </svg>
+                    <div class="gauge-text"><span id="scoreNum"></span><small id="scoreTotal"></small></div>
+                </div>
+                <div class="community-score">
+                    <span>Community<br>Score</span>
+                    <b id="communityScore"></b>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <div class="info-title">
+                    <span>URL report for <b id="reportDate"></b>.</span>
+                    <span class="info-actions">
+                        <button id="reanalyzeBtn"><svg><use href="#i-reload" /></svg> Reanalyze</button>
+                        <button>More <svg><use href="#i-chevron" /></svg></button>
+                    </span>
+                </div>
+                <div class="info-body">
+                    <div class="info-url">
+                        <div id="reportUrl"></div>
+                        <div id="reportHost"></div>
+                    </div>
+                    <dl class="info-meta">
+                        <div><dt>Status</dt><dd id="metaStatus"></dd></div>
+                        <div><dt>Content Type</dt><dd id="metaType"></dd></div>
+                        <div><dt>Last Analysis Date</dt><dd id="metaAgo"></dd></div>
+                    </dl>
+                    <div class="info-globe"><svg><use href="#i-globe" /></svg></div>
+                </div>
+            </div>
+        </div>
+
+        <nav class="report-tabs" role="tablist">
+            <button role="tab" data-rtab="summary">SUMMARY</button>
+            <button role="tab" data-rtab="detection">DETECTION</button>
+            <button role="tab" data-rtab="details">DETAILS</button>
+            <button role="tab" data-rtab="community" data-tour="rtab-community">COMMUNITY <span class="badge" id="communityCount"></span></button>
+        </nav>
+
+        <div class="join-banner"><a href="#/">Join our Community</a> and enjoy additional community insights and
+            crowdsourced detections, plus an API key to <a href="#/">automate checks.</a></div>
+
+        <section class="rpanel" data-rpanel="summary" id="panelSummary"></section>
+
+        <section class="rpanel" data-rpanel="detection">
+            <div class="box" data-tour="vendors">
+                <h3>Security vendors' analysis</h3>
+                <div class="vendors" id="vendorList"></div>
+            </div>
+        </section>
+
+        <section class="rpanel" data-rpanel="details" id="panelDetails"></section>
+        <section class="rpanel" data-rpanel="community" id="panelCommunity"></section>
+    </main>
+
+
+    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/driver.js@1/dist/driver.js.iife.js"></script>
+    <script src="tour.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,302 @@
+/* Společný vzhled průvodce (driver.js) pro úkol Photoshop + VirusTotal.
+   Průvodce je ve stylu VUT (červená + písmo Vafle), aby se odlišil od stránek, které popisuje. */
+
+@font-face {
+    font-family: 'VafleVUT';
+    src: url('fonts/VAFLE_VUT_REGULAR.OTF') format('opentype');
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: 'VafleVUT';
+    src: url('fonts/VAFLE_VUT_BOLD.OTF') format('opentype');
+    font-weight: 700;
+}
+
+:root {
+    --zk-primary: #E50000;
+    --zk-primary-hover: #CC0000;
+    --zk-text: #1a1a1a;
+    --zk-text-soft: #6b6b6b;
+    --zk-radius: 4px;
+}
+
+.driver-popover.zk-tour {
+    min-width: 300px;
+    max-width: 370px;
+    padding: 20px 22px 18px;
+    border-top: 5px solid var(--zk-primary);
+    border-radius: var(--zk-radius);
+    background: #ffffff;
+    color: var(--zk-text);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, .35);
+}
+
+/* krok „rozhlédni se“: bublina v pravém dolním rohu, stránka zůstane neztmavená */
+.driver-popover.zk-tour.zk-corner {
+    position: fixed !important;
+    inset: auto 24px 24px auto !important;
+}
+
+.driver-popover.zk-corner .driver-popover-arrow {
+    display: none;
+}
+
+.driver-overlay {
+    transition: opacity .3s;
+}
+
+body:has(.driver-popover.zk-corner) .driver-overlay {
+    opacity: 0 !important;
+}
+
+/* úzká varianta – vejde se vlevo od nabídky po kliknutí pravým tlačítkem */
+.driver-popover.zk-tour.zk-compact {
+    min-width: 0;
+    width: 250px;
+    padding: 16px;
+}
+
+.driver-popover.zk-tour.zk-compact .driver-popover-footer {
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.driver-popover.zk-tour * {
+    font-family: 'VafleVUT', "Segoe UI", system-ui, Arial, sans-serif;
+}
+
+.driver-popover.zk-tour .driver-popover-title {
+    /* titulek je prvek <header>, proto rušíme styly, které pro header mají samotné stránky */
+    display: block;
+    position: static;
+    width: auto;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--zk-text);
+}
+
+.driver-popover.zk-tour .driver-popover-description {
+    margin-top: 8px;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--zk-text);
+}
+
+.driver-popover.zk-tour .driver-popover-footer {
+    margin-top: 16px;
+}
+
+.driver-popover.zk-tour .driver-popover-progress-text {
+    font-size: 13px;
+    color: var(--zk-text-soft);
+}
+
+.driver-popover.zk-tour .driver-popover-footer button,
+.zk-btn {
+    display: inline-block;
+    padding: 9px 16px;
+    border: 0;
+    border-radius: var(--zk-radius);
+    background: var(--zk-primary);
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.2;
+    text-shadow: none;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.driver-popover.zk-tour .driver-popover-footer button:hover,
+.zk-btn:hover {
+    background: var(--zk-primary-hover);
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.zk-btn.zk-btn-light {
+    background: #eceef4;
+    color: var(--zk-text);
+}
+
+.zk-btn.zk-btn-light:hover {
+    background: #dcdfe9;
+    color: var(--zk-text);
+}
+
+.zk-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.zk-tour kbd {
+    display: inline-block;
+    padding: 1px 7px;
+    border: 1px solid #b9bdca;
+    border-bottom-width: 2px;
+    border-radius: 5px;
+    background: #f7f8fb;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.zk-note {
+    margin-top: 10px;
+    font-size: 14px;
+    color: var(--zk-text-soft);
+}
+
+.zk-note a,
+.zk-linkbtn {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--zk-primary);
+    font-size: 14px;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.zk-warning {
+    margin-bottom: 10px;
+    padding: 9px 12px;
+    border-left: 4px solid #e08a00;
+    border-radius: var(--zk-radius);
+    background: #fff4d6;
+    color: #6b4200;
+    font-weight: 700;
+    animation: zk-shake .35s;
+}
+
+@keyframes zk-shake {
+    25% {
+        transform: translateX(-6px);
+    }
+
+    75% {
+        transform: translateX(6px);
+    }
+}
+
+/* napodobenina nabídky po kliknutí pravým tlačítkem */
+.zk-menu {
+    margin: 12px 0 0;
+    padding: 5px;
+    list-style: none;
+    border: 1px solid #d5d8e2;
+    border-radius: 8px;
+    background: #fafbfd;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, .12);
+    font-size: 14px;
+    color: #8a90a2;
+}
+
+.zk-menu li {
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.zk-menu li.zk-menu-pick {
+    background: #0b4dda;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+/* adresa webu, na kterou má student kliknout */
+.zk-site-link {
+    display: block;
+    margin-top: 12px;
+    padding: 10px 14px;
+    border: 2px solid var(--zk-primary);
+    border-radius: var(--zk-radius);
+    color: var(--zk-primary);
+    font-size: 19px;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: underline;
+}
+
+.zk-site-link:hover {
+    background: var(--zk-primary);
+    color: #ffffff;
+}
+
+/* vlajka */
+.zk-flag {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin: 12px 0 14px;
+    padding: 14px;
+    border: 2px dashed #21a366;
+    border-radius: var(--zk-radius);
+    background: #eaf8f1;
+}
+
+.zk-flag code {
+    font-family: Consolas, "Courier New", monospace !important;
+    font-size: 17px;
+    font-weight: 700;
+    color: #0f6b40;
+    word-break: break-all;
+    user-select: all;
+}
+
+.zk-address {
+    word-break: break-all;
+}
+
+.zk-list {
+    margin: 8px 0 0;
+    padding-left: 20px;
+}
+
+.zk-list li {
+    margin-top: 4px;
+}
+
+.zk-chip {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 9000;
+    padding: 10px 18px;
+    border: 0;
+    border-radius: var(--zk-radius);
+    background: var(--zk-primary);
+    color: #ffffff;
+    font: 700 15px 'VafleVUT', "Segoe UI", system-ui, Arial, sans-serif;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, .3);
+    cursor: pointer;
+}
+
+/* neviditelná oblast, kterou průvodce zvýrazní místo celého dlouhého seznamu */
+.zk-spot {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    pointer-events: none;
+}
+
+/* driver.js prvky kvůli klávesnici zaměřuje; rámeček zaměření tu jen ruší, místo kliknutí už vymezuje výřez */
+.driver-active-element:focus,
+.driver-active-element:focus-visible,
+.driver-popover.zk-tour :focus,
+.driver-popover.zk-tour :focus-visible {
+    outline: none;
+}
+
+.zk-chip:hover {
+    background: var(--zk-primary-hover);
+}

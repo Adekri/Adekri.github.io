@@ -393,10 +393,39 @@
     }
 
     /* ================================================================
+       Přepínání Pošta / Kalendář (levý panel aplikací, odkaz #kalendar)
+       ================================================================ */
+
+    function setupViewSwitching() {
+        const railItems = document.querySelectorAll('.app-rail li[data-view]');
+
+        function showView(view) {
+            $('mailView').hidden = view !== 'mail';
+            $('calendarView').hidden = view !== 'calendar';
+            railItems.forEach((li) => li.classList.toggle('active', li.dataset.view === view));
+            closeMenus();
+        }
+
+        railItems.forEach((li) => {
+            li.querySelector('a').addEventListener('click', (e) => {
+                e.preventDefault();
+                const view = li.dataset.view;
+                history.replaceState(null, '', view === 'calendar' ? '#kalendar' : location.pathname + location.search);
+                showView(view);
+            });
+        });
+
+        window.addEventListener('hashchange', () => showView(location.hash === '#kalendar' ? 'calendar' : 'mail'));
+        showView(location.hash === '#kalendar' ? 'calendar' : 'mail');
+    }
+
+    /* ================================================================
        Start
        ================================================================ */
 
     async function init() {
+        setupViewSwitching();
+
         try {
             const resp = await fetch('emails.json');
             if (!resp.ok) throw new Error('Nepodařilo se načíst emails.json: ' + resp.status);

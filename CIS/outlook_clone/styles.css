@@ -12,6 +12,9 @@
     9. Podokno pro čtení
    10. Kontextová nabídka
    11. Modální okna
+   12. Kalendář
+   13. Copilot
+   14. Detail události
    ================================================================== */
 
 
@@ -1727,4 +1730,1074 @@ button {
     letter-spacing: 0.5px;
     user-select: text;
     cursor: text;
+}
+
+
+/* ------------------------------------------------------------------
+   12. KALENDÁŘ
+   ------------------------------------------------------------------ */
+
+/* Sada SVG ikon (symboly) – sama se nezobrazuje */
+.icon-sprite {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
+
+/* Výchozí velikost ikon v kalendáři, Copilotu a detailu události */
+:where(.calendar-view, .event-peek) svg {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+}
+
+:where(.calendar-view, .event-peek) .icon-btn {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    color: var(--text-primary);
+    cursor: pointer;
+}
+
+:where(.calendar-view, .event-peek) .icon-btn:hover {
+    background: var(--surface-alt);
+    color: var(--text);
+}
+
+/* Pás karet kalendáře: jednořádková lišta (vychází z .toolbar pošty) */
+.calendar-toolbar-ribbon {
+    gap: 2px;
+}
+
+.calendar-toolbar-ribbon .toolbar-btn {
+    box-sizing: border-box;
+    gap: 4px;
+    border: 1px solid transparent;
+}
+
+.calendar-toolbar-ribbon .toolbar-btn .label {
+    padding: 0 2px;
+}
+
+.calendar-toolbar-ribbon .toolbar-btn.selected {
+    border-color: #d1d1d1;
+    background: #ebebeb;
+}
+
+.calendar-toolbar-ribbon .toolbar-btn[aria-disabled="true"] {
+    color: #bdbdbd;
+}
+
+.calendar-toolbar-ribbon .ribbon-icon {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    color: var(--text-primary);
+}
+
+.calendar-toolbar-ribbon .toolbar-btn[aria-disabled="true"] .ribbon-icon {
+    color: #d1d1d1;
+}
+
+.calendar-toolbar-ribbon .split-btn.primary .ribbon-icon {
+    color: #fff;
+}
+
+.calendar-toolbar-ribbon .split-btn.primary .toolbar-btn {
+    border: none;
+}
+
+.calendar-toolbar-ribbon .ribbon-chevron {
+    flex-shrink: 0;
+    width: 14px;
+    height: 14px;
+}
+
+/* Šipka pro rozbalení pásu karet – úplně vpravo */
+.calendar-toolbar-ribbon .ribbon-expand {
+    margin-left: auto;
+}
+
+/* Levý panel: malý kalendář a seznam kalendářů */
+.calendar-sidebar {
+    flex: 0 0 auto;
+    box-sizing: border-box;
+    width: 262px;
+    margin-top: 8px;
+    padding: 0 12px 0 16px;
+    color: var(--text);
+    font-size: 14px;
+}
+
+.calendar-sidebar:hover {
+    scrollbar-color: rgba(0, 0, 0, 0.5) transparent;
+}
+
+.mini-calendar-header {
+    display: flex;
+    align-items: center;
+    height: 36px;
+}
+
+.mini-calendar-header .icon-btn {
+    width: 28px;
+    height: 28px;
+}
+
+.mini-calendar-header .icon-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+.mini-calendar-title {
+    flex: 1;
+    margin-left: 4px;
+    font-weight: 600;
+}
+
+.mini-calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    padding: 0 4px;
+}
+
+.mini-weekday {
+    height: 28px;
+    font-size: 13px;
+    line-height: 28px;
+    text-align: center;
+}
+
+.mini-day {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.mini-day:hover {
+    background: #ebebeb;
+}
+
+.mini-day span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+}
+
+.mini-day.selected {
+    border-color: var(--brand);
+    background: var(--hover-blue);
+}
+
+.mini-day.today span {
+    background: var(--brand);
+    color: #fff;
+    font-weight: 600;
+}
+
+.sidebar-divider {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin: 8px 0 12px;
+}
+
+.sidebar-divider::before,
+.sidebar-divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #c7c7c7;
+}
+
+.sidebar-divider .icon-btn {
+    width: 24px;
+    height: 24px;
+}
+
+.sidebar-divider .icon-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 40px;
+    padding-left: 12px;
+    color: var(--brand-link);
+    text-decoration: none;
+}
+
+.sidebar-link:hover {
+    text-decoration: underline;
+}
+
+.calendar-list {
+    margin-top: 12px;
+}
+
+.calendar-list-header,
+.calendar-list-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    height: 40px;
+    padding-left: 12px;
+}
+
+.calendar-list-header {
+    font-weight: 600;
+}
+
+.calendar-list-header svg {
+    width: 16px;
+    height: 16px;
+}
+
+.calendar-check {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #c4314b;
+    color: #fff;
+}
+
+.calendar-check svg {
+    width: 14px;
+    height: 14px;
+}
+
+.sidebar-link.show-all {
+    padding-left: 42px;
+}
+
+/* Hlavní plocha s měsícem */
+.calendar-main {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-width: 0;
+    margin: 8px 19px 0 0;
+    overflow: hidden;
+    border-radius: 8px 8px 0 0;
+    background: #fff;
+    box-shadow: var(--shadow);
+}
+
+.calendar-toolbar {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: 8px;
+    height: 54px;
+    padding: 0 16px 0 20px;
+}
+
+.today-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-sizing: border-box;
+    min-width: 118px;
+    height: 34px;
+    margin-right: 12px;
+    padding: 0 16px 0 12px;
+    border: 1px solid #d1d1d1;
+    border-radius: 4px;
+    background: #fff;
+    color: var(--text);
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.today-btn:hover {
+    background: var(--surface-alt);
+}
+
+.calendar-title {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: 12px;
+    color: var(--text);
+    font-size: 22px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.calendar-title svg {
+    width: 16px;
+    height: 16px;
+}
+
+.month-view {
+    flex: 1;
+    min-height: 0;
+}
+
+.month-grid {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(110px, 1fr));
+    min-height: 100%;
+    border-top: 1px solid var(--border);
+}
+
+.month-weekday {
+    height: 32px;
+    padding: 6px 12px 0;
+    box-sizing: border-box;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-primary);
+    font-size: 14px;
+}
+
+.month-weekday + .month-weekday,
+.day-cell {
+    border-left: 1px solid var(--border);
+}
+
+/* první sloupec (za 7 názvy dnů) bez levé čáry */
+.day-cell:nth-child(7n + 8) {
+    border-left: none;
+}
+
+.day-cell {
+    display: flex;
+    flex-direction: column;
+    min-height: 80px;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
+    background: #fafafa;
+}
+
+.day-cell.selected {
+    outline: 1px solid var(--brand);
+    outline-offset: -1px;
+    background: #fff;
+}
+
+.day-header {
+    display: flex;
+    align-items: center;
+    height: 32px;
+    padding: 4px 8px 0 12px;
+}
+
+.day-number {
+    color: var(--text);
+    font-size: 14px;
+}
+
+.day-cell.today .day-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 24px;
+    height: 24px;
+    margin-left: -4px;
+    padding: 0 4px;
+    box-sizing: border-box;
+    border-radius: 12px;
+    background: var(--brand);
+    color: #fff;
+    font-weight: 600;
+}
+
+/* Tlačítko "+" pro novou událost – ukáže se po najetí nebo u vybraného dne */
+.day-add {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    margin-left: auto;
+    border-radius: 50%;
+    background: var(--brand);
+    color: #fff;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.day-add svg {
+    width: 12px;
+    height: 12px;
+}
+
+.day-cell:hover .day-add,
+.day-cell.selected .day-add {
+    opacity: 1;
+}
+
+.day-events {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 0 6px 4px;
+}
+
+/* Událost v mřížce – barva kalendáře "Kalendář" (červená) */
+.event-chip {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    box-sizing: border-box;
+    width: 100%;
+    height: 22px;
+    padding: 0 6px 0 9px;
+    overflow: hidden;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    background: #f6d4d8;
+    color: var(--text);
+    font-size: 13px;
+    text-align: left;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.event-chip::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 4px;
+    background: #c4314b;
+}
+
+.event-chip:hover {
+    background: #f1c5ca;
+}
+
+/* Předběžná účast: šrafovaný proužek a přerušovaný okraj */
+.event-chip.tentative {
+    border: 1px dashed #d13438;
+    background: #fbe9eb;
+}
+
+.event-chip.tentative::before {
+    background: repeating-linear-gradient(135deg, #c4314b 0 2px, #fff 2px 4px);
+}
+
+.event-chip.active {
+    box-shadow: 0 0 0 2px var(--text);
+}
+
+.event-chip-title {
+    overflow: hidden;
+    font-weight: 600;
+    text-overflow: ellipsis;
+}
+
+/* Když je otevřený Copilot, levý panel a tlačítko Copilot se skryjí */
+.calendar-view.copilot-open .calendar-sidebar,
+.calendar-view.copilot-open .copilot-btn {
+    display: none;
+}
+
+.calendar-view.copilot-open .calendar-main {
+    margin: 8px 8px 0 4px;
+}
+
+
+/* ------------------------------------------------------------------
+   13. COPILOT
+   ------------------------------------------------------------------ */
+
+.copilot-pane {
+    position: relative;
+    display: flex;
+    flex: 0 0 clamp(380px, 42%, 620px);
+    flex-direction: column;
+    min-height: 0;
+    margin: 8px 19px 0 0;
+    overflow: hidden;
+    border-radius: 8px 8px 0 0;
+    background: #fafafa;
+    box-shadow: var(--shadow);
+    color: var(--text);
+    font-family: var(--font-ui);
+    font-size: 15px;
+}
+
+.copilot-header {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: 4px;
+    padding: 20px 20px 4px 28px;
+}
+
+.copilot-header h2 {
+    flex: 1;
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.copilot-toolbar {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 20px 8px 24px;
+}
+
+.copilot-shield {
+    display: flex;
+}
+
+.copilot-new-chat {
+    display: flex;
+    margin-left: auto;
+}
+
+.copilot-new-chat button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: var(--brand);
+    color: #fff;
+    cursor: pointer;
+}
+
+.copilot-new-chat button:first-child {
+    border-radius: 4px 0 0 4px;
+}
+
+.copilot-new-chat button:last-child {
+    width: 24px;
+    border-left: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 0 4px 4px 0;
+}
+
+.copilot-new-chat button:last-child svg {
+    width: 16px;
+    height: 16px;
+}
+
+.copilot-new-chat button:hover {
+    background: var(--brand-hover);
+}
+
+.copilot-welcome {
+    padding: 56px 24px 72px;
+    text-align: center;
+}
+
+.copilot-welcome h3 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+/* Prázdný stav × probíhající konverzace */
+.copilot-pane.is-empty .copilot-messages,
+.copilot-pane.is-empty .copilot-disclaimer,
+.copilot-pane:not(.is-empty) .copilot-welcome,
+.copilot-pane:not(.is-empty) .copilot-suggestions,
+.copilot-pane:not(.is-empty) .copilot-show-more {
+    display: none;
+}
+
+.copilot-messages {
+    flex: 1;
+    min-height: 0;
+    padding: 4px 24px 16px;
+    user-select: text;
+}
+
+.copilot-date {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 8px 0 20px;
+    color: var(--text-secondary);
+    font-size: 13px;
+}
+
+.copilot-date::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+}
+
+.copilot-msg {
+    margin-bottom: 24px;
+    line-height: 1.5;
+}
+
+.copilot-msg.user {
+    width: fit-content;
+    max-width: 90%;
+    margin-left: auto;
+    padding: 12px 16px;
+    border-radius: 8px;
+    background: #f0f0f0;
+}
+
+.copilot-bot-name {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 4px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.copilot-bot-name img {
+    width: 20px;
+    height: 20px;
+}
+
+.copilot-bot-content p {
+    margin: 0 0 10px;
+}
+
+.copilot-bot-content h4 {
+    margin: 16px 0 4px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.copilot-bot-content ul,
+.copilot-bot-content ol {
+    margin: 0 0 10px;
+    padding-left: 22px;
+}
+
+.copilot-bot-content .reveal {
+    animation: copilot-reveal 0.3s ease both;
+}
+
+@keyframes copilot-reveal {
+    from {
+        opacity: 0;
+        transform: translateY(4px);
+    }
+}
+
+/* Odkaz na událost v odpovědi */
+.copilot-ref {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    max-width: 260px;
+    padding: 1px 8px;
+    border-radius: 4px;
+    background: #f0f0f0;
+    color: var(--text);
+    font-size: 12px;
+    line-height: 20px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.copilot-ref:hover {
+    background: var(--border);
+}
+
+.copilot-ref svg {
+    width: 14px;
+    height: 14px;
+}
+
+.copilot-ref span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Tři tečky, než Copilot odpoví */
+.copilot-typing {
+    display: flex;
+    gap: 4px;
+    padding: 8px 0;
+}
+
+.copilot-typing span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--text-muted);
+    animation: copilot-typing 1s infinite ease-in-out;
+}
+
+.copilot-typing span:nth-child(2) {
+    animation-delay: 0.15s;
+}
+
+.copilot-typing span:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+@keyframes copilot-typing {
+    0%, 60%, 100% {
+        opacity: 0.3;
+    }
+    30% {
+        opacity: 1;
+    }
+}
+
+.copilot-bot-actions {
+    display: flex;
+    gap: 2px;
+    margin-top: 2px;
+}
+
+.copilot-bot-actions .icon-btn {
+    width: 28px;
+    height: 28px;
+}
+
+.copilot-bot-actions .icon-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+.copilot-bot-actions .icon-btn[aria-pressed="true"] {
+    color: var(--brand);
+}
+
+/* Pole pro zprávu */
+.copilot-input {
+    flex-shrink: 0;
+    margin: 0 24px;
+    padding: 12px 12px 8px 16px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+/* Psaní je vypnuté – dotazy se vybírají jen z návrhů */
+.copilot-input.is-disabled {
+    background: var(--surface-alt);
+    box-shadow: none;
+}
+
+.copilot-input.is-disabled textarea,
+.copilot-input.is-disabled .icon-btn {
+    cursor: not-allowed;
+}
+
+.copilot-input.is-disabled .icon-btn {
+    opacity: 0.4;
+}
+
+.copilot-input.is-disabled .icon-btn:hover {
+    background: transparent;
+}
+
+.copilot-input textarea {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0;
+    border: none;
+    outline: none;
+    resize: none;
+    background: transparent;
+    color: var(--text);
+    font: inherit;
+    line-height: 22px;
+}
+
+.copilot-input textarea::placeholder {
+    color: var(--text-secondary);
+}
+
+.copilot-input-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 12px;
+}
+
+/* Další návrhy pod odpovědí Copilota */
+.copilot-followups {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    margin-bottom: 24px;
+}
+
+.copilot-followup {
+    padding: 6px 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: #fff;
+    color: var(--brand-link);
+    font-size: 14px;
+    text-align: left;
+    cursor: pointer;
+}
+
+.copilot-followup:hover {
+    box-shadow: var(--shadow);
+}
+
+/* Karty s návrhy dotazů */
+.copilot-suggestions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 32px 24px 0;
+}
+
+.copilot-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    min-height: 110px;
+    padding: 16px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: #fff;
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.4;
+    text-align: left;
+    cursor: pointer;
+}
+
+.copilot-card:hover {
+    box-shadow: var(--shadow);
+}
+
+.copilot-card.extra {
+    display: none;
+}
+
+.copilot-pane.show-all-suggestions .copilot-card.extra {
+    display: flex;
+}
+
+.copilot-show-more {
+    display: flex;
+    align-items: center;
+    align-self: flex-end;
+    gap: 4px;
+    margin: 16px 24px 0;
+    color: var(--text);
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.copilot-show-more svg {
+    width: 16px;
+    height: 16px;
+}
+
+.copilot-pane.show-all-suggestions .copilot-show-more svg {
+    transform: rotate(180deg);
+}
+
+.copilot-disclaimer {
+    flex-shrink: 0;
+    margin: 10px 24px 12px;
+    color: var(--text-secondary);
+    font-size: 12px;
+    text-align: center;
+}
+
+
+/* ------------------------------------------------------------------
+   14. DETAIL UDÁLOSTI
+   ------------------------------------------------------------------ */
+
+.event-peek {
+    position: fixed;
+    z-index: 9000;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 420px;
+    color: var(--text);
+    font-family: var(--font-ui);
+    font-size: 14px;
+}
+
+.event-peek-card,
+.event-peek-copilot {
+    border-radius: 6px;
+    background: #fff;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.14), 0 0 2px rgba(0, 0, 0, 0.12);
+}
+
+.event-peek-card {
+    position: relative;
+    padding: 14px 20px 20px;
+    border-top: 6px solid #c4314b;
+}
+
+.event-peek-expand {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.event-peek h2 {
+    margin: 0 36px 10px 0;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 26px;
+}
+
+.event-peek-time,
+.event-peek-location {
+    margin: 0 0 6px;
+    color: var(--text-primary);
+}
+
+.event-peek-organizer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 10px 0 16px;
+}
+
+.avatar.small {
+    width: 24px;
+    height: 24px;
+    font-size: 10px;
+}
+
+.event-peek-description {
+    max-height: 180px;
+    margin-bottom: 16px;
+    padding: 8px 12px;
+    overflow: auto;
+    border-radius: 4px;
+    background: var(--surface-alt);
+    white-space: pre-line;
+    user-select: text;
+}
+
+.event-peek-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.event-peek-actions {
+    align-items: stretch;
+}
+
+.event-peek-actions button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 32px;
+    line-height: 18px;
+    cursor: pointer;
+}
+
+.peek-split {
+    display: flex;
+    border: 1px solid #d1d1d1;
+    border-radius: 4px;
+}
+
+.peek-split button {
+    padding: 0 12px;
+}
+
+.peek-split button + button {
+    padding: 0 6px;
+    border-left: 1px solid #d1d1d1;
+}
+
+.peek-split button + button svg {
+    width: 16px;
+    height: 16px;
+}
+
+.peek-btn {
+    padding: 0 12px;
+    border: 1px solid #d1d1d1;
+    border-radius: 4px;
+}
+
+.peek-split button:hover,
+.peek-btn:hover {
+    background: var(--surface-alt);
+}
+
+.peek-rsvp {
+    margin-left: auto;
+    padding: 0 10px 0 14px;
+    border-radius: 4px;
+    background: var(--brand);
+    color: #fff;
+    font-weight: 600;
+}
+
+.peek-rsvp:hover {
+    background: var(--brand-hover);
+}
+
+.peek-rsvp svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* Návrhy dotazů pro Copilota pod detailem */
+.event-peek-copilot {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 16px;
+}
+
+.event-peek-copilot img {
+    width: 20px;
+    height: 20px;
+    margin-top: 6px;
+}
+
+.event-peek-prompts {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+}
+
+.event-peek-prompts button {
+    padding: 4px 12px;
+    border: 1px solid #d1d1d1;
+    border-radius: 16px;
+    background: #fff;
+    color: var(--text);
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.event-peek-prompts button:hover {
+    background: var(--surface-alt);
 }

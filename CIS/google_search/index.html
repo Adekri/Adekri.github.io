@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="cs">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kde stáhnout Microsoft Office? - Hledat Googlem</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+</head>
+
+<body>
+    <!-- ===== Hlavička s vyhledávacím polem ===== -->
+    <header class="header">
+        <a class="header__logo" href="?" aria-label="Domů">
+            <span class="b1">G</span><span class="r">o</span><span class="y">o</span><span class="b2">g</span><span class="g">l</span><span class="e">e</span>
+        </a>
+
+        <form class="search" role="search" onsubmit="return false">
+            <input class="search__input" id="search-input" type="text" value="Kde stáhnout Microsoft Office?" autocomplete="off" aria-label="Hledat">
+            <div class="search__icons">
+                <button class="search__btn search__btn--close" type="button" aria-label="Vymazat">
+<span class="material-icons">close</span>
+                </button>
+                                <span class="search__sep"></span>
+                <button class="search__btn" type="button" aria-label="Nástroje pro zadávání textu">
+<span class="material-icons">keyboard</span>
+                </button>
+                <button class="search__btn" type="button" aria-label="Vyhledávejte hlasem">
+
+<span class="material-icons">mic</span>
+                </button>
+                <button class="search__btn search__btn--lens" type="button" aria-label="Vyhledávání pomocí obrázku">
+<span class="material-icons">photo_camera</span>
+                </button>
+                <button class="search__btn search__btn--search" type="submit" aria-label="Hledat">
+<span class="material-icons">search</span>
+                </button>
+            </div>
+        </form>
+
+        <div class="header__right">
+            <button class="header__icon-btn" type="button" aria-label="Rychlé nastavení">
+                <span class="material-icons">settings</span>
+            </button>
+            <button class="header__icon-btn" type="button" aria-label="Sdílet">
+                <span class="material-icons">share</span>
+            </button>
+            <button class="header__icon-btn" type="button" aria-label="Aplikace Google">
+                <span class="material-icons">apps</span>
+            </button>
+            <button class="header__signin" type="button">Přihlásit</button>
+        </div>
+    </header>
+
+    <main class="main">
+
+        <!-- ===== Přehled od AI ===== -->
+        <section class="ai">
+            <div class="ai__head">
+                <span class="material-icons gemini_spark">auto_awesome</span>
+                <span class="ai__title">Přehled od AI</span>
+            </div>
+
+            <!-- is-collapsed = text je sbalený, tlačítko níže ho rozbalí -->
+            <div class="ai__body is-collapsed" id="ai-body">
+                <p class="ai__intro">
+                    Microsoft Office (dnes pod názvem <b>Microsoft 365</b>) si můžete stáhnout z oficiálních
+                    stránek Microsoftu. Stačí se přihlásit k účtu Microsoft, ke kterému máte přiřazenou licenci
+                    nebo předplatné, a aplikace nainstalovat přímo z přehledu účtu.
+                    <span class="ai__source-chip"><img src="images/fav-microsoft.svg" alt="">Microsoft</span>
+                </p>
+
+                <h2 class="ai__section-title">Jak na stažení a instalaci</h2>
+                <ul class="ai__list">
+                    <li><span class="ai__item-title">Přihlášení:</span> Jděte na stránku pro správu účtu Microsoft a přihlaste se pod účtem, ke kterému máte licenci nebo předplatné.</li>
+                    <li><span class="ai__item-title">Stažení:</span> V přehledu účtu zvolte možnost instalace aplikací do vašeho zařízení (PC nebo Mac).</li>
+                    <li><span class="ai__item-title">Mobilní zařízení:</span> Pro telefony a tablety stahujte jednotlivé aplikace přes Google Play (Android) nebo App Store (iOS).</li>
+                </ul>
+
+                <h2 class="ai__section-title">Možnosti zdarma</h2>
+                <ul class="ai__list">
+                    <li><span class="ai__item-title">Online verze:</span> Word, Excel a PowerPoint lze zdarma používat v prohlížeči po přihlášení k účtu Microsoft.</li>
+                    <li><span class="ai__item-title">Studenti a učitelé:</span> Mnoho škol poskytuje Microsoft 365 zdarma přes školní účet.</li>
+                </ul>
+            </div>
+
+            <button class="ai__toggle" type="button" onclick="toggleAi(this)">
+                <span>Zobrazit více</span>
+                <span class="material-icons">expand_more</span>
+            </button>
+            <hr class="ai__divider">
+        </section>
+
+        <!-- ===== Výsledky vyhledávání ===== -->
+
+        <div class="result">
+            <div class="result__site">
+                <img class="result__favicon" src="images/fav-microsoft.svg" alt="">
+                <div class="result__meta">
+                    <span class="result__sitename">Microsoft</span>
+                    <span class="result__url">https://www.microsoft.com › cs-cz › microsoft-365</span>
+                </div>
+                <span class="result__more material-icons">more_vert</span>
+            </div>
+            <span class="result__title">Microsoft 365 – stažení Office</span>
+            <p class="result__snippet">Můžete si do počítače <b>stáhnout</b> jednu z následujících verzí <b>Office</b>: <b>Office</b> pro studenty a domácnosti, <b>Office</b> pro domácnosti a podnikatele nebo předplatné Microsoft 365.</p>
+        </div>
+
+        <div class="result">
+            <div class="result__site">
+                <img class="result__favicon" src="images/fav-microsoft.svg" alt="">
+                <div class="result__meta">
+                    <span class="result__sitename">Podpora Microsoftu</span>
+                    <span class="result__url">https://support.microsoft.com › cs-cz › office</span>
+                </div>
+                <span class="result__more material-icons">more_vert</span>
+            </div>
+            <span class="result__title">Stažení, instalace nebo přeinstalace Microsoftu 365 nebo Office 2024 na počítači</span>
+            <p class="result__snippet">Přihlaste se a <b>stáhněte</b> si Microsoft 365 nebo Office 2024 na počítači. Postup pro Windows i Mac, včetně řešení potíží s instalací.</p>
+        </div>
+
+        <div class="result">
+            <div class="result__site">
+                <img class="result__favicon" src="images/fav-microsoft.svg" alt="">
+                <div class="result__meta">
+                    <span class="result__sitename">Microsoft 365</span>
+                    <span class="result__url">https://www.office.com</span>
+                </div>
+                <span class="result__more material-icons">more_vert</span>
+            </div>
+            <span class="result__title">Přihlášení | Microsoft 365</span>
+            <p class="result__snippet">Spolupracujte zdarma s online verzemi aplikací Microsoft Word, PowerPoint, Excel a OneNote. Ukládejte dokumenty na OneDrive a sdílejte je s ostatními.</p>
+        </div>
+
+        <div class="result">
+            <div class="result__site">
+                <img class="result__favicon" src="images/fav-wiki.svg" alt="">
+                <div class="result__meta">
+                    <span class="result__sitename">Wikipedie</span>
+                    <span class="result__url">https://cs.wikipedia.org › wiki › Microsoft_Office</span>
+                </div>
+                <span class="result__more material-icons">more_vert</span>
+            </div>
+            <span class="result__title">Microsoft Office – Wikipedie</span>
+            <p class="result__snippet">Microsoft <b>Office</b> je kancelářský balík společnosti Microsoft pro operační systémy Windows a macOS. Obsahuje aplikace Word, Excel, PowerPoint, Outlook a další.</p>
+        </div>
+
+        <!-- ===== Lidé se také ptají (rozbalování zajišťuje <details>) ===== -->
+        <section class="paa">
+            <h2 class="paa__title">Lidé se také ptají</h2>
+
+            <details class="paa__item">
+                <summary class="paa__q">
+                    <span>Kde stáhnout Microsoft Office zdarma?</span>
+                    <span class="material-icons">expand_more</span>
+                </summary>
+                <div class="paa__a">Zdarma můžete používat online verze Wordu, Excelu a PowerPointu v prohlížeči po přihlášení k účtu Microsoft. Studenti a učitelé často získají plnou verzi Microsoft 365 zdarma přes svou školu.</div>
+            </details>
+
+            <details class="paa__item">
+                <summary class="paa__q">
+                    <span>Jak nainstalovat Office na nový počítač?</span>
+                    <span class="material-icons">expand_more</span>
+                </summary>
+                <div class="paa__a">Přihlaste se k účtu Microsoft, ke kterému máte licenci, v přehledu zvolte instalaci aplikací a spusťte stažený instalační soubor. Instalace proběhne automaticky.</div>
+            </details>
+
+            <details class="paa__item">
+                <summary class="paa__q">
+                    <span>Jaký je rozdíl mezi Microsoft 365 a Office 2024?</span>
+                    <span class="material-icons">expand_more</span>
+                </summary>
+                <div class="paa__a">Microsoft 365 je předplatné s průběžnými aktualizacemi a cloudovým úložištěm OneDrive. Office 2024 se kupuje jednorázově a nové funkce už nedostává.</div>
+            </details>
+
+            <details class="paa__item">
+                <summary class="paa__q">
+                    <span>Lze Office používat bez předplatného?</span>
+                    <span class="material-icons">expand_more</span>
+                </summary>
+                <div class="paa__a">Ano. Můžete si koupit jednorázovou licenci Office 2024, nebo používat bezplatné online verze aplikací v prohlížeči.</div>
+            </details>
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
