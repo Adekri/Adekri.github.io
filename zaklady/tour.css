@@ -1,4 +1,4 @@
-/* Společný vzhled průvodce (driver.js) pro úkol Photoshop + VirusTotal.
+/* Společný vzhled průvodce (driver.js) pro úkoly v adresáři zaklady.
    Průvodce je ve stylu VUT (červená + písmo Vafle), aby se odlišil od stránek, které popisuje. */
 
 @font-face {
@@ -299,4 +299,270 @@ body:has(.driver-popover.zk-corner) .driver-overlay {
 
 .zk-chip:hover {
     background: var(--zk-primary-hover);
+}
+
+/* panel „mise“ – úkol v rohu, se stránkou jde přitom normálně pracovat */
+.zk-mission {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 9000;
+    width: 340px;
+    max-width: calc(100vw - 32px);
+    padding: 16px 20px 18px;
+    border-top: 5px solid var(--zk-primary);
+    border-radius: var(--zk-radius);
+    background: #ffffff;
+    color: var(--zk-text);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, .45);
+    font: 400 16px/1.5 'VafleVUT', "Segoe UI", system-ui, Arial, sans-serif;
+}
+
+.zk-mission * {
+    font-family: inherit;
+}
+
+.zk-mission-head {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+}
+
+.zk-mission-head b {
+    flex: 1;
+    font-size: 19px;
+    line-height: 1.25;
+}
+
+.zk-mission-head span {
+    font-size: 13px;
+    color: var(--zk-text-soft);
+}
+
+.zk-mission-toggle {
+    padding: 0 6px;
+    border: 0;
+    background: none;
+    color: var(--zk-text-soft);
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.zk-mission-body {
+    margin-top: 10px;
+}
+
+.zk-mission.collapsed .zk-mission-body {
+    display: none;
+}
+
+.zk-mission code {
+    font-family: Consolas, "Courier New", monospace;
+    font-weight: 700;
+}
+
+/* odškrtávací seznam (hesla ze sešitu, pravidla nového hesla) */
+.zk-checklist {
+    margin: 12px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.zk-checklist li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 0;
+    border-bottom: 1px solid #eceef4;
+}
+
+.zk-checklist li::before {
+    content: "";
+    flex: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #b9bdca;
+    border-radius: 3px;
+}
+
+.zk-checklist li.done::before {
+    border-color: #21a366;
+    background: #21a366 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 8.5l3 3 6-7' fill='none' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 14px no-repeat;
+}
+
+.zk-checklist li.fail::before {
+    border-color: var(--zk-primary);
+    background: var(--zk-primary) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4.5 4.5l7 7M11.5 4.5l-7 7' stroke='white' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E") center / 12px no-repeat;
+}
+
+.zk-rules-head {
+    margin-top: 12px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    color: var(--zk-text-soft);
+}
+
+.zk-rules-head + .zk-checklist {
+    margin-top: 2px;
+}
+
+/* volitelná pravidla jsou menší a odškrtnutí je jen modré, nic se jimi nepodmiňuje */
+.zk-checklist.optional li {
+    padding: 4px 0;
+    font-size: 14px;
+    color: var(--zk-text-soft);
+}
+
+.zk-checklist.optional li::before {
+    width: 14px;
+    height: 14px;
+}
+
+.zk-checklist.optional li.done::before {
+    border-color: #4dabf7;
+    background-color: #4dabf7;
+    background-size: 11px;
+}
+
+.zk-count {
+    margin-left: auto;
+    color: var(--zk-primary);
+    font-weight: 700;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+/* na telefonu se panel roztáhne přes šířku a nezabere víc než polovinu výšky */
+@media (max-width: 600px) {
+    .zk-mission {
+        right: 8px;
+        left: 8px;
+        bottom: 8px;
+        width: auto;
+        max-width: none;
+        max-height: 55vh;
+        overflow-y: auto;
+    }
+}
+
+/* text ke zkopírování kliknutím: tečkované podtržení a malá ikonka, po kliknutí „zkopírováno“ */
+.zk-copy {
+    position: relative;
+    border-bottom: 1px dotted currentColor;
+    cursor: copy;
+    white-space: nowrap;
+}
+
+.zk-copy::after {
+    content: "";
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin-left: 4px;
+    vertical-align: -1px;
+    opacity: .45;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%231a1a1a' stroke-width='1.5'%3E%3Crect x='5.5' y='5.5' width='8' height='8' rx='1.5'/%3E%3Cpath d='M10.5 3.5v-1a1 1 0 0 0-1-1h-6a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h1'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+.zk-copy:hover::after {
+    opacity: .9;
+}
+
+.zk-copy.copied::before {
+    content: "✔ zkopírováno";
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 4px);
+    transform: translateX(-50%);
+    padding: 2px 7px;
+    border-radius: var(--zk-radius);
+    background: #21a366;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+/* Pepův papírek s hesly (úkol HIBP) */
+.zk-postit {
+    position: relative;
+    width: 290px;
+    max-width: 100%;
+    margin: 18px auto 6px;
+    padding: 26px 12px 18px 16px;
+    background: linear-gradient(170deg, #fff59d, #ffe45c);
+    box-shadow: 0 14px 18px -12px rgba(0, 0, 0, .45), 0 1px 2px rgba(0, 0, 0, .15);
+    transform: rotate(-2deg);
+    font-family: 'Caveat', cursive;
+    font-size: 25px;
+    line-height: 1.3;
+    color: #2b2b2b;
+}
+
+/* izolepa */
+.zk-postit::before {
+    content: "";
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    width: 90px;
+    height: 26px;
+    transform: translateX(-50%) rotate(2deg);
+    background: rgba(255, 255, 255, .55);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+}
+
+.zk-postit * {
+    font-family: inherit;
+}
+
+.zk-postit-title {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.zk-postit ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.zk-postit li {
+    display: flex;
+    align-items: baseline;
+    column-gap: 5px;
+}
+
+.zk-postit .zk-copy {
+    border-bottom: 0;
+}
+
+.zk-postit li.leaked .zk-copy > span {
+    text-decoration: line-through #d6336c 2.5px;
+}
+
+.zk-postit-use {
+    color: #6d6a55;
+    font-size: 18px;
+    white-space: nowrap;
+}
+
+/* připsáno červenou propiskou, trochu našikmo */
+.zk-postit-stamp {
+    margin-left: auto;
+    color: #d6336c;
+    font-size: 19px;
+    font-weight: 700;
+    white-space: nowrap;
+    transform: rotate(-5deg);
+}
+
+/* širší okno pro závěr s FLAGem, aby se seznam „Co si zapamatovat“ nezalamoval po pár slovech */
+.driver-popover.zk-tour.zk-wide {
+    width: 560px;
+    max-width: calc(100vw - 32px);
 }
