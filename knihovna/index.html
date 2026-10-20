@@ -1,1 +1,63 @@
-hello
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pohádková knihovna</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="spolecne/hra.css">
+    <style>
+        .hry {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: clamp(16px, 3vw, 32px);
+            width: min(1100px, 100%);
+        }
+        .hra-odkaz {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            padding: clamp(18px, 3vh, 32px) 16px;
+            border-radius: var(--radius);
+            background: var(--karta);
+            box-shadow: var(--stin);
+            color: var(--text);
+            text-decoration: none;
+            transition: transform .15s;
+        }
+        .hra-odkaz:hover { transform: translateY(-4px) rotate(-1deg); }
+        .hra-odkaz:active { transform: scale(.97); }
+        .hra-odkaz .emoji { font-size: clamp(80px, 15vh, 130px); line-height: 1.1; }
+        .hra-odkaz strong { font-size: clamp(1.5rem, 3vw, 2.1rem); line-height: 1.1; }
+        .hra-odkaz span:last-child { color: var(--tlumeny); font-size: 1.1rem; line-height: 1.25; }
+    </style>
+</head>
+<body>
+    <main class="hra">
+        <div class="ikona-uvod">📚</div>
+        <h1 class="nadpis">Pohádková knihovna</h1>
+        <p class="podnadpis">Vyber si hru!</p>
+
+        <nav class="hry" aria-label="Výběr hry">
+            <a class="hra-odkaz" href="co-bylo-v-pribehu/">
+                <span class="emoji">👂</span>
+                <strong>Co bylo v příběhu?</strong>
+                <span>Poslouchej povídku a pak hádej, co v ní bylo.</span>
+            </a>
+            <a class="hra-odkaz" href="pohadkovy-kufrik/">
+                <span class="emoji">🧳</span>
+                <strong>Pohádkový kufřík</strong>
+                <span>Komu patří kouzelná věc? Vrať ji správné postavě.</span>
+            </a>
+            <a class="hra-odkaz" href="popletena-pohadka/">
+                <span class="emoji">🤪</span>
+                <strong>Popletená pohádka</strong>
+                <span>Najdi v obrázku věci, které do pohádky nepatří.</span>
+            </a>
+        </nav>
+    </main>
+</body>
+</html>
