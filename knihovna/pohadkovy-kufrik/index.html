@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Čí je to kufr?</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,500;0,700;0,800;1,500&family=Alegreya+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../spolecne/hra.css">
+    <style>
+        .hra { gap: clamp(10px, 2.2vh, 26px); }
+
+        .scena-kufru {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-end;
+            justify-content: center;
+            gap: clamp(20px, 4vw, 60px);
+            width: min(1500px, 100%);
+        }
+
+        /* ----- Kufr ----- */
+        .kufr {
+            position: relative;
+            flex: 1 1 560px;
+            max-width: 980px;
+            padding-top: 5vh;
+        }
+        .viko {
+            position: relative;
+            height: 6vh;
+            margin: 0 5%;
+            background: var(--hneda);
+            border: 4px solid var(--inkoust);
+            border-bottom: 0;
+            border-radius: 40px 34px 0 0 / 30px 36px 0 0;
+        }
+        .drzadlo {
+            position: absolute;
+            left: 50%;
+            bottom: 100%;
+            width: 20%;
+            height: 4.4vh;
+            translate: -50% 4px;
+            border: 7px solid var(--inkoust);
+            border-bottom: 0;
+            border-radius: 50px 46px 0 0 / 40px 44px 0 0;
+        }
+        .telo {
+            padding: clamp(10px, 2.2vh, 26px) clamp(12px, 2.2vw, 30px);
+            background: var(--hneda);
+            border: 4px solid var(--inkoust);
+            border-radius: 22px 30px 26px 34px / 30px 22px 34px 26px;
+            box-shadow: 6px 8px 0 var(--linka);
+            /* popruhy */
+            background-image: linear-gradient(90deg,
+                transparent 16%, var(--hneda-tmava) 16%, var(--hneda-tmava) 20%, transparent 20%,
+                transparent 80%, var(--hneda-tmava) 80%, var(--hneda-tmava) 84%, transparent 84%);
+        }
+        .vnitrek {
+            display: grid;
+            grid-template-columns: repeat(var(--pocet), 1fr);
+            gap: clamp(6px, 1.4vw, 20px);
+            min-height: 34vh;
+            padding: clamp(10px, 2vh, 22px);
+            background: #efe0bf;
+            border: 3px dashed rgba(122, 78, 42, .55);
+            border-radius: 18px 24px 16px 26px;
+        }
+        .slot {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .slot .emoji { font-size: clamp(70px, 17vh, 180px); }
+        .slot .popisek { font-size: clamp(1rem, 2vw, 1.6rem); font-weight: 500; line-height: 1.1; }
+        .slot.prazdny .emoji {
+            display: grid;
+            place-items: center;
+            width: 1em;
+            height: 1em;
+            font-family: var(--nadpisy);
+            font-size: clamp(50px, 11vh, 120px);
+            color: rgba(122, 78, 42, .35);
+        }
+
+        /* Visačka se jménem */
+        .stitek {
+            position: absolute;
+            top: 0;
+            right: 1%;
+            z-index: 1;
+            min-width: 4.5em;
+            padding: .15em .9em .2em 1.3em;
+            background: var(--papir-svetly);
+            border: 3px solid var(--inkoust);
+            border-radius: 8px 22px 22px 8px / 8px 26px 26px 8px;
+            font-family: var(--nadpisy);
+            font-size: clamp(1.5rem, 3.4vw, 2.8rem);
+            font-weight: 800;
+            rotate: 6deg;
+            box-shadow: 3px 4px 0 var(--linka);
+            transform-origin: left center;
+        }
+        .stitek::before {
+            content: '';
+            position: absolute;
+            left: .4em;
+            top: 50%;
+            width: .35em;
+            height: .35em;
+            translate: 0 -50%;
+            border: 3px solid var(--inkoust);
+            border-radius: 50%;
+        }
+        .stitek.otoc { animation: otoc .6s ease-in-out; }
+        @keyframes otoc { 50% { transform: scaleX(0); } }
+
+        /* ----- Majitel ----- */
+        .majitel {
+            position: relative;
+            flex: 0 1 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-width: clamp(200px, 22vw, 340px);
+            min-height: 42vh;
+            padding: 16px;
+            border: 3px dashed var(--linka);
+            border-radius: var(--rucni);
+        }
+        .majitel .otaznik { font-family: var(--nadpisy); font-size: clamp(90px, 20vh, 200px); color: var(--linka); line-height: 1; }
+        .majitel .emoji { font-size: clamp(130px, 28vh, 280px); }
+        .majitel.odhaleny { border-style: solid; border-color: transparent; }
+
+        .titulek { max-width: 1100px; }
+    </style>
+</head>
+<body>
+    <header class="lista">
+        <a class="lista-zpet" href="../index.html">← Všechny hry</a>
+        <h1 class="lista-nazev">Čí je to kufr?</h1>
+        <span class="postup" id="postup"></span>
+        <button class="ikonka" id="zvuk" aria-label="Předčítání nahlas"></button>
+        <button class="ikonka" id="celaobrazovka" aria-label="Celá obrazovka"></button>
+    </header>
+
+    <main class="hra" id="hra"></main>
+
+    <footer class="paticka">Obrázky: <a href="https://openmoji.org" target="_blank" rel="noopener">OpenMoji</a> – CC BY-SA 4.0</footer>
+
+    <script src="../spolecne/hra.js"></script>
+    <script src="kufry.js"></script>
+    <script src="hra.js"></script>
+</body>
+</html>

@@ -6,21 +6,23 @@
     <title>Co bylo v příběhu?</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,500;0,700;0,800;1,500&family=Alegreya+Sans:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../spolecne/hra.css">
     <style>
         /* Text povídky pro předčítání */
         .text-pribehu {
-            width: min(760px, 100%);
+            width: min(820px, 100%);
             max-height: 55vh;
             overflow-y: auto;
-            padding: 20px 28px;
-            border-radius: var(--radius);
-            background: var(--karta);
-            box-shadow: var(--stin);
+            padding: 24px 32px;
+            border: 3px solid var(--inkoust);
+            border-radius: 12px 18px 10px 20px / 18px 10px 20px 12px;
+            background: var(--papir-svetly);
+            box-shadow: 4px 5px 0 var(--linka);
             text-align: left;
-            font-size: 1.25rem;
-            line-height: 1.55;
+            font-family: var(--nadpisy);
+            font-size: 1.35rem;
+            line-height: 1.6;
             -webkit-user-select: text;
             user-select: text;
         }
@@ -28,54 +30,58 @@
         .text-pribehu[hidden] { display: none; }
 
         /* Ano / Ne */
-        .ano-ne .tlacitko { min-width: clamp(150px, 26vw, 260px); font-size: clamp(1.8rem, 4.5vw, 3rem); }
-        .ano-ne .tlacitko.spatne { opacity: .4; animation: trest .45s; }
-        .ano-ne .tlacitko.ukaz { animation: skok .6s 2; }
+        .ano-ne .tlacitko { min-width: clamp(170px, 22vw, 300px); justify-content: center; font-size: clamp(2rem, 5vw, 3.6rem); }
 
         /* Seřazení */
-        .sloty { display: flex; gap: clamp(8px, 2vw, 20px); justify-content: center; flex-wrap: wrap; }
+        .sloty { display: flex; gap: clamp(12px, 2.4vw, 32px); justify-content: center; flex-wrap: wrap; }
         .slot {
             position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            width: clamp(110px, 20vw, 200px);
-            min-height: clamp(120px, 22vh, 200px);
-            padding: 8px;
-            border: 4px dashed rgba(59, 47, 42, .25);
-            border-radius: var(--radius);
+            gap: 6px;
+            width: clamp(150px, 20vw, 260px);
+            min-height: clamp(150px, 26vh, 260px);
+            padding: 12px;
+            border: 3px dashed var(--linka);
+            border-radius: var(--rucni);
         }
         .slot .cislo {
             position: absolute;
-            top: -16px;
+            top: -20px;
             left: 50%;
             translate: -50% 0;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
+            width: 44px;
+            height: 44px;
             display: grid;
             place-items: center;
-            background: var(--zluta);
+            border: 3px solid var(--inkoust);
+            border-radius: 50%;
+            background: var(--papir);
+            font-family: var(--nadpisy);
             font-weight: 800;
-            font-size: 1.4rem;
+            font-size: 1.5rem;
         }
-        .slot.plny { border: 4px solid var(--zelena); background: var(--zelena-svetla); }
-        .slot .emoji { font-size: clamp(54px, 10vh, 100px); line-height: 1.1; }
-        .slot .popisek { font-size: clamp(.95rem, 2vw, 1.3rem); font-weight: 600; line-height: 1.15; }
+        .slot.plny { border-style: solid; border-color: var(--inkoust); background: var(--papir-svetly); }
+        .slot .emoji { font-size: clamp(70px, 14vh, 140px); }
+        .slot .popisek { font-size: clamp(1.1rem, 2vw, 1.5rem); font-weight: 500; line-height: 1.15; }
         .karta.pouzita { visibility: hidden; }
+        .poradi-karty .karta .emoji { font-size: clamp(70px, 14vh, 140px); }
     </style>
 </head>
 <body>
     <header class="lista">
-        <a class="kulaty" href="../index.html" aria-label="Zpět na výběr her">🏠</a>
+        <a class="lista-zpet" href="../index.html">← Všechny hry</a>
         <h1 class="lista-nazev">Co bylo v příběhu?</h1>
-        <div class="hvezdy" id="hvezdy"></div>
-        <button class="kulaty" id="celaobrazovka" aria-label="Celá obrazovka">⛶</button>
-        <button class="kulaty" id="zvuk" aria-label="Zapnout nebo vypnout zvuk">🔊</button>
+        <span class="postup" id="postup"></span>
+        <button class="ikonka" id="zvuk" aria-label="Předčítání nahlas"></button>
+        <button class="ikonka" id="celaobrazovka" aria-label="Celá obrazovka"></button>
     </header>
 
     <main class="hra" id="hra"></main>
+
+    <footer class="paticka">Obrázky: <a href="https://openmoji.org" target="_blank" rel="noopener">OpenMoji</a> – CC BY-SA 4.0</footer>
 
     <script src="../spolecne/hra.js"></script>
     <script src="pribeh.js"></script>

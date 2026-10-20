@@ -24,10 +24,12 @@
  *          { obrazek: '🧀', popisek: 'sýr' } ] }
  *
  *    Seřazení obrázků (zapište je VE SPRÁVNÉM pořadí, hra je sama zamíchá)
- *      { typ: 'poradi', otazka: 'Seřaď, co se stalo.', obrazky: [
+ *      { typ: 'poradi', otazka: 'Seřaďte, co se stalo.', obrazky: [
  *          { obrazek: '😢', popisek: 'Knížka zmizela' }, … ] }
  *
- *  Emoji lze zkopírovat např. z https://getemoji.com
+ *  Obrázky se zadávají jako emoji (zkopírujte např. z https://openmoji.org).
+ *  Hra je ukáže v kreslené podobě OpenMoji. Obrázky, které už hra používá,
+ *  jsou uložené ve složce knihovna/obrazky/; nové se načtou z internetu.
  */
 
 const PRIBEHY = [
@@ -70,7 +72,7 @@ A tak si od toho večera sedávají v knihovně spolu: myška čte nahlas, kočk
                 { obrazek: '🐱', popisek: 'kočka', spravne: true },
                 { obrazek: '🐉', popisek: 'drak' }
             ] },
-            { typ: 'poradi', otazka: 'Seřaď obrázky, jak šly v příběhu za sebou.', obrazky: [
+            { typ: 'poradi', otazka: 'Seřaďte obrázky, jak šly v příběhu za sebou.', obrazky: [
                 { obrazek: '😢', popisek: 'Knížka zmizela' },
                 { obrazek: '🦉', popisek: 'Sova ji našla' },
                 { obrazek: '📖', popisek: 'Čtou si spolu' }

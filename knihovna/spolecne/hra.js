@@ -1,49 +1,77 @@
 /**
  * POHÁDKOVÁ KNIHOVNA — společné funkce pro všechny hry
- * Obsahuje: předčítání hlasem, zvuky, konfety, hvězdičky, pochvaly, pomocné funkce
+ * Obsahuje: kreslené obrázky, předčítání hlasem, tóny, ruční značky,
+ * ovládání klávesnicí / prezentérem, pomocné funkce.
  *
- * Předčítání používá český hlas prohlížeče. Pokud ho zařízení nemá,
- * hra funguje dál a otázky přečte paní učitelka (texty jsou na obrazovce).
+ * Hry jsou dělané na promítání: děti odpovídají nahlas, učitel kliká.
+ * Další krok jde i šipkou →, mezerníkem nebo prezentérem.
  */
 
 const Hra = (() => {
 
+    // Kořen složky „knihovna“ — odvodí se z umístění tohoto skriptu
+    const KOREN = new URL('../', document.currentScript.src).href;
+
+
     /* ================================================================
-       1. HLAS — předčítání textů česky
+       1. OBRÁZKY — kreslené emoji OpenMoji uložené ve složce obrazky/
+       ================================================================ */
+
+    function kod(emoji) {
+        return [...emoji]
+            .map(znak => znak.codePointAt(0).toString(16).toUpperCase())
+            .filter(k => k !== 'FE0F')
+            .join('-');
+    }
+
+    /** Vrátí <img> s kresleným obrázkem pro dané emoji. */
+    function obr(emoji, popis = '') {
+        return `<img class="obr" src="${KOREN}obrazky/${kod(emoji)}.svg" alt="${popis}" draggable="false" data-emoji="${emoji}">`;
+    }
+
+    // Obrázek, který ve složce obrazky/ chybí (např. v nové pohádce), se zkusí
+    // načíst přímo z OpenMoji; když ani to nejde, ukáže se obyčejné emoji.
+    document.addEventListener('error', e => {
+        const img = e.target;
+        if (!(img instanceof HTMLImageElement) || !img.classList.contains('obr') || !img.dataset.emoji) return;
+        if (!img.dataset.zkusenoCdn) {
+            img.dataset.zkusenoCdn = '1';
+            img.src = `https://cdn.jsdelivr.net/npm/openmoji@15.1.0/color/svg/${kod(img.dataset.emoji)}.svg`;
+        } else {
+            const nahrada = document.createElement('span');
+            nahrada.className = 'obr-nahrada';
+            nahrada.textContent = img.dataset.emoji;
+            img.replaceWith(nahrada);
+        }
+    }, true);
+
+
+    /* ================================================================
+       2. PŘEDČÍTÁNÍ — ve výchozím stavu vypnuté (čte učitel)
        ================================================================ */
 
     const synth = window.speechSynthesis || null;
-    const tlZvuk = document.getElementById('zvuk');
+    const tlHlas = document.getElementById('zvuk');
     let ceskyHlas = null;
-    let zvukZapnut = true;
+    let hlasZapnut = false;
     let generace = 0; // každé nové mluvení zruší čekání toho předchozího
 
-    try { zvukZapnut = localStorage.getItem('knihovna-zvuk') !== 'vyp'; } catch (e) { /* bez úložiště */ }
+    try { hlasZapnut = localStorage.getItem('knihovna-hlas') === 'zap'; } catch (e) { /* bez úložiště */ }
 
     function najdiHlas() {
         if (!synth) return;
         const ceske = synth.getVoices().filter(h => /^cs/i.test(h.lang));
-        // Přirozeněji znějící hlasy (Google, Microsoft Natural) mají přednost
         ceskyHlas = ceske.find(h => /natural|google/i.test(h.name)) || ceske[0] || null;
         aktualizujTlacitko();
     }
 
-    function muzeMluvit() {
-        return zvukZapnut && synth && ceskyHlas;
-    }
-
     function rekni(text, g, hotovo) {
         const konec = () => { if (g === generace && hotovo) hotovo(); };
-        if (!muzeMluvit()) {
-            // Bez hlasu počkáme přibližně tak dlouho, jak dlouho by se text četl
-            setTimeout(konec, Math.max(700, text.length * 55));
-            return;
-        }
+        if (!hlasZapnut || !ceskyHlas) { setTimeout(konec, 0); return; }
         const u = new SpeechSynthesisUtterance(text);
         u.voice = ceskyHlas;
         u.lang = ceskyHlas.lang;
-        u.rate = 0.92;
-        u.pitch = 1.05;
+        u.rate = 0.9;
         u.onend = konec;
         u.onerror = konec;
         synth.speak(u);
@@ -54,57 +82,44 @@ const Hra = (() => {
         if (synth) synth.cancel();
     }
 
-    /** Přečte text; po dočtení zavolá hotovo(). */
+    /** Přečte text (pokud je předčítání zapnuté); po dočtení zavolá hotovo(). */
     function mluv(text, hotovo) {
         zastav();
         rekni(text, generace, hotovo);
     }
 
-    /** Přečte několik textů po sobě; každý krok může mít zacatek() (např. zvýraznění karty). */
-    function mluvPostupne(kroky, hotovo) {
-        zastav();
-        const g = generace;
-        let i = 0;
-        const dalsi = () => {
-            if (g !== generace) return;
-            if (i >= kroky.length) { if (hotovo) hotovo(); return; }
-            const krok = kroky[i++];
-            if (krok.zacatek) krok.zacatek();
-            rekni(krok.text, g, dalsi);
-        };
-        dalsi();
+    function aktualizujTlacitko() {
+        if (!tlHlas) return;
+        tlHlas.hidden = !ceskyHlas; // bez českého hlasu tlačítko nemá smysl
+        tlHlas.classList.toggle('zapnuto', hlasZapnut);
+        tlHlas.title = hlasZapnut ? 'Předčítání zapnuté' : 'Předčítání vypnuté';
+        tlHlas.setAttribute('aria-pressed', String(hlasZapnut));
     }
 
-    function aktualizujTlacitko() {
-        if (!tlZvuk) return;
-        tlZvuk.textContent = zvukZapnut ? '🔊' : '🔇';
-        tlZvuk.title = !zvukZapnut
-            ? 'Zvuk je vypnutý'
-            : (synth && ceskyHlas ? 'Vypnout zvuk' : 'Český hlas v tomto zařízení není – otázky přečte paní učitelka');
+    if (tlHlas) {
+        tlHlas.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/><path d="M19.5 5.5a9 9 0 0 1 0 13"/></svg>';
+        tlHlas.hidden = true;
+        tlHlas.addEventListener('click', () => {
+            hlasZapnut = !hlasZapnut;
+            try { localStorage.setItem('knihovna-hlas', hlasZapnut ? 'zap' : 'vyp'); } catch (e) { /* bez úložiště */ }
+            if (!hlasZapnut) zastav();
+            aktualizujTlacitko();
+        });
     }
 
     if (synth) {
         najdiHlas();
         synth.onvoiceschanged = najdiHlas;
     }
-    aktualizujTlacitko();
-
-    if (tlZvuk) {
-        tlZvuk.addEventListener('click', () => {
-            zvukZapnut = !zvukZapnut;
-            try { localStorage.setItem('knihovna-zvuk', zvukZapnut ? 'zap' : 'vyp'); } catch (e) { /* bez úložiště */ }
-            if (!zvukZapnut) zastav();
-            aktualizujTlacitko();
-        });
-    }
 
 
     /* ================================================================
-       2. CELÁ OBRAZOVKA — hodí se na interaktivní tabuli
+       3. CELÁ OBRAZOVKA
        ================================================================ */
 
     const tlCela = document.getElementById('celaobrazovka');
     if (tlCela) {
+        tlCela.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>';
         if (!document.documentElement.requestFullscreen) {
             tlCela.hidden = true;
         } else {
@@ -117,29 +132,21 @@ const Hra = (() => {
 
 
     /* ================================================================
-       3. ZVUKY — krátké tóny bez externích souborů
+       4. TÓNY — jemné, bez externích souborů
        ================================================================ */
 
     let audioKontext = null;
 
-    function audio() {
-        if (!audioKontext) {
-            const AC = window.AudioContext || window.webkitAudioContext;
-            if (!AC) return null;
-            audioKontext = new AC();
-        }
+    function ton(frekvence, za, delka, hlasitost = 0.12) {
+        const AC = window.AudioContext || window.webkitAudioContext;
+        if (!AC) return;
+        if (!audioKontext) audioKontext = new AC();
         if (audioKontext.state === 'suspended') audioKontext.resume();
-        return audioKontext;
-    }
-
-    function ton(frekvence, za, delka, typ = 'sine', hlasitost = 0.18) {
-        if (!zvukZapnut) return;
-        const a = audio();
-        if (!a) return;
+        const a = audioKontext;
         const osc = a.createOscillator();
         const zisk = a.createGain();
         const t = a.currentTime + za;
-        osc.type = typ;
+        osc.type = 'sine';
         osc.frequency.value = frekvence;
         zisk.gain.setValueAtTime(0, t);
         zisk.gain.linearRampToValueAtTime(hlasitost, t + 0.02);
@@ -150,75 +157,73 @@ const Hra = (() => {
     }
 
     const zvuk = {
-        spravne() { [523, 659, 784].forEach((f, i) => ton(f, i * 0.09, 0.3)); },
-        spatne()  { ton(330, 0, 0.18, 'triangle', 0.12); ton(262, 0.15, 0.3, 'triangle', 0.12); },
-        klik()    { ton(880, 0, 0.08, 'sine', 0.08); },
-        vyhra()   { [523, 659, 784, 1047, 784, 1047].forEach((f, i) => ton(f, i * 0.12, 0.35)); }
+        spravne() { ton(659, 0, 0.5); ton(988, 0.12, 0.7); },
+        spatne()  { ton(220, 0, 0.35, 0.08); },
+        listek()  { ton(1175, 0, 0.25, 0.05); }
     };
 
 
     /* ================================================================
-       4. RADOST — konfety, bublina, pochvaly, hvězdičky
+       5. RUČNÍ ZNAČKY — zakroužkování (správně) a přeškrtnutí (špatně)
        ================================================================ */
 
-    const POCHVALY = ['Výborně!', 'Super!', 'Paráda!', 'Jsi šikula!', 'Bravo!', 'Skvělé!', 'Správně!'];
-
-    function pochvala() {
-        return POCHVALY[Math.floor(Math.random() * POCHVALY.length)];
+    // Tvary jsou nakreslené v rámečku 200 × 120 a přepočítají se na skutečnou
+    // velikost prvku, aby čára měla všude stejnou tloušťku.
+    function pridejZnacku(el, typ, cesty, presah) {
+        const sirka = el.offsetWidth * (1 + 2 * presah.x);
+        const vyska = el.offsetHeight * (1 + 2 * presah.y);
+        const sx = sirka / 200;
+        const sy = vyska / 120;
+        const d = cesty.map(c => c.replace(/(-?[\d.]+) (-?[\d.]+)/g,
+            (_, x, y) => `${(x * sx).toFixed(1)} ${(y * sy).toFixed(1)}`));
+        el.insertAdjacentHTML('beforeend', `
+            <svg class="znacka ${typ}" viewBox="0 0 ${sirka} ${vyska}" aria-hidden="true"
+                style="left:${-presah.x * 100}%;top:${-presah.y * 100}%;width:${(1 + 2 * presah.x) * 100}%;height:${(1 + 2 * presah.y) * 100}%">
+                ${d.map(c => `<path pathLength="1" d="${c}"/>`).join('')}
+            </svg>`);
     }
 
-    function konfety(kusu = 40) {
-        const tvary = ['⭐', '✨', '🎉', '💛', '🌟', '🎈'];
-        for (let i = 0; i < kusu; i++) {
-            const k = document.createElement('span');
-            k.className = 'konfeta';
-            k.textContent = tvary[i % tvary.length];
-            k.style.left = Math.random() * 100 + 'vw';
-            k.style.animationDelay = Math.random() * 0.8 + 's';
-            k.style.setProperty('--dx', (Math.random() * 30 - 15) + 'vw');
-            k.style.setProperty('--r', (Math.random() * 720 - 360) + 'deg');
-            document.body.appendChild(k);
-            setTimeout(() => k.remove(), 4000);
-        }
+    function zakrouzkuj(el, cervene = false) {
+        pridejZnacku(el, cervene ? 'krouzek cerveny' : 'krouzek',
+            ['M 64 10 C 124 0, 198 18, 194 62 C 190 106, 108 120, 52 108 C 8 98, 2 54, 26 30 C 44 12, 84 4, 118 9'],
+            { x: 0.08, y: 0.1 });
     }
 
-    function bublina(text) {
-        document.querySelectorAll('.bublina').forEach(b => b.remove());
-        const b = document.createElement('div');
-        b.className = 'bublina';
-        b.textContent = text;
-        document.body.appendChild(b);
-        setTimeout(() => b.remove(), 1900);
-    }
-
-    /** Vykreslí hvězdičky: kolik je hotovo z kolika. */
-    function hvezdy(el, hotovo, celkem) {
-        if (!el) return;
-        el.innerHTML = Array.from({ length: celkem }, (_, i) =>
-            `<span class="${i < hotovo ? (i === hotovo - 1 ? 'nova' : '') : 'prazdna'}">⭐</span>`
-        ).join('');
-    }
-
-    /** Závěrečná obrazovka s pohárem. */
-    function konecHry(hraEl, { ikona = '🏆', nadpis = 'Hotovo!', text = '', znovu }) {
-        zvuk.vyhra();
-        konfety(60);
-        hraEl.innerHTML = `
-            <div class="ikona-uvod objev">${ikona}</div>
-            <h2 class="nadpis objev">${nadpis}</h2>
-            ${text ? `<p class="podnadpis objev">${text}</p>` : ''}
-            <div class="radek objev">
-                <button class="tlacitko" id="hratZnovu">🔄 Hrát znovu</button>
-                <a class="tlacitko svetle" href="../index.html">🏠 Jiná hra</a>
-            </div>`;
-        hraEl.querySelector('#hratZnovu').addEventListener('click', znovu);
-        mluv(`${nadpis} ${text}`);
+    function preskrtni(el) {
+        pridejZnacku(el, 'skrt',
+            ['M 16 16 C 70 48, 132 80, 186 106', 'M 184 14 C 128 46, 72 80, 18 104'],
+            { x: 0, y: 0 });
     }
 
 
     /* ================================================================
-       5. POMOCNÉ FUNKCE
+       6. OVLÁDÁNÍ — šipka →, mezerník, Enter, PageDown (prezentér)
        ================================================================ */
+
+    let naDalsi = null;
+
+    /** Nastaví, co se stane při stisku „další“. null = nic. */
+    function dalsiKlavesou(fn) {
+        naDalsi = fn;
+    }
+
+    document.addEventListener('keydown', e => {
+        if (!naDalsi || e.repeat) return;
+        if (!['ArrowRight', 'PageDown', ' ', 'Enter'].includes(e.key)) return;
+        // Mezerník/Enter na tlačítku s fokusem už klikne sám
+        if ((e.key === ' ' || e.key === 'Enter') && document.activeElement?.tagName === 'BUTTON') return;
+        e.preventDefault();
+        naDalsi();
+    });
+
+
+    /* ================================================================
+       7. POMOCNÉ FUNKCE
+       ================================================================ */
+
+    function postup(el, hotovo, celkem) {
+        if (el) el.textContent = celkem ? `${hotovo} / ${celkem}` : '';
+    }
 
     function zamichej(pole) {
         const a = [...pole];
@@ -240,10 +245,25 @@ const Hra = (() => {
         el.classList.add(trida);
     }
 
-    // Po doběhnutí úvodní animace třídu odebereme, aby nepřebíjela další efekty (zvýraznění apod.)
+    // Po doběhnutí úvodní animace třídu odebereme, aby nepřebíjela další efekty
     document.addEventListener('animationend', e => {
         if (e.animationName === 'objeveni') e.target.classList.remove('objev');
     });
 
-    return { mluv, mluvPostupne, zastav, zvuk, pochvala, konfety, bublina, hvezdy, konecHry, zamichej, vyber, efekt };
+    /** Závěrečná obrazovka. */
+    function konecHry(hraEl, { ikona = '📚', nadpis = 'Konec', text = '', znovu }) {
+        hraEl.innerHTML = `
+            <div class="ikona-uvod objev">${obr(ikona)}</div>
+            <h2 class="nadpis objev">${nadpis}</h2>
+            ${text ? `<p class="podnadpis objev">${text}</p>` : ''}
+            <div class="radek objev">
+                <button class="tlacitko" id="hratZnovu">Hrát znovu</button>
+                <a class="tlacitko svetle" href="${KOREN}index.html">Jiná hra</a>
+            </div>`;
+        hraEl.querySelector('#hratZnovu').addEventListener('click', znovu);
+        dalsiKlavesou(null);
+        mluv(`${nadpis} ${text}`);
+    }
+
+    return { obr, mluv, zastav, zvuk, zakrouzkuj, preskrtni, dalsiKlavesou, postup, zamichej, vyber, efekt, konecHry };
 })();
