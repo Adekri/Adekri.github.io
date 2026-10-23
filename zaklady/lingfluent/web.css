@@ -1,0 +1,526 @@
+/* Výuková kopie podvodného článku „Global Science Review“ (vzhled podle originálu z roku 2019). */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #ffffff;
+    color: #222222;
+    font: 14px/1.3 Arial, Helvetica, sans-serif;
+}
+
+/* připnutý pruh s odpočtem akce (na originálu nebyl, odpočet je převzatý z jiných podvodných webů
+   ze seznamu ČOI); barvy a tlačítko odpovídají rámečku s nabídkou */
+.promo-bar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 6px 14px;
+    padding: 8px 16px;
+    border-bottom: 3px solid #a50000;
+    background: #4a7ba5;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.promo-bar-time {
+    padding: 3px 10px;
+    background: #a50000;
+    color: #ffffff;
+    font-size: 20px;
+}
+
+.promo-bar a {
+    padding: 6px 14px;
+    border-radius: 3px;
+    background: linear-gradient(#ffc226, #f4a300);
+    color: #3a2a00;
+    font-size: 14px;
+    font-weight: 400;
+    text-decoration: none;
+}
+
+.wrap {
+    max-width: 990px;
+    margin: 0 auto;
+    padding: 0 16px 40px;
+}
+
+.masthead {
+    padding: 4px 0 20px;
+}
+
+.logo img {
+    display: block;
+    width: 250px;
+    height: auto;
+}
+
+.menu {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    background: #8ab0d6;
+}
+
+.menu a {
+    padding: 7px 8px;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.menu a + a {
+    border-left: 2px solid #c8102e;
+}
+
+.menu-date {
+    margin-left: auto;
+    padding: 7px 15px;
+    background: #a50000;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+h1 {
+    margin: 46px 0 60px;
+    font-size: 48px;
+    font-weight: 400;
+    line-height: 1.1;
+}
+
+.columns {
+    display: grid;
+    grid-template-columns: minmax(0, 585px) 310px;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.article p {
+    margin: 0 0 18px;
+}
+
+.intro {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 40px;
+}
+
+.photo-left {
+    flex: none;
+    width: 150px;
+    margin: 0;
+    background: #ebebeb;
+}
+
+.photo-left img {
+    display: block;
+    width: 150px;
+    cursor: pointer;
+}
+
+.photo-left figcaption,
+.photo-box figcaption {
+    padding: 4px;
+    color: #333333;
+    font-size: 14px;
+}
+
+.lead {
+    font-size: 21px;
+    line-height: 1.15;
+}
+
+.article h2 {
+    margin: 26px 0 18px;
+    font-size: 19px;
+    line-height: 1.3;
+}
+
+.intensive {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 180px;
+    gap: 14px;
+    margin-bottom: 30px;
+}
+
+.chart {
+    float: right;
+    width: 150px;
+    margin: 0 0 8px 12px;
+}
+
+.intensive p {
+    margin: 0;
+}
+
+mark {
+    background: #ffff00;
+}
+
+.quote {
+    align-self: start;
+    padding: 6px 8px 8px;
+    border: 3px solid #cccccc;
+    background: #eeeeee;
+}
+
+.quote p {
+    margin: 16px 0 0;
+    font-style: italic;
+}
+
+.big-link {
+    display: block;
+    margin: 30px 0 22px;
+    color: #315a9a;
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.05;
+}
+
+.promo {
+    color: #b00000;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.countdown {
+    display: inline-block;
+    min-width: 48px;
+    font-variant-numeric: tabular-nums;
+}
+
+.sidebar {
+    padding-top: 12px;
+    border-top: 1px solid #dddddd;
+}
+
+.photo-box {
+    margin: 22px 15px 0;
+    background: #ebebeb;
+}
+
+.photo-box img {
+    display: block;
+    width: 100%;
+}
+
+.photo-box figcaption {
+    padding: 10px;
+    font-size: 12px;
+    font-style: italic;
+}
+
+.offer {
+    margin: 22px 35px 0;
+    color: #ffffff;
+    text-align: center;
+}
+
+.offer-top {
+    padding: 20px 12px 30px;
+    background: #4a7ba5;
+}
+
+.offer-title {
+    font-size: 29px;
+    line-height: 1.25;
+}
+
+.offer-guarantee {
+    margin: 14px 0 6px;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.offer-top p {
+    margin: 0;
+}
+
+.offer-mid {
+    padding: 10px;
+    background: #2f5a80;
+}
+
+.offer-btn {
+    display: block;
+    padding: 12px;
+    border-radius: 3px;
+    background: linear-gradient(#ffc226, #f4a300);
+    color: #3a2a00;
+    text-decoration: none;
+}
+
+.offer-bottom {
+    padding: 20px 10px;
+    background: #bdbdbd;
+    color: #333333;
+}
+
+/* komentáře ve stylu starého pluginu Facebooku */
+.fbc {
+    margin-top: 10px;
+    font: 11px/1.36 Tahoma, Verdana, sans-serif;
+}
+
+.fbc-head {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-top: 1px solid #cccccc;
+    border-bottom: 1px solid #cccccc;
+}
+
+.fbc-head a {
+    color: #3b5998;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.fbc a {
+    color: #3b5998;
+    text-decoration: none;
+}
+
+.fbc-c {
+    display: flex;
+    gap: 10px;
+    margin-left: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid #e9e9e9;
+}
+
+.fbc-c.reply {
+    margin-left: 70px;
+}
+
+.fbc-c img {
+    flex: none;
+    width: 50px;
+    height: 50px;
+}
+
+.fbc-c b {
+    display: block;
+    color: #3b5998;
+    margin-bottom: 4px;
+}
+
+.fbc-c p {
+    margin: 0 0 4px;
+    color: #333333;
+}
+
+.fbc-meta {
+    color: #90949c;
+}
+
+.fbc-meta .thumb {
+    color: #3b5998;
+}
+
+.fbc-more {
+    display: block;
+    padding: 8px;
+    border: 1px solid #d8dfea;
+    background: #edeff4;
+    font-size: 13px;
+    text-align: center;
+}
+
+.fbc-plugin {
+    margin-top: 4px;
+    padding-top: 4px;
+    border-top: 1px solid #cccccc;
+    color: #3b5998;
+}
+
+.fbc-f {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+    background: #3b5998;
+    color: #ffffff;
+    font: 700 11px/13px Arial, sans-serif;
+    text-align: center;
+}
+
+.footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    margin-top: 20px;
+    padding-bottom: 24px;
+}
+
+.footer img {
+    width: 190px;
+}
+
+.footer a {
+    color: #999999;
+    font-size: 11px;
+}
+
+/* okna (objednávka, kontakt, obchodní podmínky) */
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 30;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    background: rgba(0, 0, 0, .55);
+}
+
+.modal-backdrop[hidden] {
+    display: none;
+}
+
+.modal {
+    position: relative;
+    width: 460px;
+    max-width: 100%;
+    max-height: 90vh;
+    overflow: auto;
+    padding: 24px 26px;
+    border-radius: 6px;
+    background: #ffffff;
+    font-size: 15px;
+}
+
+.modal h2 {
+    margin: 0 0 10px;
+    color: #2f5a80;
+}
+
+.modal-x {
+    position: absolute;
+    top: 6px;
+    right: 10px;
+    border: 0;
+    background: none;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.order-price {
+    margin-bottom: 16px;
+}
+
+.order-price s {
+    color: #888888;
+}
+
+.order-price b {
+    color: #b00000;
+    font-size: 26px;
+}
+
+.order-price span {
+    padding: 2px 6px;
+    background: #ffd60a;
+    font-weight: 700;
+}
+
+.modal label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.modal input,
+.modal select {
+    display: block;
+    width: 100%;
+    margin-top: 3px;
+    padding: 8px;
+    border: 1px solid #bbbbbb;
+    border-radius: 3px;
+    font: inherit;
+    font-weight: 400;
+}
+
+.order-pay {
+    margin: 4px 0 12px;
+}
+
+.modal button[type=submit] {
+    width: 100%;
+    padding: 12px;
+    border: 0;
+    border-radius: 3px;
+    background: linear-gradient(#ffc226, #f4a300);
+    font: 700 17px Arial, sans-serif;
+    cursor: pointer;
+}
+
+.order-small {
+    color: #777777;
+    font-size: 12px;
+}
+
+.order-done {
+    padding: 14px;
+    background: #d8f3dc;
+    font-weight: 700;
+}
+
+.modal.doc {
+    width: 640px;
+    font-size: 13px;
+    line-height: 1.45;
+}
+
+.modal.doc h3 {
+    margin: 14px 0 3px;
+    font-size: 14px;
+}
+
+.modal.doc p {
+    margin: 0;
+}
+
+@media (max-width: 800px) {
+    h1 {
+        margin: 24px 0 30px;
+        font-size: 30px;
+    }
+
+    .columns,
+    .intensive {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .intro {
+        flex-direction: column;
+    }
+
+    .offer,
+    .photo-box {
+        margin: 22px 0 0;
+    }
+
+    .big-link {
+        font-size: 22px;
+    }
+
+    .fbc-c.reply {
+        margin-left: 40px;
+    }
+}

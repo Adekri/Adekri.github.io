@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="cs">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facebook</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,400,0..1,0" />
+    <link rel="stylesheet" href="feed.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/driver.js@1/dist/driver.css">
+    <link rel="stylesheet" href="../tour.css">
+</head>
+
+<!-- Úvodní stránka úkolu: výuková kopie feedu Facebooku. Mezi příspěvky přátel je sponzorovaný
+     příspěvek, který vede na podvodný článek (web.html). Odkazy kromě reklamy nikam nevedou. -->
+
+<body data-page="feed">
+    <header class="fb-top">
+        <div class="fb-top-left">
+            <svg class="fb-logo" viewBox="0 0 36 36" aria-label="Facebook">
+                <circle cx="18" cy="18" r="18" fill="#0866ff" />
+                <path fill="#fff" d="M20.2 36V23.5h4.1l.7-4.9h-4.8v-3.1c0-1.4.4-2.4 2.4-2.4H25V8.8a34 34 0 0 0-3.8-.2c-3.7 0-6.3 2.3-6.3 6.5v3.5h-4.2v4.9h4.2V36z" />
+            </svg>
+            <label class="fb-search"><span class="material-symbols-rounded">search</span><input type="search" placeholder="Hledat na Facebooku"></label>
+        </div>
+        <nav class="fb-top-nav">
+            <a href="#" class="active" title="Domů"><span class="material-symbols-rounded fill">home</span></a>
+            <a href="#" title="Video"><span class="material-symbols-rounded">ondemand_video</span></a>
+            <a href="#" title="Marketplace"><span class="material-symbols-rounded">storefront</span></a>
+            <a href="#" title="Skupiny"><span class="material-symbols-rounded">groups</span></a>
+            <a href="#" title="Hry"><span class="material-symbols-rounded">sports_esports</span></a>
+        </nav>
+        <div class="fb-top-right">
+            <span class="fb-round" title="Nabídka"><span class="material-symbols-rounded">apps</span></span>
+            <span class="fb-round" title="Messenger"><span class="material-symbols-rounded fill">chat</span><b class="fb-badge">2</b></span>
+            <span class="fb-round" title="Upozornění"><span class="material-symbols-rounded fill">notifications</span><b class="fb-badge">5</b></span>
+            <img class="fb-me" src="img/fb/ja.jpg" alt="Tvůj profil">
+        </div>
+    </header>
+
+    <div class="fb-layout">
+        <aside class="fb-left">
+            <a href="#"><img src="img/fb/ja.jpg" alt=""><b>Tvůj profil</b></a>
+            <a href="#"><span class="fb-ico" style="--c:#1b74e4">group</span>Přátelé</a>
+            <a href="#"><span class="fb-ico" style="--c:#1b74e4">history</span>Vzpomínky</a>
+            <a href="#"><span class="fb-ico" style="--c:#a033ff">bookmark</span>Uložené</a>
+            <a href="#"><span class="fb-ico" style="--c:#1b74e4">groups</span>Skupiny</a>
+            <a href="#"><span class="fb-ico" style="--c:#1b74e4">ondemand_video</span>Video</a>
+            <a href="#"><span class="fb-ico" style="--c:#1b74e4">storefront</span>Marketplace</a>
+            <a href="#"><span class="fb-ico" style="--c:#1b74e4">dynamic_feed</span>Kanály</a>
+            <a href="#"><span class="fb-ico" style="--c:#e4405f">event</span>Události</a>
+            <hr>
+            <small>Ochrana osobních údajů · Podmínky · Reklama · Volby reklam · Soubory cookie · Meta © 2026</small>
+        </aside>
+
+        <main class="fb-feed">
+            <section class="fb-stories">
+                <div class="fb-story fb-story-new"><img src="img/fb/ja.jpg" alt=""><span class="material-symbols-rounded">add_circle</span><b>Vytvořit příběh</b></div>
+                <div class="fb-story" style="--bg:linear-gradient(160deg,#f6d365,#fda085)"><img src="img/fb/kuba.jpg" alt=""><b>Kuba Dvořák</b></div>
+                <div class="fb-story" style="--bg:linear-gradient(160deg,#84fab0,#8fd3f4)"><img src="img/fb/bara.jpg" alt=""><b>Bára Nováková</b></div>
+                <div class="fb-story" style="--bg:linear-gradient(160deg,#a18cd1,#fbc2eb)"><img src="img/fb/eliska.jpg" alt=""><b>Eliška Králová</b></div>
+                <div class="fb-story" style="--bg:linear-gradient(160deg,#4facfe,#00f2fe)"><img src="img/fb/martin.jpg" alt=""><b>Martin Horák</b></div>
+            </section>
+
+            <section class="fb-card fb-composer">
+                <div class="fb-composer-row"><img src="img/fb/ja.jpg" alt=""><span>Co se vám honí hlavou?</span></div>
+                <div class="fb-composer-actions">
+                    <span><span class="material-symbols-rounded" style="color:#f02849">videocam</span>Živé video</span>
+                    <span><span class="material-symbols-rounded" style="color:#45bd62">photo_library</span>Fotka/video</span>
+                    <span><span class="material-symbols-rounded" style="color:#f7b928">mood</span>Pocit/aktivita</span>
+                </div>
+            </section>
+
+            <article class="fb-card fb-post">
+                <header class="fb-post-head">
+                    <img src="img/fb/kuba.jpg" alt="">
+                    <div><b>Kuba Dvořák</b><small>25 min · <span class="material-symbols-rounded">group</span></small></div>
+                    <span class="material-symbols-rounded fb-more">more_horiz</span>
+                </header>
+                <div class="fb-bgtext" style="--bg:linear-gradient(135deg,#ff6a88,#ff99ac)">Konečně dopsanej test z matiky 😅<br>Kdo jde večer na fotbal? ⚽</div>
+                <div class="fb-stats"><span><i class="fb-r like">👍</i><i class="fb-r haha">😆</i> 14</span><span>6 komentářů</span></div>
+                <div class="fb-actions"><span><span class="material-symbols-rounded">thumb_up</span>To se mi líbí</span><span><span class="material-symbols-rounded">chat_bubble</span>Okomentovat</span><span><span class="material-symbols-rounded">share</span>Sdílet</span></div>
+            </article>
+
+            <article class="fb-card fb-post" id="adPost">
+                <header class="fb-post-head">
+                    <span class="fb-page-avatar">LF</span>
+                    <div><b>Ling Fluent</b><small class="ad-label">Sponzorováno · <span class="material-symbols-rounded">public</span></small></div>
+                    <span class="material-symbols-rounded fb-more">more_horiz</span>
+                </header>
+                <p class="fb-text">😱 Tento 62letý Švéd mluví plynule <b>23 jazyky</b>. Teď prozradil formuli, díky které se cizí jazyk naučíš za pouhé <b>2 týdny</b>, a to bez biflování! Jazykové školy zuří 👇</p>
+                <a class="ad-link" href="web.html">
+                    <div class="ad-image">
+                        <img src="img/leo-anders.jpg" alt="">
+                        <span class="ad-overlay">23 JAZYKŮ<br><small>za 2 týdny</small></span>
+                    </div>
+                    <div class="ad-bar">
+                        <div><small>YOUREDUSPACE.COM</small><b>Nová dvoutýdenní formule pro automatické učení cizích jazyků</b></div>
+                        <span class="ad-btn">Další informace</span>
+                    </div>
+                </a>
+                <div class="fb-stats"><span><i class="fb-r like">👍</i><i class="fb-r love">❤️</i><i class="fb-r wow">😮</i> 2,4 tis.</span><span>318 komentářů · 97 sdílení</span></div>
+                <div class="fb-actions"><span><span class="material-symbols-rounded">thumb_up</span>To se mi líbí</span><span><span class="material-symbols-rounded">chat_bubble</span>Okomentovat</span><span><span class="material-symbols-rounded">share</span>Sdílet</span></div>
+            </article>
+
+            <article class="fb-card fb-post">
+                <header class="fb-post-head">
+                    <img src="img/fb/bara.jpg" alt="">
+                    <div><b>Bára Nováková</b><small>Včera v 18:40 · <span class="material-symbols-rounded">group</span></small></div>
+                    <span class="material-symbols-rounded fb-more">more_horiz</span>
+                </header>
+                <p class="fb-text">Víkend na Pálavě 🌄 Doporučuju všem!</p>
+                <svg class="fb-photo" viewBox="0 0 500 280" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Západ slunce nad kopci">
+                    <defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffb48a" /><stop offset=".55" stop-color="#ff7e67" /><stop offset="1" stop-color="#6d5a8c" /></linearGradient></defs>
+                    <rect width="500" height="280" fill="url(#sky)" />
+                    <circle cx="330" cy="170" r="38" fill="#ffe29a" />
+                    <path d="M0 200 Q90 120 180 175 T360 160 T500 150 V280 H0z" fill="#4b3f6b" />
+                    <path d="M0 235 Q120 190 250 225 T500 210 V280 H0z" fill="#2e2a48" />
+                </svg>
+                <div class="fb-stats"><span><i class="fb-r like">👍</i><i class="fb-r love">❤️</i> 47</span><span>9 komentářů</span></div>
+                <div class="fb-actions"><span><span class="material-symbols-rounded">thumb_up</span>To se mi líbí</span><span><span class="material-symbols-rounded">chat_bubble</span>Okomentovat</span><span><span class="material-symbols-rounded">share</span>Sdílet</span></div>
+            </article>
+
+            <article class="fb-card fb-post">
+                <header class="fb-post-head">
+                    <img src="img/fb/martin.jpg" alt="">
+                    <div><b>Martin Horák</b> <span class="fb-arrow">▸</span> <b>Gympl – 3.B</b><small>Včera v 9:12 · <span class="material-symbols-rounded">groups</span></small></div>
+                    <span class="material-symbols-rounded fb-more">more_horiz</span>
+                </header>
+                <p class="fb-text">Prodám kalkulačku, skoro nepoužitá, jen jeden pololetní test 😂 Kdo chce, napište do zpráv.</p>
+                <div class="fb-stats"><span><i class="fb-r like">👍</i> 8</span><span>3 komentáře</span></div>
+                <div class="fb-actions"><span><span class="material-symbols-rounded">thumb_up</span>To se mi líbí</span><span><span class="material-symbols-rounded">chat_bubble</span>Okomentovat</span><span><span class="material-symbols-rounded">share</span>Sdílet</span></div>
+            </article>
+        </main>
+
+        <aside class="fb-right">
+            <h4>Narozeniny</h4>
+            <p class="fb-bday"><span class="material-symbols-rounded" style="color:#1b74e4">featured_seasonal_and_gifts</span><span>Dnes má narozeniny <b>Eliška Králová</b>.</span></p>
+            <hr>
+            <h4>Kontakty</h4>
+            <ul class="fb-contacts">
+                <li><img src="img/fb/kuba.jpg" alt=""><span class="online"></span>Kuba Dvořák</li>
+                <li><img src="img/fb/bara.jpg" alt=""><span class="online"></span>Bára Nováková</li>
+                <li><img src="img/fb/eliska.jpg" alt="">Eliška Králová</li>
+                <li><img src="img/fb/martin.jpg" alt=""><span class="online"></span>Martin Horák</li>
+                <li><img src="img/fb/adam.jpg" alt="">Adam Šebek</li>
+                <li><img src="img/fb/klara.jpg" alt=""><span class="online"></span>Klára Malá</li>
+                <li><img src="img/fb/tom.jpg" alt="">Tomáš Veselý</li>
+            </ul>
+        </aside>
+    </div>
+
+    <script>
+        // s vypnutým průvodcem (?tour=0) zůstane vypnutý i na webu, kam reklama vede
+        if (new URLSearchParams(location.search).get('tour') === '0') {
+            document.querySelectorAll('.ad-link').forEach((a) => { a.href += '?tour=0'; });
+        }
+        // ostatní odkazy výukové kopie nikam nevedou
+        document.querySelectorAll('a[href="#"]').forEach((a) => a.addEventListener('click', (e) => e.preventDefault()));
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/driver.js@1/dist/driver.js.iife.js"></script>
+    <script src="tour.js"></script>
+</body>
+
+</html>

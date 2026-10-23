@@ -177,6 +177,61 @@ body:has(.driver-popover.zk-corner) .driver-overlay {
     animation: zk-shake .35s;
 }
 
+/* zelená zpráva „našel jsi“ (úkol lingfluent) */
+.zk-success {
+    margin-bottom: 10px;
+    padding: 9px 12px;
+    border-left: 4px solid #21a366;
+    border-radius: var(--zk-radius);
+    background: #eaf8f1;
+    color: #0f5132;
+    font-size: 15px;
+}
+
+/* odškrtávací seznam triků: název a pod ním menší nápověda */
+.zk-checklist.zk-tricks li {
+    align-items: flex-start;
+    line-height: 1.35;
+}
+
+.zk-checklist.zk-tricks small {
+    color: var(--zk-text-soft);
+    font-size: 14px;
+}
+
+/* napodobenina výsledků vyhledávání podle obrázku */
+.zk-results {
+    margin: 10px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.zk-results li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid #eceef4;
+}
+
+.zk-results img {
+    flex: none;
+    width: 56px;
+    height: 56px;
+    border-radius: var(--zk-radius);
+}
+
+.zk-results b {
+    display: block;
+    font-size: 15px;
+    line-height: 1.3;
+}
+
+.zk-results small {
+    color: #1a7f37;
+    font-size: 13px;
+}
+
 @keyframes zk-shake {
     25% {
         transform: translateX(-6px);

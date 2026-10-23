@@ -1,0 +1,617 @@
+/* Výuková kopie feedu Facebooku (vzhled podle webové verze). */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #f0f2f5;
+    color: #050505;
+    font: 15px/1.34 "Segoe UI Historic", "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+img {
+    display: block;
+}
+
+.material-symbols-rounded {
+    font-size: 22px;
+    line-height: 1;
+    vertical-align: middle;
+}
+
+.material-symbols-rounded.fill {
+    font-variation-settings: 'FILL' 1;
+}
+
+/* horní lišta */
+.fb-top {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+    padding: 0 16px;
+    background: #ffffff;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+}
+
+.fb-top-left,
+.fb-top-right {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    gap: 8px;
+}
+
+.fb-top-right {
+    justify-content: flex-end;
+}
+
+.fb-logo {
+    flex: none;
+    width: 40px;
+    height: 40px;
+}
+
+.fb-search {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    width: 240px;
+    height: 40px;
+    padding: 0 12px;
+    border-radius: 20px;
+    background: #f0f2f5;
+    color: #65676b;
+}
+
+.fb-search input {
+    width: 100%;
+    border: 0;
+    background: none;
+    font: inherit;
+    outline: none;
+}
+
+.fb-top-nav {
+    display: flex;
+    gap: 8px;
+}
+
+.fb-top-nav a {
+    display: grid;
+    place-items: center;
+    width: 112px;
+    height: 56px;
+    border-bottom: 3px solid transparent;
+    color: #65676b;
+}
+
+.fb-top-nav a .material-symbols-rounded {
+    font-size: 28px;
+}
+
+.fb-top-nav a.active {
+    border-bottom-color: #0866ff;
+    color: #0866ff;
+}
+
+.fb-round {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #e4e6eb;
+}
+
+.fb-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    min-width: 19px;
+    padding: 1px 5px;
+    border-radius: 10px;
+    background: #e41e3f;
+    color: #ffffff;
+    font-size: 12px;
+    text-align: center;
+}
+
+.fb-me {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+/* rozložení */
+.fb-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 590px minmax(0, 1fr);
+    gap: 32px;
+    padding: 16px 16px 60px;
+}
+
+.fb-left,
+.fb-right {
+    position: sticky;
+    top: 72px;
+    align-self: start;
+    max-width: 340px;
+}
+
+.fb-left a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px;
+    border-radius: 8px;
+    color: inherit;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.fb-left a:hover {
+    background: #e4e6eb;
+}
+
+.fb-left img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+}
+
+.fb-ico {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--c);
+    color: #ffffff;
+    font-family: 'Material Symbols Rounded';
+    font-size: 22px;
+    font-variation-settings: 'FILL' 1;
+}
+
+.fb-left hr,
+.fb-right hr {
+    margin: 12px 8px;
+    border: 0;
+    border-top: 1px solid #ced0d4;
+}
+
+.fb-left small {
+    display: block;
+    padding: 0 8px;
+    color: #65676b;
+    font-size: 13px;
+}
+
+.fb-right {
+    justify-self: end;
+    width: 100%;
+}
+
+.fb-right h4 {
+    margin: 4px 8px 8px;
+    color: #65676b;
+    font-size: 17px;
+}
+
+.fb-bday {
+    display: flex;
+    gap: 10px;
+    margin: 0 8px;
+}
+
+.fb-contacts {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.fb-contacts li {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px;
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+.fb-contacts li:hover {
+    background: #e4e6eb;
+}
+
+.fb-contacts img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+}
+
+.fb-contacts .online {
+    position: absolute;
+    left: 34px;
+    top: 34px;
+    width: 12px;
+    height: 12px;
+    border: 2px solid #f0f2f5;
+    border-radius: 50%;
+    background: #31a24c;
+}
+
+/* příběhy */
+.fb-stories {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    overflow: hidden;
+}
+
+.fb-story {
+    position: relative;
+    flex: none;
+    width: 112px;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 10px;
+    background: var(--bg);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+}
+
+.fb-story img {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    width: 40px;
+    height: 40px;
+    border: 4px solid #0866ff;
+    border-radius: 50%;
+    background: #ffffff;
+}
+
+.fb-story b {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    left: 10px;
+    color: #ffffff;
+    font-size: 13px;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, .5);
+}
+
+.fb-story-new {
+    background: #ffffff;
+}
+
+.fb-story-new img {
+    position: static;
+    width: 100%;
+    height: 150px;
+    border: 0;
+    border-radius: 0;
+    object-fit: cover;
+    background: #c0aede;
+}
+
+.fb-story-new .material-symbols-rounded {
+    position: absolute;
+    top: 132px;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid #ffffff;
+    border-radius: 50%;
+    background: #ffffff;
+    color: #0866ff;
+    font-size: 36px;
+    font-variation-settings: 'FILL' 1;
+}
+
+.fb-story-new b {
+    color: #050505;
+    text-align: center;
+    text-shadow: none;
+}
+
+/* karty */
+.fb-card {
+    margin-bottom: 16px;
+    border-radius: 8px;
+    background: #ffffff;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+}
+
+.fb-composer {
+    padding: 12px 16px 10px;
+}
+
+.fb-composer-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #ced0d4;
+}
+
+.fb-composer-row img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.fb-composer-row span {
+    flex: 1;
+    padding: 9px 12px;
+    border-radius: 20px;
+    background: #f0f2f5;
+    color: #65676b;
+    font-size: 17px;
+}
+
+.fb-composer-actions,
+.fb-actions {
+    display: flex;
+    justify-content: space-around;
+    padding-top: 8px;
+    color: #65676b;
+    font-weight: 600;
+}
+
+.fb-composer-actions > span,
+.fb-actions > span {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 6px 0;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.fb-composer-actions > span:hover,
+.fb-actions > span:hover {
+    background: #f0f2f5;
+}
+
+.fb-composer-actions .material-symbols-rounded {
+    font-size: 24px;
+    font-variation-settings: 'FILL' 1;
+}
+
+.fb-post-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px 0;
+}
+
+.fb-post-head img,
+.fb-page-avatar {
+    flex: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.fb-page-avatar {
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, #1d6fd6, #36b5ff);
+    color: #ffffff;
+    font-weight: 800;
+}
+
+.fb-post-head div {
+    flex: 1;
+}
+
+.fb-post-head b {
+    font-size: 15px;
+}
+
+.fb-post-head small {
+    display: block;
+    color: #65676b;
+    font-size: 13px;
+}
+
+.fb-post-head small .material-symbols-rounded {
+    font-size: 13px;
+}
+
+.fb-arrow {
+    color: #65676b;
+}
+
+.fb-more {
+    color: #65676b;
+}
+
+.fb-text {
+    margin: 0;
+    padding: 8px 16px 12px;
+}
+
+.fb-bgtext {
+    display: grid;
+    place-items: center;
+    min-height: 300px;
+    margin-top: 10px;
+    padding: 40px;
+    background: var(--bg);
+    color: #ffffff;
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.3;
+    text-align: center;
+}
+
+.fb-photo {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.fb-stats {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 16px;
+    padding: 10px 0;
+    border-bottom: 1px solid #ced0d4;
+    color: #65676b;
+}
+
+.fb-r {
+    display: inline-block;
+    font-size: 14px;
+    font-style: normal;
+}
+
+.fb-actions {
+    padding: 4px 12px;
+}
+
+.fb-actions .material-symbols-rounded {
+    font-size: 20px;
+}
+
+/* reklama */
+.ad-link {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+}
+
+.ad-image {
+    position: relative;
+}
+
+.ad-image img {
+    width: 100%;
+    height: 330px;
+    object-fit: cover;
+}
+
+.ad-overlay {
+    position: absolute;
+    top: 18px;
+    left: 18px;
+    padding: 10px 16px;
+    border-radius: 6px;
+    background: #ffd60a;
+    color: #111111;
+    font-size: 30px;
+    font-weight: 900;
+    line-height: 1;
+    transform: rotate(-3deg);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, .3);
+}
+
+.ad-overlay small {
+    font-size: 18px;
+}
+
+.ad-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: #f0f2f5;
+}
+
+.ad-bar small {
+    display: block;
+    color: #65676b;
+    font-size: 13px;
+}
+
+.ad-bar b {
+    font-size: 16px;
+}
+
+.ad-btn {
+    flex: none;
+    margin-left: auto;
+    padding: 8px 12px;
+    border-radius: 6px;
+    background: #e2e5e9;
+    font-weight: 600;
+}
+
+.ad-link:hover .ad-btn {
+    background: #d8dadf;
+}
+
+@media (max-width: 1260px) {
+    .fb-top-nav a {
+        width: 80px;
+    }
+
+    .fb-layout {
+        grid-template-columns: minmax(0, 590px) minmax(0, 300px);
+        justify-content: center;
+    }
+
+    .fb-left {
+        display: none;
+    }
+}
+
+@media (max-width: 900px) {
+    .fb-layout {
+        grid-template-columns: minmax(0, 590px);
+    }
+
+    .fb-right,
+    .fb-top-nav,
+    .fb-search {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .fb-layout {
+        padding: 8px 0 60px;
+    }
+
+    .fb-card {
+        border-radius: 0;
+    }
+
+    .fb-stories {
+        padding: 0 8px;
+    }
+
+    .fb-top-right .fb-round:first-child {
+        display: none;
+    }
+
+    .ad-image img {
+        height: 260px;
+    }
+}
+
+/* reklama e-shopu: mřížka čtyř fotek produktů */
+.ad-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background: #ffffff;
+}
+
+.ad-grid img {
+    height: 240px;
+    object-position: top;
+}
+
+.ts-avatar {
+    background: linear-gradient(135deg, #1fb8b0, #0b7a8a);
+}
