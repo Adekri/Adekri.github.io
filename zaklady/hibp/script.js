@@ -229,7 +229,7 @@ async function pwnedCount(password) {
 
 async function checkPassword(password) {
     if (!password) return;
-    const button = $('#passwordForm button[type="submit"]');
+    const button = $('#checkForm button[type="submit"]');
     button.disabled = true;
     const { count, offline } = await pwnedCount(password);
     button.disabled = false;
@@ -258,20 +258,21 @@ async function checkPassword(password) {
 
 /* ---------- události ---------- */
 
-$('#emailForm').addEventListener('submit', (e) => {
+$('#accountForm').addEventListener('submit', (e) => {
     e.preventDefault();
-    checkEmail($('#emailInput').value);
+    checkEmail($('#accountInput').value);
 });
 
-$('#passwordForm').addEventListener('submit', (e) => {
+$('#checkForm').addEventListener('submit', (e) => {
     e.preventDefault();
-    checkPassword($('#passwordInput').value);
+    checkPassword($('#checkInput').value);
 });
 
 $('#revealBtn').addEventListener('click', (e) => {
-    const input = $('#passwordInput');
-    const show = input.type === 'password';
-    input.type = show ? 'text' : 'password';
+    // pole je textové a skrývá ho jen CSS (třída masked), aby se k němu nehlásily správce hesel
+    const input = $('#checkInput');
+    const show = input.classList.contains('masked');
+    input.classList.toggle('masked', !show);
     e.currentTarget.setAttribute('aria-pressed', String(show));
 });
 

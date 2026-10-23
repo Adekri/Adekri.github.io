@@ -1153,3 +1153,18 @@ a.btn-outline {
         font-size: 36px;
     }
 }
+
+/* pole pro heslo: textové pole skryté tečkami (type="password" by otevíral správce hesel) */
+#checkInput.masked {
+    -webkit-text-security: disc;
+}
+
+/* vyhledávací pole (type="search") vypadají jako dřív, jen bez křížku prohlížeče */
+.search input[type="search"] {
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.search input[type="search"]::-webkit-search-cancel-button {
+    display: none;
+}

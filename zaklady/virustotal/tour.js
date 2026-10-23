@@ -82,11 +82,11 @@
             step(5, undefined, 'Tohle je VirusTotal',
                 'Zdarma prověří soubor nebo odkaz u desítek antivirů najednou.',LOOK),
             step(6, '[data-tour="tab-url"]', 'Prověříme odkaz',
-                'Nechceme nahrávat soubor, ale prověřit <b>odkaz</b>. Klikni na záložku <b>URL</b>.',
+                'Nechceme nahrávat soubor, ale prověřit <b>odkaz</b>. Klikněte na záložku <b>URL</b>.',
                 { showButtons: [], side: 'bottom' }),
-            step(7, '#urlForm', 'Vlož zkopírovanou adresu',
-                'Klikni do pole, zmáčkni <kbd>Ctrl</kbd> + <kbd>V</kbd> a potvrď klávesou <kbd>Enter</kbd>.'
-                + `<div class="zk-note">Nemáš nic zkopírováno? <a href="${PHOTOSHOP_URL}">Vrať se pro adresu.</a></div>`,
+            step(7, '#urlForm', 'Vložte zkopírovanou adresu',
+                'Klikněte do pole, zmáčkněte <kbd>Ctrl</kbd> + <kbd>V</kbd> a potvrďte klávesou <kbd>Enter</kbd>.'
+                + `<div class="zk-note">Nemáte nic zkopírováno? <a href="${PHOTOSHOP_URL}">Vraťte se pro adresu.</a></div>`,
                 {
                     showButtons: [],
                     side: 'bottom',
@@ -148,8 +148,8 @@
                     + '<button type="button" class="zk-btn" data-copy-flag>Kopírovat</button></div>'
                     + '<b>Co si zapamatovat:</b><ul class="zk-list">'
                     + '<li>Placený program „zdarma“ bývá past.</li>'
-                    + '<li>Odkaz si před stažením prověř na <b>virustotal.com</b>.</li>'
-                    + '<li>Programy stahuj jen z oficiálních stránek výrobce.</li></ul>',
+                    + '<li>Odkaz si před stažením prověřte na <b>virustotal.com</b>.</li>'
+                    + '<li>Programy stahujte jen z oficiálních stránek výrobce.</li></ul>',
                 progressText: NO_PROGRESS,
                 showButtons: ['next'],
                 doneBtnText: 'Zavřít',
@@ -180,13 +180,13 @@
                 'Červené <b>Malware</b> nebo <b>Malicious</b> znamená škodlivý soubor.',
                 { side: 'top' }),
             step(11, '[data-tour="rtab-community"]', 'Co na to ostatní?',
-                'Klikni na záložku <b>COMMUNITY</b> a podívej se, co o odkazu napsali lidé.',
+                'Klikněte na záložku <b>COMMUNITY</b> a podívejte se, co o odkazu napsali lidé.',
                 { showButtons: [], side: 'bottom' }),
             step(12, '#commentsSection', 'Varování od odborníků',
                 'Lidé, kteří soubor zkoumali, píšou, že jde o <b>falešný instalátor</b>, který krade hesla.',
                 { side: 'top' }),
-            step(13, undefined, 'Tak co, stáhneš si ho? 🤔',
-                'Teď už víš o odkazu dost. Jak se rozhodneš?'
+            step(13, undefined, 'Tak co, stáhnete si ho? 🤔',
+                'Teď už o odkazu víte dost. Jak se rozhodnete?'
                 + '<div class="zk-actions">'
                 + '<button type="button" class="zk-btn" data-answer="no">Ne, raději si najdu oficiální zdroj</button>'
                 + '<button type="button" class="zk-btn zk-btn-light" data-answer="yes">Ano, nějakého odkazu se nebojím</button></div>',
@@ -202,7 +202,7 @@
                                 const old = popover.description.querySelector('.zk-warning');
                                 if (old) old.remove();
                                 popover.description.insertAdjacentHTML('afterbegin',
-                                    '<div class="zk-warning">Raději ne! ✋ Program by ti mohl ukrást hesla. Zkus to znovu.</div>');
+                                    '<div class="zk-warning">Raději ne! ✋ Program by vám mohl ukrást hesla. Zkuste to znovu.</div>');
                             }
                         });
                     }

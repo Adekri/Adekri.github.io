@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/driver.js@1/dist/driver.css">
   <link rel="stylesheet" href="../tour.css">
 </head>
-<!-- Výuková kopie podvodného e-shopu titaskin.com (ČOI ho zařadila mezi rizikové e-shopy 16. 7. 2021).
+<!--  kopie podvodného e-shopu titaskin.com (ČOI ho zařadila mezi rizikové e-shopy 16. 7. 2021).
      Produkty (jména, ceny, fotky) jsou převzaté ze skutečného obchodu uloženého ve Wayback Machine.
      Průvodce úkolu se vybírá parametrem: ?ukol=podvod (výchozí), ?ukol=platba, ?tour=0 = bez průvodce. -->
 <body>
@@ -37,11 +37,11 @@
     <div class="modal" role="dialog" aria-modal="true">
       <h3>Platební údaje</h3>
       <label style="color:#3A2F2A;">Číslo karty</label>
-      <input id="cardNumber" type="text" maxlength="19" placeholder="1234 5678 9012 3456" />
+      <input id="cardNumber" type="search" inputmode="numeric" maxlength="19" placeholder="1234 5678 9012 3456" autocomplete="off" data-1p-ignore data-lpignore="true" data-bwignore="true" data-form-type="other" data-protonpass-ignore="true" />
       <label style="color:#3A2F2A;">Platnost (MM/YY)</label>
-      <input id="cardExp" type="text" maxlength="5" placeholder="MM/YY" />
+      <input id="cardExp" type="search" inputmode="numeric" maxlength="5" placeholder="MM/YY" autocomplete="off" data-1p-ignore data-lpignore="true" data-bwignore="true" data-form-type="other" data-protonpass-ignore="true" />
       <label style="color:#3A2F2A;">CVC</label>
-      <input id="cardCvc" type="text" maxlength="4" placeholder="CVC" />
+      <input id="cardCvc" type="search" inputmode="numeric" maxlength="4" placeholder="CVC" autocomplete="off" data-1p-ignore data-lpignore="true" data-bwignore="true" data-form-type="other" data-protonpass-ignore="true" />
       <div class="actions">
         <button id="cancelPay" style="background:#D8A7A1;color:white;border:none;padding:8px;cursor:pointer;">Zavřít</button>
         <button id="submitPay" style="background:#C9A45C;color:white;border:none;padding:8px;cursor:pointer;">Odeslat</button>

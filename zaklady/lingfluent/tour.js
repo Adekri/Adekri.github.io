@@ -30,26 +30,26 @@
         {
             id: 'timer',
             title: '⏰ Odpočet akce',
-            hint: 'Podívej se na odpočet v pruhu nahoře. Pak obnov stránku (<kbd>Ctrl</kbd>+<kbd>R</kbd>, <kbd>F5</kbd> nebo tlačítko ⟳ vlevo od adresy v horní liště prohlížeče) a sleduj, co se s ním stane.',
-            note: 'Po obnovení začal odpočet znovu od 14:59. Akce nikdy neskončí. Odpočet tě má jen donutit rozhodnout se rychle a nepřemýšlet.'
+            hint: 'Podívejte se na odpočet v pruhu nahoře. Pak obnovte stránku (<kbd>Ctrl</kbd>+<kbd>R</kbd>, <kbd>F5</kbd> nebo tlačítko ⟳ vlevo od adresy v horní liště prohlížeče) a sledujte, co se s ním stane.',
+            note: 'Po obnovení začal odpočet znovu od 14:59. Akce nikdy neskončí. Odpočet vás má jen donutit rozhodnout se rychle a nepřemýšlet.'
         },
         {
             id: 'comments',
             title: '💬 Komentáře',
-            hint: 'Zkus u komentáře kliknout na <i>To se mi líbí</i> nebo <i>Odpovědět</i>.',
+            hint: 'Zkuste u komentáře kliknout na <i>To se mi líbí</i> nebo <i>Odpovědět</i>.',
             note: 'Komentáře jsou jen text napodobující Facebook. Nikdo je nenapsal a nikdo na ně nemůže odpovědět.'
         },
         {
             id: 'expert',
             title: '🎓 Odborník',
-            hint: 'Klikni na fotku Lea Anderse a vyhledej ji na internetu.',
+            hint: 'Klikněte na fotku Lea Anderse a vyhledejte ji na internetu.',
             note: 'Fotka je z fotobanky a „Leo Anders“ neexistuje. Stejně tak „paní Monika“ v pravém sloupci.'
         },
         {
             id: 'operator',
             title: '🏢 Prodávající',
-            hint: 'Otevři obchodní podmínky (odkaz je v patičce) a zjisti, kdo ti kartičky prodá.',
-            note: 'Prodávající sídlí v Číně. Zboží vrátíš jen neotevřené do 7 dní a na vlastní náklady do Číny, spory řeší soud v Shenzhenu. '
+            hint: 'Otevřete obchodní podmínky (odkaz je v patičce) a zjistěte, kdo vám kartičky prodá.',
+            note: 'Prodávající sídlí v Číně. Zboží vrátíte jen neotevřené do 7 dní a na vlastní náklady do Číny, spory řeší soud v Shenzhenu. '
                 + 'A „zaručené“ výsledky z článku? Podle podmínek prodávající nezaručuje nic.'
         }
     ];
@@ -192,22 +192,22 @@
     function startFeedIntro() {
         phase = 'intro';
         drive([step(1, undefined, 'Facebook',
-            'Prohlížíš si příspěvky kamarádů. Mezi nimi se ale schovává jeden, který ti nenapsal nikdo z přátel.'
+            'Prohlížíte si příspěvky kamarádů. Mezi nimi se ale schovává jeden, který vám nenapsal nikdo z přátel.'
             + '<div class="zk-note">Je to výuková kopie Facebooku, nic tu nikam neodchází.</div>',
             Object.assign({ onNextClick: startFind }, LOOK))]);
     }
 
     function startFind() {
         phase = 'find';
-        mission.show(2, 'Najdi reklamu',
-            'Najdi příspěvek, který není od tvých přátel, a klikni na odkaz v něm.');
+        mission.show(2, 'Najděte reklamu',
+            'Najděte příspěvek, který není od vašich přátel, a klikněte na odkaz v něm.');
     }
 
     function startAdFound() {
         phase = 'adfound';
         mission.hide();
         drive([step(2, '#adPost .fb-post-head', 'Tohle je reklama',
-            'Poznáš ji podle štítku <b>Sponzorováno</b>. Reklamu si může zaplatit kdokoli, i podvodník. '
+            'Poznáte ji podle štítku <b>Sponzorováno</b>. Reklamu si může zaplatit kdokoli, i podvodník. '
             + 'Facebook obsah reklam pečlivě nekontroluje.'
             + '<br><br>Podívejme se, kam reklama vede.',
             {
@@ -237,8 +237,8 @@
     function startLook() {
         setPhase('look');
         mission.hide();
-        drive([step(3, undefined, 'Kam tě reklama zavedla?',
-            'Vypadá to jako článek ve vědeckém časopise. Projdi si stránku až dolů.'
+        drive([step(3, undefined, 'Kam vás reklama zavedla?',
+            'Vypadá to jako článek ve vědeckém časopise. Projděte si stránku až dolů.'
             + '<div class="zk-note">Je to věrná kopie skutečného podvodného webu <b>youreduspace.com</b>.</div>',
             Object.assign({ onNextClick: startHunt }, LOOK))]);
     }
@@ -247,7 +247,7 @@
         const items = TRICKS.map((t) => `<li class="${found.includes(t.id) ? 'done' : ''}">`
             + `<span><b>${t.title}</b><br><small>${t.hint}</small></span></li>`).join('');
         const enough = found.length >= TRICKS_NEEDED;
-        return 'Web tě chce za každou cenu přesvědčit k nákupu. Prověř jeho triky:'
+        return 'Web vás chce za každou cenu přesvědčit k nákupu. Prověřte jeho triky:'
             + `<ul class="zk-checklist zk-tricks">${items}</ul>`
             + `<div class="zk-note">Prověřeno <b>${found.length} ze ${TRICKS.length}</b>. Stačí ${TRICKS_NEEDED}.</div>`
             + (enough ? '<div class="zk-actions"><button type="button" class="zk-btn" data-next-coi>Pokračovat →</button></div>' : '');
@@ -255,7 +255,7 @@
 
     function startHunt() {
         setPhase('hunt');
-        mission.show(4, 'Odhal triky webu', huntHtml());
+        mission.show(4, 'Odhalte triky webu', huntHtml());
     }
 
     function markFound(id) {
@@ -265,7 +265,7 @@
             found.push(id);
             save();
         }
-        mission.show(4, 'Odhal triky webu', huntHtml());
+        mission.show(4, 'Odhalte triky webu', huntHtml());
         mission.message(`<b>${trick.title}</b><br>${trick.note}`, 'zk-success');
     }
 
@@ -290,7 +290,7 @@
             + result('Jak se senioři učí na internetu – ilustrační foto', 'blog o vzdělávání')
             + result('Pojištění pro aktivní důchodce', 'reklama pojišťovny')
             + '</ul>'
-            + '<div class="zk-note">Doma to zkusíš takhle: klikni na obrázek <b>pravým tlačítkem</b> a vyber <b>Hledat obrázek</b> (Google Lens) '
+            + '<div class="zk-note">Doma to zkusíte takhle: klikněte na obrázek <b>pravým tlačítkem</b> a vyberte <b>Hledat obrázek</b> (Google Lens) '
             + 'nebo <b>Vyhledat obrázek pomocí Bingu</b>. Výsledky tady jsou ukázkové.</div>');
     }
 
@@ -298,21 +298,21 @@
         setPhase('coi');
         mission.hide();
         drive([step(5, undefined, 'Ví o webu něco ČOI?',
-            'Triky jsi odhalil/a. Teď si web ověř u nezávislého zdroje.'
+            'Triky jste odhalili. Teď si web ověřte u nezávislého zdroje.'
             + '<br><br><b>Česká obchodní inspekce (ČOI)</b> vede seznam rizikových e-shopů, před kterými varuje. '
-            + 'Najdi v něm záznam o webu <b>youreduspace.com</b>.',
+            + 'Najděte v něm záznam o webu <b>youreduspace.com</b>.',
             { nextBtnText: 'Jdu hledat', doneBtnText: 'Jdu hledat', onNextClick: startCoiMission })]);
     }
 
     function startCoiMission() {
         setPhase('coi');
-        mission.show(6, 'Najdi web v seznamu ČOI',
+        mission.show(6, 'Najděte web v seznamu ČOI',
             `<a class="zk-site-link" href="${COI_URL}" target="_blank" rel="noopener">Rizikové e-shopy ČOI ↗</a>`
-            + `<div class="zk-note">Stránka se otevře v nové záložce. Do pole <b>Hledat</b> napiš ${copyable('youreduspace')}, `
-            + 'nebo použij <kbd>Ctrl</kbd>+<kbd>F</kbd>.</div>'
-            + '<p><b>FLAG je rok, kdy ČOI před webem youreduspace.com varovala.</b> Datum najdeš v závorce pod popisem záznamu. '
-            + 'Rok zadej do platformy.</p>'
-            + '<div class="zk-note">Pozor: o stejném výrobku jsou v seznamu dva záznamy. Hledáš ten, který začíná <b>youreduspace.com</b>.</div>'
+            + `<div class="zk-note">Stránka se otevře v nové záložce. Do pole <b>Hledat</b> napište ${copyable('youreduspace')}, `
+            + 'nebo použijte <kbd>Ctrl</kbd>+<kbd>F</kbd>.</div>'
+            + '<p><b>FLAG je rok, kdy ČOI před webem youreduspace.com varovala.</b> Datum najdete v závorce pod popisem záznamu. '
+            + 'Rok zadejte do platformy.</p>'
+            + '<div class="zk-note">Pozor: o stejném výrobku jsou v seznamu dva záznamy. Hledáte ten, který začíná <b>youreduspace.com</b>.</div>'
             + '<div class="zk-note" data-hint><button type="button" class="zk-linkbtn" data-show-direct>Nedaří se mi záznam najít</button></div>'
             + '<div class="zk-actions"><button type="button" class="zk-btn" data-finish>Mám rok →</button></div>');
     }
@@ -321,13 +321,13 @@
 
     function summaryStep() {
         return step(0, undefined, 'Výborně, podvod odhalen!',
-            'Rok, který jsi našel/našla v seznamu ČOI, zadej do platformy jako <b>FLAG</b>.'
+            'Rok, který jste našli v seznamu ČOI, zadejte do platformy jako <b>FLAG</b>.'
             + '<br><br><b>Co si zapamatovat:</b><ul class="zk-list">'
             + '<li>Reklamu na sociální síti si může zaplatit kdokoli, i podvodník.</li>'
-            + '<li>Odpočet „akce končí za…“ tě má jen uspěchat. Obnov stránku a uvidíš, jestli opravdu končí.</li>'
-            + '<li>Komentáře, recenze i „odborníky“ jde snadno vymyslet. Fotku si ověříš vyhledáváním podle obrázku.</li>'
-            + '<li>Vždy si přečti obchodní podmínky a zjisti, kdo ti zboží prodává. U prodávajícího mimo EU reklamaci prakticky nevymůžeš.</li>'
-            + '<li>Než nakoupíš na neznámém webu, podívej se do seznamu rizikových e-shopů na <b>coi.gov.cz</b>.</li>'
+            + '<li>Odpočet „akce končí za…“ vás má jen uspěchat. Obnovte stránku a uvidíte, jestli opravdu končí.</li>'
+            + '<li>Komentáře, recenze i „odborníky“ jde snadno vymyslet. Fotku si ověříte vyhledáváním podle obrázku.</li>'
+            + '<li>Vždy si přečtěte obchodní podmínky a zjistěte, kdo vám zboží prodává. U prodávajícího mimo EU reklamaci prakticky nevymůžete.</li>'
+            + '<li>Než nakoupíte na neznámém webu, podívejte se do seznamu rizikových e-shopů na <b>coi.gov.cz</b>.</li>'
             + '<li>Zázračné metody „bez biflování“ neexistují.</li></ul>',
             {
                 popoverClass: 'zk-tour zk-wide',
@@ -362,7 +362,7 @@
 
     // Text, který má student někam napsat: kliknutím se zkopíruje (nenápadná ikonka vedle).
     function copyable(text) {
-        return `<span class="zk-copy" data-copy-text="${esc(text)}" title="Kliknutím zkopíruješ"><b>${esc(text)}</b></span>`;
+        return `<span class="zk-copy" data-copy-text="${esc(text)}" title="Kliknutím zkopírujete"><b>${esc(text)}</b></span>`;
     }
 
     document.addEventListener('click', (event) => {
@@ -419,7 +419,7 @@
             if (event.detail.doc === 'terms') {
                 termsOpen = true;
                 if (mission.el) mission.el.classList.add('collapsed');
-            } else mission.warn('V kontaktu je jen e-mail. Kdo ti kartičky prodá, zjistíš v <b>obchodních podmínkách</b>.');
+            } else mission.warn('V kontaktu je jen e-mail. Kdo vám kartičky prodá, zjistíte v <b>obchodních podmínkách</b>.');
         });
 
         document.addEventListener('lingfluent:close', () => {
@@ -432,8 +432,8 @@
             if (phase === 'done') return;
             event.preventDefault();
             drive([step(0, undefined, 'Stop! ✋',
-                'Právě bys neznámo komu poslal/a své jméno, telefon a adresu. Takové kontakty se prodávají dál '
-                + 'a pak ti volají „konzultanti“ s dalšími nabídkami.<br><br>Nejdřív web prověř.',
+                'Právě byste neznámo komu poslali své jméno, telefon a adresu. Takové kontakty se prodávají dál '
+                + 'a pak vám volají „konzultanti“ s dalšími nabídkami.<br><br>Nejdřív web prověřte.',
                 { nextBtnText: 'Zpět k úkolu', doneBtnText: 'Zpět k úkolu', onNextClick: resume })]);
         });
 

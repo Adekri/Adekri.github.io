@@ -355,9 +355,9 @@ Tyto Zásady ochrany osobních údajů můžeme čas od času aktualizovat, abyc
       // jako na originálu: jen formulář, žádná firma, IČO, adresa ani telefon (přestože pruh slibuje „Kontakty 24/7“)
       contact: {
         title: 'Kontaktujte nás',
-        text: '<form id="contactForm" style="white-space:normal; max-width:520px;">'
-          + '<label>Jméno<br><input type="text" style="width:100%; padding:8px; margin:4px 0 10px; box-sizing:border-box;"></label>'
-          + '<label>E-mail *<br><input type="email" style="width:100%; padding:8px; margin:4px 0 10px; box-sizing:border-box;"></label>'
+        text: '<form id="contactForm" autocomplete="off" data-protonpass-ignore="true" data-lpignore="true" data-1p-ignore data-bwignore="true" data-form-type="other" style="white-space:normal; max-width:520px;">'
+          + '<label>Jméno<br><input type="search" autocomplete="off" data-1p-ignore data-lpignore="true" data-bwignore="true" data-form-type="other" data-protonpass-ignore="true" style="width:100%; padding:8px; margin:4px 0 10px; box-sizing:border-box;"></label>'
+          + '<label>E-mail *<br><input type="search" inputmode="email" autocomplete="off" data-1p-ignore data-lpignore="true" data-bwignore="true" data-form-type="other" data-protonpass-ignore="true" style="width:100%; padding:8px; margin:4px 0 10px; box-sizing:border-box;"></label>'
           + '<label>Zpráva<br><textarea rows="5" style="width:100%; padding:8px; margin:4px 0 10px; box-sizing:border-box;"></textarea></label>'
           + '<button type="submit" class="pay-btn">Odeslat</button></form>'
       }

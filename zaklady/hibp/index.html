@@ -95,8 +95,8 @@
         <section class="hero">
             <h1 class="hero-title">Have I Been <br><span class="logo-mark">;--</span>Pwned</h1>
             <p class="hero-sub">Check if your email address is in a data breach</p>
-            <form class="search" id="emailForm" autocomplete="off">
-                <input type="text" id="emailInput" placeholder="Email address" spellcheck="false" aria-label="Email address">
+            <form class="search" id="accountForm" autocomplete="off" data-protonpass-ignore="true" data-lpignore="true" data-1p-ignore data-bwignore="true" data-form-type="other">
+                <input type="search" id="accountInput" placeholder="Email address" spellcheck="false" aria-label="Email address" autocomplete="off" data-1p-ignore data-lpignore="true" data-bwignore="true" data-form-type="other" data-protonpass-ignore="true">
                 <button type="submit">Check</button>
             </form>
             <p class="terms">Using Have I Been Pwned is subject to the <a href="#/">terms of use</a></p>
@@ -185,8 +185,8 @@
             <p class="hero-sub">Check if your password has appeared in known data breaches</p>
             <p class="pw-intro">Pwned Passwords is free and open source for everyone to use. If you need support for
                 using or integrating it, that’s now included with <a href="#/passwords">Pro and High RPM subscriptions</a>.</p>
-            <form class="search" id="passwordForm" autocomplete="off">
-                <input type="password" id="passwordInput" placeholder="Password to check" aria-label="Password to check">
+            <form class="search" id="checkForm" autocomplete="off" data-protonpass-ignore="true" data-lpignore="true" data-1p-ignore data-bwignore="true" data-form-type="other">
+                <input type="search" class="masked" id="checkInput" placeholder="Password to check" aria-label="Password to check" spellcheck="false" autocomplete="off" data-1p-ignore data-lpignore="true" data-bwignore="true" data-form-type="other" data-protonpass-ignore="true">
                 <button type="button" class="reveal" id="revealBtn" aria-label="Show password" aria-pressed="false"><svg><use href="#i-eye" /></svg></button>
                 <button type="submit">Check</button>
             </form>

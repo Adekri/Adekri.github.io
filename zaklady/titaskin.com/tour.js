@@ -17,7 +17,7 @@
    Stav se drží v sessionStorage, protože jeden ze signálů
    (odpočet) se odhaluje obnovením stránky.
 
-   Úkol „Bezpečné placení“ (?ukol=platba) zatím nemá průvodce.
+
    ============================================================ */
 (function () {
     const params = new URLSearchParams(location.search);
@@ -38,13 +38,13 @@
         {
             id: 'timer',
             title: 'Odpočet, který nikdy nekončí',
-            hint: 'Obnov stránku (<kbd>Ctrl</kbd>+<kbd>R</kbd> nebo ⟳) a sleduj odpočet nahoře.',
-            note: 'Odpočet začal znovu od 14:59. Časově omezené nabídky tě obvykle nutí jednat unáhleně'
+            hint: 'Obnovte stránku (<kbd>Ctrl</kbd>+<kbd>R</kbd> nebo ⟳) a sledujte odpočet nahoře.',
+            note: 'Odpočet začal znovu od 14:59. Časově omezené nabídky vás obvykle nutí jednat unáhleně'
         },
         {
             id: 'refund',
             title: 'Kdo obchod provozuje?',
-            hint: 'Otevři v patičce <b>Reklamační řád</b>. Kam se posílá reklamace?',
+            hint: 'Otevřete v patičce <b>Reklamační řád</b>. Kam se posílá reklamace?',
             note: 'Obchod „z Brna“ reklamuje v Hongkongu a nemá IČO.',
             // vysvětlení v bublině u otevřeného dokumentu
             explainTitle: 'Brno, nebo Hongkong?',
@@ -189,15 +189,15 @@
 
     function startFind() {
         phase = 'find';
-        mission.show(2, 'Najdi reklamu',
-            'Najdi mezi příspěvky reklamu a rozklikni ji.');
+        mission.show(2, 'Najděte reklamu',
+            'Najděte mezi příspěvky reklamu a rozklikněte ji.');
     }
 
     function startAdFound() {
         phase = 'adfound';
         mission.hide();
         drive([step(2, '#adPost .fb-post-head', 'Výborně',
-            'Poznáš ji podle štítku <b>Sponzorováno</b>. Zaplatit si ji může kdokoli, i podvodník.',
+            'Poznáte ji podle štítku <b>Sponzorováno</b>. Zaplatit si ji může kdokoli, i podvodník.',
             {
                 side: 'bottom',
                 nextBtnText: 'Otevřít odkaz →',
@@ -228,8 +228,8 @@
     function startLook() {
         setPhase('look');
         mission.hide();
-        drive([step(3, undefined, 'Kam tě reklama zavedla?',
-            'Vypadá to, že tě reklama zavedla na výhodný e-shop... nebo ne?',
+        drive([step(3, undefined, 'Kam vás reklama zavedla?',
+            'Vypadá to, že vás reklama zavedla na výhodný e-shop... nebo ne?',
             Object.assign({ onNextClick: startHunt }, LOOK))]);
     }
 
@@ -237,7 +237,7 @@
         const items = TRICKS.map((t) => `<li class="${found.includes(t.id) ? 'done' : ''}">`
             + `<span><b>${t.title}</b><br><small>${t.hint}</small></span></li>`).join('');
         const enough = found.length === TRICKS.length;
-        return 'Najdi dva varovné signály:'
+        return 'Najděte dva varovné signály:'
             + `<ul class="zk-checklist zk-tricks">${items}</ul>`
             + `<div class="zk-note">Nalezeno <b>${found.length} ze ${TRICKS.length}</b>.</div>`
             + (enough ? '<div class="zk-actions"><button type="button" class="zk-btn" data-next-coi>Pokračovat →</button></div>' : '');
@@ -245,7 +245,7 @@
 
     function startHunt() {
         setPhase('hunt');
-        mission.show(4, 'Co tě může upozornit?', huntHtml());
+        mission.show(4, 'Co vás může upozornit?', huntHtml());
     }
 
     function markFound(id) {
@@ -255,7 +255,7 @@
             found.push(id);
             save();
         }
-        mission.show(4, 'Co tě může upozornit?', huntHtml());
+        mission.show(4, 'Co vás může upozornit?', huntHtml());
         mission.message(`<b>${trick.title}</b><br>${trick.note}`, 'zk-success');
     }
 
@@ -277,20 +277,20 @@
         setPhase('coi');
         mission.hide();
         drive([step(5, undefined, 'Ví o obchodu něco ČOI?',
-            'Signály ještě nejsou důkaz. Ověř si obchod v seznamu rizikových e-shopů <b>České obchodní inspekce</b>.',
+            'Signály ještě nejsou důkaz. Ověřte si obchod v seznamu rizikových e-shopů <b>České obchodní inspekce</b>.',
             { nextBtnText: 'Jdu hledat', doneBtnText: 'Jdu hledat', onNextClick: startCoiMission })]);
     }
 
     function startCoiMission() {
         setPhase('coi');
-        mission.show(6, 'Najdi obchod v seznamu ČOI',
+        mission.show(6, 'Najděte obchod v seznamu ČOI',
             '<ol class="zk-list">'
-            + '<li>Otevři seznam (otevře se v nové záložce):'
+            + '<li>Otevřete seznam (otevře se v nové záložce):'
             + `<a class="zk-site-link" href="${COI_URL}" target="_blank" rel="noopener">Rizikové e-shopy ČOI ↗</a></li>`
-            + `<li>Sjeď k nadpisu <i>Přehled dosud známých rizikových e-shopů</i> a do pole <b>Hledat</b> napiš ${copyable('titaskin')}.</li>`
+            + `<li>Sjeďte k nadpisu <i>Přehled dosud známých rizikových e-shopů</i> a do pole <b>Hledat</b> napište ${copyable('titaskin')}.</li>`
             + '<li>Pod popisem záznamu je v závorce datum.</li>'
             + '</ol>'
-            + '<p><b>FLAG je rok z tohoto data.</b> Zadej ho do platformy.</p>'
+            + '<p><b>FLAG je rok z tohoto data.</b> Zadejte ho do platformy.</p>'
             + '<div class="zk-note" data-hint><button type="button" class="zk-linkbtn" data-show-direct>Nedaří se mi záznam najít</button></div>'
             + '<div class="zk-actions"><button type="button" class="zk-btn" data-finish>Mám rok →</button></div>');
     }
@@ -299,12 +299,12 @@
 
     function summaryStep() {
         return step(0, undefined, 'Výborně, podvod odhalen!',
-            'Rok z ČOI zadej do platformy jako <b>FLAG</b>.'
+            'Rok z ČOI zadejte do platformy jako <b>FLAG</b>.'
             + '<br><br><b>Co si zapamatovat:</b><ul class="zk-list">'
             + '<li>Reklamu si může zaplatit kdokoli.</li>'
-            + '<li>Nekonečný odpočet tě má jen uspěchat.</li>'
-            + '<li>Zjisti, kdo obchod provozuje a kam se reklamuje.</li>'
-            + '<li>Neznámý obchod si ověř na <b>coi.gov.cz</b>.</li></ul>',
+            + '<li>Nekonečný odpočet vás má jen uspěchat.</li>'
+            + '<li>Zjistěte, kdo obchod provozuje a kam se reklamuje.</li>'
+            + '<li>Neznámý obchod si ověřte na <b>coi.gov.cz</b>.</li></ul>',
             {
                 popoverClass: 'zk-tour zk-wide',
                 doneBtnText: 'Zavřít',
@@ -338,7 +338,7 @@
 
     // Text, který má student někam napsat: kliknutím se zkopíruje (nenápadná ikonka vedle).
     function copyable(text) {
-        return `<span class="zk-copy" data-copy-text="${esc(text)}" title="Kliknutím zkopíruješ"><b>${esc(text)}</b></span>`;
+        return `<span class="zk-copy" data-copy-text="${esc(text)}" title="Kliknutím zkopírujete"><b>${esc(text)}</b></span>`;
     }
 
     document.addEventListener('click', (event) => {
@@ -391,7 +391,7 @@
             if (phase === 'done') return;
             event.preventDefault();
             drive([step(0, undefined, 'Stop! ✋',
-                'Nejdřív obchod prověř.',
+                'Nejdřív obchod prověřte.',
                 { nextBtnText: 'Zpět k úkolu', doneBtnText: 'Zpět k úkolu', onNextClick: resume })]);
         });
 

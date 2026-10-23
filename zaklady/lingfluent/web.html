@@ -111,13 +111,13 @@
             <button type="button" class="modal-x" data-close aria-label="Zavřít">×</button>
             <h2 id="orderTitle">Interaktivní kartičky Ling Fluent</h2>
             <div class="order-price"><s>2 590 Kč</s> <b>1 290 Kč</b> <span>−1 300 Kč jen dnes</span></div>
-            <form id="orderForm" autocomplete="off">
+            <form id="orderForm" autocomplete="off" data-protonpass-ignore="true" data-lpignore="true" data-1p-ignore data-bwignore="true" data-form-type="other">
                 <label>Jazyk
                     <select name="lang"><option>Angličtina</option><option>Němčina</option><option>Španělština</option><option>Francouzština</option><option>Italština</option></select>
                 </label>
-                <label>Jméno a příjmení<input type="text" name="name" required></label>
-                <label>Telefon<input type="tel" name="phone" required></label>
-                <label>Adresa pro doručení<input type="text" name="address" required></label>
+                <label>Jméno a příjmení<input type="search" name="name" required autocomplete="off" data-1p-ignore data-lpignore="true" data-bwignore="true" data-form-type="other" data-protonpass-ignore="true"></label>
+                <label>Telefon<input type="search" inputmode="tel" name="phone" required autocomplete="off" data-1p-ignore data-lpignore="true" data-bwignore="true" data-form-type="other" data-protonpass-ignore="true"></label>
+                <label>Adresa pro doručení<input type="search" name="address" required autocomplete="off" data-1p-ignore data-lpignore="true" data-bwignore="true" data-form-type="other" data-protonpass-ignore="true"></label>
                 <p class="order-pay">Platba na dobírku</p>
                 <button type="submit">Objednat se slevou</button>
                 <p class="order-small">Odesláním objednávky souhlasíte s <a href="#" data-doc="terms">obchodními podmínkami</a>.</p>

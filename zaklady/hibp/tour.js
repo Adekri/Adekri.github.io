@@ -1,5 +1,5 @@
 /* ============================================================
-   Průvodce úkolem „Pomoz Pepovi“ (Have I Been Pwned).
+   Průvodce úkolem s ukázkovým účtem „Pepy“ (Have I Been Pwned).
    1. Student vyhledá Pepův e-mail a sám najde únik, ve kterém
       uniklo i heslo.
    2. Na stránce Passwords prověří hesla z Pepova sešitu.
@@ -169,8 +169,8 @@
         setPhase('intro');
         goTo('home');
         drive([step(1, undefined, '',
-            'Na stránce <b>Have I Been Pwned</b> zjistíš, jestli se něčí e-mail nebo heslo objevilo v úniku dat.'
-            + '<div class="zk-note">Ve skutečnosti ji najdeš na adrese <b>haveibeenpwned.com</b>. Tady pracuješ s její kopií.</div>',
+            'Na stránce <b>Have I Been Pwned</b> zjistíte, jestli se něčí e-mail nebo heslo objevilo v úniku dat.'
+            + '<div class="zk-note">Ve skutečnosti ji najdete na adrese <b>haveibeenpwned.com</b>. Tady pracujete s její kopií.</div>',
             Object.assign({ onNextClick: startEmail }, LOOK))]);
     }
 
@@ -178,12 +178,12 @@
         setPhase('email');
         mission.hide();
         goTo('home');
-        drive([step(2, '#emailForm', 'Zkontroluj Pepův e-mail',
-            `Napiš do pole ${copyable(PEPA_EMAIL)} a klikni na <b>Check</b>.`,
+        drive([step(2, '#accountForm', 'Zkontrolujte Pepův e-mail',
+            `Napište do pole ${copyable(PEPA_EMAIL)} a klikněte na <b>Check</b>.`,
             {
                 showButtons: [],
                 side: 'bottom',
-                onPopoverRender: () => setTimeout(() => document.getElementById('emailInput').focus(), 450)
+                onPopoverRender: () => setTimeout(() => document.getElementById('accountInput').focus(), 450)
             })]);
     }
 
@@ -191,14 +191,14 @@
         setPhase('wrong-email');
         drive([step(0, undefined, 'Tenhle e-mail neznáme 🙈',
             `Zadaný e-mail:<br><b class="zk-address">${esc(email)}</b><br><br>`
-            + `Pepův e-mail je ${copyable(PEPA_EMAIL)}. Zkontroluj, že je napsaný přesně, i s tečkou a zavináčem.`,
+            + `Pepův e-mail je ${copyable(PEPA_EMAIL)}. Zkontrolujte, že je napsaný přesně, i s tečkou a zavináčem.`,
             { nextBtnText: 'Zkusit znovu', doneBtnText: 'Zkusit znovu', onNextClick: startEmail })]);
     }
 
     function startSummary(count) {
         setPhase('summary');
-        drive([step(3, '#breachSummary', 'Pepa je v únicích dat',
-            `Jeho e-mail se objevil v <b>${count}</b> únicích. Firmy, kterým Pepa svěřil své údaje, je neuhlídaly.`
+        drive([step(3, '#breachSummary', 'Výsledek kontroly',
+            `Pepův e-mail se objevil v <b>${count}</b> únicích dat.`
             + '<br><br>Pod tímto rámečkem je časová osa – každá karta je jeden únik.',
             { side: 'bottom', onNextClick: startHunt })]);
     }
@@ -207,16 +207,16 @@
 
     function startHunt() {
         setPhase('hunt');
-        mission.show(4, 'Najdi únik s hesly',
-            'Projdi časovou osu a u každého úniku si přečti seznam <b>Compromised data</b> (co uniklo).'
-            + '<br><br>Najdi únik, ve kterém uniklo i heslo – anglicky <b>Passwords</b> – a otevři ho tlačítkem <b>View Details</b>.');
+        mission.show(4, 'Najděte únik s hesly',
+            'Projděte časovou osu a u každého úniku si přečtěte seznam <b>Compromised data</b> (co uniklo).'
+            + '<br><br>Najděte únik, ve kterém uniklo i heslo – anglicky <b>Passwords</b> – a otevřete ho tlačítkem <b>View Details</b>.');
     }
 
     function startFound(breach) {
         setPhase('found');
         mission.hide();
         drive([step(5, '[data-tour="breach-data"]', 'Výborně!',
-            `Z portálu <b>${esc(breach.name)}</b> uniklo i Pepovo heslo. Pepa ho ale používá i jinde…`
+            `Z portálu <b>${esc(breach.name)}</b> uniklo i Pepovo heslo. Pepa ho přitom používá i jinde.`
             + '<br><br>Útočníci uniklá hesla zkoušejí i na dalších stránkách. Když má někdo všude stejné heslo, dostanou se do všech jeho účtů.',
             { side: 'bottom', onNextClick: startNav })]);
     }
@@ -224,7 +224,7 @@
     function startNav() {
         setPhase('nav');
         drive([step(6, '[data-tour="nav-passwords"]', 'Jak jsou tedy na tom Pepova hesla?',
-            'Na stránce <b>Passwords</b> se dá zjistit, jestli se nějaké heslo objevilo v úniku. Klikni na ni v menu.',
+            'Na stránce <b>Passwords</b> se dá zjistit, jestli se nějaké heslo objevilo v úniku. Klikněte na ni v menu.',
             { showButtons: [], side: 'bottom' })]);
     }
 
@@ -234,7 +234,7 @@
         setPhase('pwlook');
         goTo('passwords');
         drive([step(7, undefined, 'Kontrola hesel',
-            '<div class="zk-warning">⚠️ Sem ani nikam jinam nepiš svoje skutečné heslo! Heslo patří jen do přihlášení na stránce, ke které patří.</div>'
+            '<div class="zk-warning">⚠️ Sem ani nikam jinam nepište svoje skutečné heslo! Heslo patří jen do přihlášení na stránce, ke které patří.</div>'
             + 'Vyzkoušíme hesla, která má Pepa napsaná na papírku.',
             Object.assign({ onNextClick: startPwCheck }, LOOK))]);
     }
@@ -251,7 +251,7 @@
     // Posune stránku tak, aby pole pro heslo bylo nahoře: pod ním je vidět rámeček s výsledkem
     // a panel úkolu v pravém dolním rohu nepřekrývá tlačítko Check.
     function showPasswordArea() {
-        const form = document.getElementById('passwordForm');
+        const form = document.getElementById('checkForm');
         const top = form.getBoundingClientRect().top + window.scrollY - (FORM_TOP_GAP[phase] || 110);
         window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
     }
@@ -260,7 +260,7 @@
         setPhase('pwcheck');
         goTo('passwords');
         mission.show(8, 'Pepův papírek s hesly',
-            'Zkontroluj všechna tři hesla: napiš heslo do pole a klikni na <b>Check</b>.'
+            'Zkontrolujte všechna tři hesla: napište heslo do pole a klikněte na <b>Check</b>.'
             + '<div class="zk-note">Pozor na velká a malá písmena.</div>'
             + `<div data-notebook>${notebookHtml()}</div>`);
         setTimeout(showPasswordArea, 50);
@@ -278,8 +278,8 @@
     function startChallenge() {
         setPhase('challenge');
         goTo('passwords');
-        mission.show(9, 'Vymysli Pepovi nové heslo',
-            'Všechna Pepova hesla už unikla! Vymysli nové, které splní obě povinná pravidla.'
+        mission.show(9, 'Vymyslete nové heslo',
+            'Žádné z hesel na papírku už není bezpečné. Vymyslete nové, které splní obě povinná pravidla.'
             + '<div class="zk-rules-head">Povinné</div>'
             + '<ul class="zk-checklist" data-rules>'
             + `<li data-rule="length"><span>minimálně ${MIN_LENGTH} znaků</span></li>`
@@ -289,8 +289,8 @@
             + '<ul class="zk-checklist optional" data-rules>'
             + OPTIONAL_RULES.map(([id, label]) => `<li data-rule="${id}"><span>${label}</span></li>`).join('')
             + '</ul>'
-            + `<div class="zk-note">Tip: dlouhé heslo se dobře pamatuje, když spojíš několik slov, třeba <i>${EXAMPLE_PASSPHRASE}</i> (tohle ale nepoužívej 😉). Tlačítkem s okem uvidíš, co píšeš.</div>`);
-        updateRules(document.getElementById('passwordInput').value, null);
+            + `<div class="zk-note">Tip: dlouhé heslo se dobře pamatuje, když spojíte několik slov, třeba <i>${EXAMPLE_PASSPHRASE}</i> (tohle ale nepoužívejte 😉). Tlačítkem s okem uvidíte, co píšete.</div>`);
+        updateRules(document.getElementById('checkInput').value, null);
         setTimeout(showPasswordArea, 50);
     }
 
@@ -306,16 +306,16 @@
     /* ---------- vlajka ---------- */
 
     function flagStep() {
-        return step(0, undefined, 'Výborně, Pepa je v bezpečí!',
+        return step(0, undefined, 'Úkol splněn',
             'Tady je FLAG:'
             + `<div class="zk-flag"><code>${esc(FLAG)}</code>`
             + '<button type="button" class="zk-btn" data-copy-flag>Kopírovat</button></div>'
             + '<b>Co si zapamatovat:</b><ul class="zk-list">'
-            + '<li>Heslo, které uniklo, už nikdy nepoužívej.</li>'
+            + '<li>Heslo, které uniklo, už nikdy nepoužívejte.</li>'
             + '<li>Každý účet má mít jiné heslo – pomůže správce hesel.</li>'
             + '<li>Dlouhé heslo z několika slov se dobře pamatuje a těžko hádá.</li>'
-            + '<li>Hesla nepiš na papírky – kdokoli je může najít.</li>'
-            + '<li>Svůj e-mail si doma ověř na <b>haveibeenpwned.com</b>.</li></ul>',
+            + '<li>Hesla nepište na papírky – kdokoli je může najít.</li>'
+            + '<li>Svůj e-mail si doma ověřte na <b>haveibeenpwned.com</b>.</li></ul>',
             {
                 popoverClass: 'zk-tour zk-wide',
                 doneBtnText: 'Zavřít',
@@ -350,7 +350,7 @@
     // kind: 'plain' = bez zvýraznění (ruční písmo na papírku), jinak tučně
     function copyable(text, kind) {
         const inner = kind === 'plain' ? `<span>${esc(text)}</span>` : `<b>${esc(text)}</b>`;
-        return `<span class="zk-copy" data-copy-text="${esc(text)}" title="Kliknutím zkopíruješ">${inner}</span>`;
+        return `<span class="zk-copy" data-copy-text="${esc(text)}" title="Kliknutím zkopírujete">${inner}</span>`;
     }
 
     document.addEventListener('click', (event) => {
@@ -401,8 +401,8 @@
         const { page, breach } = event.detail;
         if (phase === 'hunt' && page === 'breach') {
             if (breach.data.includes('Passwords')) setTimeout(() => startFound(breach), 400);
-            else mission.warn(`V úniku <b>${esc(breach.name)}</b> hesla neunikla – podívej se na <b>Compromised Data</b>. `
-                + 'Vrať se šipkou <b>Zpět</b> v prohlížeči a otevři další únik.'
+            else mission.warn(`V úniku <b>${esc(breach.name)}</b> hesla neunikla – podívejte se na <b>Compromised Data</b>. `
+                + 'Vraťte se šipkou <b>Zpět</b> v prohlížeči a otevřete další únik.'
                 + '<div class="zk-actions"><button type="button" class="zk-btn" data-back>← Zpět na seznam úniků</button></div>');
         } else if (phase === 'hunt' && page === 'home') {
             const old = mission.find('.zk-warning');
@@ -410,7 +410,7 @@
         } else if (phase === 'nav' && page === 'passwords') startPwLook();
         else if (phase === 'hunt' && page === 'passwords') {
             goTo('home');
-            mission.warn('Na hesla dojde za chvíli. Nejdřív najdi únik, ve kterém uniklo Pepovo heslo.');
+            mission.warn('Na hesla dojde za chvíli. Nejdřív najděte únik, ve kterém uniklo Pepovo heslo.');
         } else if ((phase === 'pwcheck' || phase === 'challenge') && page === 'home') {
             mission.warn('Úkol pokračuje na stránce <b>Passwords</b> v menu nahoře.');
         }
@@ -420,7 +420,7 @@
         const { password, count, offline } = event.detail;
         if (phase === 'pwcheck') {
             if (!PEPA_PASSWORDS.includes(password)) {
-                mission.warn(`Heslo <code>${esc(password)}</code> na Pepově papírku není. Zkontroluj velká a malá písmena.`);
+                mission.warn(`Heslo <code>${esc(password)}</code> na Pepově papírku není. Zkontrolujte velká a malá písmena.`);
                 return;
             }
             checked[password] = count;
@@ -441,9 +441,9 @@
             const old = mission.find('.zk-warning');
             if (old) old.remove();
             if (normalized.replace(/[\s_.,+]+/g, '-') === example) {
-                mission.warn('Tohle bylo jen ukázkové heslo. Vymysli vlastní slova!');
+                mission.warn('Tohle bylo jen ukázkové heslo. Vymyslete vlastní slova!');
             } else if (count > 0) {
-                mission.warn(`Tohle heslo už uniklo ${count.toLocaleString('cs-CZ')}×. Zkus jiné, méně obvyklé.`);
+                mission.warn(`Tohle heslo už uniklo ${count.toLocaleString('cs-CZ')}×. Zkuste jiné, méně obvyklé.`);
             } else if (!longEnough) {
                 mission.warn(`V databázi není, ale je moc krátké – potřebuje aspoň ${MIN_LENGTH} znaků.`);
             } else {
@@ -454,7 +454,7 @@
     });
 
     // Délka a volitelná pravidla se odškrtávají už při psaní.
-    document.getElementById('passwordInput').addEventListener('input', (event) => {
+    document.getElementById('checkInput').addEventListener('input', (event) => {
         if (phase === 'challenge') updateRules(event.target.value, null);
     });
 

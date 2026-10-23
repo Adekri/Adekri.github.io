@@ -224,3 +224,12 @@ body {
       vertical-align: -0.125em;
       margin-right: 8px;
     }
+/* formulářová pole jsou type="search", aby je nevyplňovali správci hesel; vypadají jako běžná pole */
+input[type="search"] {
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+input[type="search"]::-webkit-search-cancel-button {
+    display: none;
+}

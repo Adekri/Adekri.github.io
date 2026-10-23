@@ -20,7 +20,7 @@
     const MENU_GAP = 14; // mezera mezi bublinou a místem kliknutí
     const EDGE_GAP = 8;  // nejmenší vzdálenost bubliny od okraje okna
     let helpTimer = null;
-    let menuPoint = null; // kde student klikl pravým tlačítkem
+    let menuPoint = null; // kde uživatel klikl pravým tlačítkem
 
     const helpHtml = '<div class="zk-note"><button type="button" class="zk-linkbtn" data-copy>Nejde to? Zkopírovat adresu za mě</button></div>';
 
@@ -35,9 +35,9 @@
         steps: [
             {
                 popover: {
-                    title: 'Photoshop zdarma? 🤔',
+                    title: 'Photoshop zdarma?',
                     description: 'Tahle stránka nabízí drahý program úplně zadarmo! A to se vyplatí! ... nebo ne?'
-                        + '<br><br><b>Tvůj úkol:</b> prověřit odkaz dřív, než cokoli stáhneš.',
+                        + '<br><br><b>Váš úkol:</b> prověřit odkaz dřív, než cokoli stáhnete.',
                     progressText: `1 / ${TOTAL_STEPS}`,
                     showButtons: ['next'],
                     nextBtnText: 'Jdeme na to',
@@ -48,7 +48,7 @@
                 element: '#dlBtn',
                 popover: {
                     title: 'Kam tlačítko vede?',
-                    description: 'Tlačítko <b>Stáhnout</b> v sobě skrývá adresu souboru. Klikni na něj <b>pravým</b> tlačítkem myši.'
+                    description: 'Tlačítko <b>Stáhnout</b> v sobě skrývá adresu souboru. Klikněte na něj <b>pravým</b> tlačítkem myši.'
                         + '<div class="zk-note">Levým ne – tím by se soubor rovnou stáhl!</div>',
                     progressText: `2 / ${TOTAL_STEPS}`,
                     showButtons: [],
@@ -59,8 +59,8 @@
             {
                 element: '#dlBtn',
                 popover: {
-                    title: 'Zkopíruj adresu',
-                    description: 'V nabídce, která se otevřela, vyber <b>Kopírovat adresu odkazu</b>.'
+                    title: 'Zkopírujte adresu',
+                    description: 'V nabídce, která se otevřela, vyberte <b>Kopírovat adresu odkazu</b>.'
                         + '<ul class="zk-menu"><li>Otevřít odkaz na nové kartě</li><li>Uložit odkaz jako…</li>'
                         + '<li class="zk-menu-pick">Kopírovat adresu odkazu</li><li>Prozkoumat</li></ul>'
                         + helpHtml,
@@ -77,11 +77,11 @@
                 popover: {
                     title: 'Kde odkaz prověřit?',
                     description: 'Podezřelé odkazy umí zdarma prověřit služba <b>VirusTotal</b>. '
-                        + '<b>Klikni na její adresu:</b>'
+                        + '<b>Klikněte na její adresu:</b>'
                         // odkaz jen vypadá jako skutečná adresa, vede na výukovou kopii
                         + `<a class="zk-site-link" href="${VIRUSTOTAL_URL}">www.virustotal.com</a>`
-                        + '<div class="zk-note">Až budeš příště něco prověřovat doma, '
-                        + 'napíšeš ji do prohlížeče.</div>',
+                        + '<div class="zk-note">Až budete příště něco prověřovat doma, '
+                        + 'napíšete ji do prohlížeče.</div>',
                     progressText: `4 / ${TOTAL_STEPS}`,
                     showButtons: []
                 }
@@ -163,14 +163,14 @@
             copyText(dlBtn.getAttribute('href')).then(() => {
                 if (tour.getActiveIndex() === STEP_RIGHT_CLICK) tour.moveNext();
                 const button = document.querySelector('.driver-popover [data-copy]');
-                if (button) button.outerHTML = '<b>✔ Zkopírováno.</b> Pokračuj tlačítkem níže.';
+                if (button) button.outerHTML = '<b>✔ Zkopírováno.</b> Pokračujte tlačítkem níže.';
             });
             return;
         }
         if (tour.isActive() && event.target.closest('#dlBtn')) {
             event.preventDefault();
             event.stopImmediatePropagation();
-            showWarning('Stop! ✋ Takhle by sis stáhl neznámý program. Zkus to pravým tlačítkem.');
+            showWarning('Stop! ✋ Takhle byste si stáhli neznámý program. Zkuste to pravým tlačítkem.');
         }
     }, true);
 
