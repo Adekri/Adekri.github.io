@@ -134,7 +134,10 @@
             border-radius: var(--rucni);
         }
         .majitel .otaznik { font-family: var(--nadpisy); font-size: clamp(90px, 20vh, 200px); color: var(--linka); line-height: 1; }
+        .majitel .postavy { display: flex; justify-content: center; }
         .majitel .emoji { font-size: clamp(130px, 28vh, 280px); }
+        .majitel .postavy .emoji + .emoji { margin-left: -.15em; }
+        .majitel .postavy:has(.emoji + .emoji) .emoji { font-size: clamp(100px, 20vh, 200px); }
         .majitel.odhaleny { border-style: solid; border-color: transparent; }
 
         .titulek { max-width: 1100px; }

@@ -15,6 +15,11 @@ function velkePismeno(text) {
     return text.charAt(0).toUpperCase() + text.slice(1);
 }
 
+/** Obrázek věci ve scéně; krtčí hromádka se kreslí v CSS (v sadě obrázků není). */
+function obrazekVeci(v) {
+    return v.e === 'hromadka' ? '<span class="hromadka"></span>' : Hra.obr(v.e, v.n);
+}
+
 function uvod() {
     Hra.postup(postupEl, 0, 0);
     hra.innerHTML = `
@@ -49,7 +54,7 @@ function zobrazScenu() {
         <div class="scena objev" style="--nebe:${s.nebe};--nebe2:${s.nebe2};--zeme:${s.zeme};--zeme2:${s.zeme2};--horizont:${s.horizont}">
             ${s.veci.map((v, i) => `
                 <button class="vec" data-i="${i}" aria-label="${v.n}"
-                    style="left:${v.x}%;top:${v.y}%;--s:${v.s}">${Hra.obr(v.e, v.n)}</button>`).join('')}
+                    style="left:${v.x}%;top:${v.y}%;--s:${v.s}">${obrazekVeci(v)}</button>`).join('')}
         </div>
         <p class="titulek" id="titulek"></p>`;
 

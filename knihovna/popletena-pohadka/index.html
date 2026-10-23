@@ -84,6 +84,19 @@
             line-height: 0;
         }
         .vec:hover:not(:disabled) { scale: 1.06; }
+
+        /* Krtčí hromádka */
+        .hromadka {
+            display: block;
+            width: 1em;
+            height: .5em;
+            background: radial-gradient(circle at 35% 30%, #94704b 0 6%, transparent 7%),
+                        radial-gradient(circle at 62% 48%, #94704b 0 5%, transparent 6%),
+                        #7a5634;
+            border: .035em solid var(--inkoust);
+            border-bottom: 0;
+            border-radius: 50% 50% 6% 6% / 100% 100% 0 0;
+        }
         .vec.kyv { animation: kyv .5s; }
         @keyframes kyv {
             0%, 100% { transform: rotate(0); }

@@ -4,7 +4,8 @@
  * ================================================================
  *
  *  Každá scéna je obrázek složený z emoji:
- *    e – emoji,  n – název (přečte se po ťuknutí)
+ *    e – emoji (nebo 'hromadka' = nakreslená krtčí hromádka),
+ *    n – název (ukáže se po kliknutí)
  *    x, y – poloha středu v procentech (0 = vlevo/nahoře, 100 = vpravo/dole)
  *    s – velikost (cca 5 = malá věc, 13 = postava, 16 = dům)
  *    cizi: true – věc, která do pohádky NEPATŘÍ (tu mají děti najít)
@@ -35,21 +36,23 @@ const SCENY = [
         ]
     },
     {
-        nazev: 'O třech prasátkách',
-        nebe: '#dbe7ec', nebe2: '#f1f1e6', zeme: '#e3d6a4', zeme2: '#cbb985', horizont: '50%',
+        nazev: 'Krteček',
+        nebe: '#d8e8ec', nebe2: '#eef3e6', zeme: '#c2d79c', zeme2: '#a3bf80', horizont: '48%',
         veci: [
-            { e: '☁️', n: 'mráček', x: 20, y: 14, s: 10 },
-            { e: '☁️', n: 'mráček', x: 52, y: 10, s: 8 },
-            { e: '🛖', n: 'domeček ze slámy', x: 15, y: 44, s: 13 },
-            { e: '🏠', n: 'domeček ze dřeva', x: 47, y: 42, s: 13 },
-            { e: '🧱', n: 'domeček z cihel', x: 80, y: 46, s: 11 },
-            { e: '🌾', n: 'sláma', x: 30, y: 58, s: 6 },
-            { e: '🐷', n: 'prasátko', x: 17, y: 72, s: 10 },
-            { e: '🐷', n: 'prasátko', x: 41, y: 76, s: 10 },
-            { e: '🐷', n: 'prasátko', x: 63, y: 72, s: 10 },
-            { e: '🐺', n: 'vlk', x: 88, y: 72, s: 12 },
-            { e: '🚀', n: 'raketa', x: 82, y: 15, s: 9, cizi: true },
-            { e: '💻', n: 'počítač', x: 53, y: 90, s: 7, cizi: true }
+            { e: '☀️', n: 'sluníčko', x: 88, y: 13, s: 8 },
+            { e: '🦋', n: 'motýlek', x: 42, y: 18, s: 5 },
+            { e: '🌳', n: 'strom', x: 12, y: 32, s: 14 },
+            { e: '🌳', n: 'strom', x: 70, y: 28, s: 10 },
+            { e: 'hromadka', n: 'krtčí hromádka', x: 36, y: 58, s: 15 },
+            { e: '🐭', n: 'myška', x: 17, y: 70, s: 9 },
+            { e: '🐰', n: 'zajíček', x: 56, y: 67, s: 11 },
+            { e: '🦔', n: 'ježek', x: 80, y: 72, s: 10 },
+            { e: '🍄', n: 'houbička', x: 65, y: 87, s: 6 },
+            { e: '🌼', n: 'kytička', x: 9, y: 89, s: 5 },
+            { e: '🌷', n: 'tulipán', x: 46, y: 87, s: 5 },
+            { e: '🍓', n: 'jahůdka', x: 90, y: 90, s: 5 },
+            { e: '🦈', n: 'žralok', x: 88, y: 45, s: 11, cizi: true },
+            { e: '🐧', n: 'tučňák', x: 28, y: 85, s: 8, cizi: true }
         ]
     },
     {
@@ -71,19 +74,22 @@ const SCENY = [
         ]
     },
     {
-        nazev: 'O kohoutkovi a slepičce',
-        nebe: '#f1e5c4', nebe2: '#f6efdc', zeme: '#cddba6', zeme2: '#b3c78b', horizont: '48%',
+        nazev: 'SpongeBob v kalhotách',
+        nebe: '#bcdde6', nebe2: '#a6cfdb', zeme: '#eadcae', zeme2: '#dccb92', horizont: '72%',
         veci: [
-            { e: '☀️', n: 'sluníčko', x: 12, y: 14, s: 9 },
-            { e: '🏡', n: 'chaloupka', x: 20, y: 40, s: 12 },
-            { e: '🌻', n: 'slunečnice', x: 41, y: 43, s: 8 },
-            { e: '🐄', n: 'kravička', x: 82, y: 56, s: 14 },
-            { e: '🐓', n: 'kohoutek', x: 34, y: 68, s: 13 },
-            { e: '🐔', n: 'slepička', x: 57, y: 66, s: 11 },
-            { e: '🌽', n: 'zrníčko', x: 22, y: 87, s: 6 },
-            { e: '🪣', n: 'vědro na vodu', x: 68, y: 85, s: 7 },
-            { e: '🍕', n: 'pizza', x: 46, y: 89, s: 6, cizi: true },
-            { e: '🛴', n: 'koloběžka', x: 90, y: 84, s: 9, cizi: true }
+            { e: '🫧', n: 'bublinky', x: 9, y: 22, s: 7 },
+            { e: '🫧', n: 'bublinky', x: 53, y: 12, s: 5 },
+            { e: '🪼', n: 'medúza', x: 34, y: 20, s: 8 },
+            { e: '🪼', n: 'medúza', x: 70, y: 28, s: 6 },
+            { e: '🐟', n: 'rybka', x: 88, y: 16, s: 8 },
+            { e: '🍍', n: 'ananasový domek', x: 20, y: 58, s: 18 },
+            { e: '🍔', n: 'krabí burger', x: 64, y: 56, s: 5 },
+            { e: '🧽', n: 'SpongeBob', x: 45, y: 72, s: 11 },
+            { e: '🐌', n: 'šnek Gary', x: 58, y: 87, s: 6 },
+            { e: '🦀', n: 'pan Krabs', x: 76, y: 77, s: 10 },
+            { e: '🐙', n: 'Sépiák', x: 91, y: 60, s: 10 },
+            { e: '🐄', n: 'kráva', x: 82, y: 40, s: 10, cizi: true },
+            { e: '☃️', n: 'sněhulák', x: 31, y: 85, s: 9, cizi: true }
         ]
     },
     {

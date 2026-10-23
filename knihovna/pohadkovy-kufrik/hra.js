@@ -113,7 +113,7 @@ function odhal() {
     const majitel = document.getElementById('majitel');
     majitel.classList.add('odhaleny');
     majitel.innerHTML = k.obr
-        ? `<span class="emoji objev">${Hra.obr(k.obr, k.majitel)}</span>`
+        ? `<span class="postavy objev">${[].concat(k.obr).map(e => `<span class="emoji">${Hra.obr(e, k.majitel)}</span>`).join('')}</span>`
         : `<span class="nadpis objev">${k.majitel}</span>`;
     Hra.zakrouzkuj(majitel);
     Hra.zvuk.spravne();
