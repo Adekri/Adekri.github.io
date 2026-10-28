@@ -46,7 +46,7 @@
      "recipients": "Novák Jan (168149)",
      "subject": "Bazar – koupě kola",
      "date": "2026-10-24T14:30:00",
-     "bodyHtml": "<p>Dobrý den,</p><p>o to kolo, co máte na bazaru na prodej, bych měl zájem nakonec. V blízké době by vám měl přijít mail s převodem peněz. Prosím o jeho vyplnění v co nejrychlejší době. Peníze jinak propadnou společnosti.</p><p>Přeji pěkný den</p><p>Stanislav Dlouhý</p>",
+     "bodyHtml": "<p>Dobrý den,</p><p>o to kolo, co máte na bazaru na prodej, bych měl nakonec zájem. Zaplatím hned – peníze pošlu přes dopravce, takže vám během chvíle přijde e-mail od kurýrní služby s odkazem, kde si částku vyzvednete. Prosím vyřiďte to co nejrychleji, jinak peníze propadnou.</p><p>Přeji pěkný den,<br>Stanislav Dlouhý</p>",
      "type": "phishing"
     }
    ]

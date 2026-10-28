@@ -122,11 +122,11 @@
         }
     };
 
-    // popisky k jednotlivým zprávám
+    // popisky k jednotlivým zprávám (zájemce 1 = Stanislav + DPD = jeden podvod, zájemce 2 = Jaromír = bezpečný)
     const NOTES = {
-        '3': { cls: 'zk-warning', html: 'Spěchá – tvrdí, že přijdou peníze, ať rychle vyplníte formulář, jinak propadnou. <b>Nátlak na rychlost</b> je typický pro podvod.' },
-        '1': { cls: 'zk-warning', html: '5000 Kč si máte vyzvednout přes odkaz. Otevřete odkaz <b>DPD</b> (nová záložka) a podívejte se, jaké údaje po vás chce.' },
-        '2': { cls: 'zk-success', html: 'Poctivá nabídka – dobírka přes Bleskurýr. V jeho <b>formuláři</b> se zadává jen číslo účtu, na které lze peníze zaslat, nikoliv odečíst.' },
+        '3': { cls: 'zk-warning', html: '<b>Zájemce 1 – Stanislav.</b> Tvrdí, že za kolo pošle peníze „přes dopravce“ a vy si je máte vyzvednout přes e-mail, který hned dorazí. Tlačí na rychlost (jinak prý peníze propadnou) – <b>nátlak na čas</b> je typický pro podvod. Tím slíbeným e-mailem je zpráva od <b>„DPD“</b>.' },
+        '1': { cls: 'zk-warning', html: '<b>Druhá část Stanislavova podvodu.</b> Zpráva tvrdí, že částku 5000 Kč už uhradil Stanislav a vy si ji vyzvednete přes odkaz. Otevřete odkaz <b>DPD</b> (nová záložka) a všimněte si, co stránka chce: <b>číslo karty a CVC</b>. Tím ale peníze nepřijmete – naopak byste útočníkovi umožnili platit z vaší karty.' },
+        '2': { cls: 'zk-success', html: '<b>Zájemce 2 – Jaromír.</b> Poctivá nabídka: zaplatí na <b>dobírku</b> přes Bleskurýr. V jeho <b>formuláři</b> se zadává jen <b>číslo účtu</b>, na které peníze přijdou – nic víc není potřeba. Tudy je to bezpečné.' },
         '4': { cls: 'zk-note', html: 'Běžná zpráva, s prodejem kola nesouvisí.' },
         '5': { cls: 'zk-note', html: 'Reklama, s prodejem nesouvisí.' },
         '6': { cls: 'zk-note', html: 'Běžné oznámení služby.' }
@@ -145,8 +145,8 @@
 
         waitFor('#messageList', () => {
             mission.show('Prodáváte kolo',
-                'Na inzerát na prodej kola odpověděli dva zájemci – <b>jeden z nich je podvodník</b>. '
-                + 'Otevřete si zprávy a rozhodněte, jak si nechat bezpečně zaplatit.');
+                'Na inzerát na prodej kola odpověděli <b>dva zájemci</b> a každý navrhuje jiný způsob, jak dostanete zaplaceno. Jeden z nich je <b>podvodník</b>.'
+                + '<div class="zk-note">Projděte si obě nabídky, porovnejte je a vyberte tu <b>bezpečnou</b> cestu, jak si necháte zaplatit.</div>');
 
             // Panel umístíme vlevo přes seznam složek – tam nepřekáží čtení zprávy ani seznamu e-mailů.
             Object.assign(mission.el.style, {

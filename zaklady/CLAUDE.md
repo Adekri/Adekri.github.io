@@ -47,10 +47,14 @@ bezpečné placení…). Každý úkol je samostatná složka se statickými str
 
 - **outlook/** – cvičná schránka. Už NENÍ o označování e-mailů (ta funkce byla
   odstraněna); slouží jako vstup do úkolu o bezpečném placení (bazarový podvod).
-  Z e-mailů vedou dvě cesty (odkazy se otevírají v nové záložce): `bleskuryr/`
-  = bezpečná (jen číslo účtu, tady je `FLAG(NaKartuNelzePoslatPenize)`) a `DPD/`
-  = podvodná (chce kartu; jen upozornění, FLAG tu NENÍ). Schránka je volné
-  prohlížení s panelem v rohu a popisky po otevření zprávy.
+  Rámec: prodáváte kolo a ozvali se **dva zájemci** – student je má porovnat.
+  Zájemce 1 (**Stanislav** + návazný e-mail od **„DPD"** = jeden podvod) tvrdí,
+  že zaplatil „přes dopravce", a odkaz na „vyzvednutí" vede na `DPD/` = podvodná
+  stránka chtějící kartu (jen upozornění, FLAG tu NENÍ). Zájemce 2 (**Jaromír**)
+  platí na dobírku přes `bleskuryr/` = bezpečná cesta (jen číslo účtu, tady je
+  `FLAG(NaKartuNelzePoslatPenize)`). Odkazy se otevírají v nové záložce. Schránka
+  je volné prohlížení s panelem v rohu a popisky po otevření zprávy (popisky
+  zájemce i podvod explicitně pojmenovávají, aby bylo vazbu Stanislav↔DPD vidět).
 - **titaskin.com/** – podvodný e-shop; úkol na placení se chystá jako druhý
   průvodce přes parametr `?ukol=…`.
 - **telefon/** – simulátor telefonu, dva samostatné úkoly na jedné stránce,
