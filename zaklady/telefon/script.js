@@ -10,6 +10,12 @@ const sendBtn = inputBar.querySelector('button');
 // sledování, zda už uživatel odpověděl v chatu s Anetou
 let anetaReplied = false;
 
+// Úkoly jsou oddělené. Druhý úkol (2FA – zprávy od Googlu a Anety) se zpřístupní
+// jen při přímém vstupu s parametrem ?ukol=2 (odkaz je v zadání druhého úkolu).
+if (new URLSearchParams(location.search).get('ukol') === '2') {
+  document.querySelectorAll('.hidden-until-flag').forEach(el => el.classList.remove('hidden-until-flag'));
+}
+
 
 //když tady tohle nebylo tak se muselo pokaždé vytvářet znovu dolní lišta pod chatem -- takhle je tam stále
 function setChatPosition(chat) {
@@ -79,18 +85,16 @@ sendBtn.addEventListener('click', ()=>{
   input.value = '';
   const msgs = chat.querySelector('.messages-container');
   msgs.scrollTop = msgs.scrollHeight;
-  // kontrola zprávy odeslané v chatu s Anetou 
+  // kontrola zprávy odeslané v chatu s Anetou
   if (chatId === 'aneta') {
-    if (!anetaReplied) {
-      if (text.includes('920183')) {
-        anetaReplied = true;
-        alert('Pozor! Odesláním tohoto kódu umožníte Anetě přístup k vašemu Google účtu. FLAG(DvoufazoveOvereniNeniVse).');
-      } else {
-        alert('Výborně! Neposlali jste Anetě kód a tím jste odolali pokusu o obejití dvoufázového ověření. FLAG(DvoufazoveOvereniNeniVse).');
-      }
-
-    }else {
-        alert('Pozor! Odesláním tohoto kódu umožníte Anetě přístup k vašemu Google účtu. FLAG(DvoufazoveOvereniNeniVse).');
+    const sentCode = text.includes('920183');
+    anetaReplied = true;
+    // FLAG ukáže průvodce; když je vypnutý (?tour=0), zůstane záložní alert
+    const handled = !document.dispatchEvent(new CustomEvent('telefon:aneta', { detail: { sentCode }, cancelable: true }));
+    if (!handled) {
+      alert(sentCode
+        ? 'Pozor! Odesláním tohoto kódu umožníte Anetě přístup k vašemu Google účtu. FLAG(DvoufazoveOvereniNeniVse).'
+        : 'Výborně! Neposlali jste Anetě kód a tím jste odolali pokusu o obejití dvoufázového ověření. FLAG(DvoufazoveOvereniNeniVse).');
     }
   }
 
@@ -260,15 +264,14 @@ const bankBtn = document.getElementById('bankovniIdentitaBtn');
         }
 
 
-        if (user === '1092740' && pass === 'VelmiBezpecneHeslo123!') {
-          status.textContent = 'Pozor! Tímto jste útočníkovi poskytli přihlašovací údaje k Vašemu bankovnictví! FLAG(VladniWebyMajiJednotnouDomenu)';
-          status.style.color = 'red';
-          document.querySelectorAll('.hidden-until-flag').forEach(el => {el.classList.remove('hidden-until-flag');});
-        } else {
-          status.textContent = 'Výborně! Nezadali jste Vaše skutečné přihlašovací údaje a odolali jste útoku. FLAG(VladniWebyMajiJednotnouDomenu)';
-          status.style.color = 'green';
-          document.querySelectorAll('.hidden-until-flag').forEach(el => {el.classList.remove('hidden-until-flag');});
-        }
+        const correct = (user === '1092740' && pass === 'VelmiBezpecneHeslo123!');
+        status.textContent = correct
+          ? 'Pozor! Tímto jste útočníkovi poskytli přihlašovací údaje k Vašemu bankovnictví!'
+          : 'Výborně! Nezadali jste Vaše skutečné přihlašovací údaje a odolali jste útoku.';
+        status.style.color = correct ? 'red' : 'green';
+        // FLAG ukáže průvodce; když je vypnutý (?tour=0), zůstane FLAG ve stavovém textu
+        const handled = !document.dispatchEvent(new CustomEvent('telefon:login', { detail: { correct }, cancelable: true }));
+        if (!handled) { status.textContent += ' FLAG(VladniWebyMajiJednotnouDomenu)'; }
     });
       break;
 

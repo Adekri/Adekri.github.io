@@ -53,3 +53,10 @@ bezpečné placení…). Každý úkol je samostatná složka se statickými str
   prohlížení s panelem v rohu a popisky po otevření zprávy.
 - **titaskin.com/** – podvodný e-shop; úkol na placení se chystá jako druhý
   průvodce přes parametr `?ukol=…`.
+- **telefon/** – simulátor telefonu, dva samostatné úkoly na jedné stránce,
+  přepínané parametrem `?ukol=`: výchozí / `1` = smishing (podvodná SMS „GOV",
+  přes falešnou bankovní identitu, `FLAG(VladniWebyMajiJednotnouDomenu)`),
+  `2` = dvoufaktor (Aneta se snaží vylákat ověřovací kód,
+  `FLAG(DvoufazoveOvereniNeniVse)`). Úkoly jsou nezávislé (řešitelné i s odstupem);
+  úkol 1 nezpřístupňuje zprávy úkolu 2 – ty se ukážou jen při přímém vstupu
+  `index.html?ukol=2` (tento odkaz patří do zadání druhého úkolu).
