@@ -20,20 +20,12 @@
     // Odkaz na druhý úkol (…/index.html?ukol=2) patří do zadání druhého úkolu.
     const ukol = new URLSearchParams(location.search).get('ukol') === '2' ? 2 : 1;
 
-    // přihlašovací údaje k (cvičné) MONETA Bank – musí sedět s kontrolou ve script.js
-    const BANK_ID = '1092740';
-    const BANK_PASS = 'VelmiBezpecneHeslo123!';
-
     /* ---------- kopírování kliknutím ---------- */
 
     function esc(text) {
         const div = document.createElement('div');
         div.textContent = text;
         return div.innerHTML;
-    }
-
-    function copyable(text) {
-        return `<span class="zk-copy" data-copy-text="${esc(text)}" title="Kliknutím zkopírujete"><b>${esc(text)}</b></span>`;
     }
 
     function copyText(text) {
@@ -52,15 +44,6 @@
         }
         return Promise.resolve(legacy());
     }
-
-    document.addEventListener('click', (event) => {
-        const el = event.target.closest('[data-copy-text]');
-        if (!el) return;
-        copyText(el.dataset.copyText).then(() => {
-            el.classList.add('copied');
-            setTimeout(() => el.classList.remove('copied'), 1400);
-        });
-    });
 
     /* ---------- panel s instrukcí (vedle telefonu) ---------- */
 
@@ -100,7 +83,11 @@
         activePopup.drive();
     }
 
+    // poslední zobrazená vlajka, aby ji šlo znovu otevřít přes chip
+    let reopenFlag = null;
+
     function flagPopup(title, flag, lessonHtml, buttonText, onDone) {
+        reopenFlag = () => flagPopup(title, flag, lessonHtml, buttonText, onDone);
         popup({
             popoverClass: 'zk-tour zk-wide',
             title,
@@ -109,7 +96,7 @@
                 + '<button type="button" class="zk-btn" data-copy-flag>Kopírovat</button></div>'
                 + lessonHtml,
             nextBtnText: buttonText, doneBtnText: buttonText, showButtons: ['next'],
-            onNextClick: () => { driveStop(); if (onDone) onDone(); },
+            onNextClick: () => { driveStop(); showFlagChip(); if (onDone) onDone(); },
             onPopoverRender: (pop) => {
                 const btn = pop.description.querySelector('[data-copy-flag]');
                 if (btn) btn.addEventListener('click', () => {
@@ -117,6 +104,17 @@
                 });
             }
         });
+    }
+
+    // Po zavření okna s vlajkou zůstane vpravo dole tlačítko, kterým ji lze znovu zobrazit.
+    function showFlagChip() {
+        if (document.querySelector('.zk-chip')) return;
+        const chip = document.createElement('button');
+        chip.type = 'button';
+        chip.className = 'zk-chip';
+        chip.textContent = 'Zobrazit FLAG';
+        chip.addEventListener('click', () => { if (reopenFlag) reopenFlag(); });
+        document.body.appendChild(chip);
     }
 
     function driveStop() {
@@ -150,18 +148,18 @@
                 'Vyberte svou banku – <b>Moneta</b>.');
         } else if (n === 4) {
             panel.show('Přihlášení do bankovnictví',
-                'Podívejte se na adresu nahoře: <b>www.moenta-login.online.net</b>. Skutečná doména monety je ale <b>moneta.cz</b> – tohle je překlep a cizí doména, tedy podvod.'
-                + '<div class="zk-note">Chcete-li vidět následek, přihlaste se těmito cvičnými údaji (<b>ne svými skutečnými!</b>) a klikněte na <b>Přihlásit</b>:<br>'
-                + 'ID: ' + copyable(BANK_ID) + '<br>'
-                + 'Heslo: ' + copyable(BANK_PASS) + '</div>');
+                'Stránka po vás chce přihlašovací údaje do bankovnictví. Podívejte se ale na adresu nahoře: <b>www.moenta-login.online.net</b>. Skutečná doména Monety je <b>moneta.cz</b> – tohle je překlep a cizí doména.'
+                + '<div class="zk-note">Co uděláte?</div>'
+                + '<div class="zk-actions">'
+                + '<button type="button" class="zk-btn zk-btn-light" data-choice="login">Přihlásím se zde</button>'
+                + '<button type="button" class="zk-btn zk-btn-light" data-choice="report">Nepřihlásím se, podvod nahlásím</button>'
+                + '</div>');
         } else if (n === 5) {
             panel.show('Dvoufaktorové ověření',
-                'Útočník už zná vaše heslo. Stačí mu to? K přihlášení je potřeba ještě <b>jednorázový kód</b> z telefonu – to je dvoufaktorové ověření.'
-                + '<div class="zk-note">Přišly dvě zprávy: ověřovací kód z <b>Googlu</b> (i když jste se nikam nehlásili) a zpráva z neznámého čísla – od <b>Anety</b>.<br><b>Otevřete zprávu od Anety.</b></div>');
+                'Přišly dvě zprávy: autorizační kód z <b>Monety</b> (sami jste se nikam nehlásili – vyvolal ho útočník vaším heslem) a zpráva z neznámého čísla – od Anety. <br><b>Otevřete zprávu od Anety.</b>');
         } else if (n === 6) {
             panel.show('Zpráva od Anety',
-                'Aneta tvrdí, že omylem zadala vaše číslo, a prosí o kód, který vám přišel. Může mluvit pravdu? <b>Ne</b> – ověřovací kód chodí jen tomu, kdo se zrovna přihlašuje vaším jménem.'
-                + '<div class="zk-note">Odpovězte Anetě – rozmyslete si, co jí napíšete.</div>');
+                'Aneta tvrdí, že omylem zadala vaše číslo, a prosí o kód, který vám přišel. Zamyslete se, jestli může mluvit pravdu... a podle toho jí přímo do telefonu odpovězte. Důležité je, jestli vaše odpověď bude obsahovat autorizační kód nebo ne.');
         }
     }
 
@@ -183,16 +181,41 @@
         if (event.target.closest('#bankovniIdentitaBtn') && step === 2) setTimeout(() => go(3), 80);
     });
 
-    document.addEventListener('telefon:login', (event) => {
-        event.preventDefault();
+    // Bezpečná volba – student podvod rozpoznal a nepřihlásil se.
+    function loginSafe() {
         panel.hide();
         flagPopup('Úkol splněn', 'FLAG(VladniWebyMajiJednotnouDomenu)',
             '<b>Co si zapamatovat:</b><ul class="zk-list">'
             + '<li>Státní weby mají <b>jednotnou doménu gov.cz</b> – Portál občana je na <b>obcan.gov.cz</b>, ne na „obcan.cz-gov.net“.</li>'
             + '<li>Tlak a strašení („problém s daňovým výkazem“) mají zabránit tomu, abyste přemýšleli.</li>'
-            + '<li>Vždy zkontrolujte adresu v prohlížeči, než zadáte přihlašovací údaje.</li>'
+            + '<li>Před zadáním přihlašovacích údajů vždy zkontrolujte adresu v prohlížeči. Podezřelou zprávu neotvírejte a číslo můžete nahlásit (operátorovi, policii).</li>'
             + '</ul>',
             'Zavřít');
+    }
+
+    // Riziková volba (tlačítko „Přihlásím se" nebo skutečné odeslání formuláře) –
+    // ukáže následek a nechá studenta zvolit bezpečnou cestu. FLAG se neudělí.
+    function loginRisk() {
+        const body = panel.el && !panel.el.hidden && panel.el.querySelector('.zk-mission-body');
+        if (!body || body.querySelector('[data-risk]')) return;
+        const btn = body.querySelector('[data-choice="login"]');
+        if (btn) btn.disabled = true;
+        body.insertAdjacentHTML('beforeend',
+            '<div class="zk-warning" data-risk style="margin-top:12px">Tím byste útočníkovi předali přihlašovací údaje do bankovnictví a ten by se pak vaším jménem přihlásil. Nic sem nezadávejte – stránka je podvod.</div>');
+    }
+
+    // rozhodnutí v panelu (krok 4)
+    document.addEventListener('click', (event) => {
+        const choice = event.target.closest('[data-choice]');
+        if (!choice || step !== 4) return;
+        if (choice.dataset.choice === 'report') loginSafe();
+        else if (choice.dataset.choice === 'login') loginRisk();
+    });
+
+    // kdyby student přesto vyplnil a odeslal formulář, bereme to jako rizikovou volbu
+    document.addEventListener('telefon:login', (event) => {
+        event.preventDefault();
+        if (step === 4) loginRisk();
     });
 
     document.addEventListener('telefon:aneta', (event) => {
@@ -207,7 +230,7 @@
             + '<b>Co si zapamatovat:</b><ul class="zk-list">'
             + '<li>Jednorázový ověřovací kód <b>nikdy nikomu neposílejte</b>.</li>'
             + '<li>Dvoufaktor chrání, jen dokud kód zůstane u vás. Jakmile ho pošlete, útočník se s vaším heslem přihlásí.</li>'
-            + '<li>Banka ani Google po vás kód přes SMS nebo telefon nikdy nechtějí.</li>'
+            + '<li>Banka vás o autorizační kód nikdy nepožádá – ani přes SMS, ani po telefonu.</li>'
             + '</ul>',
             'Zavřít');
     });

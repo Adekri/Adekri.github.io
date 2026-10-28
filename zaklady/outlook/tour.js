@@ -197,7 +197,8 @@
     }
 
     function summary() {
-        build([
+        let t;
+        t = build([
             { popover: {
                 popoverClass: 'zk-tour zk-wide',
                 title: 'Výborně, hotovo!',
@@ -209,6 +210,7 @@
                     + '<li>Číslo karty, platnost a CVC slouží k <b>placení</b>, ne k přijímání. Kdo je po vás chce „kvůli připsání peněz“, je podvodník.</li>'
                     + '</ul>',
                 nextBtnText: 'Zavřít', doneBtnText: 'Zavřít', showButtons: ['next'],
+                onNextClick: function () { if (t) t.destroy(); showFlagChip(); },
                 onPopoverRender: function (popover) {
                     const btn = popover.description.querySelector('[data-copy-flag]');
                     if (btn) btn.addEventListener('click', function () {
@@ -216,7 +218,19 @@
                     });
                 }
             } }
-        ]).drive();
+        ]);
+        t.drive();
+    }
+
+    // Po zavření okna s vlajkou zůstane vpravo dole tlačítko, kterým ji lze znovu zobrazit.
+    function showFlagChip() {
+        if (document.querySelector('.zk-chip')) return;
+        const chip = document.createElement('button');
+        chip.type = 'button';
+        chip.className = 'zk-chip';
+        chip.textContent = 'Zobrazit FLAG';
+        chip.addEventListener('click', summary);
+        document.body.appendChild(chip);
     }
 
     /* ---------- start ---------- */
