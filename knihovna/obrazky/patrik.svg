@@ -1,0 +1,15 @@
+<svg id="emoji" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
+  <!-- Patrik (hvězdice ze SpongeBoba) — nakresleno ve stylu OpenMoji -->
+  <path fill="#F4A6B8" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M36,5 L46,24.2 L66.4,28.1 L52.2,43.3 L54.8,63.9 L36,55 L17.2,63.9 L19.8,43.3 L5.6,28.1 L26,24.2 Z"/>
+  <path fill="#F4A6B8" d="M36,5 L46,24.2 L66.4,28.1 L52.2,43.3 L54.8,63.9 L36,55 L17.2,63.9 L19.8,43.3 L5.6,28.1 L26,24.2 Z"/>
+  <!-- kraťasy -->
+  <path fill="#5C9E31" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M20.6,41 L51.4,41 L53.6,53 L41,53 L36,55 L31,53 L18.4,53 Z"/>
+  <g fill="#8967AA"><circle cx="25" cy="46" r="1.5"/><circle cx="33" cy="49" r="1.5"/><circle cx="41" cy="45.5" r="1.5"/><circle cx="48" cy="49" r="1.5"/></g>
+  <!-- obličej -->
+  <ellipse cx="32" cy="24" rx="3.6" ry="4.6" fill="#FFFFFF" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <ellipse cx="40" cy="24" rx="3.6" ry="4.6" fill="#FFFFFF" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="32.8" cy="25" r="1.4" fill="#000"/>
+  <circle cx="39.2" cy="25" r="1.4" fill="#000"/>
+  <path fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M29.5,18.5 L32.5,17 M42.5,18.5 L39.5,17"/>
+  <path fill="#D22F27" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M30,32 C32,37 40,37 42,32 Z"/>
+</svg>

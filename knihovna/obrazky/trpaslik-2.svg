@@ -1,0 +1,15 @@
+<svg id="emoji" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
+  <!-- Trpaslík číslo 2 — nakresleno ve stylu OpenMoji -->
+  <g transform="translate(20,2)">
+    <path fill="#8967AA" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M0,68 C0,52 6,42 12,42 L20,42 C26,42 32,52 32,68"/>
+    <path fill="#F1B31C" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M16,0 C19,7 25,14 27,23 L5,23 C7,14 13,7 16,0 Z"/>
+    <path fill="#FADCBC" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M16,21 C21,21 24.5,25 24.5,30 C24.5,35 21,38 16,38 C11,38 7.5,35 7.5,30 C7.5,25 11,21 16,21 Z"/>
+    <path fill="#F1B31C" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M4,22 C9,20 23,20 28,22 C28.5,24 28,25.5 27,26 C21,24 11,24 5,26 C4,25.5 3.5,24 4,22 Z"/>
+    <path fill="#FFFFFF" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M7,31 C7,39 11,44 16,46 C21,44 25,39 25,31 C22,35 19,36 16,35 C13,36 10,35 7,31 Z"/>
+    <circle cx="16" cy="31.5" r="2.8" fill="#F4A6A0" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="12.3" cy="28.3" r="1.2" fill="#000"/>
+    <circle cx="19.7" cy="28.3" r="1.2" fill="#000"/>
+    <circle cx="16" cy="57" r="9.5" fill="#FFFFFF" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="16" y="62.6" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="bold" font-size="16" fill="#000">2</text>
+  </g>
+</svg>

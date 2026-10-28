@@ -1,0 +1,46 @@
+OBRÁZKY POSTAV Z POHÁDEK
+========================
+
+Sem patří skutečné obrázky postav. Hra je ukáže místo kreslených ikonek.
+Když obrázek chybí, hra ukáže ikonku, takže je můžete přidávat postupně.
+
+Soubor pojmenujte přesně podle tabulky. Přípona může být .png, .jpg, .jpeg nebo .webp.
+
+  Soubor                  Kde se ukáže
+  ----------------------  -------------------------------------------------
+  popelka                 kufr
+  karkulka                kufr
+  jenicek-a-marenka       kufr
+  krtek                   kufr + scéna „Krteček“ (stojí vedle hromádky)
+  krtek-zajic             scéna „Krteček“ (zajíček z večerníčku)
+  krtek-jezek             scéna „Krteček“ (ježek z večerníčku)
+  krtek-mys               scéna „Krteček“ (myška z večerníčku)
+  krtek-zabka             scéna „Krteček“ (žabka z večerníčku)
+  spongebob               kufr + scéna „SpongeBob v kalhotách“
+  snehurka                kufr
+  peppa                   kufr
+  elsa                    kufr
+  mach-a-sebestova        kufr
+  bob-a-bobek             kufr
+  pat-a-mat               kufr
+  pejsek-a-kocicka        kufr
+  tlapkova-patrola        kufr
+  shrek                   kufr
+
+Příklad: knihovna/obrazky-postav/bob-a-bobek.jpg
+
+Tipy:
+- V kufru se obrázek ukáže jako fotka v rámečku, takže pozadí nevadí.
+- Do scén v Popletené pohádce se hodí jen PNG s průhledným pozadím
+  (pozadí jde odstranit např. na remove.bg). Které postavy mají obrázek
+  i ve scéně, se nastavuje v popletena-pohadka/sceny.js (položka foto).
+- Stačí šířka kolem 600 px, větší obrázky jen zpomalí načítání.
+- Vlastní obrázek můžete dát i věci v kufru, viz návod v souboru
+  pohadkovy-kufrik/kufry.js.
+
+Autorská práva:
+Obrázky postav (Krteček, Bob a Bobek, SpongeBob…) jsou chráněné autorským
+právem. Pro výuku ve třídě je můžete použít, ale tahle složka je součástí
+veřejného webu na GitHubu, takže by je mohl vidět kdokoli.
+Pokud je nechcete zveřejnit, nechte je jen v počítači, ze kterého
+promítáte, a do gitu je nenahrávejte.

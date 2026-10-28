@@ -15,9 +15,18 @@ function velkePismeno(text) {
     return text.charAt(0).toUpperCase() + text.slice(1);
 }
 
-/** Obrázek věci ve scéně; krtčí hromádka se kreslí v CSS (v sadě obrázků není). */
+/**
+ * Obrázek věci ve scéně: vlastní obrázek (pokud existuje), jinak kreslená ikonka.
+ * Krtčí hromádka se kreslí v CSS (v sadě obrázků není).
+ */
 function obrazekVeci(v) {
-    return v.e === 'hromadka' ? '<span class="hromadka"></span>' : Hra.obr(v.e, v.n);
+    const kresba = v.e === 'hromadka' ? '<span class="hromadka"></span>' : (v.e ? Hra.obr(v.e, v.n) : '');
+    return v.foto ? Hra.foto(v.foto, kresba, v.n) : kresba;
+}
+
+/** Věc stojí spodním okrajem na [x, y]; čím je níž, tím víc vpředu. */
+function polohaVeci(v) {
+    return `left:${v.x}%;top:${v.y}%;--s:${v.s};z-index:${v.z ?? Math.round(v.y)}`;
 }
 
 function uvod() {
@@ -52,9 +61,10 @@ function zobrazScenu() {
             <div class="nalezene">${'<span class="misto">?</span>'.repeat(cizich)}</div>
         </div>
         <div class="scena objev" style="--nebe:${s.nebe};--nebe2:${s.nebe2};--zeme:${s.zeme};--zeme2:${s.zeme2};--horizont:${s.horizont}">
+            ${(s.kulisy || []).map(v => `
+                <span class="vec kulisa" aria-hidden="true" style="${polohaVeci(v)}">${obrazekVeci(v)}</span>`).join('')}
             ${s.veci.map((v, i) => `
-                <button class="vec" data-i="${i}" aria-label="${v.n}"
-                    style="left:${v.x}%;top:${v.y}%;--s:${v.s}">${obrazekVeci(v)}</button>`).join('')}
+                <button class="vec" data-i="${i}" aria-label="${v.n}" style="${polohaVeci(v)}">${obrazekVeci(v)}</button>`).join('')}
         </div>
         <p class="titulek" id="titulek"></p>`;
 
@@ -63,7 +73,7 @@ function zobrazScenu() {
     const titulek = document.getElementById('titulek');
     const mista = hra.querySelectorAll('.nalezene .misto');
 
-    hra.querySelectorAll('.vec').forEach(tl => {
+    hra.querySelectorAll('button.vec').forEach(tl => {
         tl.addEventListener('click', () => {
             const v = s.veci[tl.dataset.i];
 
@@ -78,21 +88,24 @@ function zobrazScenu() {
             // Nalezená věc se zakroužkuje a objeví se i v přihrádce nahoře
             tl.disabled = true;
             Hra.zakrouzkuj(tl, true);
-            const misto = mista[nalezeno++];
-            misto.innerHTML = Hra.obr(v.e, v.n);
-            misto.classList.add('plne');
-            Hra.zvuk.spravne();
-            titulek.textContent = `${velkePismeno(v.n)} do pohádky nepatří!`;
-            Hra.mluv(titulek.textContent);
-
-            if (nalezeno === cizich) hotovaScena();
+            nalezeno_(v.e, v.n, v.zprava || `${velkePismeno(v.n)} do pohádky nepatří!`);
         });
     });
+
+    function nalezeno_(emoji, nazev, zprava) {
+        const misto = mista[nalezeno++];
+        misto.innerHTML = Hra.obr(emoji, nazev);
+        misto.classList.add('plne');
+        Hra.zvuk.spravne();
+        titulek.textContent = zprava;
+        Hra.mluv(zprava);
+        if (nalezeno === cizich) hotovaScena();
+    }
 }
 
 function hotovaScena() {
     scena++;
-    hra.querySelectorAll('.vec').forEach(tl => { tl.disabled = true; });
+    hra.querySelectorAll('button.vec').forEach(tl => { tl.disabled = true; });
 
     const posledni = scena >= SCENY.length;
     const ukol = document.getElementById('ukol');

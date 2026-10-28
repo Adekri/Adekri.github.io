@@ -24,8 +24,15 @@ const Hra = (() => {
             .join('-');
     }
 
-    /** Vrátí <img> s kresleným obrázkem pro dané emoji. */
+    /**
+     * Vrátí <img> s kresleným obrázkem pro dané emoji.
+     * Místo emoji jde zadat i jméno vlastní kresby ve složce obrazky/
+     * (např. 'kape' → obrazky/kape.svg).
+     */
     function obr(emoji, popis = '') {
+        if (/^[a-z0-9-]+$/.test(emoji)) {
+            return `<img class="obr" src="${KOREN}obrazky/${emoji}.svg" alt="${popis}" draggable="false">`;
+        }
         return `<img class="obr" src="${KOREN}obrazky/${kod(emoji)}.svg" alt="${popis}" draggable="false" data-emoji="${emoji}">`;
     }
 
@@ -43,6 +50,44 @@ const Hra = (() => {
             nahrada.textContent = img.dataset.emoji;
             img.replaceWith(nahrada);
         }
+    }, true);
+
+
+    /* ----------------------------------------------------------------
+       Vlastní obrázky (skutečné obrázky z pohádek) ve složce obrazky-postav/
+       Hra zkouší přípony .png, .jpg, .jpeg, .webp. Když soubor chybí,
+       ukáže se náhrada (např. kreslená ikonka) — nic se nerozbije.
+       ---------------------------------------------------------------- */
+
+    const PRIPONY = ['png', 'jpg', 'jpeg', 'webp'];
+    const nahradyFot = new Map();
+    let pocitadloFot = 0;
+
+    /**
+     * Vrátí <img> s vlastním obrázkem.
+     * @param nazev   jméno souboru bez přípony (např. 'bob-a-bobek')
+     * @param nahrada HTML, které se ukáže, když obrázek chybí ('' = nic)
+     */
+    function foto(nazev, nahrada = '', popis = '', trida = '') {
+        const id = String(++pocitadloFot);
+        nahradyFot.set(id, nahrada);
+        return `<img class="foto ${trida}" src="${KOREN}obrazky-postav/${nazev}.${PRIPONY[0]}" alt="${popis}"
+                    draggable="false" data-foto="${nazev}" data-pripona="0" data-nahrada="${id}">`;
+    }
+
+    document.addEventListener('error', e => {
+        const img = e.target;
+        if (!(img instanceof HTMLImageElement) || !img.dataset.foto) return;
+        const dalsi = Number(img.dataset.pripona) + 1;
+        if (dalsi < PRIPONY.length) {
+            img.dataset.pripona = dalsi;
+            img.src = `${KOREN}obrazky-postav/${img.dataset.foto}.${PRIPONY[dalsi]}`;
+            return;
+        }
+        const rodic = img.parentElement;
+        img.outerHTML = nahradyFot.get(img.dataset.nahrada) || '';
+        // Prázdné tlačítko ve scéně (obrázek bez náhrady) schováme úplně
+        if (rodic && rodic.matches('.vec') && !rodic.children.length) rodic.remove();
     }, true);
 
 
@@ -177,7 +222,7 @@ const Hra = (() => {
         const d = cesty.map(c => c.replace(/(-?[\d.]+) (-?[\d.]+)/g,
             (_, x, y) => `${(x * sx).toFixed(1)} ${(y * sy).toFixed(1)}`));
         el.insertAdjacentHTML('beforeend', `
-            <svg class="znacka ${typ}" viewBox="0 0 ${sirka} ${vyska}" aria-hidden="true"
+            <svg class="znacka ${typ}" viewBox="0 0 ${sirka} ${vyska}" preserveAspectRatio="none" aria-hidden="true"
                 style="left:${-presah.x * 100}%;top:${-presah.y * 100}%;width:${(1 + 2 * presah.x) * 100}%;height:${(1 + 2 * presah.y) * 100}%">
                 ${d.map(c => `<path pathLength="1" d="${c}"/>`).join('')}
             </svg>`);
@@ -265,5 +310,5 @@ const Hra = (() => {
         mluv(`${nadpis} ${text}`);
     }
 
-    return { obr, mluv, zastav, zvuk, zakrouzkuj, preskrtni, dalsiKlavesou, postup, zamichej, vyber, efekt, konecHry };
+    return { obr, foto, mluv, zastav, zvuk, zakrouzkuj, preskrtni, dalsiKlavesou, postup, zamichej, vyber, efekt, konecHry };
 })();

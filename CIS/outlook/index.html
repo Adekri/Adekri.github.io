@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="cs">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0078d4">
+    <title>Pošta - Klon Outlook</title>
+    <link rel="icon" href="icons/favicon.ico">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="app">
+
+        <!-- ================= HLAVIČKA ================= -->
+        <header class="header">
+            <div class="header-left">
+                <button class="header-btn app-launcher" aria-label="Spouštěč aplikací">
+                    <svg viewBox="0 0 2048 2048" aria-hidden="true">
+                        <path fill="currentColor" d="M128 128h384v384H128V128zm0 768h384v384H128V896zm0 768h384v384H128v-384zm768-1536h384v384H896V128zm0 768h384v384H896V896zm0 768h384v384H896v-384zm768-1536h384v384h-384V128zm0 768h384v384h-384V896zm0 768h384v384h-384v-384z" />
+                    </svg>
+                </button>
+                <a class="tenant-logo" title="VUT" aria-label="VUT">
+                    <img src="icons/tenant-logo.png" alt="VUT">
+                </a>
+                <!-- Kliknutí na "Outlook" vyhodnotí označené e-maily (script.js) -->
+                <a href="#" class="brand-link" id="outlookEvalBtn">Outlook</a>
+            </div>
+
+            <div class="header-center">
+                <div class="search-box">
+                    <i class="icon icon-16 icon-search" aria-hidden="true"></i>
+                    <input type="text" class="search-input" placeholder="Hledat">
+                </div>
+            </div>
+
+            <div class="header-right">
+                <button class="header-btn" aria-label="Chat" title="Chat">
+                    <i class="icon icon-chat" aria-hidden="true"></i>
+                </button>
+                <button class="header-btn" aria-label="OneNote" title="Informační kanál OneNotu">
+                    <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path d="M15 2a2 2 0 012 2v12a2 2 0 01-2 2H7a3 3 0 01-2.83-2H4a2 2 0 01-2-2V9c0-1.1.9-2 2-2V5a3 3 0 013-3h8zM4.25 14H5.3v-2.7a28.54 28.54 0 00-.01-.8h.01l.1.17.14.24L7.61 14h1.14V9H7.7v2.7a21.64 21.64 0 00.01.7H7.7a2.98 2.98 0 00-.24-.41L5.46 9H4.25v5zM16 7.73c-.3.17-.64.27-1 .27h-1a1 1 0 00-1 1v2c0 .36-.1.7-.27 1H15a1 1 0 001-1V7.73zM5.27 16c.35.6.99 1 1.73 1h8a1 1 0 001-1v-3.27c-.3.17-.64.27-1 .27h-4v1a2 2 0 01-2 2H5.27zM9 7a2 2 0 012 2v3a1 1 0 001-1V9c0-1.1.9-2 2-2h1a1 1 0 001-1V4a1 1 0 00-1-1H7a2 2 0 00-2 2v2h4z" />
+                    </svg>
+                </button>
+                <button class="header-btn" aria-label="Můj den" title="Můj den">
+                    <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path d="M14.5 3A2.5 2.5 0 0117 5.5v3.09a2 2 0 00-1 .23V7H4v7.5c0 .83.67 1.5 1.5 1.5h1.48a2 2 0 00.41.6l.4.4H5.5A2.5 2.5 0 013 14.5v-9A2.5 2.5 0 015.5 3h9zm0 1h-9C4.67 4 4 4.67 4 5.5V6h12v-.5c0-.83-.67-1.5-1.5-1.5zM8.1 15.9a1 1 0 010-1.42l1.06-1.06a1 1 0 011.41 0l1.07 1.06 4.6-4.6a1 1 0 011.4 0l1.07 1.06a1 1 0 010 1.42l-6.37 6.36a1 1 0 01-1.41 0L8.1 15.89zm2.47 1.05l1.07 1.06L18 11.65l-1.06-1.06-6.37 6.36zm-1.76-1.77l1.06 1.06 1.06-1.06-1.06-1.06-1.06 1.06z" />
+                    </svg>
+                </button>
+                <button class="header-btn" aria-label="Oznámení" title="Oznámení">
+                    <i class="icon icon-20 icon-alert" aria-hidden="true"></i>
+                </button>
+                <button class="header-btn" aria-label="Nastavení" title="Nastavení">
+                    <i class="icon icon-20 icon-settings" aria-hidden="true"></i>
+                </button>
+                <button class="profile-btn" aria-label="Správce účtu" title="Správce účtu pro uživatele Novák Jan (281569)">
+                    <span class="profile-initials">JN</span>
+                </button>
+            </div>
+        </header>
+
+        <div class="app-body">
+
+            <!-- ================= LEVÝ PANEL APLIKACÍ ================= -->
+            <nav class="app-rail" aria-label="Navigace aplikacemi">
+                <ul>
+                    <li class="active" title="Pošta"><a href="#" aria-label="Pošta"><img src="icons/rail-mail.svg" alt=""></a></li>
+                    <li title="Kalendář"><a href="#" aria-label="Kalendář"><img src="icons/rail-calendar.svg" alt=""></a></li>
+                    <li title="Copilot"><a href="#" aria-label="Copilot"><img src="icons/copilot.png" alt=""></a></li>
+                    <li title="Lidé"><a href="#" aria-label="Lidé"><img src="icons/rail-people.svg" alt=""></a></li>
+                    <li title="To Do"><a href="#" aria-label="To Do"><img src="icons/rail-todo.png" alt=""></a></li>
+                    <li title="OneDrive"><a href="#" aria-label="OneDrive"><img src="icons/rail-onedrive.svg" alt=""></a></li>
+                    <li title="Přejít do aplikace Word"><a href="#" aria-label="Přejít do aplikace Word"><img src="icons/rail-word.svg" alt=""></a></li>
+                    <li title="Přejít do aplikace Excel"><a href="#" aria-label="Přejít do aplikace Excel"><img src="icons/rail-excel.svg" alt=""></a></li>
+                    <li title="Přejít do aplikace PowerPoint"><a href="#" aria-label="Přejít do aplikace PowerPoint"><img src="icons/rail-powerpoint.svg" alt=""></a></li>
+                    <li title="Další aplikace"><a href="#" aria-label="Další aplikace"><i class="icon icon-more-apps" aria-hidden="true"></i></a></li>
+                </ul>
+            </nav>
+
+            <!-- ================= POŠTA ================= -->
+            <div class="workspace" id="mailView">
+
+                <!-- ================= PÁS KARET ================= -->
+                <div class="ribbon">
+                    <div class="ribbon-tabs">
+                        <div class="ribbon-file">
+                            <button class="nav-toggle" aria-label="Skrýt navigační podokno">
+                                <i class="icon icon-hamburger" aria-hidden="true"></i>
+                            </button>
+                            <button class="file-btn">Soubor</button>
+                        </div>
+                        <div role="tablist">
+                            <button role="tab" aria-selected="true">Domů</button>
+                            <button role="tab" aria-selected="false">Zobrazení</button>
+                            <button role="tab" aria-selected="false">Nápověda</button>
+                        </div>
+                    </div>
+
+                    <div class="ribbon-row">
+                        <div class="toolbar">
+                            <div class="split-btn primary">
+                                <button class="toolbar-btn">
+                                    <i class="icon icon-20 icon-compose" aria-hidden="true"></i>
+                                    <span class="label">Nová zpráva</span>
+                                </button>
+                                <button class="toolbar-btn" aria-label="Další možnosti nového e-mailu">
+                                    <i class="icon icon-chevron-down" aria-hidden="true"></i>
+                                </button>
+                            </div>
+
+                            <button class="toolbar-btn menu" aria-label="Odstranit">
+                                <i class="icon icon-20 icon-delete" aria-hidden="true"></i>
+                                <i class="icon chevron icon-chevron-down" aria-hidden="true"></i>
+                            </button>
+                            <button class="toolbar-btn" aria-label="Archivovat">
+                                <i class="icon icon-20 icon-archive icon-green" aria-hidden="true"></i>
+                            </button>
+                            <button class="toolbar-btn menu" aria-label="Nahlásit">
+                                <i class="icon icon-20 icon-report icon-red" aria-hidden="true"></i>
+                                <i class="icon chevron icon-chevron-down" aria-hidden="true"></i>
+                            </button>
+                            <button class="toolbar-btn" aria-label="Uklidit">
+                                <i class="icon icon-20 icon-sweep" aria-hidden="true"></i>
+                            </button>
+                            <button class="toolbar-btn menu" aria-label="Přesunout do">
+                                <i class="icon icon-20 icon-move icon-blue" aria-hidden="true"></i>
+                                <i class="icon chevron icon-chevron-down" aria-hidden="true"></i>
+                            </button>
+
+                            <div class="toolbar-separator"></div>
+
+                            <button class="toolbar-btn" aria-label="Odpovědět">
+                                <i class="icon icon-16 icon-reply icon-purple" aria-hidden="true"></i>
+                            </button>
+                            <button class="toolbar-btn" aria-label="Odpovědět všem">
+                                <i class="icon icon-16 icon-reply-all icon-purple" aria-hidden="true"></i>
+                            </button>
+                            <button class="toolbar-btn menu" aria-label="Přeposlat">
+                                <i class="icon icon-16 icon-forward icon-blue" aria-hidden="true"></i>
+                                <i class="icon chevron icon-chevron-down" aria-hidden="true"></i>
+                            </button>
+
+                            <div class="toolbar-separator"></div>
+
+                            <button class="toolbar-btn" aria-label="Microsoft Teams">
+                                <img class="teams-logo" src="icons/teams-logo.svg" alt="MS Teams">
+                            </button>
+
+                            <div class="toolbar-separator"></div>
+
+                            <div class="split-btn outline">
+                                <button class="toolbar-btn">
+                                    <i class="icon icon-20 icon-flash icon-gold" aria-hidden="true"></i>
+                                    <span class="label">Rychlé kroky</span>
+                                </button>
+                                <button class="toolbar-btn" aria-label="Další možnosti rychlých kroků">
+                                    <i class="icon icon-chevron-down" aria-hidden="true"></i>
+                                </button>
+                            </div>
+
+                            <button class="toolbar-btn">
+                                <i class="icon icon-20 icon-mail-read icon-gray" aria-hidden="true"></i>
+                                <span class="label">Přečtené/nepřečtené</span>
+                            </button>
+                            <button class="toolbar-btn menu" aria-label="Kategorizovat">
+                                <i class="icon icon-20 icon-tag" aria-hidden="true"></i>
+                                <i class="icon chevron icon-chevron-down" aria-hidden="true"></i>
+                            </button>
+                            <button class="toolbar-btn menu" aria-label="Označit příznakem">
+                                <i class="icon icon-20 icon-flag icon-red" aria-hidden="true"></i>
+                                <i class="icon chevron icon-chevron-down" aria-hidden="true"></i>
+                            </button>
+                            <button class="toolbar-btn" aria-label="Připnout">
+                                <i class="icon icon-20 icon-pin icon-blue" aria-hidden="true"></i>
+                            </button>
+                            <button class="toolbar-btn menu" aria-label="Odložit">
+                                <i class="icon icon-20 icon-clock icon-gray" aria-hidden="true"></i>
+                                <i class="icon chevron icon-chevron-down" aria-hidden="true"></i>
+                            </button>
+                            <button class="toolbar-btn menu" aria-label="Zásady">
+                                <i class="icon icon-20 icon-archive-settings icon-blue" aria-hidden="true"></i>
+                                <i class="icon chevron icon-chevron-down" aria-hidden="true"></i>
+                            </button>
+
+                            <div class="toolbar-separator"></div>
+
+                            <button class="toolbar-btn" aria-label="Tisk">
+                                <i class="icon icon-20 icon-print icon-gray" aria-hidden="true"></i>
+                            </button>
+
+                            <div class="toolbar-separator"></div>
+
+                            <button class="toolbar-btn" aria-label="Aplikace">
+                                <i class="icon icon-20 icon-apps icon-gray" aria-hidden="true"></i>
+                            </button>
+
+                            <div class="toolbar-separator"></div>
+
+                            <button class="toolbar-btn" aria-label="Zpět" aria-disabled="true">
+                                <i class="icon icon-20 icon-undo icon-gray" aria-hidden="true"></i>
+                            </button>
+
+                            <div class="toolbar-separator"></div>
+
+                            <button class="toolbar-btn" aria-label="Další akce">
+                                <i class="icon icon-ellipsis" aria-hidden="true"></i>
+                            </button>
+
+                            <div class="toolbar-separator"></div>
+                        </div>
+
+                        <button type="button" class="copilot-btn" aria-label="Copilot Chat">
+                            <img src="icons/copilot.png" alt="">
+                        </button>
+                    </div>
+                </div>
+
+                <div class="panes">
+
+                    <!-- ================= NAVIGAČNÍ PODOKNO (SLOŽKY) ================= -->
+                    <nav class="folder-pane thin-scroll" aria-label="Navigační podokno">
+                        <div class="folder-tree">
+                            <div class="folder-section" role="group">
+                                <div class="folder-section-header">
+                                    <span class="toggle"><i class="icon icon-chevron-down" aria-hidden="true"></i></span>
+                                    <span class="title">Oblíbené</span>
+                                </div>
+                                <div class="folder" title="Doručená pošta">
+                                    <i class="icon icon-inbox" aria-hidden="true"></i><span class="title">Doručená pošta</span>
+                                </div>
+                                <div class="folder" title="Odeslaná pošta">
+                                    <i class="icon icon-sent" aria-hidden="true"></i><span class="title">Odeslaná pošta</span>
+                                </div>
+                                <div class="folder" title="Koncepty">
+                                    <i class="icon icon-drafts" aria-hidden="true"></i><span class="title">Koncepty</span>
+                                </div>
+                                <div class="folder" title="Odstraněná pošta">
+                                    <i class="icon icon-trash" aria-hidden="true"></i><span class="title">Odstraněná pošta</span>
+                                </div>
+                            </div>
+
+                            <div class="folder-section" role="group">
+                                <div class="folder-section-header">
+                                    <span class="toggle"><i class="icon icon-chevron-down" aria-hidden="true"></i></span>
+                                    <span class="title">Jan.Novak@vut.cz</span>
+                                </div>
+                                <div class="folder selected" title="Doručená pošta">
+                                    <i class="icon icon-inbox-filled" aria-hidden="true"></i><span class="title">Doručená pošta</span>
+                                </div>
+                                <div class="folder" title="Koncepty">
+                                    <i class="icon icon-drafts" aria-hidden="true"></i><span class="title">Koncepty</span>
+                                </div>
+                                <div class="folder" title="Odeslaná pošta">
+                                    <i class="icon icon-sent" aria-hidden="true"></i><span class="title">Odeslaná pošta</span>
+                                </div>
+                                <div class="folder" title="Odstraněná pošta">
+                                    <i class="icon icon-trash" aria-hidden="true"></i><span class="title">Odstraněná pošta</span>
+                                </div>
+                                <div class="folder" title="Nevyžádaná pošta">
+                                    <i class="icon icon-junk" aria-hidden="true"></i><span class="title">Nevyžádaná pošta</span>
+                                </div>
+                                <div class="folder" title="Poznámky">
+                                    <i class="icon icon-notes" aria-hidden="true"></i><span class="title">Poznámky</span>
+                                </div>
+                                <div class="folder" title="Archiv">
+                                    <i class="icon icon-archive" aria-hidden="true"></i><span class="title">Archiv</span>
+                                </div>
+                                <div class="folder" title="Historie konverzací">
+                                    <i class="icon icon-folder" aria-hidden="true"></i><span class="title">Historie konverzací</span>
+                                </div>
+                                <div class="folder" title="Informační kanály RSS">
+                                    <i class="icon icon-folder" aria-hidden="true"></i><span class="title">Informační kanály RSS</span>
+                                </div>
+                                <div class="folder" title="Složky výsledků hledání">
+                                    <i class="icon icon-folder-search" aria-hidden="true"></i><span class="title">Složky výsledků hledání</span>
+                                </div>
+                                <div class="folder link" title="Přejít na skupiny">
+                                    <i class="icon icon-groups" aria-hidden="true"></i><span class="title">Přejít na Skupiny</span>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+
+                    <!-- ================= SEZNAM ZPRÁV ================= -->
+                    <section class="message-list-pane" aria-label="Seznam zpráv">
+                        <div class="message-list-header">
+                            <div class="message-list-tabs" role="tablist">
+                                <button type="button" role="tab" aria-selected="true">Prioritní</button>
+                                <button type="button" role="tab" aria-selected="false">Další</button>
+                            </div>
+                            <div class="message-list-tools">
+                                <button type="button" aria-label="Vybrat"><i class="icon icon-20 icon-select-all" aria-hidden="true"></i></button>
+                                <button type="button" aria-label="Přejít na"><i class="icon icon-20 icon-jump" aria-hidden="true"></i></button>
+                                <button type="button" aria-label="Filtr"><i class="icon icon-20 icon-filter" aria-hidden="true"></i></button>
+                                <button type="button" aria-label="Seřazení"><i class="icon icon-20 icon-sort" aria-hidden="true"></i></button>
+                            </div>
+                        </div>
+
+                        <!-- Zprávy vykresluje script.js ze souboru emails.json -->
+                        <div id="messageList" class="message-list thin-scroll" role="listbox"></div>
+                    </section>
+
+                    <!-- ================= PODOKNO PRO ČTENÍ ================= -->
+                    <main id="readingPane" class="reading-pane" aria-label="Podokno pro čtení">
+
+                        <div id="readingPaneEmpty" class="reading-pane-empty">
+                            <img src="icons/no-mail-selected.svg" alt="">
+                            <p class="title">Vyberte položku, kterou si chcete přečíst.</p>
+                            <p class="subtitle">Není vybrána žádná položka.</p>
+                        </div>
+
+                        <div id="readingPaneContent" class="reading-pane-content" hidden>
+                            <div class="subject-bar">
+                                <h2 id="messageSubject"></h2>
+                                <button type="button" class="summarize-btn">
+                                    <i class="icon icon-16 icon-summary" aria-hidden="true"></i>
+                                    <span>Shrnout</span>
+                                </button>
+                            </div>
+
+                            <div class="message-scroll fluent-scroll">
+                                <article class="message-card" aria-label="E-mailová zpráva">
+                                    <div class="message-header">
+                                        <div class="sender">
+                                            <span id="senderAvatar" class="avatar large" role="img"></span>
+                                            <div class="sender-info">
+                                                <span id="senderName" class="sender-name"></span>
+                                                <span id="senderEmail" class="sender-email"></span>
+                                                <div id="recipients" class="recipients" hidden>
+                                                    <span>Komu:&nbsp;</span><span id="recipientsList"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="message-actions" role="toolbar">
+                                            <button type="button" class="icon-btn" aria-label="Reakce">
+                                                <i class="icon icon-16 icon-emoji icon-brand" aria-hidden="true"></i>
+                                            </button>
+                                            <button type="button" class="text-btn" aria-label="Odpovědět">
+                                                <i class="icon icon-16 icon-reply icon-purple" aria-hidden="true"></i>
+                                            </button>
+                                            <button type="button" class="text-btn" aria-label="Odpovědět všem">
+                                                <i class="icon icon-16 icon-reply-all icon-purple" aria-hidden="true"></i>
+                                            </button>
+                                            <button type="button" class="text-btn" aria-label="Přeposlat">
+                                                <i class="icon icon-16 icon-forward icon-blue" aria-hidden="true"></i>
+                                            </button>
+                                            <div class="divider" role="separator"></div>
+                                            <button type="button" class="text-btn apps-btn" aria-label="Aplikace">
+                                                <i class="icon icon-16 icon-apps icon-brand" aria-hidden="true"></i>
+                                            </button>
+                                            <div class="divider" role="separator"></div>
+                                            <button type="button" id="moreActionsBtn" class="icon-btn" aria-label="Další akce" aria-haspopup="menu">
+                                                <i class="icon icon-16 icon-more" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+
+                                        <div id="messageDate" class="message-date"></div>
+                                    </div>
+
+                                    <div id="messageBody" class="message-body fluent-scroll"></div>
+
+                                    <div class="message-footer">
+                                        <button type="button"><i class="icon icon-20 icon-reply icon-purple" aria-hidden="true"></i>Odpovědět</button>
+                                        <button type="button"><i class="icon icon-20 icon-reply-all icon-purple" aria-hidden="true"></i>Odpovědět všem</button>
+                                        <button type="button"><i class="icon icon-20 icon-forward icon-blue" aria-hidden="true"></i>Přeposlat</button>
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+                    </main>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= KONTEXTOVÁ NABÍDKA POŠTA (tři tečky u zprávy) ================= -->
+    <div id="moreActionsMenu" class="context-menu" role="menu">
+        <div class="context-menu-item disabled">Nasdílet do Teams</div>
+        <div class="context-menu-item disabled">Další akce odpovědi<span class="arrow">&#8250;</span></div>
+        <div class="context-menu-item disabled">Odstranit</div>
+        <div class="context-menu-item disabled">Označit jako nepřečtené</div>
+        <div class="context-menu-item disabled">Označit příznakem</div>
+        <div class="context-menu-item disabled">Přizpůsobení akcí</div>
+        <hr>
+        <div class="context-menu-item" id="reportMenuItem">Nahlásit<span class="arrow">&#8250;</span></div>
+        <div class="context-menu-item disabled">Blokovat<span class="arrow">&#8250;</span></div>
+        <hr>
+        <div class="context-menu-item disabled">Tisk</div>
+        <div class="context-menu-item disabled">Přeložit</div>
+        <div class="context-menu-item disabled">Zobrazit v asistivní čtečce</div>
+        <div class="context-menu-item disabled">Zobrazit<span class="arrow">&#8250;</span></div>
+        <div class="context-menu-item disabled">Stáhnout</div>
+        <hr>
+        <div class="context-menu-item disabled">Pokročilé akce<span class="arrow">&#8250;</span></div>
+    </div>
+
+    <!-- Podnabídka "Nahlásit" -->
+    <div id="reportSubmenu" class="context-menu" role="menu">
+        <div class="context-menu-item" id="reportSpamBtn">Nahlásit spam</div>
+        <div class="context-menu-item" id="reportPhishingBtn">Nahlásit útok phishing</div>
+    </div>
+
+    <!-- ================= MODÁLNÍ OKNA ================= -->
+    <div id="reportSpamModal" class="modal-overlay">
+        <div class="modal" role="dialog" aria-labelledby="reportSpamTitle">
+            <h2 class="modal-title" id="reportSpamTitle">Nahlásit nevyžádanou poštu</h2>
+            <p class="modal-text">Nahlášení nevyžádané pošty pomáhá zlepšit rozpoznávání nevyžádané pošty pro vás i ostatní uživatele v budoucnu.</p>
+            <div class="modal-buttons">
+                <button class="modal-btn primary" id="confirmSpamBtn">Sestava</button>
+                <button class="modal-btn secondary" id="cancelSpamBtn">Zrušit</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="reportPhishingModal" class="modal-overlay">
+        <div class="modal" role="dialog" aria-labelledby="reportPhishingTitle">
+            <h2 class="modal-title" id="reportPhishingTitle">Nahlásit útok phishing</h2>
+            <p class="modal-text">Nahlášení phishingových podvodů pomáhá zabezpečit osobní údaje, jak vaše, tak ostatních lidí.</p>
+            <div class="modal-buttons">
+                <button class="modal-btn primary" id="confirmPhishingBtn">Sestava</button>
+                <button class="modal-btn secondary" id="cancelPhishingBtn">Zrušit</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="evalModal" class="modal-overlay">
+        <div class="modal" role="dialog" aria-labelledby="evalModalTitle">
+            <h2 class="modal-title" id="evalModalTitle"></h2>
+            <div class="modal-text" id="evalModalText"></div>
+            <div class="modal-buttons">
+                <button class="modal-btn primary" id="evalModalBtn">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

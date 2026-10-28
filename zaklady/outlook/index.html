@@ -8,6 +8,8 @@
     <title>Pošta - Klon Outlook</title>
     <link rel="icon" href="icons/favicon.ico">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/driver.js@1/dist/driver.css">
+    <link rel="stylesheet" href="../tour.css">
 </head>
 
 <body>
@@ -25,7 +27,7 @@
                     <img src="icons/tenant-logo.png" alt="VUT">
                 </a>
                 <!-- Kliknutí na "Outlook" vyhodnotí označené e-maily (script.js) -->
-                <a href="#" class="brand-link" id="outlookEvalBtn">Outlook</a>
+                <span class="brand-link">Outlook</span>
             </div>
 
             <div class="header-center">
@@ -385,7 +387,7 @@
         <div class="context-menu-item disabled">Označit příznakem</div>
         <div class="context-menu-item disabled">Přizpůsobení akcí</div>
         <hr>
-        <div class="context-menu-item" id="reportMenuItem">Nahlásit<span class="arrow">&#8250;</span></div>
+        <div class="context-menu-item disabled">Nahlásit<span class="arrow">&#8250;</span></div>
         <div class="context-menu-item disabled">Blokovat<span class="arrow">&#8250;</span></div>
         <hr>
         <div class="context-menu-item disabled">Tisk</div>
@@ -397,46 +399,9 @@
         <div class="context-menu-item disabled">Pokročilé akce<span class="arrow">&#8250;</span></div>
     </div>
 
-    <!-- Podnabídka "Nahlásit" -->
-    <div id="reportSubmenu" class="context-menu" role="menu">
-        <div class="context-menu-item" id="reportSpamBtn">Nahlásit spam</div>
-        <div class="context-menu-item" id="reportPhishingBtn">Nahlásit útok phishing</div>
-    </div>
-
-    <!-- ================= MODÁLNÍ OKNA ================= -->
-    <div id="reportSpamModal" class="modal-overlay">
-        <div class="modal" role="dialog" aria-labelledby="reportSpamTitle">
-            <h2 class="modal-title" id="reportSpamTitle">Nahlásit nevyžádanou poštu</h2>
-            <p class="modal-text">Nahlášení nevyžádané pošty pomáhá zlepšit rozpoznávání nevyžádané pošty pro vás i ostatní uživatele v budoucnu.</p>
-            <div class="modal-buttons">
-                <button class="modal-btn primary" id="confirmSpamBtn">Sestava</button>
-                <button class="modal-btn secondary" id="cancelSpamBtn">Zrušit</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="reportPhishingModal" class="modal-overlay">
-        <div class="modal" role="dialog" aria-labelledby="reportPhishingTitle">
-            <h2 class="modal-title" id="reportPhishingTitle">Nahlásit útok phishing</h2>
-            <p class="modal-text">Nahlášení phishingových podvodů pomáhá zabezpečit osobní údaje, jak vaše, tak ostatních lidí.</p>
-            <div class="modal-buttons">
-                <button class="modal-btn primary" id="confirmPhishingBtn">Sestava</button>
-                <button class="modal-btn secondary" id="cancelPhishingBtn">Zrušit</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="evalModal" class="modal-overlay">
-        <div class="modal" role="dialog" aria-labelledby="evalModalTitle">
-            <h2 class="modal-title" id="evalModalTitle"></h2>
-            <div class="modal-text" id="evalModalText"></div>
-            <div class="modal-buttons">
-                <button class="modal-btn primary" id="evalModalBtn">OK</button>
-            </div>
-        </div>
-    </div>
-
     <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/driver.js@1/dist/driver.js.iife.js"></script>
+    <script src="tour.js"></script>
 </body>
 
 </html>

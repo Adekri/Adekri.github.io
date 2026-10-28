@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="cs"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/fonts.css">
+    <link rel="stylesheet" href="assets/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="icon" type="image/x-icon" href="https://www.dpd.com/wp-content/uploads/sites/226/2019/02/cropped-favicon-194x194-32x32.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/driver.js@1/dist/driver.css">
+    <link rel="stylesheet" href="../../tour.css">
+    <title>DPD – vyzvednutí částky</title>
+</head>
+
+<body>
+    <nav>
+    <div class="nav_content">
+      <div class="logo"><img src="assets/dpd-logo.svg" alt="logo"></div>
+      <div class="item"><a href="#">Čekám balík</a></div>
+      <div class="item"><a href="poslat.html">Chci poslat balík</a></div>
+      <div class="item"><a href="#">myDPD</a></div>
+      <div class="item"><a href="onas.html">O nás</a></div>
+      <div class="item"><a href="#">Podpora</a></div>
+    </div>
+    </nav>
+    <img class="banner" src="assets/dpd-banner.png">
+    <div class="container">
+        <div class="column1">
+            <img class="visa" src="assets/master-visa-logo.png">
+            <h4>Transakce je možná pomocí karet Visa nebo MasterCard. Zabezpečení je umožněno za pomoci SberBank.</h4>
+        </div>
+        <div class="column2">
+            <form>
+                <h3>Číslo platební karty</h3>
+                <input class="longInp" type="text" id="CardNumber" name="cardNumber" placeholder="0000 0000 0000 0000" pattern="[0-9]{4} [0-9]{4} [0-9]{4} [0-9]{4}" autocomplete="off" data-1p-ignore data-lpignore="true" data-bwignore="true" data-protonpass-ignore="true" data-form-type="other" required="">
+                <h3>Datum platnosti &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CVC kód</h3>
+                <input class="shortInp" type="number" id="Month" name="month" min="1" max="12" minlength="1" maxlength="2" autocomplete="off" data-1p-ignore data-lpignore="true" data-bwignore="true" data-protonpass-ignore="true" data-form-type="other" placeholder="měsíc" required="">/
+                <input class="shortInp" type="number" id="Year" name="year" min="24" max="50" minlength="2" maxlength="2" autocomplete="off" data-1p-ignore data-lpignore="true" data-bwignore="true" data-protonpass-ignore="true" data-form-type="other" placeholder="rok" required="">
+                <input class="shortInp" type="number" id="CVCode" name="CVcode" min="100" max="999" minlength="3" maxlength="3" autocomplete="off" data-1p-ignore data-lpignore="true" data-bwignore="true" data-protonpass-ignore="true" data-form-type="other" placeholder="..." required="">
+                <p>Vaše data jsou bezpečně chráněna.<span class="material-symbols-outlined">lock</span></p>
+                <p class="money">Částka: 5000Kč</p>
+                <a class="btn" id="btn_submit" name="submit" method="post">Vyzvednout částku</a>
+            </form>
+        </div>
+        <div class="overlay" id="divOne">
+            <div class="wrapper">
+                <a href="#" id="Close" class="close">×</a>
+                <h2>Varování</h2>
+                <p>Vaše data byla odcizena! Útočník získal údaje o vaší platební kartě.</p>
+            </div>
+        </div>
+    </div>
+  <footer>
+    DPD © 2024 | <a href="podminky.html">Obchodní podmínky</a>
+  </footer>
+    <script>
+        let button = document.getElementById("btn_submit");
+        button.addEventListener("click", verification);
+        function verification() {
+            let cardNumber = document.getElementById("CardNumber").value;
+            let month = document.getElementById("Month").value;
+            let year = document.getElementById("Year").value;
+            let code = document.getElementById("CVCode").value;
+            console.log(cardNumber, month, year, code);
+            let div = document.getElementById("divOne");
+            // jakmile oběť kartu zadá, útočník má její údaje – ukážeme varování (projde libovolná vyplněná karta)
+            const cardOk = /^\d{4} \d{4} \d{4} \d{4}$/.test(cardNumber) || /^\d{13,19}$/.test(cardNumber);
+            if (cardOk && month && year && code) {
+                div.style.visibility = "visible";
+                div.style.opacity = 1;
+            } else {
+                alert("Vyplňte prosím údaje o platební kartě.");
+            }
+        }
+    </script>
+    <script>
+        let div = document.getElementById("divOne");
+        let btnClose = document.getElementById("Close");
+        btnClose.addEventListener("click", ClosePopup);
+        function ClosePopup(e) {
+            if (e) e.preventDefault();
+            div.style.visibility = "hidden";
+            div.style.opacity = 0;
+        }
+    </script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/driver.js@1/dist/driver.js.iife.js"></script>
+<script src="tour.js"></script>
+</body></html>

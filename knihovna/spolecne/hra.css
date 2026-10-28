@@ -53,6 +53,7 @@ button:focus-visible, a:focus-visible { outline: 3px dashed var(--okr); outline-
 .emoji, .ikona-uvod, .velky-obrazek { display: block; line-height: 1; }
 img.obr { display: block; width: 1em; height: 1em; pointer-events: none; -webkit-user-drag: none; }
 .obr-nahrada { display: block; font-size: .85em; line-height: 1.15; }
+img.foto { display: block; width: 1em; height: 1em; object-fit: contain; pointer-events: none; -webkit-user-drag: none; }
 
 
 /* ----- Horní lišta (nenápadná, ať neruší při promítání) ----- */

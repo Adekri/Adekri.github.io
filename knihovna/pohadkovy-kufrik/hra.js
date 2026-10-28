@@ -78,11 +78,12 @@ function dalsiKrok() {
 }
 
 function vykresliVec(i) {
-    const [emoji, popisek] = kufry[poradi].veci[i];
+    const [emoji, popisek, vlastni] = kufry[poradi].veci[i];
+    const ikonka = Hra.obr(emoji, popisek);
     const slot = hra.querySelectorAll('.slot')[i];
     slot.classList.remove('prazdny');
     slot.innerHTML = `
-        <span class="emoji objev">${Hra.obr(emoji, popisek)}</span>
+        <span class="emoji objev">${vlastni ? Hra.foto(vlastni, ikonka, popisek) : ikonka}</span>
         <span class="popisek objev">${popisek}</span>`;
     Hra.mluv(popisek);
 }
@@ -112,9 +113,11 @@ function odhal() {
 
     const majitel = document.getElementById('majitel');
     majitel.classList.add('odhaleny');
-    majitel.innerHTML = k.obr
-        ? `<span class="postavy objev">${[].concat(k.obr).map(e => `<span class="emoji">${Hra.obr(e, k.majitel)}</span>`).join('')}</span>`
-        : `<span class="nadpis objev">${k.majitel}</span>`;
+    const ikonky = k.obr
+        ? `<span class="postavy">${[].concat(k.obr).map(e => `<span class="emoji">${Hra.obr(e, k.majitel)}</span>`).join('')}</span>`
+        : `<span class="nadpis">${k.majitel}</span>`;
+    // Skutečný obrázek z pohádky, pokud je ve složce obrazky-postav/; jinak ikonky
+    majitel.innerHTML = `<span class="objev">${k.foto ? Hra.foto(k.foto, ikonky, k.majitel, 'portret') : ikonky}</span>`;
     Hra.zakrouzkuj(majitel);
     Hra.zvuk.spravne();
 

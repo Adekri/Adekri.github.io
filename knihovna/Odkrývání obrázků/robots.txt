@@ -1,4 +1,0 @@
-User-agent: *
-Disallow:
-
-Sitemap: https://www.tkalcovna-virgo.cz/sitemap.xml

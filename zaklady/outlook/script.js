@@ -2,8 +2,7 @@
  * Outlook Clone – seznam zpráv a podokno pro čtení
  *
  * Načte emails.json → vykreslí seznam zpráv → po kliknutí zobrazí zprávu.
- * Uživatel může zprávu nahlásit jako spam / phishing (tři tečky → Nahlásit)
- * a kliknutím na „Outlook“ v hlavičce si nechat výsledek vyhodnotit.
+ * Slouží jako cvičná schránka (bez označování a vyhodnocování).
  */
 
 (function () {
@@ -18,8 +17,6 @@
 
     const CZ_DAYS = ['Ne', 'Po', 'Út', 'St', 'Čt', 'Pá', 'So'];
 
-    const FLAG_LABELS = { spam: 'spam', phishing: 'phishing', normal: 'normální' };
-
     /** Id právě otevřené zprávy (null = žádná) */
     let selectedEmailId = null;
 
@@ -28,9 +25,6 @@
 
     /** emailId → id skupiny ("tento-tyden", …) */
     const emailGroupMap = {};
-
-    /** emailId → 'spam' | 'phishing' (jak zprávu označil uživatel) */
-    const userFlags = {};
 
     /* ================================================================
        Pomocné funkce
@@ -224,20 +218,16 @@
     }
 
     /* ================================================================
-       Nabídka tří teček a podnabídka "Nahlásit"
+       Nabídka tří teček (jen vzhled Outlooku, všechny položky neaktivní)
        ================================================================ */
 
     function closeMenus() {
         $('moreActionsMenu').classList.remove('open');
-        $('reportSubmenu').classList.remove('open');
     }
 
     function setupMoreActionsMenu() {
         const btn = $('moreActionsBtn');
         const menu = $('moreActionsMenu');
-        const reportItem = $('reportMenuItem');
-        const submenu = $('reportSubmenu');
-        let submenuTimer = null;
 
         btn.addEventListener('click', (e) => {
             e.stopPropagation();
@@ -256,140 +246,9 @@
             menu.classList.add('open');
         });
 
-        // Podnabídka se otevírá vlevo od položky "Nahlásit"
-        reportItem.addEventListener('mouseenter', () => {
-            clearTimeout(submenuTimer);
-            const menuRect = menu.getBoundingClientRect();
-            const itemRect = reportItem.getBoundingClientRect();
-            submenu.style.top = (itemRect.top - 4) + 'px';
-            submenu.style.right = (window.innerWidth - menuRect.left + 2) + 'px';
-            submenu.classList.add('open');
-        });
-        reportItem.addEventListener('mouseleave', () => {
-            submenuTimer = setTimeout(() => submenu.classList.remove('open'), 200);
-        });
-        submenu.addEventListener('mouseenter', () => clearTimeout(submenuTimer));
-        submenu.addEventListener('mouseleave', () => submenu.classList.remove('open'));
-
-        $('reportSpamBtn').addEventListener('click', (e) => {
-            e.stopPropagation();
-            closeMenus();
-            $('reportSpamModal').classList.add('open');
-        });
-        $('reportPhishingBtn').addEventListener('click', (e) => {
-            e.stopPropagation();
-            closeMenus();
-            $('reportPhishingModal').classList.add('open');
-        });
-
         // Klik mimo nabídku ji zavře, klik uvnitř ne
         document.addEventListener('click', closeMenus);
         menu.addEventListener('click', (e) => e.stopPropagation());
-        submenu.addEventListener('click', (e) => e.stopPropagation());
-    }
-
-    /* ================================================================
-       Nahlášení spamu / phishingu
-       ================================================================ */
-
-    /** Označí otevřenou zprávu, skryje ji ze seznamu a vyprázdní podokno pro čtení */
-    function flagSelectedEmail(type) {
-        if (!selectedEmailId) return;
-
-        userFlags[selectedEmailId] = type;
-        $('email-' + selectedEmailId).hidden = true;
-        hideEmail();
-        hideEmptyGroups();
-        selectedEmailId = null;
-    }
-
-    function setupReportModals() {
-        [['spam', 'reportSpamModal', 'confirmSpamBtn', 'cancelSpamBtn'],
-         ['phishing', 'reportPhishingModal', 'confirmPhishingBtn', 'cancelPhishingBtn']]
-            .forEach(([type, modalId, confirmId, cancelId]) => {
-                const modal = $(modalId);
-                $(confirmId).addEventListener('click', () => {
-                    flagSelectedEmail(type);
-                    modal.classList.remove('open');
-                });
-                $(cancelId).addEventListener('click', () => modal.classList.remove('open'));
-            });
-    }
-
-    /* ================================================================
-       Vyhodnocení (klik na "Outlook" v hlavičce)
-       ================================================================ */
-
-    function setupEvaluation() {
-        $('outlookEvalBtn').addEventListener('click', (e) => {
-            e.preventDefault();
-
-            const phishingErrors = [];
-            const spamErrors = [];
-
-            Object.keys(emailMap).forEach((id) => {
-                const email = emailMap[id];
-                const expected = email.type || 'normal';
-                const got = userFlags[id] || null;
-
-                if (expected === 'normal' && got === null) return;
-                if (expected === got) return;
-
-                // Chyba "phishing" = phishing nepoznán nebo něco neprávem označeno jako phishing
-                const mistake = { email, expected, got };
-                if (expected === 'phishing' || got === 'phishing') {
-                    phishingErrors.push(mistake);
-                } else {
-                    spamErrors.push(mistake);
-                }
-            });
-
-            showEvaluation(phishingErrors, spamErrors);
-        });
-
-        $('evalModalBtn').addEventListener('click', () => {
-            $('evalModal').classList.remove('open');
-            window.location.reload();
-        });
-    }
-
-    function renderMistakes(list) {
-        return '<ul class="eval-mistakes">' + list.map((m) => {
-            const got = m.got ? FLAG_LABELS[m.got] : 'neoznačen';
-            return `<li><strong>${escapeHtml(m.email.subject)}</strong> — správně: `
-                + `${FLAG_LABELS[m.expected]}, vaše označení: ${got}</li>`;
-        }).join('') + '</ul>';
-    }
-
-    function showEvaluation(phishingErrors, spamErrors) {
-        const title = $('evalModalTitle');
-        const text = $('evalModalText');
-
-        const flagHtml = '<div class="eval-flag">'
-            + '<div class="eval-flag-label">Vaše vlajka:</div>'
-            + '<span class="eval-flag-value">FLAG(SocialniInzenyrstvi)</span>'
-            + '</div>';
-
-        if (phishingErrors.length === 0 && spamErrors.length === 0) {
-            title.textContent = 'Gratulujeme!';
-            title.style.color = '#0e700e';
-            text.innerHTML = 'Správně jste identifikovali všechny nebezpečné e-maily. Výborná práce!' + flagHtml;
-        } else if (phishingErrors.length === 0) {
-            // Všechny phishingy správně → vlajka i přes chyby u spamu / normálních zpráv
-            title.textContent = 'Skoro perfektní!';
-            title.style.color = '#0e700e';
-            text.innerHTML = '<p>Všechny phishingové e-maily jste označili správně — zde je vlajka pro tento úkol. '
-                + 'Některé spam / normální e-maily však byly označeny chybně:</p>'
-                + renderMistakes(spamErrors) + flagHtml;
-        } else {
-            // Jakákoli chyba u phishingu → bez vlajky, vypíšou se všechny chyby
-            title.textContent = 'Zkuste to znovu';
-            title.style.color = '#c4314b';
-            text.innerHTML = '<p>Některé e-maily nebyly označeny správně:</p>'
-                + renderMistakes(phishingErrors.concat(spamErrors));
-        }
-
-        $('evalModal').classList.add('open');
     }
 
     /* ================================================================
@@ -419,8 +278,6 @@
 
             updateUnreadBadges();
             setupMoreActionsMenu();
-            setupReportModals();
-            setupEvaluation();
         } catch (err) {
             console.error('Outlook clone – chyba při inicializaci:', err);
         }

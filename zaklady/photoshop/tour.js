@@ -29,7 +29,7 @@
         allowKeyboardControl: false,
         showProgress: true,
         popoverClass: 'zk-tour',
-        overlayOpacity: 0.5,
+        overlayOpacity: 0.2,
         stagePadding: 10,
         stageRadius: 10,
         steps: [

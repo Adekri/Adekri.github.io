@@ -49,6 +49,7 @@
             border-radius: 14px 22px 12px 26px / 24px 12px 26px 14px;
             box-shadow: 6px 8px 0 var(--linka);
             container-type: inline-size;
+            isolation: isolate;
             background: linear-gradient(to bottom,
                 var(--nebe) 0%, var(--nebe2) var(--horizont),
                 var(--zeme) var(--horizont), var(--zeme2) 100%);
@@ -74,9 +75,11 @@
             background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .27 0 0 0 0 .18 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
         }
 
+        /* Věc stojí spodním okrajem na bodě [x, y] */
         .vec {
             position: absolute;
-            translate: -50% -50%;
+            translate: -50% -100%;
+            transform-origin: 50% 100%;
             padding: 0;
             border: 0;
             background: none;
@@ -84,6 +87,7 @@
             line-height: 0;
         }
         .vec:hover:not(:disabled) { scale: 1.06; }
+        .vec.kulisa { pointer-events: none; }
 
         /* Krtčí hromádka */
         .hromadka {
