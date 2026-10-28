@@ -55,8 +55,13 @@ bezpečné placení…). Každý úkol je samostatná složka se statickými str
   průvodce přes parametr `?ukol=…`.
 - **telefon/** – simulátor telefonu, dva samostatné úkoly na jedné stránce,
   přepínané parametrem `?ukol=`: výchozí / `1` = smishing (podvodná SMS „GOV",
-  přes falešnou bankovní identitu, `FLAG(VladniWebyMajiJednotnouDomenu)`),
+  přes falešnou bankovní identitu až na podvodnou přihlašovací stránku Monety),
   `2` = dvoufaktor (Aneta se snaží vylákat ověřovací kód,
-  `FLAG(DvoufazoveOvereniNeniVse)`). Úkoly jsou nezávislé (řešitelné i s odstupem);
+  `FLAG(DvoufazoveOvereniNeniVse)`). V úkolu 1 průvodce FLAG **neprozrazuje** –
+  student si má dohledat skutečnou doménu Monety (`moneta.cz`) a tu zadat do
+  platformy jako FLAG (platforma musí očekávat tuto hodnotu; formát řeš v zadání,
+  v průvodci se zadává jen doména ve tvaru `nazev.cz`). Na přihlašovací stránce
+  průvodce nabízí volbu (přihlásit se × nepřihlásit a nahlásit); přihlášení je
+  riziková volba bez FLAGu. Úkoly jsou nezávislé (řešitelné i s odstupem);
   úkol 1 nezpřístupňuje zprávy úkolu 2 – ty se ukážou jen při přímém vstupu
   `index.html?ukol=2` (tento odkaz patří do zadání druhého úkolu).

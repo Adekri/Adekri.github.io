@@ -269,9 +269,9 @@ const bankBtn = document.getElementById('bankovniIdentitaBtn');
           ? 'Pozor! Tímto jste útočníkovi poskytli přihlašovací údaje k Vašemu bankovnictví!'
           : 'Výborně! Nezadali jste Vaše skutečné přihlašovací údaje a odolali jste útoku.';
         status.style.color = correct ? 'red' : 'green';
-        // FLAG ukáže průvodce; když je vypnutý (?tour=0), zůstane FLAG ve stavovém textu
-        const handled = !document.dispatchEvent(new CustomEvent('telefon:login', { detail: { correct }, cancelable: true }));
-        if (!handled) { status.textContent += ' FLAG(VladniWebyMajiJednotnouDomenu)'; }
+        // Na odeslání reaguje průvodce (bere ho jako rizikovou volbu). FLAG tu není –
+        // tím je skutečná doména Monety, kterou si student dohledá a zadá do platformy.
+        document.dispatchEvent(new CustomEvent('telefon:login', { detail: { correct }, cancelable: true }));
     });
       break;
 

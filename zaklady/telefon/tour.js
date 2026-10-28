@@ -1,8 +1,9 @@
 /* ============================================================
-   Průvodce dvěma navazujícími úkoly v simulátoru telefonu:
+   Průvodce dvěma samostatnými úkoly v simulátoru telefonu:
    1. Smishing – podvodná SMS „GOV / Portál občana“, která přes
-      falešnou bankovní identitu láká přihlašovací údaje.
-      FLAG(VladniWebyMajiJednotnouDomenu).
+      falešnou bankovní identitu láká přihlašovací údaje k Monetě.
+      FLAG = skutečná doména Monety; student si ji dohledá sám a
+      zadá do platformy (průvodce ji neprozrazuje).
    2. Dvoufaktor – útočník (Aneta) se snaží vylákat jednorázový
       ověřovací kód. FLAG(DvoufazoveOvereniNeniVse).
    Panel s instrukcí je vedle telefonu a posouvá se podle toho,
@@ -83,11 +84,14 @@
         activePopup.drive();
     }
 
-    // poslední zobrazená vlajka, aby ji šlo znovu otevřít přes chip
-    let reopenFlag = null;
+    // poslední zobrazené okno (FLAG / zadání), aby šlo znovu otevřít přes chip
+    let reopenLast = null;
+    let chipLabel = 'Zobrazit FLAG';
 
+    // Okno s hotovou vlajkou (2. úkol – kód se dvoufaktorem).
     function flagPopup(title, flag, lessonHtml, buttonText, onDone) {
-        reopenFlag = () => flagPopup(title, flag, lessonHtml, buttonText, onDone);
+        reopenLast = () => flagPopup(title, flag, lessonHtml, buttonText, onDone);
+        chipLabel = 'Zobrazit FLAG';
         popup({
             popoverClass: 'zk-tour zk-wide',
             title,
@@ -96,7 +100,7 @@
                 + '<button type="button" class="zk-btn" data-copy-flag>Kopírovat</button></div>'
                 + lessonHtml,
             nextBtnText: buttonText, doneBtnText: buttonText, showButtons: ['next'],
-            onNextClick: () => { driveStop(); showFlagChip(); if (onDone) onDone(); },
+            onNextClick: () => { driveStop(); showChip(); if (onDone) onDone(); },
             onPopoverRender: (pop) => {
                 const btn = pop.description.querySelector('[data-copy-flag]');
                 if (btn) btn.addEventListener('click', () => {
@@ -106,14 +110,35 @@
         });
     }
 
-    // Po zavření okna s vlajkou zůstane vpravo dole tlačítko, kterým ji lze znovu zobrazit.
-    function showFlagChip() {
+    // Okno se zadáním (1. úkol – hodnotu FLAGu student najde sám, průvodce ji neprozrazuje).
+    function taskPopup(title, html, buttonText) {
+        reopenLast = () => taskPopup(title, html, buttonText);
+        chipLabel = 'Zobrazit zadání';
+        popup({
+            popoverClass: 'zk-tour zk-wide',
+            title,
+            description: html,
+            nextBtnText: buttonText, doneBtnText: buttonText, showButtons: ['next'],
+            onNextClick: () => { driveStop(); showChip(); },
+            onPopoverRender: (pop) => {
+                // „Nedaří se" → odkryje odkaz na skutečný web Monety (doména je pak vidět v adresním řádku)
+                const hint = pop.description.querySelector('[data-show-direct]');
+                if (hint) hint.addEventListener('click', () => {
+                    hint.closest('[data-hint]').innerHTML =
+                        'Otevřete <a href="https://www.moneta.cz" target="_blank" rel="noopener">stránku Monety ↗</a> a podívejte se na doménu v adresním řádku prohlížeče.';
+                });
+            }
+        });
+    }
+
+    // Po zavření okna zůstane vpravo dole tlačítko, kterým ho lze znovu zobrazit.
+    function showChip() {
         if (document.querySelector('.zk-chip')) return;
         const chip = document.createElement('button');
         chip.type = 'button';
         chip.className = 'zk-chip';
-        chip.textContent = 'Zobrazit FLAG';
-        chip.addEventListener('click', () => { if (reopenFlag) reopenFlag(); });
+        chip.textContent = chipLabel;
+        chip.addEventListener('click', () => { if (reopenLast) reopenLast(); });
         document.body.appendChild(chip);
     }
 
@@ -148,7 +173,7 @@
                 'Vyberte svou banku – <b>Moneta</b>.');
         } else if (n === 4) {
             panel.show('Přihlášení do bankovnictví',
-                'Stránka po vás chce přihlašovací údaje do bankovnictví. Podívejte se ale na adresu nahoře: <b>www.moenta-login.online.net</b>. Skutečná doména Monety je <b>moneta.cz</b> – tohle je překlep a cizí doména.'
+                'Stránka po vás chce přihlašovací údaje do bankovnictví. Podívejte se ale na adresu nahoře: <b>www.moenta-login.online.net</b>. To je překlep a cizí doména – skutečná Moneta běží na své oficiální adrese.'
                 + '<div class="zk-note">Co uděláte?</div>'
                 + '<div class="zk-actions">'
                 + '<button type="button" class="zk-btn zk-btn-light" data-choice="login">Přihlásím se zde</button>'
@@ -182,14 +207,13 @@
     });
 
     // Bezpečná volba – student podvod rozpoznal a nepřihlásil se.
+    // FLAG = skutečná doména Monety; tu si student dohledá sám a zadá do platformy.
     function loginSafe() {
         panel.hide();
-        flagPopup('Úkol splněn', 'FLAG(VladniWebyMajiJednotnouDomenu)',
-            '<b>Co si zapamatovat:</b><ul class="zk-list">'
-            + '<li>Státní weby mají <b>jednotnou doménu gov.cz</b> – Portál občana je na <b>obcan.gov.cz</b>, ne na „obcan.cz-gov.net“.</li>'
-            + '<li>Tlak a strašení („problém s daňovým výkazem“) mají zabránit tomu, abyste přemýšleli.</li>'
-            + '<li>Před zadáním přihlašovacích údajů vždy zkontrolujte adresu v prohlížeči. Podezřelou zprávu neotvírejte a číslo můžete nahlásit (operátorovi, policii).</li>'
-            + '</ul>',
+        taskPopup('Správně – nepřihlašujte se',
+            'Podvodnou stránku jste nepustili ke svým údajům. Než někam zadáte přihlašovací údaje, vždy si ověřte <b>skutečnou adresu</b> služby – ne tu z odkazu ve zprávě.'
+            + '<div class="zk-success"><b>Úkol:</b> Zjistěte, jakou doménu má ve skutečnosti Moneta (vyhledejte si ji), a zadejte ji do platformy jako <b>FLAG</b> – jen samotnou doménu ve tvaru <code>nazev.cz</code>.</div>'
+            + '<div class="zk-note" data-hint><button type="button" class="zk-linkbtn" data-show-direct>Nedaří se mi doménu najít</button></div>',
             'Zavřít');
     }
 
