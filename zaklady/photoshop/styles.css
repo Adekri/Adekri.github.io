@@ -5,7 +5,24 @@
     --dodger:     #0496ff;
     --honeydew:   #eff8e2;
 }
+/* Výřez Material Symbols Outlined (Google, licence Apache 2.0) jen s ikonami download a copyright – celý font má 4 MB.
+   Novou ikonu je potřeba přidat i do souboru s písmem, jinak se místo ní ukáže její název. */
+@font-face {
+  font-family: 'Material Symbols Outlined';
+  src: url('../fonts/MaterialSymbolsOutlined.woff2') format('woff2');
+  font-weight: 400;
+  font-display: block;
+}
 .material-symbols-outlined {
+  display: inline-block;
+  font-family: 'Material Symbols Outlined';
+  font-size: 24px;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  white-space: nowrap;
+  font-feature-settings: 'liga';
   font-variation-settings:
   'FILL' 0,
   'wght' 400,

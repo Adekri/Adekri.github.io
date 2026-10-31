@@ -24,6 +24,68 @@
 
     const helpHtml = '<div class="zk-note"><button type="button" class="zk-linkbtn" data-copy>Nejde to? Zkopírovat adresu za mě</button></div>';
 
+    // Nabídka po kliknutí pravým tlačítkem se liší podle prohlížeče a jeho jazyka. `copy` je položka, kterou má student vybrat.
+    // Texty jsou z překladů prohlížečů (české a slovenské Safari nebylo možné ověřit), český Edge, Firefox a Brave podle jejich skutečné nabídky.
+    const MENU_SEPARATOR = '-';
+    const CONTEXT_MENUS = {
+        cs: {
+            chromium: { copy: 'Kopírovat adresu odkazu', before: ['Otevřít odkaz na nové kartě', 'Uložit odkaz jako…'], after: ['Prozkoumat'] },
+            edge: {
+                copy: 'Kopírovat odkaz',
+                before: ['Otevřít odkaz v okně InPrivate', MENU_SEPARATOR, 'Uložit odkaz jako…'],
+                after: [MENU_SEPARATOR, 'Vizuální hledání']
+            },
+            brave: { copy: 'Kopírovat adresu odkazu', before: ['Otevřít odkaz v rozděleném zobrazení', MENU_SEPARATOR, 'Uložit odkaz jako…'], after: ['Kopírovat čistý odkaz'] },
+            firefox: { copy: 'Zkopírovat odkaz', before: ['Přidat do záložek…', 'Uložit odkaz jako…'], after: ['Zkopírovat čistý odkaz'] },
+            safari: { copy: 'Kopírovat odkaz', before: ['Otevřít odkaz', 'Otevřít odkaz v novém panelu'], after: [] }
+        },
+        sk: {
+            chromium: { copy: 'Kopírovať adresu odkazu', before: ['Otvoriť odkaz na novej karte', 'Uložiť odkaz ako...'], after: ['Preskúmať'] },
+            edge: {
+                copy: 'Skopírovať prepojenie',
+                before: ['Otvoriť prepojenie v novom okne', 'Otvoriť prepojenie v okne InPrivate', MENU_SEPARATOR, 'Uložiť prepojenie ako'],
+                after: []
+            },
+            firefox: { copy: 'Kopírovať odkaz', before: ['Pridať odkaz medzi záložky…', 'Uložiť cieľ odkazu ako…'], after: ['Kopírovať čistý odkaz'] },
+            safari: { copy: 'Kopírovať odkaz', before: ['Otvoriť odkaz'], after: [] }
+        },
+        en: {
+            chromium: { copy: 'Copy link address', before: ['Open link in new tab', 'Save link as...'], after: ['Inspect'] },
+            edge: {
+                copy: 'Copy link',
+                before: ['Open link in InPrivate window', MENU_SEPARATOR, 'Save link as'],
+                after: [MENU_SEPARATOR, 'Visual search']
+            },
+            firefox: { copy: 'Copy Link', before: ['Bookmark Link…', 'Save Link As…'], after: ['Copy Clean Link'] },
+            safari: { copy: 'Copy Link', before: ['Open Link', 'Open Link in New Tab'], after: [] }
+        }
+    };
+
+    // Jazyk nabídky se bere z jazyka prohlížeče; ostatní jazyky nemáme, nejblíž je jim angličtina.
+    function detectLanguage() {
+        const language = (navigator.language || '').slice(0, 2).toLowerCase();
+        return CONTEXT_MENUS[language] ? language : 'en';
+    }
+
+    // Pořadí je důležité: Edge má v identifikaci i „Chrome“ a Chrome i Edge i „Safari“.
+    function detectBrowser() {
+        const ua = navigator.userAgent;
+        if (navigator.brave) return 'brave'; // v identifikaci se tváří jako Chrome
+        if (/Edg(e|A|iOS)?\//.test(ua)) return 'edge';
+        if (/Firefox\/|FxiOS\//.test(ua)) return 'firefox';
+        if (/Safari\//.test(ua) && !/Chrome\/|Chromium\/|CriOS\/|OPR\//.test(ua)) return 'safari';
+        return 'chromium'; // Chrome, Opera, Seznam prohlížeč…
+    }
+
+    const menus = CONTEXT_MENUS[detectLanguage()];
+    const contextMenu = menus[detectBrowser()] || menus.chromium; // Brave známe jen česky, jinak je blízko Chromu
+    const menuItemHtml = (item) => (item === MENU_SEPARATOR ? '<li class="zk-menu-sep"></li>' : `<li>${item}</li>`);
+    const contextMenuHtml = '<ul class="zk-menu">'
+        + contextMenu.before.map(menuItemHtml).join('')
+        + `<li class="zk-menu-pick">${contextMenu.copy}</li>`
+        + contextMenu.after.map(menuItemHtml).join('')
+        + '</ul>';
+
     const tour = driver({
         allowClose: false,
         allowKeyboardControl: false,
@@ -60,9 +122,8 @@
                 element: '#dlBtn',
                 popover: {
                     title: 'Zkopírujte adresu',
-                    description: 'V nabídce, která se otevřela, vyberte <b>Kopírovat adresu odkazu</b>.'
-                        + '<ul class="zk-menu"><li>Otevřít odkaz na nové kartě</li><li>Uložit odkaz jako…</li>'
-                        + '<li class="zk-menu-pick">Kopírovat adresu odkazu</li><li>Prozkoumat</li></ul>'
+                    description: `V nabídce, která se otevřela, vyberte <b>${contextMenu.copy}</b>.`
+                        + contextMenuHtml
                         + helpHtml,
                     progressText: `3 / ${TOTAL_STEPS}`,
                     showButtons: ['next'],
@@ -123,7 +184,7 @@
         const height = popover.offsetHeight;
         const left = menuPoint.x - MENU_GAP - width;
         if (left < EDGE_GAP) return; // vlevo není místo, necháme umístění na driver.js
-        const top = Math.min(Math.max(menuPoint.y - height / 2, EDGE_GAP), window.innerHeight - height - EDGE_GAP);
+        const top = Math.max(Math.min(menuPoint.y - height / 2, window.innerHeight - height - EDGE_GAP), EDGE_GAP);
         Object.assign(popover.style, { left: left + 'px', top: top + 'px', right: 'auto', bottom: 'auto' });
         const arrow = popover.querySelector('.driver-popover-arrow');
         if (arrow) arrow.style.display = 'none';

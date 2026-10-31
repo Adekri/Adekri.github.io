@@ -260,6 +260,14 @@ body:has(.driver-popover.zk-corner) .driver-overlay {
     border-radius: 5px;
 }
 
+.zk-menu li.zk-menu-sep {
+    height: 1px;
+    margin: 4px 6px;
+    padding: 0;
+    border-radius: 0;
+    background: #d5d8e2;
+}
+
 .zk-menu li.zk-menu-pick {
     background: #0b4dda;
     color: #ffffff;
