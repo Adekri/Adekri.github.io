@@ -2,9 +2,8 @@
    Průvodce úkolem s ukázkovým účtem „Pepy“ (Have I Been Pwned).
    1. Student vyhledá Pepův e-mail a sám najde únik, ve kterém
       uniklo i heslo.
-   2. Na stránce Passwords prověří hesla z Pepova sešitu.
-   3. Vymyslí Pepovi nové heslo podle zásad z CIS/Strong_password
-      (povinně aspoň 15 znaků a heslo neuniklo) a dostane FLAG.
+   2. Na stránce Passwords prověří hesla z Pepova sešitu a dostane
+      FLAG. Tvorba bezpečného hesla je až v navazujícím úkolu.
    Kroky, kde má student volně procházet stránku, nepoužívají
    driver.js (ztmavil by stránku), ale panel „mise“ v rohu.
    Průvodce lze vypnout parametrem ?tour=0.
@@ -13,7 +12,7 @@
     if (new URLSearchParams(location.search).get('tour') === '0') return;
 
     const FLAG = 'FLAG(KazdyUcetJineHeslo)';
-    const TOTAL_STEPS = 9;
+    const TOTAL_STEPS = 8;
     const PEPA_EMAIL = 'pepa.zdepa@example.com';
     const PEPA_PASSWORDS = ['pepa123', 'fotbal', 'Sparta2010'];
     // kde Pepa které heslo používá (poznámka na papírku)
@@ -24,10 +23,8 @@
     handFont.rel = 'stylesheet';
     handFont.href = 'https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&display=swap';
     document.head.appendChild(handFont);
-    const EXAMPLE_PASSPHRASE = 'žirafa-kolo-polévka';
-    const MIN_LENGTH = 15;
-    // o kolik px pod horním okrajem okna má být pole pro heslo; panel s pravidly nového hesla je vyšší, proto výš
-    const FORM_TOP_GAP = { pwcheck: 110, challenge: 30 };
+    // o kolik px pod horním okrajem okna má být pole pro heslo
+    const FORM_TOP_GAP = 110;
     const STORAGE_KEY = 'hibp-tour';
 
     const NO_PROGRESS = ' '; // driver.js neumí počítadlo u jednoho kroku vypnout, tak ho nahradíme mezerou
@@ -228,7 +225,7 @@
             { showButtons: [], side: 'bottom' })]);
     }
 
-    /* ---------- 7.–9. hesla ---------- */
+    /* ---------- 7.–8. hesla ---------- */
 
     function startPwLook() {
         setPhase('pwlook');
@@ -252,7 +249,7 @@
     // a panel úkolu v pravém dolním rohu nepřekrývá tlačítko Check.
     function showPasswordArea() {
         const form = document.getElementById('checkForm');
-        const top = form.getBoundingClientRect().top + window.scrollY - (FORM_TOP_GAP[phase] || 110);
+        const top = form.getBoundingClientRect().top + window.scrollY - FORM_TOP_GAP;
         window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
     }
 
@@ -266,43 +263,6 @@
         setTimeout(showPasswordArea, 50);
     }
 
-    // Zásady stejné jako v úkolu CIS/Strong_password: povinná je jen délka a to, že heslo neuniklo.
-    // Velká písmena, čísla a speciální znaky jsou volitelné, délka je důležitější.
-    const OPTIONAL_RULES = [
-        ['upper', 'velké písmeno', /\p{Lu}/u],
-        ['lower', 'malé písmeno', /\p{Ll}/u],
-        ['number', 'číslo', /[0-9]/],
-        ['special', 'speciální znak (např. !@#$%^&*)', /[^\p{L}0-9\s]/u]
-    ];
-
-    function startChallenge() {
-        setPhase('challenge');
-        goTo('passwords');
-        mission.show(9, 'Vymyslete nové heslo',
-            'Žádné z hesel na papírku už není bezpečné. Vymyslete nové, které splní obě povinná pravidla.'
-            + '<div class="zk-rules-head">Povinné</div>'
-            + '<ul class="zk-checklist" data-rules>'
-            + `<li data-rule="length"><span>minimálně ${MIN_LENGTH} znaků</span></li>`
-            + '<li data-rule="pwned"><span>heslo neuniklo (ověří tlačítko <b>Check</b>)</span></li>'
-            + '</ul>'
-            + '<div class="zk-rules-head">Volitelné</div>'
-            + '<ul class="zk-checklist optional" data-rules>'
-            + OPTIONAL_RULES.map(([id, label]) => `<li data-rule="${id}"><span>${label}</span></li>`).join('')
-            + '</ul>'
-            + `<div class="zk-note">Tip: dlouhé heslo se dobře pamatuje, když spojíte několik slov, třeba <i>${EXAMPLE_PASSPHRASE}</i> (tohle ale nepoužívejte 😉). Tlačítkem s okem uvidíte, co píšete.</div>`);
-        updateRules(document.getElementById('checkInput').value, null);
-        setTimeout(showPasswordArea, 50);
-    }
-
-    // pwnedOk: true / false po kontrole, null = zatím neověřeno
-    function updateRules(password, pwnedOk) {
-        if (!mission.find('[data-rules]')) return;
-        const mark = (id, ok) => { mission.find(`[data-rule="${id}"]`).className = ok === true ? 'done' : ok === false ? 'fail' : ''; };
-        mark('length', [...password].length >= MIN_LENGTH ? true : null);
-        mark('pwned', pwnedOk);
-        OPTIONAL_RULES.forEach(([id, , re]) => mark(id, re.test(password) ? true : null));
-    }
-
     /* ---------- vlajka ---------- */
 
     function flagStep() {
@@ -313,7 +273,6 @@
             + '<b>Co si zapamatovat:</b><ul class="zk-list">'
             + '<li>Heslo, které uniklo, už nikdy nepoužívejte.</li>'
             + '<li>Každý účet má mít jiné heslo – pomůže správce hesel.</li>'
-            + '<li>Dlouhé heslo z několika slov se dobře pamatuje a těžko hádá.</li>'
             + '<li>Hesla nepište na papírky – kdokoli je může najít.</li>'
             + '<li>Svůj e-mail si doma ověřte na <b>haveibeenpwned.com</b>.</li></ul>',
             {
@@ -411,13 +370,13 @@
         else if (phase === 'hunt' && page === 'passwords') {
             goTo('home');
             mission.warn('Na hesla dojde za chvíli. Nejdřív najděte únik, ve kterém uniklo Pepovo heslo.');
-        } else if ((phase === 'pwcheck' || phase === 'challenge') && page === 'home') {
+        } else if (phase === 'pwcheck' && page === 'home') {
             mission.warn('Úkol pokračuje na stránce <b>Passwords</b> v menu nahoře.');
         }
     });
 
     document.addEventListener('hibp:password', (event) => {
-        const { password, count, offline } = event.detail;
+        const { password, count } = event.detail;
         if (phase === 'pwcheck') {
             if (!PEPA_PASSWORDS.includes(password)) {
                 mission.warn(`Heslo <code>${esc(password)}</code> na Pepově papírku není. Zkontrolujte velká a malá písmena.`);
@@ -430,32 +389,9 @@
             const old = mission.find('.zk-warning');
             if (old) old.remove();
             if (PEPA_PASSWORDS.every((pw) => Object.prototype.hasOwnProperty.call(checked, pw))) {
-                setTimeout(startChallenge, 1500);
-            }
-        } else if (phase === 'challenge') {
-            const longEnough = [...password].length >= MIN_LENGTH;
-            const normalized = password.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
-            const example = EXAMPLE_PASSPHRASE.normalize('NFD').replace(/[̀-ͯ]/g, '');
-            updateRules(password, count === 0);
-            showPasswordArea();
-            const old = mission.find('.zk-warning');
-            if (old) old.remove();
-            if (normalized.replace(/[\s_.,+]+/g, '-') === example) {
-                mission.warn('Tohle bylo jen ukázkové heslo. Vymyslete vlastní slova!');
-            } else if (count > 0) {
-                mission.warn(`Tohle heslo už uniklo ${count.toLocaleString('cs-CZ')}×. Zkuste jiné, méně obvyklé.`);
-            } else if (!longEnough) {
-                mission.warn(`V databázi není, ale je moc krátké – potřebuje aspoň ${MIN_LENGTH} znaků.`);
-            } else {
-                if (offline) mission.warn('Bez internetu šlo heslo ověřit jen částečně, ale pravidla splňuje.');
-                setTimeout(finish, offline ? 2500 : 900);
+                setTimeout(finish, 1500);
             }
         }
-    });
-
-    // Délka a volitelná pravidla se odškrtávají už při psaní.
-    document.getElementById('checkInput').addEventListener('input', (event) => {
-        if (phase === 'challenge') updateRules(event.target.value, null);
     });
 
     /* ---------- start (po obnovení stránky naváže, kde student skončil) ---------- */
@@ -468,7 +404,6 @@
             showFlagChip();
         } else if (saved.phase === 'pwlook') startPwLook();
         else if (saved.phase === 'pwcheck') startPwCheck();
-        else if (saved.phase === 'challenge') startChallenge();
         else if (saved.phase === 'nav' || saved.phase === 'found' || saved.phase === 'hunt' || saved.phase === 'summary') startEmail();
         else startIntro();
     }, 400);
