@@ -48,13 +48,6 @@
                 <p id="codeStatus">Čekáme na potvrzení…</p>
             </div>
         </div>
-        <div class="overlay" id="divOne">
-            <div class="wrapper">
-                <a href="#" id="Close" class="close">×</a>
-                <h2>Varování</h2>
-                <p>Vaše data byla odcizena! Útočník získal údaje o vaší platební kartě a vy jste mu v aplikaci banky potvrdili platbu.</p>
-            </div>
-        </div>
     </div>
     <!-- simulovaný telefon s aplikací banky, obsah plní phone.js -->
     <div class="phone" id="phone" hidden><div class="phone-screen"></div></div>
@@ -79,27 +72,7 @@
                 alert("Vyplňte prosím údaje o platební kartě.");
             }
         }
-
-        // jakmile oběť platbu potvrdí, útočník má peníze – ukážeme varování
-        document.addEventListener("dpd:payment", (event) => {
-            if (event.detail.payment !== "confirmed") return;
-            let div = document.getElementById("divOne");
-            div.style.visibility = "visible";
-            div.style.opacity = 1;
-        });
     </script>
-    <script>
-        let div = document.getElementById("divOne");
-        let btnClose = document.getElementById("Close");
-        btnClose.addEventListener("click", ClosePopup);
-        function ClosePopup(e) {
-            if (e) e.preventDefault();
-            div.style.visibility = "hidden";
-            div.style.opacity = 0;
-        }
-    </script>
-
-
 <script src="https://cdn.jsdelivr.net/npm/driver.js@1/dist/driver.js.iife.js"></script>
 <script src="phone.js"></script>
 <script src="tour.js"></script>

@@ -28,7 +28,9 @@ bezpečné placení…). Každý úkol je samostatná složka se statickými str
 
 - Scénáře a značky na funkčních stránkách jsou **fiktivní**. Skutečné firmy se
   objevují jen jako ukázka v podvodných e-mailech, ne jako funkční web, který bych
-  stavěla pod jejich jménem (nenapodobovat reálné firmy).
+  stavěla pod jejich jménem (nenapodobovat reálné firmy). Výjimka na přání autorky:
+  aplikace banky v `outlook/DPD/phone.js` má logo a název Smart Banky; nic nesbírá
+  a slouží jen jako simulace uvnitř úkolu.
 - Obrázky: fiktivní / volné (CC0) / ilustrační. Obličeje ber z
   `thispersondoesnotexist.com`; nikdy ne fotky skutečných lidí.
 - Úkoly necílí na identifikaci ani vyhledání konkrétní reálné osoby.
@@ -52,7 +54,7 @@ bezpečné placení…). Každý úkol je samostatná složka se statickými str
   e-mail od **„DPD"** (= jeden podvod) tvrdí, že zaplatil „přes dopravce", a odkaz
   na „vyzvednutí" vede na `DPD/` = podvodná stránka chtějící kartu a kód z SMS.
   Student vyplní cvičnou kartu (během průvodce jiná neprojde) a v simulovaném
-  telefonu (`DPD/phone.js`, fiktivní „Vaše banka") sám reaguje na žádost o potvrzení
+  telefonu (`DPD/phone.js`, podle Smart Banky od Monety) sám reaguje na žádost o potvrzení
   platby 5000 Kč místo slíbeného připsání. Zamítnutí nestačí, útočník má údaje dál:
   `FLAG(NaKartuNelzePoslatPenize)` je v závěrečném okně až po zablokování karty
   s důvodem „údaje získal někdo cizí" (jde i po potvrzení platby, jen se závěrem

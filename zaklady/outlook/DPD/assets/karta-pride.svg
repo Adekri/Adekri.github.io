@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="15 15 1135 720" preserveAspectRatio="xMidYMid slice">
+  <!-- geometrický vzor překreslený podle karty Pride Debit (střed podle svislé varianty): plné plochy a přes ně dlouhé průsvitné pruhy -->
+  <defs>
+    <linearGradient id="diagonala" x1="900" y1="15" x2="590" y2="460" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#d23a78"/>
+      <stop offset=".55" stop-color="#a98a72"/>
+      <stop offset="1" stop-color="#74c07a"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="15" y="15" width="1135" height="720" fill="#dd8a3a"/>
+
+  <!-- plné plochy -->
+  <polygon points="15,15 1150,15 1150,190 740,222 200,312 15,345" fill="#c0897a"/>
+  <polygon points="15,15 640,15 15,150" fill="#b23f8e"/>
+  <polygon points="100,15 345,15 15,118 15,62" fill="#8a2a7c"/>
+  <polygon points="15,120 80,132 15,165" fill="#9b8d86"/>
+  <polygon points="620,15 940,15 885,105 640,120" fill="#b84a78"/>
+  <polygon points="470,48 520,15 640,15" fill="#6b3f96"/>
+  <polygon points="940,15 1150,15 1150,85 885,105" fill="#6c3f97"/>
+  <polygon points="885,105 1150,82 1150,118 830,195" fill="#16988c"/>
+  <polygon points="830,195 1150,116 1150,152 800,232" fill="#d9bf6a"/>
+  <polygon points="800,232 1150,150 1150,190 760,262" fill="#c9c93c"/>
+  <polygon points="740,222 1150,186 1150,392 900,425 660,345" fill="#e6b722"/>
+  <polygon points="15,345 200,312 120,440 15,470" fill="#7168af"/>
+  <polygon points="200,312 340,290 740,222 563,480 270,365" fill="#17978b"/>
+  <polygon points="15,470 120,440 200,312 270,365 563,480 15,610" fill="#1f9c86"/>
+  <polygon points="15,610 563,480 15,705" fill="#3fa875"/>
+  <polygon points="15,705 563,480 790,560 640,735 15,735" fill="#a4bf5c"/>
+  <polygon points="513,535 646,620 550,735 403,643" fill="#e8b62a"/>
+  <polygon points="416,625 525,680 452,735 360,735" fill="#8f8a84"/>
+  <polygon points="15,680 80,735 15,735" fill="#a7c35c"/>
+  <polygon points="15,195 180,295 15,345" fill="#c8479a"/>
+
+  <!-- průsvitné pruhy -->
+  <polygon points="265,240 560,15 870,15 450,195" fill="#7d6470" fill-opacity=".42"/>
+  <polygon points="15,180 640,15 800,15 15,262" fill="#e0a78c" fill-opacity=".38"/>
+  <polygon points="840,15 940,15 610,470 550,440" fill="url(#diagonala)" fill-opacity=".85"/>
+  <polygon points="730,145 695,222 200,312 15,470 15,345 200,275" fill="#7168af" fill-opacity=".93"/>
+  <polygon points="200,312 300,293 395,320 610,470 563,500" fill="#72b274"/>
+  <polygon points="265,240 335,227 285,250" fill="#d6398f"/>
+
+  <!-- pravý dolní roh -->
+  <polygon points="640,735 1150,525 1150,620 860,735" fill="#d9603f" fill-opacity=".85"/>
+  <polygon points="860,735 1150,620 1150,735" fill="#cb3650"/>
+  <polygon points="563,500 610,470 1040,735 880,735" fill="#b9a24c" fill-opacity=".75"/>
+</svg>

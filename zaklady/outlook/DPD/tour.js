@@ -72,8 +72,7 @@
             }, LOOK) },
             { element: '.column2', popover: {
                 title: 'Pozor, co po vás chce',
-                description: 'Abyste prý peníze dostali, máte zadat <b>číslo karty, platnost a CVC</b>. Ty ale slouží k <b>placení</b>, ne k přijímání.'
-                    + '<div class="zk-note">Ve skutečnosti sem nic nezadávejte. Tady si na cvičné kartě ukážeme, co by následovalo.</div>',
+                description: 'Abyste prý peníze dostali, máte zadat <b>číslo karty, platnost a CVC</b>. Ty ale slouží k <b>placení</b>, ne k přijímání.',
                 popoverClass: 'zk-tour zk-left', nextBtnText: 'Pokračovat', doneBtnText: 'Pokračovat', showButtons: ['next'],
                 onNextClick: () => {
                     if (tour) { tour.destroy(); tour = null; }
