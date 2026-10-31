@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detekce podvodných odkazů</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="../tour.css">
     <style>
         /* --- FONT DEFINITIONS --- */
         @font-face {
@@ -183,6 +184,10 @@
             animation: slideIn 0.3s ease-out;
         }
 
+        .zk-flag .zk-btn {
+            font-family: inherit;
+        }
+
         @keyframes slideIn {
             from {
                 opacity: 0;
@@ -351,6 +356,8 @@
     </div>
 
     <script>
+        const FLAG = 'FLAG(NaOdkazSeNenachytam)';
+
         // 15 adres pro smíšené publikum (teenageři i méně zkušení dospělí), legitimní odkazy jsou rozprostřené.
         const levels = [
             {
@@ -564,10 +571,33 @@
                 urlDisplayEl.style.display = 'none';
                 nextBtn.style.display = 'none';
                 feedbackEl.className = 'feedback success';
-                feedbackEl.innerHTML = `<strong>Výborně!</strong><br>Podařilo se Vám odhalit všechny typy podvodů.<br><br><strong>FLAG(NaOdkazSeNenachytam)</strong>`;
+                feedbackEl.innerHTML = `<strong>Výborně!</strong><br>Podařilo se Vám odhalit všechny typy podvodů.`
+                    + `<div class="zk-flag"><code>${FLAG}</code>`
+                    + `<button type="button" class="zk-btn" data-copy-flag>Kopírovat</button></div>`;
+                const copyBtn = feedbackEl.querySelector('[data-copy-flag]');
+                copyBtn.addEventListener('click', () => {
+                    copyText(FLAG).then(() => { copyBtn.textContent = '✔ Zkopírováno'; });
+                });
                 levelDisplayEl.innerText = "Hotovo!";
             }
         };
+
+        function copyText(text) {
+            const legacy = () => {
+                const area = document.createElement('textarea');
+                area.value = text;
+                area.style.position = 'fixed';
+                area.style.opacity = '0';
+                document.body.appendChild(area);
+                area.select();
+                try { document.execCommand('copy'); } catch (e) { /* nic */ }
+                area.remove();
+            };
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                return navigator.clipboard.writeText(text).catch(legacy);
+            }
+            return Promise.resolve(legacy());
+        }
 
         loadLevel();
     </script>
