@@ -38,7 +38,14 @@
     inset: auto 24px 24px auto !important;
 }
 
-.driver-popover.zk-corner .driver-popover-arrow {
+/* okno průvodce vlevo dole; samotné nechá zvýraznění prvku, se zk-corner nahradí roh vpravo */
+.driver-popover.zk-tour.zk-left {
+    position: fixed !important;
+    inset: auto auto 24px 24px !important;
+}
+
+.driver-popover.zk-corner .driver-popover-arrow,
+.driver-popover.zk-left .driver-popover-arrow {
     display: none;
 }
 
@@ -414,6 +421,11 @@ body:has(.driver-popover.zk-corner) .driver-overlay {
 
 .zk-mission-body {
     margin-top: 10px;
+}
+
+.zk-mission-body [data-message] .zk-warning {
+    margin: 10px 0 0;
+    font-size: 14px;
 }
 
 .zk-mission.collapsed .zk-mission-body {

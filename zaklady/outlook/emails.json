@@ -13,7 +13,7 @@
       "initials": "DP",
       "avatarColor": "cranberry"
      },
-     "recipients": "Novák Jan (168149)",
+     "recipients": "Jan Novák",
      "subject": "Potřebujeme od vás ještě zaplatit částku za balíček",
      "date": "2026-10-27T08:42:00",
      "bodyHtml": "<p>Dobrý den,</p><p>evidujeme žádost o přepravu zboží č. 254100768 v hodnotě 5000 Kč. Částka i poštovné byla již uhrazena uživatelem Stanislav Dlouhý. Pro vyzvednutí částky 5000 Kč přejděte na webovou stránku DPD.</p><p>Na získání prostředků máte pouze měsíc, poté peníze propadnou a nebudete mít na ně už nárok.<br>Odkaz pro vybrání částky naleznete zde: <a href=\"DPD/index.html\" class=\"to-dpd\" target=\"_blank\" rel=\"noopener\">DPD</a></p><p>Vaše kurýrní DPD služba</p>",
@@ -23,31 +23,46 @@
      "id": 2,
      "isRead": false,
      "sender": {
-      "name": "Jaromír Novák",
-      "email": "jaromir.novak83@email.cz",
-      "initials": "JN",
-      "avatarColor": "steel"
-     },
-     "recipients": "Novák Jan (168149)",
-     "subject": "Zájem o koupi kola (platba na dobírku)",
-     "date": "2026-10-26T19:15:00",
-     "bodyHtml": "<p>Dobrý den,</p><p>měl bych zájem o kolo, které nabízíte na Bazaru. Je stále k dispozici? Pokud ano, poprosil bych o zaslání na dobírku Bleskurýrem na BleskBox.</p><p>Na následujícím odkaze posílám předvyplněný formulář pro odeslání zásilky: <a href=\"bleskuryr/bleskuryr.html\" class=\"to-form\" target=\"_blank\" rel=\"noopener\">Formulář</a></p><p>Děkuji a přeji hezký den,<br>Jaromír Novák<br>Tel.: 301 928 471</p>",
-     "type": "phishing"
-    },
-    {
-     "id": 3,
-     "isRead": false,
-     "sender": {
       "name": "Stanislav Dlouhý",
       "email": "stanislav.dlouhy@seznam.cz",
       "initials": "SD",
       "avatarColor": "grape"
      },
-     "recipients": "Novák Jan (168149)",
+     "recipients": "Jan Novák",
      "subject": "Bazar – koupě kola",
-     "date": "2026-10-24T14:30:00",
+     "date": "2026-10-27T08:31:00",
      "bodyHtml": "<p>Dobrý den,</p><p>o to kolo, co máte na bazaru na prodej, bych měl nakonec zájem. Zaplatím hned – peníze pošlu přes dopravce, takže vám během chvíle přijde e-mail od kurýrní služby s odkazem, kde si částku vyzvednete. Prosím vyřiďte to co nejrychleji, jinak peníze propadnou.</p><p>Přeji pěkný den,<br>Stanislav Dlouhý</p>",
      "type": "phishing"
+    },
+    {
+     "id": 3,
+     "isRead": true,
+     "sender": {
+      "name": "Jaromír Novák",
+      "email": "jaromir.novak83@email.cz",
+      "initials": "JN",
+      "avatarColor": "steel"
+     },
+     "recipients": "Jan Novák",
+     "subject": "Zájem o koupi kola (platba na dobírku)",
+     "date": "2026-10-26T19:15:00",
+     "bodyHtml": "<p>Dobrý den,</p><p>měl bych zájem o kolo, které nabízíte na Bazaru. Je stále k dispozici? Pokud ano, zaplatil bych na dobírku. Napište mi prosím, jakým dopravcem byste ho poslal a kolik by to vyšlo, a domluvíme se.</p><p>Děkuji a přeji hezký den,<br>Jaromír Novák<br>Tel.: 301 928 471</p>",
+     "type": "normal"
+    },
+    {
+     "id": 7,
+     "isRead": true,
+     "sender": {
+      "name": "Lenka Marková",
+      "email": "lenka.markova@seznam.cz",
+      "initials": "LM",
+      "avatarColor": "teal"
+     },
+     "recipients": "Jan Novák",
+     "subject": "Kolo z inzerátu – osobní odběr",
+     "date": "2026-10-25T10:02:00",
+     "bodyHtml": "<p>Dobrý den,</p><p>viděla jsem váš inzerát na kolo. Mohla bych se na něj v sobotu přijet podívat? Pokud bude v pořádku, zaplatím hotově na místě. Napište mi prosím, kdy a kde by se vám to hodilo.</p><p>Děkuji a hezký den,<br>Lenka Marková</p>",
+     "type": "normal"
     }
    ]
   },
@@ -64,7 +79,7 @@
       "initials": "ŠS",
       "avatarColor": "marigold"
      },
-     "recipients": "Novák Jan (168149)",
+     "recipients": "Jan Novák",
      "subject": "Ohodnoťte váš zážitek na polygonu",
      "date": "2026-10-16T11:05:00",
      "bodyHtml": "<p>Dobrý den,</p><p>děkujeme, že jste navštívili náš polygon. Budeme rádi, když si najdete chvilku a ohodnotíte svůj zážitek v krátkém dotazníku.</p><p>S pozdravem,<br>Tým Školy smyku Jihlava</p>",
@@ -79,7 +94,7 @@
       "initials": "R",
       "avatarColor": "teal"
      },
-     "recipients": "Novák Jan (168149)",
+     "recipients": "Jan Novák",
      "subject": "Now you can win a brand new keyboard",
      "date": "2026-10-12T09:20:00",
      "bodyHtml": "<p>Hi,</p><p>join our giveaway and you could win a brand new Razer mechanical keyboard. Enter now and don't miss your chance!</p><p>— The Razer Team</p>",
@@ -94,7 +109,7 @@
       "initials": "YT",
       "avatarColor": "red"
      },
-     "recipients": "Novák Jan (168149)",
+     "recipients": "Jan Novák",
      "subject": "Aktualizovali jsme smluvní podmínky používání našich služeb",
      "date": "2026-10-05T16:48:00",
      "bodyHtml": "<p>Dobrý den,</p><p>aktualizovali jsme smluvní podmínky používání našich služeb. Změny vstupují v platnost automaticky, žádná akce z vaší strany není nutná.</p><p>S pozdravem,<br>Tým YouTube</p>",

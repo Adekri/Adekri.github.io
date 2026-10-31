@@ -1,84 +1,14 @@
 /* ============================================================
-   Průvodce úkolem „Bazarový prodej – jak si nechat bezpečně zaplatit“.
-   Běží na dvou stránkách:
-   1. schránka (index.html) – volné prohlížení odpovědí. Panel v rohu
-      zadá úkol a po otevření každé zprávy se po chvilce ukáže popisek.
-      Odkazy DPD i Bleskurýr se otevírají v nové záložce.
-   2. Bleskurýr (bleskuryr/bleskuryr.html) – bezpečný formulář, kde se
-      zadá jen číslo účtu a student dostane FLAG.
-   Podvodnou stránku DPD vede vlastní průvodce (DPD/tour.js) – tam FLAG
-   není, jen upozornění.
+   Průvodce úkolem „Bazarový prodej – podvod přes falešného dopravce“.
+   Běží ve schránce (index.html): panel v rohu vede studenta po
+   podvodné cestě (Stanislav -> e-mail od „DPD“ -> odkaz na podvodnou
+   stránku). Ostatní zprávy jsou legitimní a slouží jen pro srovnání.
+   Na stránce DPD pokračuje vlastní průvodce (DPD/tour.js), tam je FLAG.
    Průvodce lze vypnout parametrem ?tour=0.
    ============================================================ */
 (function () {
     if (new URLSearchParams(location.search).get('tour') === '0') return;
-    if (!window.driver || !window.driver.js) return;
-
-    const driver = window.driver.js.driver;
-    const onInbox = !!document.getElementById('messageList');
-    const onForm = !!document.getElementById('zasilkaForm');
-    if (!onInbox && !onForm) return;
-
-    // údaje prodávajícího (jméno odpovídá příjemci ve schránce; účet musí sedět s kontrolou v bleskuryr.html)
-    const NAME = 'Jan Novák';
-    const PHONE = '777 123 456';
-    const ACCOUNT = '265066011/5500';
-    const FLAG = 'FLAG(NaKartuNelzePoslatPenize)';
-
-    const LOOK = { popoverClass: 'zk-tour zk-corner', nextBtnText: 'Pokračovat', showButtons: ['next'] };
-
-    /* ---------- kopírování textu kliknutím ---------- */
-
-    function esc(text) {
-        const div = document.createElement('div');
-        div.textContent = text;
-        return div.innerHTML;
-    }
-
-    function copyable(text) {
-        return `<span class="zk-copy" data-copy-text="${esc(text)}" title="Kliknutím zkopírujete"><b>${esc(text)}</b></span>`;
-    }
-
-    function copyText(text) {
-        const legacy = () => {
-            const area = document.createElement('textarea');
-            area.value = text;
-            area.style.position = 'fixed';
-            area.style.opacity = '0';
-            document.body.appendChild(area);
-            area.select();
-            try { document.execCommand('copy'); } catch (e) { /* nic */ }
-            area.remove();
-        };
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-            return navigator.clipboard.writeText(text).catch(legacy);
-        }
-        return Promise.resolve(legacy());
-    }
-
-    document.addEventListener('click', (event) => {
-        const el = event.target.closest('[data-copy-text]');
-        if (!el) return;
-        copyText(el.dataset.copyText).then(() => {
-            el.classList.add('copied');
-            setTimeout(() => el.classList.remove('copied'), 1400);
-        });
-    });
-
-    function build(steps) {
-        return driver({
-            allowClose: false,
-            allowKeyboardControl: false,
-            overlayOpacity: 0.2,
-            stagePadding: 6,
-            stageRadius: 8,
-            showProgress: false,
-            popoverClass: 'zk-tour',
-            nextBtnText: 'Další',
-            doneBtnText: 'Hotovo',
-            steps
-        });
-    }
+    if (!document.getElementById('messageList')) return;
 
     function waitFor(selector, cb, tries) {
         tries = tries || 0;
@@ -86,10 +16,6 @@
         if (tries > 24) return; // ~3,6 s
         setTimeout(() => waitFor(selector, cb, tries + 1), 150);
     }
-
-    /* ============================================================
-       Schránka (index.html) – panel v rohu + popisky po otevření
-       ============================================================ */
 
     // Panel jde sbalit, aby nezakrýval obsah.
     document.addEventListener('click', (event) => {
@@ -111,7 +37,7 @@
             this.el.hidden = false;
             this.el.classList.remove('collapsed');
         },
-        // popisek k otevřené zprávě; cls: 'zk-warning' | 'zk-success' | 'zk-note'
+        // popisek k otevřené zprávě; cls: 'zk-warning' | 'zk-note'
         note(html, cls) {
             if (!this.el) return;
             const body = this.el.querySelector('.zk-mission-body');
@@ -122,119 +48,44 @@
         }
     };
 
-    // popisky k jednotlivým zprávám (zájemce 1 = Stanislav + DPD = jeden podvod, zájemce 2 = Jaromír = bezpečný)
+    const STANISLAV_ID = '2';
+    const opened = new Set();
+
+    // Popisky k jednotlivým zprávám. Stanislav + „DPD“ = jeden podvod, `other` = zpráva mimo podvodnou cestu.
     const NOTES = {
-        '3': { cls: 'zk-warning', html: '<b>Zájemce 1 – Stanislav.</b> Tvrdí, že za kolo pošle peníze „přes dopravce“ a vy si je máte vyzvednout přes e-mail, který hned dorazí. Tlačí na rychlost (jinak prý peníze propadnou) – <b>nátlak na čas</b> je typický pro podvod. Tím slíbeným e-mailem je zpráva od <b>„DPD“</b>.' },
-        '1': { cls: 'zk-warning', html: '<b>Druhá část Stanislavova podvodu.</b> Zpráva tvrdí, že částku 5000 Kč už uhradil Stanislav a vy si ji vyzvednete přes odkaz. Otevřete odkaz <b>DPD</b> (nová záložka) a všimněte si, co stránka chce: <b>číslo karty a CVC</b>. Tím ale peníze nepřijmete – naopak byste útočníkovi umožnili platit z vaší karty.' },
-        '2': { cls: 'zk-success', html: '<b>Zájemce 2 – Jaromír.</b> Poctivá nabídka: zaplatí na <b>dobírku</b> přes Bleskurýr. V jeho <b>formuláři</b> se zadává jen <b>číslo účtu</b>, na které peníze přijdou – nic víc není potřeba. Tudy je to bezpečné.' },
-        '4': { cls: 'zk-note', html: 'Běžná zpráva, s prodejem kola nesouvisí.' },
-        '5': { cls: 'zk-note', html: 'Reklama, s prodejem nesouvisí.' },
-        '6': { cls: 'zk-note', html: 'Běžné oznámení služby.' }
+        '2': { cls: 'zk-warning', html: 'Stanislav tvrdí, že peníze pošle „přes dopravce“ a vy si je vyzvednete přes odkaz v e-mailu. Spěchá, jinak prý peníze propadnou. <b>Nátlak na čas</b> by měl vzbudit pozornost.<br><br>Otevřete zprávu od <b>DPD kurýr</b>.' },
+        '1': { cls: 'zk-warning', html: 'To je slíbený e-mail. Všimněte si adresy odesílatele <b>dpd-vyplata-zasilka.info</b> a další lhůty, po které peníze prý propadnou.<br><br>Klikněte v e-mailu na odkaz <b>DPD</b>. Otevře se v nové záložce.' },
+        '3': { cls: 'zk-note', other: true, html: 'Běžná odpověď: zájemce navrhuje dobírku a chce se domluvit. Neposílá žádný odkaz.' },
+        '7': { cls: 'zk-note', other: true, html: 'Běžná odpověď: zájemkyně se chce domluvit na osobním odběru a zaplatit hotově.' },
+        '4': { cls: 'zk-note', other: true, html: 'Běžná zpráva, s prodejem kola nesouvisí.' },
+        '5': { cls: 'zk-note', other: true, html: 'Reklama, s prodejem nesouvisí.' },
+        '6': { cls: 'zk-note', other: true, html: 'Běžné oznámení služby.' }
     };
 
-    function initInbox() {
-        let noteTimer = null;
-        document.addEventListener('click', (event) => {
-            const item = event.target.closest('.message-item');
-            if (!item) return;
-            const note = NOTES[item.dataset.emailId];
-            clearTimeout(noteTimer);
-            // popisek až po chvilce, ať si student text zprávy nejdřív přečte
-            noteTimer = setTimeout(() => { if (note) mission.note(note.html, note.cls); }, 1000);
+    function noteHtml(note) {
+        if (!note.other) return note.html;
+        const next = opened.has(STANISLAV_ID) ? 'DPD kurýr' : 'Stanislava Dlouhého';
+        return `${note.html}<br><br>Pokračujte zprávou od <b>${next}</b>.`;
+    }
+
+    document.addEventListener('click', (event) => {
+        const item = event.target.closest('.message-item');
+        if (!item) return;
+        const id = item.dataset.emailId;
+        const note = NOTES[id];
+        opened.add(id);
+        if (note) mission.note(noteHtml(note), note.cls);
+    });
+
+    waitFor('#messageList .message-item', () => {
+        mission.show('Prodáváte kolo',
+            'Na inzerát na prodej kola přišlo několik odpovědí. Většina je v pořádku, mezi nimi je ale i <b>pokus o podvod</b>. Podíváme se, jak funguje.');
+        mission.note('Otevřete zprávu od <b>Stanislava Dlouhého</b>.', 'zk-note');
+
+        // Panel umístíme vlevo přes seznam složek – tam nepřekáží čtení zprávy ani seznamu e-mailů.
+        Object.assign(mission.el.style, {
+            left: '52px', right: 'auto', width: '235px', boxSizing: 'border-box',
+            maxHeight: 'calc(100vh - 110px)', overflowY: 'auto'
         });
-
-        waitFor('#messageList', () => {
-            mission.show('Prodáváte kolo',
-                'Na inzerát na prodej kola odpověděli <b>dva zájemci</b> a každý navrhuje jiný způsob, jak dostanete zaplaceno. Jeden z nich je <b>podvodník</b>.'
-                + '<div class="zk-note">Projděte si obě nabídky, porovnejte je a vyberte tu <b>bezpečnou</b> cestu, jak si necháte zaplatit.</div>');
-
-            // Panel umístíme vlevo přes seznam složek – tam nepřekáží čtení zprávy ani seznamu e-mailů.
-            Object.assign(mission.el.style, {
-                left: '52px', right: 'auto', width: '235px', boxSizing: 'border-box',
-                maxHeight: 'calc(100vh - 110px)', overflowY: 'auto'
-            });
-        });
-    }
-
-    /* ============================================================
-       Bleskurýr (bleskuryr/bleskuryr.html) – tady je FLAG
-       ============================================================ */
-
-    let tour = null;
-
-    function startForm() {
-        tour = build([
-            { popover: Object.assign({
-                title: 'Formulář dopravce',
-                description: 'Tímto formulářem odešlete balík na dobírku: zboží pošlete a peníze vám přijdou po doručení.'
-            }, LOOK) },
-            { element: '#zasilkaForm', popover: {
-                title: 'Vyplňte a odešlete',
-                description: 'Vyplňte údaje o odesílateli a klikněte na <b>Odeslat zásilku</b>. K přijetí peněz na dobírku stačí <b>číslo účtu</b>, kartu nikdo nepotřebuje.'
-                    + '<div class="zk-note">Vaše údaje (klikněte pro zkopírování):<br>'
-                    + 'Jméno: ' + copyable(NAME) + '<br>'
-                    + 'Telefon: ' + copyable(PHONE) + '<br>'
-                    + 'Číslo účtu: ' + copyable(ACCOUNT) + '</div>',
-                side: 'top', align: 'center', showButtons: []
-            } }
-        ]);
-        tour.drive();
-        watchModal();
-    }
-
-    function watchModal() {
-        const modal = document.getElementById('modal');
-        if (!modal) return;
-        const shown = () => modal.style.display && modal.style.display !== 'none';
-        const obs = new MutationObserver(() => {
-            if (!shown()) return;
-            obs.disconnect();
-            if (tour) { tour.destroy(); tour = null; }
-            const close = document.getElementById('closeModal');
-            if (close) close.addEventListener('click', summary, { once: true });
-        });
-        obs.observe(modal, { attributes: true, attributeFilter: ['style'] });
-    }
-
-    function summary() {
-        let t;
-        t = build([
-            { popover: {
-                popoverClass: 'zk-tour zk-wide',
-                title: 'Výborně, hotovo!',
-                description: 'Tady je FLAG:'
-                    + '<div class="zk-flag"><code>' + esc(FLAG) + '</code>'
-                    + '<button type="button" class="zk-btn" data-copy-flag>Kopírovat</button></div>'
-                    + '<b>Co si zapamatovat:</b><ul class="zk-list">'
-                    + '<li>K <b>přijetí</b> peněz stačí číslo účtu.</li>'
-                    + '<li>Číslo karty, platnost a CVC slouží k <b>placení</b>, ne k přijímání. Kdo je po vás chce „kvůli připsání peněz“, je podvodník.</li>'
-                    + '</ul>',
-                nextBtnText: 'Zavřít', doneBtnText: 'Zavřít', showButtons: ['next'],
-                onNextClick: function () { if (t) t.destroy(); showFlagChip(); },
-                onPopoverRender: function (popover) {
-                    const btn = popover.description.querySelector('[data-copy-flag]');
-                    if (btn) btn.addEventListener('click', function () {
-                        copyText(FLAG).then(function () { btn.textContent = '✔ Zkopírováno'; });
-                    });
-                }
-            } }
-        ]);
-        t.drive();
-    }
-
-    // Po zavření okna s vlajkou zůstane vpravo dole tlačítko, kterým ji lze znovu zobrazit.
-    function showFlagChip() {
-        if (document.querySelector('.zk-chip')) return;
-        const chip = document.createElement('button');
-        chip.type = 'button';
-        chip.className = 'zk-chip';
-        chip.textContent = 'Zobrazit FLAG';
-        chip.addEventListener('click', summary);
-        document.body.appendChild(chip);
-    }
-
-    /* ---------- start ---------- */
-
-    if (onInbox) initInbox();
-    else if (onForm) setTimeout(startForm, 300);
+    });
 })();

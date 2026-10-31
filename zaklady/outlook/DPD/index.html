@@ -40,15 +40,24 @@
                 <p class="money">Částka: 5000Kč</p>
                 <a class="btn" id="btn_submit" name="submit" method="post">Vyzvednout částku</a>
             </form>
+            <!-- druhý krok podvodu: stránka slibuje připsání, aplikace banky ale žádá potvrzení platby -->
+            <div id="codeStep" hidden>
+                <h3>Potvrzení připsání částky</h3>
+                <p>Pro připsání 5000 Kč potvrďte operaci v aplikaci své banky.</p>
+                <p class="money">Částka k připsání: 5000Kč</p>
+                <p id="codeStatus">Čekáme na potvrzení…</p>
+            </div>
         </div>
         <div class="overlay" id="divOne">
             <div class="wrapper">
                 <a href="#" id="Close" class="close">×</a>
                 <h2>Varování</h2>
-                <p>Vaše data byla odcizena! Útočník získal údaje o vaší platební kartě.</p>
+                <p>Vaše data byla odcizena! Útočník získal údaje o vaší platební kartě a vy jste mu v aplikaci banky potvrdili platbu.</p>
             </div>
         </div>
     </div>
+    <!-- simulovaný telefon s aplikací banky, obsah plní phone.js -->
+    <div class="phone" id="phone" hidden><div class="phone-screen"></div></div>
   <footer>
     DPD © 2024 | <a href="podminky.html">Obchodní podmínky</a>
   </footer>
@@ -60,17 +69,24 @@
             let month = document.getElementById("Month").value;
             let year = document.getElementById("Year").value;
             let code = document.getElementById("CVCode").value;
-            console.log(cardNumber, month, year, code);
-            let div = document.getElementById("divOne");
-            // jakmile oběť kartu zadá, útočník má její údaje – ukážeme varování (projde libovolná vyplněná karta)
+            // údaje se nikam neodesílají; po vyplnění stránka čeká na potvrzení v aplikaci banky (projde libovolná vyplněná karta)
             const cardOk = /^\d{4} \d{4} \d{4} \d{4}$/.test(cardNumber) || /^\d{13,19}$/.test(cardNumber);
             if (cardOk && month && year && code) {
-                div.style.visibility = "visible";
-                div.style.opacity = 1;
+                document.querySelector(".column2 form").style.display = "none";
+                document.getElementById("codeStep").hidden = false;
+                setTimeout(() => dpdPhone.open(cardNumber.slice(-4)), 1200);
             } else {
                 alert("Vyplňte prosím údaje o platební kartě.");
             }
         }
+
+        // jakmile oběť platbu potvrdí, útočník má peníze – ukážeme varování
+        document.addEventListener("dpd:payment", (event) => {
+            if (event.detail.payment !== "confirmed") return;
+            let div = document.getElementById("divOne");
+            div.style.visibility = "visible";
+            div.style.opacity = 1;
+        });
     </script>
     <script>
         let div = document.getElementById("divOne");
@@ -85,5 +101,6 @@
 
 
 <script src="https://cdn.jsdelivr.net/npm/driver.js@1/dist/driver.js.iife.js"></script>
+<script src="phone.js"></script>
 <script src="tour.js"></script>
 </body></html>

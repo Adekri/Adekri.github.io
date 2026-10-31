@@ -11,7 +11,9 @@
   'opsz' 24
 }
 body{
-    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 /*navbar*/
 nav{
@@ -179,6 +181,7 @@ nav  a .material-symbols-outlined:hover{
 footer{
     bottom: 0;
     position: relative;
+    margin-top: auto;
     width: 100%;
     height: 100px;
     background-color: rgb(49, 48, 48);
@@ -262,4 +265,205 @@ footer{
     .nav_content .item a{
         display: none;
     }
+}
+/* s průvodcem: když se sloupce složí pod sebe, formulář by zakryl panel, proto uhne doprava */
+@media (min-width: 761px) and (max-width: 1140px){
+    body.zk-guided .container{
+        display: block;
+        left: 0;
+        box-sizing: border-box;
+        width: calc(100% - 436px);
+        margin-left: 420px;
+    }
+    body.zk-guided:has(.phone:not([hidden])) .container{
+        width: calc(100% - 744px);
+    }
+    body.zk-guided .column1,
+    body.zk-guided .column2{
+        float: none;
+        box-sizing: border-box;
+        width: auto;
+        min-width: 0;
+        margin: 0;
+        padding: 20px 10px;
+    }
+    body.zk-guided .column1 h4{
+        width: auto;
+        margin: 0;
+    }
+    body.zk-guided .column1 .visa{
+        margin: 0 0 10px;
+    }
+}
+/* druhý krok: čekání na potvrzení v aplikaci banky */
+#codeStep{
+    padding-left: 20px;
+}
+#codeStep h3{
+    margin-top: 15px;
+}
+#codeStep[hidden],
+.phone[hidden]{
+    display: none;
+}
+
+/* simulovaný telefon s aplikací banky */
+.phone{
+    position: fixed;
+    top: 16px;
+    right: 24px;
+    z-index: 8000;
+    box-sizing: border-box;
+    width: 280px;
+    height: min(560px, calc(100vh - 32px));
+    padding: 10px;
+    border-radius: 30px;
+    background: #15171c;
+    box-shadow: 0 10px 34px rgba(0, 0, 0, .4);
+}
+.phone-screen{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow-y: auto;
+    border-radius: 21px;
+    background: #f3f5f9;
+    color: #1a1d24;
+}
+.phone-screen,
+.phone-screen *{
+    font-family: "Segoe UI", system-ui, Arial, sans-serif;
+}
+.phone-lock{
+    flex: 1;
+    padding: 34px 12px;
+    background: linear-gradient(170deg, #27476b, #101b2b);
+    text-align: center;
+}
+.phone-time{
+    margin-bottom: 34px;
+    color: #ffffff;
+    font-size: 46px;
+    font-weight: 300;
+}
+.phone-push{
+    display: block;
+    width: 100%;
+    padding: 12px 14px;
+    border: 0;
+    border-radius: 14px;
+    background: #ffffff;
+    color: #1a1d24;
+    font-size: 14px;
+    line-height: 1.35;
+    text-align: left;
+    cursor: pointer;
+}
+.phone-push b{
+    display: block;
+    margin-bottom: 3px;
+}
+.phone-bar{
+    padding: 16px;
+    background: #27476b;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+    text-align: center;
+}
+.phone-body{
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 9px;
+    padding: 16px;
+    font-size: 14px;
+    line-height: 1.4;
+}
+.phone-body h4{
+    font-size: 17px;
+}
+.phone-amount{
+    font-size: 26px;
+    font-weight: 700;
+}
+.phone-label{
+    color: #5d6472;
+    font-size: 13px;
+}
+.phone-details{
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 5px 12px;
+    margin-bottom: 8px;
+}
+.phone-details dt{
+    color: #5d6472;
+}
+.phone-btn{
+    padding: 10px;
+    border: 0;
+    border-radius: 10px;
+    background: #27476b;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+}
+.phone-btn-light{
+    background: #dfe4ec;
+    color: #1a1d24;
+}
+.phone-btn-danger{
+    background: #b3261e;
+}
+.phone-link{
+    padding: 6px 0;
+    border: 0;
+    background: none;
+    color: #b3261e;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+.phone-state{
+    padding: 9px 11px;
+    border-radius: 10px;
+    background: #fff1d6;
+    color: #6b4200;
+    font-weight: 600;
+}
+.phone-state-done{
+    background: #dff3e4;
+    color: #17572c;
+}
+.phone-card{
+    margin-top: 6px;
+    padding: 12px;
+    border-radius: 12px;
+    background: #ffffff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .12);
+    text-align: center;
+}
+.phone-card div{
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 4px;
+    font-size: 13px;
+    text-align: left;
+}
+.phone-card span{
+    color: #17572c;
+}
+.phone-body label{
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    cursor: pointer;
+}
+.phone-error{
+    min-height: 19px;
+    color: #b3261e;
+    font-size: 13px;
 }

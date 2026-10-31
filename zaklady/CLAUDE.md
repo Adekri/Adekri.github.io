@@ -46,15 +46,20 @@ bezpečné placení…). Každý úkol je samostatná složka se statickými str
 ## Poznámky k jednotlivým úkolům
 
 - **outlook/** – cvičná schránka. Už NENÍ o označování e-mailů (ta funkce byla
-  odstraněna); slouží jako vstup do úkolu o bezpečném placení (bazarový podvod).
-  Rámec: prodáváte kolo a ozvali se **dva zájemci** – student je má porovnat.
-  Zájemce 1 (**Stanislav** + návazný e-mail od **„DPD"** = jeden podvod) tvrdí,
-  že zaplatil „přes dopravce", a odkaz na „vyzvednutí" vede na `DPD/` = podvodná
-  stránka chtějící kartu (jen upozornění, FLAG tu NENÍ). Zájemce 2 (**Jaromír**)
-  platí na dobírku přes `bleskuryr/` = bezpečná cesta (jen číslo účtu, tady je
-  `FLAG(NaKartuNelzePoslatPenize)`). Odkazy se otevírají v nové záložce. Schránka
-  je volné prohlížení s panelem v rohu a popisky po otevření zprávy (popisky
-  zájemce i podvod explicitně pojmenovávají, aby bylo vazbu Stanislav↔DPD vidět).
+  odstraněna); slouží jako vstup do úkolu o bazarovém podvodu, cílem je seznámit
+  se s rizikem, ne vybírat bezpečnou cestu. Rámec: prodáváte kolo a přišlo
+  několik odpovědí. Průvodce vede jen po podvodné cestě: **Stanislav** + návazný
+  e-mail od **„DPD"** (= jeden podvod) tvrdí, že zaplatil „přes dopravce", a odkaz
+  na „vyzvednutí" vede na `DPD/` = podvodná stránka chtějící kartu a kód z SMS.
+  Student vyplní cvičnou kartu (během průvodce jiná neprojde) a v simulovaném
+  telefonu (`DPD/phone.js`, fiktivní „Vaše banka") sám reaguje na žádost o potvrzení
+  platby 5000 Kč místo slíbeného připsání. Zamítnutí nestačí, útočník má údaje dál:
+  `FLAG(NaKartuNelzePoslatPenize)` je v závěrečném okně až po zablokování karty
+  s důvodem „údaje získal někdo cizí" (jde i po potvrzení platby, jen se závěrem
+  o ztracených penězích). **Jaromír** (dobírka) a
+  **Lenka** (osobní odběr) jsou legitimní zprávy pro srovnání, bez odkazů.
+  Odkaz na DPD se otevírá v nové záložce. Schránka má panel v rohu a popisky po
+  otevření zprávy. Složka `bleskuryr/` už v úkolu není použitá (nic na ni nevede).
 - **titaskin.com/** – podvodný e-shop; úkol na placení se chystá jako druhý
   průvodce přes parametr `?ukol=…`.
 - **facebook/** – vstup do úkolu „Podvodný e-shop“ (kroky 1–2 ve vlastním

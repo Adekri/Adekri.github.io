@@ -1,9 +1,11 @@
 /* ============================================================
    Průvodce podvodnou stránkou „DPD – vyzvednutí částky“.
-   Nebezpečná cesta z úkolu o bezpečném placení: stránka po
-   prodávajícím chce údaje o kartě, aby mu prý připsala peníze.
-   Průvodce na to upozorní. Kartu zadávat NEMUSÍ; když ji zadá,
-   ukáže se jen varování – FLAG tu NENÍ (ten je až na Bleskurýru).
+   Závěr úkolu o bazarovém podvodu: stránka slibuje připsání peněz,
+   ve skutečnosti chce údaje o kartě a potvrzení v aplikaci banky,
+   kterým by oběť schválila platbu. Student si to vyzkouší na cvičné
+   kartě a v simulovaném telefonu (phone.js) sám zareaguje. FLAG se
+   ukáže až po zablokování karty: zamítnutí platby nestačí, protože
+   útočník má údaje o kartě dál. Blokace je možná i po potvrzení.
    Průvodce lze vypnout parametrem ?tour=0.
    ============================================================ */
 (function () {
@@ -13,19 +15,16 @@
 
     const driver = window.driver.js.driver;
 
-    // cvičná (neplatná) karta pro ty, kdo chtějí vidět následek – ne svoji skutečnou
+    // cvičná (neplatná) karta, aby nikdo nezkoušel svoji skutečnou
     const CARD = '4000 1234 5678 9010';
+    const FLAG = 'FLAG(NaKartuNelzePoslatPenize)';
 
-    const LOOK = { popoverClass: 'zk-tour zk-corner', nextBtnText: 'Pokračovat', showButtons: ['next'] };
+    const LOOK = { popoverClass: 'zk-tour zk-corner zk-left', nextBtnText: 'Pokračovat', doneBtnText: 'Pokračovat', showButtons: ['next'] };
 
     function esc(text) {
         const div = document.createElement('div');
         div.textContent = text;
         return div.innerHTML;
-    }
-
-    function copyable(text) {
-        return `<span class="zk-copy" data-copy-text="${esc(text)}" title="Kliknutím zkopírujete"><b>${esc(text)}</b></span>`;
     }
 
     function copyText(text) {
@@ -45,17 +44,9 @@
         return Promise.resolve(legacy());
     }
 
-    document.addEventListener('click', (event) => {
-        const el = event.target.closest('[data-copy-text]');
-        if (!el) return;
-        copyText(el.dataset.copyText).then(() => {
-            el.classList.add('copied');
-            setTimeout(() => el.classList.remove('copied'), 1400);
-        });
-    });
-
     let tour = null;
-    let warningShown = false;
+    let panel = null;
+    let paid = false;
 
     function build(steps) {
         return driver({
@@ -73,6 +64,7 @@
     }
 
     function start() {
+        document.body.classList.add('zk-guided'); // viz assets/style.css
         tour = build([
             { popover: Object.assign({
                 title: 'Kam vede odkaz z e-mailu',
@@ -80,52 +72,141 @@
             }, LOOK) },
             { element: '.column2', popover: {
                 title: 'Pozor, co po vás chce',
-                description: 'Abyste prý peníze dostali, máte zadat <b>číslo karty, platnost a CVC</b>. Jenže ty slouží k <b>placení</b>, ne k přijímání – k přijetí peněz je nikdo nepotřebuje. <b>Nic sem nezadávejte.</b>',
-                side: 'left', nextBtnText: 'Rozumím', doneBtnText: 'Rozumím', showButtons: ['next'],
+                description: 'Abyste prý peníze dostali, máte zadat <b>číslo karty, platnost a CVC</b>. Ty ale slouží k <b>placení</b>, ne k přijímání.'
+                    + '<div class="zk-note">Ve skutečnosti sem nic nezadávejte. Tady si na cvičné kartě ukážeme, co by následovalo.</div>',
+                popoverClass: 'zk-tour zk-left', nextBtnText: 'Pokračovat', doneBtnText: 'Pokračovat', showButtons: ['next'],
                 onNextClick: () => {
                     if (tour) { tour.destroy(); tour = null; }
-                    if (!warningShown) safeHint();
+                    showCardStep();
                 }
             } }
         ]);
         tour.drive();
-        watchOverlay();
     }
 
-    // Když student projde upozornění, aniž by kartu zadal, ukážeme závěr s odkazem na bezpečnou cestu.
-    function safeHint() {
-        build([
-            { popover: Object.assign({
-                title: 'Jak si nechat zaplatit bezpečně',
-                description: 'Kartu k přijetí peněz nikdy nezadávejte. Zavřete tuhle záložku a použijte <b>dobírku přes Bleskurýr</b> – tam se zadává jen <b>číslo účtu</b>.'
-            }, { popoverClass: 'zk-tour zk-corner', nextBtnText: 'Zavřít', doneBtnText: 'Zavřít', showButtons: ['next'] }) }
-        ]).drive();
+    /* ---------- panel (nebrání práci se stránkou) ---------- */
+
+    function showPanel(html) {
+        if (!panel) {
+            panel = document.createElement('aside');
+            panel.className = 'zk-mission zk-tour';
+            // vpravo je telefon
+            Object.assign(panel.style, { left: '24px', right: 'auto' });
+            document.body.appendChild(panel);
+        }
+        panel.innerHTML = '<div class="zk-mission-head"><b>Co by následovalo</b>'
+            + '<button type="button" class="zk-mission-toggle" aria-label="Skrýt úkol" title="Skrýt / zobrazit">–</button></div>'
+            + `<div class="zk-mission-body">${html}</div>`;
+        panel.classList.remove('collapsed');
     }
 
-    // Pokud student kartu přece jen zadá, ukáže se varování (stránka sama) a pak tenhle závěr. Žádný FLAG.
-    function watchOverlay() {
-        const warn = document.getElementById('divOne');
-        if (!warn) return;
-        const shown = () => getComputedStyle(warn).visibility === 'visible';
-        const obs = new MutationObserver(() => {
-            if (!shown()) return;
-            obs.disconnect();
-            warningShown = true;
-            if (tour) { tour.destroy(); tour = null; }
-            const close = document.getElementById('Close');
-            if (close) close.addEventListener('click', stolenHint, { once: true });
-        });
-        obs.observe(warn, { attributes: true, attributeFilter: ['style'] });
+    function showMessage(html) {
+        panel.querySelector('[data-message]').innerHTML = `<div class="zk-warning">${html}</div>`;
     }
 
-    function stolenHint() {
-        build([
-            { popover: Object.assign({
-                title: 'A je to venku',
-                description: 'Jakmile jste kartu zadali, útočník má její údaje a žádné peníze vám nepřijdou. K <b>přijetí</b> peněz se karta nikdy nezadává.'
-                    + '<br><br>Zavřete tuhle záložku a nechte si zaplatit bezpečně přes <b>Bleskurýr</b> (jen číslo účtu).'
-            }, { popoverClass: 'zk-tour zk-corner', nextBtnText: 'Zavřít', doneBtnText: 'Zavřít', showButtons: ['next'] }) }
-        ]).drive();
+    document.addEventListener('click', (event) => {
+        const toggle = event.target.closest('.zk-mission-toggle');
+        if (toggle) toggle.closest('.zk-mission').classList.toggle('collapsed');
+    });
+
+    /* ---------- krok 1: cvičná karta ---------- */
+
+    function showCardStep() {
+        showPanel('Vyplňte <b>cvičnou kartu</b> a klikněte na <b>Vyzvednout částku</b>. Svoji skutečnou kartu nepoužívejte.'
+            + '<div class="zk-actions"><button type="button" class="zk-btn" data-fill-card>Vyplnit cvičnou kartu</button></div>'
+            + '<div data-message></div>');
+    }
+
+    document.addEventListener('click', (event) => {
+        if (!event.target.closest('[data-fill-card]')) return;
+        document.getElementById('CardNumber').value = CARD;
+        document.getElementById('Month').value = '12';
+        document.getElementById('Year').value = '30';
+        document.getElementById('CVCode').value = '123';
+    });
+
+    // Během průvodce projde jen cvičná karta, ať nikdo nezadává skutečné údaje.
+    document.getElementById('btn_submit').addEventListener('click', (event) => {
+        if (document.getElementById('CardNumber').value === CARD) return;
+        event.stopImmediatePropagation();
+        if (panel) showMessage('Použijte cvičnou kartu.');
+    }, true);
+
+    /* ---------- krok 2: reakce v aplikaci banky ---------- */
+
+    document.addEventListener('dpd:phone', () => {
+        showPanel('Stránka tvrdí, že potvrzujete <b>připsání</b> 5000 Kč. Do telefonu vpravo přišlo oznámení od banky.'
+            + '<br><br>Otevřete ho, přečtěte si, co banka opravdu žádá, a <b>zareagujte tak, jak byste měli ve skutečnosti</b>.'
+            + '<div data-message></div>');
+    });
+
+    document.addEventListener('dpd:payment', (event) => {
+        if (event.detail.payment === 'confirmed') {
+            showPanel('<div class="zk-warning">Potvrdili jste platbu, peníze by vám odešly.</div>'
+                + 'Útočník navíc pořád zná číslo karty, platnost a CVC. Zabraňte dalším platbám přímo v aplikaci.'
+                + '<div data-message></div>');
+        } else {
+            showPanel('Platba neproběhla, to je správně. Útočník ale pořád zná <b>číslo karty, platnost a CVC</b> a může to zkusit znovu.'
+                + '<br><br>Stačí to takhle, nebo je potřeba udělat ještě něco? Zareagujte v aplikaci.'
+                + '<div data-message></div>');
+        }
+    });
+
+    document.addEventListener('dpd:block', (event) => {
+        if (event.detail.reason === 'misuse') return;
+        event.preventDefault();
+        showMessage('Kartu máte u sebe. Co se stalo s jejími údaji?');
+    });
+
+    document.addEventListener('dpd:blocked', (event) => {
+        if (panel) panel.hidden = true;
+        paid = event.detail.paid;
+        summary();
+    });
+
+    /* ---------- závěr ---------- */
+
+    function summary() {
+        let t;
+        t = build([
+            { popover: {
+                popoverClass: 'zk-tour zk-wide',
+                title: 'Karta je zablokovaná',
+                description: 'Stránka slibovala, že vám 5000 Kč <b>přijde</b>, banka ale žádala potvrzení <b>platby</b>. '
+                    + (paid
+                        ? 'Platbu jste potvrdili, takže peníze odešly. Blokace zastavila další platby, o vrácení částky je potřeba hned žádat banku. '
+                        : 'Platbu jste nepotvrdili a kartu jste zablokovali, takže útočník získané údaje nevyužije. ')
+                    + 'Tady je FLAG:'
+                    + '<div class="zk-flag"><code>' + esc(FLAG) + '</code>'
+                    + '<button type="button" class="zk-btn" data-copy-flag>Kopírovat</button></div>'
+                    + '<b>Co si zapamatovat:</b><ul class="zk-list">'
+                    + '<li>K <b>přijetí</b> peněz stačí číslo účtu.</li>'
+                    + '<li>Číslo karty, platnost a CVC slouží k <b>placení</b>, ne k přijímání.</li>'
+                    + '<li>Než v aplikaci banky něco potvrdíte, přečtěte si, <b>co přesně potvrzujete</b>.</li>'
+                    + '<li>Zadali jste údaje o kartě na podezřelé stránce? Zamítnutí nestačí, <b>kartu zablokujte</b>.</li>'
+                    + '</ul>',
+                nextBtnText: 'Zavřít', doneBtnText: 'Zavřít', showButtons: ['next'],
+                onNextClick: () => { if (t) t.destroy(); showFlagChip(); },
+                onPopoverRender: (popover) => {
+                    const btn = popover.description.querySelector('[data-copy-flag]');
+                    if (btn) btn.addEventListener('click', () => {
+                        copyText(FLAG).then(() => { btn.textContent = '✔ Zkopírováno'; });
+                    });
+                }
+            } }
+        ]);
+        t.drive();
+    }
+
+    // Po zavření okna s vlajkou zůstane vpravo dole tlačítko, kterým ji lze znovu zobrazit.
+    function showFlagChip() {
+        if (document.querySelector('.zk-chip')) return;
+        const chip = document.createElement('button');
+        chip.type = 'button';
+        chip.className = 'zk-chip';
+        chip.textContent = 'Zobrazit FLAG';
+        chip.addEventListener('click', summary);
+        document.body.appendChild(chip);
     }
 
     setTimeout(start, 300);
