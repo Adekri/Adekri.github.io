@@ -19,7 +19,7 @@
  *    x – vodorovná poloha středu v procentech (0 = vlevo, 100 = vpravo)
  *    y – kde věc STOJÍ (spodní okraj) v procentech výšky (0 = nahoře, 100 = dole)
  *        Čím je věc níž, tím víc vpředu (kreslí se přes věci za ní).
- *    s – velikost (cca 5 = drobnost, 13 = postava, 16 = dům)
+ *    s – velikost (8 = nejmenší věc, 13 = postava, 16 = dům)
  *    cizi: true – věc, která do pohádky NEPATŘÍ (tu mají děti najít)
  *    zprava – vlastní věta po nalezení (jinak „… do pohádky nepatří!“)
  *    z – ruční pořadí vrstvy (vyšší = víc vpředu), např. sova na stromě
@@ -45,12 +45,12 @@ const SCENY = [
             { e: '🏡', n: 'babiččina chaloupka', x: 85, y: 53, s: 14 },
             { e: '👵', n: 'babička', x: 72, y: 58, s: 8 },
             { e: 'kape', n: 'Karkulka', x: 33, y: 84, s: 15 },
-            { e: '🧺', n: 'košíček', x: 43, y: 85, s: 6 },
+            { e: '🧺', n: 'košíček', x: 43, y: 85, s: 8 },
             { e: '🐺', n: 'vlk', x: 62, y: 80, s: 13 },
-            { e: '💐', n: 'kytička pro babičku', x: 52, y: 95, s: 6 },
+            { e: '💐', n: 'kytička pro babičku', x: 52, y: 95, s: 8 },
             // nepatří sem
             { e: '🚗', n: 'auto', x: 82, y: 72, s: 10, cizi: true },
-            { e: '📱', n: 'mobil', x: 20, y: 96, s: 5, cizi: true }
+            { e: '📱', n: 'mobil', x: 20, y: 96, s: 8, cizi: true }
         ]
     },
     {
@@ -71,8 +71,8 @@ const SCENY = [
             { e: '🐰', foto: 'krtek-zajic', n: 'zajíček', x: 74, y: 83, s: 13 },
             { e: '🦔', foto: 'krtek-jezek', n: 'ježek', x: 89, y: 86, s: 11 },
             { e: '☂️', n: 'deštník', x: 8, y: 95, s: 8 },
-            { e: '👖', n: 'kalhotky s kapsami', x: 50, y: 96, s: 7 },
-            { e: '🍭', n: 'lízátko', x: 64, y: 95, s: 6 },
+            { e: '👖', n: 'kalhotky s kapsami', x: 50, y: 96, s: 8 },
+            { e: '🍭', n: 'lízátko', x: 64, y: 95, s: 8 },
             { e: '🦈', n: 'žralok', x: 52, y: 60, s: 10, cizi: true },
             { e: '🐧', n: 'tučňák', x: 13, y: 70, s: 8, cizi: true }
         ]
@@ -89,9 +89,9 @@ const SCENY = [
         veci: [
             { e: '🚁', n: 'vrtulník', x: 64, y: 26, s: 9, cizi: true },
             { e: '🏡', n: 'chaloupka trpaslíků', x: 42, y: 58, s: 14 },
-            { e: '🧙‍♀️', n: 'zlá královna převlečená za stařenku', x: 84, y: 62, s: 10 },
+            { e: 'carodejnice', n: 'zlá královna převlečená za stařenku', x: 84, y: 60, s: 11 },
             { e: 'snehurka', n: 'Sněhurka', x: 20, y: 87, s: 15 },
-            { e: '🍎', n: 'jablíčko', x: 30, y: 88, s: 5 },
+            { e: '🍎', n: 'jablíčko', x: 30, y: 88, s: 8 },
             // trpaslíci ve dvou řadách, čísla jdou zleva doprava
             { e: 'trpaslik-1', n: 'trpaslík číslo 1', x: 50, y: 78, s: 9 },
             { e: 'trpaslik-2', n: 'trpaslík číslo 2', x: 56, y: 90, s: 9 },
@@ -114,16 +114,16 @@ const SCENY = [
         ],
         veci: [
             { e: '🪼', n: 'medúza', x: 32, y: 34, s: 8 },
-            { e: '🪼', n: 'medúza', x: 70, y: 36, s: 6 },
+            { e: '🪼', n: 'medúza', x: 70, y: 36, s: 8 },
             { e: '🐄', n: 'kráva', x: 84, y: 58, s: 10, cizi: true },
             { e: '🍍', n: 'ananasový domek', x: 16, y: 80, s: 18 },
-            { e: '🐿️', n: 'veverka Sandy', x: 31, y: 80, s: 7 },
+            { e: '🐿️', n: 'veverka Sandy', x: 31, y: 80, s: 8 },
             { e: 'patrik', n: 'Patrik', x: 58, y: 81, s: 11 },
             { e: '🐙', n: 'Sépiák', x: 90, y: 79, s: 11 },
             { e: '🧽', foto: 'spongebob', n: 'SpongeBob', x: 44, y: 91, s: 12 },
-            { e: '🍔', n: 'krabí burger', x: 54, y: 92, s: 5 },
+            { e: '🍔', n: 'krabí burger', x: 54, y: 92, s: 8 },
             { e: '🦀', n: 'pan Krabs', x: 71, y: 92, s: 10 },
-            { e: '🐌', n: 'šnek Gary', x: 28, y: 97, s: 6 },
+            { e: '🐌', n: 'šnek Gary', x: 28, y: 97, s: 8 },
             { e: '☃️', n: 'sněhulák', x: 90, y: 97, s: 9, cizi: true }
         ]
     },
@@ -138,14 +138,14 @@ const SCENY = [
         ],
         veci: [
             { e: '🏠', n: 'perníková chaloupka', x: 57, y: 64, s: 18 },
-            { e: 'pernicek', n: 'perníček', x: 42, y: 66, s: 6 },
-            { e: '🍭', n: 'lízátko', x: 72, y: 66, s: 6 },
+            { e: 'pernicek', n: 'perníček', x: 42, y: 66, s: 8 },
+            { e: '🍭', n: 'lízátko', x: 72, y: 66, s: 8 },
             { e: 'jenicek-marenka', n: 'Jeníček a Mařenka', x: 24, y: 87, s: 16 },
             { e: '🐈‍⬛', n: 'černá kočka', x: 63, y: 88, s: 8 },
-            { e: '🧙‍♀️', n: 'ježibaba', x: 78, y: 86, s: 14 },
-            { e: '🔥', n: 'oheň v peci', x: 93, y: 91, s: 6 },
-            { e: '📺', n: 'televize', x: 40, y: 90, s: 8, cizi: true },
-            { e: '🎧', n: 'sluchátka', x: 52, y: 97, s: 5, cizi: true }
+            { e: 'carodejnice', n: 'ježibaba', x: 79, y: 88, s: 16 },
+            { e: '🔥', n: 'oheň v peci', x: 93, y: 91, s: 8 },
+            { e: '🐉', n: 'drak', x: 33, y: 36, s: 15, cizi: true },
+            { e: '🚽', n: 'záchod', x: 46, y: 95, s: 11, cizi: true }
         ]
     },
     {
@@ -160,14 +160,13 @@ const SCENY = [
         veci: [
             { e: '✈️', n: 'letadlo', x: 56, y: 26, s: 9, cizi: true },
             { e: '🏰', n: 'zámek', x: 16, y: 58, s: 15 },
-            { e: '🦉', n: 'sova Rozárka', x: 90, y: 44, s: 6, z: 99 },
+            { e: '🦉', n: 'sova Rozárka', x: 90, y: 44, s: 8, z: 99 },
             { e: '🐕', n: 'pejsek', x: 10, y: 87, s: 10 },
-            { e: '👠', n: 'ztracený střevíček', x: 22, y: 94, s: 5 },
+            { e: '👠', n: 'ztracený střevíček', x: 22, y: 94, s: 8 },
             { e: '👸', n: 'Popelka', x: 33, y: 85, s: 14 },
-            { e: '🌰', n: 'tři oříšky', x: 44, y: 90, s: 5 },
+            { e: '🌰', n: 'tři oříšky', x: 44, y: 90, s: 8 },
             { e: '🐴', n: 'koník Juráček', x: 59, y: 84, s: 16 },
-            { e: '🏹', n: 'kuše', x: 77, y: 90, s: 7 },
-            { e: '🛹', n: 'skateboard', x: 92, y: 95, s: 7, cizi: true }
+            { e: '🛹', n: 'skateboard', x: 88, y: 96, s: 12, cizi: true }
         ]
     }
 ];

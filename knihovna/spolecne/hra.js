@@ -25,15 +25,18 @@ const Hra = (() => {
     }
 
     /**
-     * Vrátí <img> s kresleným obrázkem pro dané emoji.
-     * Místo emoji jde zadat i jméno vlastní kresby ve složce obrazky/
-     * (např. 'kape' → obrazky/kape.svg).
+     * Cesta ke kresbě pro dané emoji. Místo emoji jde zadat i jméno
+     * vlastní kresby ve složce obrazky/ (např. 'kape' → obrazky/kape.svg).
      */
+    function cestaObrazku(emoji) {
+        const vlastni = /^[a-z0-9-]+$/.test(emoji);
+        return `${KOREN}obrazky/${vlastni ? emoji : kod(emoji)}.svg`;
+    }
+
+    /** Vrátí <img> s kresleným obrázkem. */
     function obr(emoji, popis = '') {
-        if (/^[a-z0-9-]+$/.test(emoji)) {
-            return `<img class="obr" src="${KOREN}obrazky/${emoji}.svg" alt="${popis}" draggable="false">`;
-        }
-        return `<img class="obr" src="${KOREN}obrazky/${kod(emoji)}.svg" alt="${popis}" draggable="false" data-emoji="${emoji}">`;
+        const zaloha = /^[a-z0-9-]+$/.test(emoji) ? '' : ` data-emoji="${emoji}"`;
+        return `<img class="obr" src="${cestaObrazku(emoji)}" alt="${popis}" draggable="false"${zaloha}>`;
     }
 
     // Obrázek, který ve složce obrazky/ chybí (např. v nové pohádce), se zkusí
@@ -310,5 +313,5 @@ const Hra = (() => {
         mluv(`${nadpis} ${text}`);
     }
 
-    return { obr, foto, mluv, zastav, zvuk, zakrouzkuj, preskrtni, dalsiKlavesou, postup, zamichej, vyber, efekt, konecHry };
+    return { obr, cestaObrazku, foto, mluv, zastav, zvuk, zakrouzkuj, preskrtni, dalsiKlavesou, postup, zamichej, vyber, efekt, konecHry };
 })();

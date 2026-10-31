@@ -1,0 +1,36 @@
+<svg id="emoji" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
+  <!-- Ježibaba — nakresleno ve stylu OpenMoji -->
+  <!-- hůl -->
+  <path fill="none" stroke="#000" stroke-width="5" stroke-linecap="round" d="M16,67 C16.5,57 15,46 16,37 C16.4,33.5 13,32.6 11.5,34.6"/>
+  <path fill="none" stroke="#A57939" stroke-width="2.6" stroke-linecap="round" d="M16,67 C16.5,57 15,46 16,37 C16.4,33.5 13,32.6 11.5,34.6"/>
+  <!-- boty -->
+  <path fill="#3F3F3F" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M33,63 L33,68 L24,68 C24,66 27,64.5 29,63 Z"/>
+  <path fill="#3F3F3F" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M50,63 L50,68 L41,68 C41,66 44,64.5 46,63 Z"/>
+  <!-- shrbené tělo s hrbem -->
+  <path fill="#6A5A7A" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M25,65 C24,55 25,46 29,39 C33,32 42,27 51,30 C60,33 62,44 61,53 C60.6,58 60,62 59,65 Z"/>
+  <!-- sukně: roztřepený lem -->
+  <path fill="#7A4E2A" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M26.5,50 C36,53 50,53 60.8,49 C60.6,55 60,61 59,65 L55,62.6 L51,65.6 L46,62.8 L41,65.8 L36,62.8 L31,65.6 L25,65 C24.8,60 25.4,55 26.5,50 Z"/>
+  <!-- záplaty -->
+  <rect x="47" y="54" width="7" height="6" fill="#C9A93A" stroke="#000" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" transform="rotate(-8 50 57)"/>
+  <rect x="44" y="36" width="7" height="6" fill="#92A36B" stroke="#000" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" transform="rotate(10 47 39)"/>
+  <!-- paže k holi -->
+  <path fill="none" stroke="#000" stroke-width="7.4" stroke-linecap="round" d="M38,37 C33,42 26,45 19,46"/>
+  <path fill="none" stroke="#6A5A7A" stroke-width="5" stroke-linecap="round" d="M38,37 C33,42 26,45 19,46"/>
+  <circle cx="16.4" cy="46.4" r="3.2" fill="#EBD3AE" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- šátek vzadu -->
+  <path fill="#3E5530" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M34,30 L42,35 L36,38 Z"/>
+  <!-- hlava -->
+  <path fill="#EBD3AE" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M18,21 C21,14 32,13 35,20 C37,25 36,31 32,34 C29,37 25,39 21.6,39.4 C19,39.6 18.4,37 20,35.6 C18,33.6 17,27 18,21 Z"/>
+  <!-- velký zahnutý nos s bradavicí -->
+  <path fill="#EBD3AE" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M20.6,21.6 C15,21 9,25 8.6,30.4 C8.4,33.4 11.4,34.2 13,32 C14.6,30 17.4,29.4 20,29.4"/>
+  <circle cx="11.8" cy="26.8" r="1.8" fill="#8B5A2B" stroke="#000" stroke-width="1.2"/>
+  <!-- oko a obočí -->
+  <circle cx="24.6" cy="24" r="1.5" fill="#000"/>
+  <path fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M21.4,20.2 L27.4,21.6"/>
+  <!-- ústa s jedním zubem -->
+  <path fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M20,32.8 C22.6,34.4 25.4,34 27.6,31.6"/>
+  <path fill="#FFFFFF" stroke="#000" stroke-width="1.1" stroke-linejoin="round" d="M22,33.4 L23,30.8 L24.2,33.6 Z"/>
+  <!-- červený šátek s puntíky -->
+  <path fill="#4F6B3A" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M17,20.6 C18,10 30,5 38,11 C43,15 43,25 38,34 C35.6,31 35,26 35,22 C31,16.6 23,16.4 17,20.6 Z"/>
+  <g fill="#FFFFFF"><circle cx="26" cy="11.6" r="1"/><circle cx="33" cy="12.4" r="1"/><circle cx="38" cy="18" r="1"/><circle cx="29" cy="15.2" r=".9"/><circle cx="38.6" cy="25" r="1"/></g>
+</svg>

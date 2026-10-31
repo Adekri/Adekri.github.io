@@ -1,0 +1,9 @@
+<svg id="emoji" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
+  <!-- Pec ježibaby — nakresleno ve stylu OpenMoji -->
+  <path fill="#A57939" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M46,14 L46,4 L54,4 L54,20 Z"/>
+  <path fill="#C97F5F" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M6,67 L6,36 C6,12 66,12 66,36 L66,67 Z"/>
+  <path fill="none" stroke="#8C5A42" stroke-width="1.2" stroke-linecap="round" d="M12,30 L22,30 M50,30 L60,30"/><path fill="none" stroke="#8C5A42" stroke-width="1.2" stroke-linecap="round" d="M10,42 L20,42 M52,42 L62,42"/><path fill="none" stroke="#8C5A42" stroke-width="1.2" stroke-linecap="round" d="M10,54 L20,54 M52,54 L62,54"/><path fill="none" stroke="#8C5A42" stroke-width="1.2" stroke-linecap="round" d="M15,30 L15,42 M57,30 L57,42"/><path fill="none" stroke="#8C5A42" stroke-width="1.2" stroke-linecap="round" d="M15,54 L15,66 M57,54 L57,66"/>
+  <path fill="#3A2A22" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M22,67 L22,48 C22,32 50,32 50,48 L50,67 Z"/>
+  <path fill="#E27022" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M26,67 C24,60 30,57 30,50 C34,53 35,48 36,43 C39,49 44,53 44,59 C45,62 45,65 44,67 Z"/>
+  <path fill="#F1B31C" d="M31,67 C30,62 34,60 35,55 C38,59 41,62 40,67 Z"/>
+</svg>

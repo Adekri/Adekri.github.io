@@ -1,0 +1,8 @@
+<svg id="emoji" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
+  <!-- Pekařská lopata ježibaby — nakresleno ve stylu OpenMoji -->
+  <g transform="rotate(32 36 36)">
+    <path fill="#A57939" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M33.5,2 C33.5,0.8 38.5,0.8 38.5,2 L38.5,39 L33.5,39 Z"/>
+    <path fill="#D0A46B" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M33.5,37 L27,41 C25,42.2 24,44 24,46 L24,63 C24,67 27,70 31,70 L41,70 C45,70 48,67 48,63 L48,46 C48,44 47,42.2 45,41 L38.5,37 Z"/>
+    <path fill="none" stroke="#A57939" stroke-width="1.5" stroke-linecap="round" d="M30,47 L30,64 M36,44 L36,66 M42,47 L42,64"/>
+  </g>
+</svg>

@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="../spolecne/hra.css">
     <style>
         .hra { gap: clamp(8px, 1.6vh, 18px); padding-top: 10px; }
+        /* Licence v rohu, ať pod scénou nezabírá místo */
+        .paticka { position: fixed; right: 10px; bottom: 2px; padding: 0; }
 
         .zahlavi {
             display: flex;
@@ -18,32 +20,32 @@
             justify-content: center;
             gap: 10px 32px;
         }
-        .nazev-pohadky { margin: 0; font-family: var(--nadpisy); font-size: clamp(1.6rem, 3.6vw, 2.8rem); font-weight: 800; line-height: 1.1; }
-        .ukol { margin: 0; font-size: clamp(1.1rem, 2.2vw, 1.7rem); color: var(--tuzka); }
+        .nazev-pohadky { margin: 0; font-family: var(--nadpisy); font-size: clamp(1.5rem, 3vw, 2.4rem); font-weight: 800; line-height: 1.1; }
+        .ukol { margin: 0; font-size: clamp(1.05rem, 1.8vw, 1.45rem); color: var(--tuzka); }
 
         /* Přihrádky na nalezené věci */
         .nalezene { display: flex; gap: 12px; }
         .nalezene .misto {
             position: relative;
-            width: clamp(56px, 7vw, 84px);
-            height: clamp(56px, 7vw, 84px);
+            width: clamp(46px, 5vw, 66px);
+            height: clamp(46px, 5vw, 66px);
             display: grid;
             place-items: center;
             border: 3px dashed var(--linka);
             border-radius: var(--rucni);
             font-family: var(--nadpisy);
-            font-size: clamp(28px, 3.6vw, 44px);
+            font-size: clamp(24px, 2.8vw, 36px);
             color: var(--linka);
         }
-        .nalezene .misto .obr { font-size: clamp(40px, 5vw, 62px); }
+        .nalezene .misto .obr { font-size: clamp(34px, 3.8vw, 50px); }
         .nalezene .misto.plne { border-style: solid; border-color: var(--cervena); }
 
         /* Obrázek scény — vše se měří v procentech, takže sedí na každém plátně */
         .scena {
             position: relative;
-            width: min(100%, calc((100vh - 330px) * 1.6));
+            width: min(100%, calc((100vh - 268px) * 16 / 9));
             min-width: min(100%, 320px);
-            aspect-ratio: 16 / 10;
+            aspect-ratio: 16 / 9;
             overflow: hidden;
             border: 4px solid var(--inkoust);
             border-radius: 14px 22px 12px 26px / 24px 12px 26px 14px;

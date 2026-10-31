@@ -23,7 +23,7 @@
 const KUFRY = [
     {
         majitel: 'Popelka', foto: 'popelka', obr: '👸',
-        veci: [['🧹', 'koště'], ['🏹', 'kuše'], ['👗', 'plesové šaty'], ['👠', 'ztracený střevíček'], ['🌰', 'tři oříšky']],
+        veci: [['🧹', 'koště'], ['👗', 'plesové šaty'], ['👠', 'ztracený střevíček'], ['🌰', 'tři oříšky']],
         veta: 'Tři oříšky pro Popelku! V každém byly kouzelné šaty.'
     },
     {
@@ -33,7 +33,7 @@ const KUFRY = [
     },
     {
         majitel: 'Jeníček a Mařenka', foto: 'jenicek-a-marenka', obr: 'jenicek-marenka',
-        veci: [['🍞', 'chleba na drobečky'], ['🍬', 'bonbon'], ['pernicek', 'perníček']],
+        veci: [['🍞', 'chleba na drobečky'], ['lopata', 'lopata'], ['pernicek', 'perníček'], ['chaloupka', 'perníková chaloupka']],
         veta: 'Jeníček a Mařenka našli v lese perníkovou chaloupku.'
     },
     {

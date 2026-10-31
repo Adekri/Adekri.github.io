@@ -108,8 +108,9 @@ function hotovaScena() {
     hra.querySelectorAll('button.vec').forEach(tl => { tl.disabled = true; });
 
     const posledni = scena >= SCENY.length;
-    const ukol = document.getElementById('ukol');
-    ukol.innerHTML = `<button class="tlacitko mensi objev" id="dalsi">${posledni ? 'Konec' : 'Další pohádka →'}</button>`;
+    // Tlačítko jde vedle přihrádek, aby záhlaví nezměnilo výšku a scéna neposkočila
+    hra.querySelector('.zahlavi').insertAdjacentHTML('beforeend',
+        `<button class="tlacitko mensi objev" id="dalsi">${posledni ? 'Konec' : 'Další pohádka →'}</button>`);
     document.getElementById('dalsi').addEventListener('click', zobrazScenu);
     Hra.dalsiKlavesou(zobrazScenu);
 }

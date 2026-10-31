@@ -1,0 +1,20 @@
+<svg id="emoji" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
+  <!-- Perníková chaloupka — nakresleno ve stylu OpenMoji -->
+  <path fill="#A57939" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M48,22 L48,10 L55,10 L55,29 Z"/>
+  <!-- perníkové stěny -->
+  <rect x="15" y="36" width="42" height="29" fill="#C77E3C" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- dveře -->
+  <path fill="#7A4E2A" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M29.5,65 L29.5,52 C29.5,45 42.5,45 42.5,52 L42.5,65 Z"/>
+  <circle cx="39.3" cy="57" r="1.2" fill="#F1B31C"/>
+  <!-- okénka s polevou -->
+  <rect x="18.8" y="47" width="7.4" height="7.4" fill="#FCEA2B" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="45.8" y="47" width="7.4" height="7.4" fill="#FCEA2B" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path fill="none" stroke="#000" stroke-width="1.2" d="M22.5,47 L22.5,54.4 M18.8,50.7 L26.2,50.7 M49.5,47 L49.5,54.4 M45.8,50.7 L53.2,50.7"/>
+  <!-- perníčky a bonbony na stěně -->
+  <circle cx="22.5" cy="60" r="2.8" fill="#F4A6B8" stroke="#000" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="49.5" cy="60" r="2.8" fill="#92D3F5" stroke="#000" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- čokoládová střecha -->
+  <path fill="#7A4E2A" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M9,37.5 L36,9 L63,37.5 Z"/>
+  <path fill="#FFFFFF" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M9,37.5 Q13.75,44 18.5,37.5 Q23.25,44 28.0,37.5 Q32.75,44 37.5,37.5 Q42.25,44 47.0,37.5 Q51.75,44 56.5,37.5 Q61.25,44 66.0,37.5 Z"/>
+  <circle cx="36" cy="20" r="3" fill="#D22F27" stroke="#000" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="28" cy="28" r="3" fill="#92D3F5" stroke="#000" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="44" cy="28" r="3" fill="#F1B31C" stroke="#000" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="19" cy="33" r="3" fill="#F4A6B8" stroke="#000" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="36" cy="31" r="3" fill="#5C9E31" stroke="#000" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="53" cy="33" r="3" fill="#D22F27" stroke="#000" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

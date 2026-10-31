@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jak to bylo dál?</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,500;0,700;0,800;1,500&family=Alegreya+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../spolecne/hra.css">
+    <style>
+        .hra {
+            /* Čtyři okénka 4:3 ve dvou řadách se musí vejít na šířku i na výšku */
+            --sirka: min(calc((100vw - 100px) / 4), calc((100vh - 268px) * 2 / 3));
+            gap: clamp(8px, 1.6vh, 16px);
+            padding-top: 10px;
+        }
+        /* Licence v rohu, ať nezabírá místo */
+        .paticka { position: fixed; right: 10px; bottom: 2px; padding: 0; }
+
+        .nazev-pohadky { margin: 0; font-family: var(--nadpisy); font-size: clamp(1.5rem, 3vw, 2.4rem); font-weight: 800; line-height: 1.1; }
+
+        .rada {
+            display: grid;
+            grid-template-columns: repeat(4, var(--sirka));
+            gap: 14px;
+            justify-content: center;
+        }
+
+        .policko {
+            position: relative;
+            width: var(--sirka);
+            aspect-ratio: 4 / 3;
+            border-radius: 10px;
+        }
+        .policko.cil { border: 3px dashed var(--linka); }
+        .policko.cil.nad { border-color: var(--okr); background: rgba(201, 154, 59, .15); }
+        .policko .cislo {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            font-family: var(--nadpisy);
+            font-size: calc(var(--sirka) * .3);
+            font-weight: 800;
+            color: var(--linka);
+        }
+
+        .panel {
+            position: absolute;
+            inset: -3px;
+            z-index: 1;
+            padding: 0;
+            border: 3px solid var(--inkoust);
+            border-radius: 10px;
+            overflow: hidden;
+            background: none;
+            box-shadow: 3px 4px 0 var(--linka);
+            cursor: grab;
+            touch-action: none;
+        }
+        .policko.zasobnik .panel { inset: 0; }
+        .panel svg { display: block; width: 100%; height: 100%; pointer-events: none; }
+        .panel.tazeny { z-index: 100; cursor: grabbing; box-shadow: 8px 12px 18px rgba(46, 38, 32, .35); rotate: -1.5deg; }
+        .panel.spravne { border-color: var(--zelena); border-width: 5px; cursor: default; }
+        .panel.spatne { border-color: var(--cervena); border-width: 5px; }
+
+        /* Věty pod okénky po vyřešení */
+        .popisy p {
+            margin: 0;
+            font-family: var(--nadpisy);
+            font-size: clamp(1.1rem, 1.9vw, 1.6rem);
+            line-height: 1.2;
+        }
+        .popisy[hidden], .zasobniky[hidden] { display: none; }
+        .ovladani { display: flex; align-items: center; justify-content: center; gap: 20px; min-height: 60px; }
+    </style>
+</head>
+<body>
+    <header class="lista">
+        <a class="lista-zpet" href="../index.html">← Všechny hry</a>
+        <h1 class="lista-nazev">Jak to bylo dál?</h1>
+        <span class="postup" id="postup"></span>
+        <button class="ikonka" id="zvuk" aria-label="Předčítání nahlas"></button>
+        <button class="ikonka" id="celaobrazovka" aria-label="Celá obrazovka"></button>
+    </header>
+
+    <main class="hra" id="hra"></main>
+
+    <footer class="paticka">Obrázky: <a href="https://openmoji.org" target="_blank" rel="noopener">OpenMoji</a> – CC BY-SA 4.0</footer>
+
+    <script src="../spolecne/hra.js"></script>
+    <script src="pribehy.js"></script>
+    <script src="hra.js"></script>
+</body>
+</html>
