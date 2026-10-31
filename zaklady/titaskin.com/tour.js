@@ -4,8 +4,8 @@
    ?tour=0 průvodce vypne.
 
    Úkol „Podvodný e-shop“:
-   1. Na Facebooku (facebook.html) student najde sponzorovaný
-      příspěvek a otevře odkaz.
+   1. Na Facebooku (../facebook/, vlastní průvodce, kroky 1–2)
+      student najde sponzorovaný příspěvek a otevře odkaz.
    2. Na e-shopu (index.html) najde dva varovné signály: odpočet,
       který se po obnovení spustí znovu, a nejasného provozovatele
       (reklamační řád). Signály nejsou důkaz podvodu, jen důvod
@@ -22,13 +22,11 @@
 (function () {
     const params = new URLSearchParams(location.search);
     if (params.get('tour') === '0') return;
-    const page = document.body.dataset.page === 'feed' ? 'feed' : 'shop';
     const task = params.get('ukol') || 'podvod';
-    if (page === 'shop' && task !== 'podvod') return; // průvodce placením zatím není
+    if (task !== 'podvod') return; // průvodce placením zatím není
 
     const TOTAL_STEPS = 6;
     const STORAGE_KEY = 'titaskin-tour';
-    const SHOP_URL = 'index.html?ukol=podvod';
     const COI_URL = 'https://coi.gov.cz/pro-spotrebitele/rizikove-e-shopy/';
     // Přímý odkaz: prohlížeč odroluje na záznam a zvýrazní ho (text fragment), starší prohlížeč aspoň skočí na kotvu.
     const COI_DIRECT_URL = COI_URL + '#post-24462:~:text=titaskin.com';
@@ -39,7 +37,7 @@
             id: 'timer',
             title: 'Odpočet, který nikdy nekončí',
             hint: 'Obnovte stránku (<kbd>Ctrl</kbd>+<kbd>R</kbd> nebo ⟳) a sledujte odpočet nahoře.',
-            note: 'Odpočet začal znovu od 14:59. Časově omezené nabídky vás obvykle nutí jednat unáhleně'
+            note: 'Odpočet začal znovu od 30:00. Časově omezené nabídky vás obvykle nutí jednat unáhleně'
         },
         {
             id: 'refund',
@@ -175,51 +173,6 @@
             this.message(html);
         }
     };
-
-    /* ============================================================
-       Facebook (facebook.html), kroky 1–2
-       ============================================================ */
-
-    function startFeedIntro() {
-        phase = 'intro';
-        drive([step(1, undefined, 'Podvodný e-shop',
-            'V tomto úkolu si ukážeme, jak se šíří podvodné e-shopy a jak je odhalit.',
-            Object.assign({ onNextClick: startFind }, LOOK))]);
-    }
-
-    function startFind() {
-        phase = 'find';
-        mission.show(2, 'Najděte reklamu',
-            'Najděte mezi příspěvky reklamu a rozklikněte ji.');
-    }
-
-    function startAdFound() {
-        phase = 'adfound';
-        mission.hide();
-        drive([step(2, '#adPost .fb-post-head', 'Výborně',
-            'Poznáte ji podle štítku <b>Sponzorováno</b>. Zaplatit si ji může kdokoli, i podvodník.',
-            {
-                side: 'bottom',
-                nextBtnText: 'Otevřít odkaz →',
-                doneBtnText: 'Otevřít odkaz →',
-                onNextClick: () => {
-                    try { sessionStorage.removeItem(STORAGE_KEY); } catch (e) { /* nic */ }
-                    location.href = SHOP_URL;
-                }
-            })]);
-    }
-
-    function initFeed() {
-        // Kliknutí na reklamu průvodce nejdřív okomentuje, teprve pak e-shop otevře.
-        document.addEventListener('click', (event) => {
-            if (!event.target.closest('.ad-link')) return;
-            if (phase !== 'intro' && phase !== 'find') return;
-            event.preventDefault();
-            startAdFound();
-        }, true);
-
-        setTimeout(startFeedIntro, 400);
-    }
 
     /* ============================================================
        E-shop (index.html), kroky 3–6
@@ -412,6 +365,5 @@
         }, 400);
     }
 
-    if (page === 'feed') initFeed();
-    else initShop();
+    initShop();
 })();

@@ -57,6 +57,11 @@ bezpečné placení…). Každý úkol je samostatná složka se statickými str
   zájemce i podvod explicitně pojmenovávají, aby bylo vazbu Stanislav↔DPD vidět).
 - **titaskin.com/** – podvodný e-shop; úkol na placení se chystá jako druhý
   průvodce přes parametr `?ukol=…`.
+- **facebook/** – vstup do úkolu „Podvodný e-shop“ (kroky 1–2 ve vlastním
+  `tour.js`, reklama vede na `../titaskin.com/index.html?ukol=podvod`, kde
+  pokračují kroky 3–6). Písma jsou lokální v `fonts/`: Segoe UI ve variantě
+  East European (West European nemá ě, ř, ů, ť, ď, ň) a výřez Material Symbols
+  jen s použitými ikonami – novou ikonu je nutné přidat i do souboru s písmem.
 - **telefon/** – simulátor telefonu, dva samostatné úkoly na jedné stránce,
   přepínané parametrem `?ukol=`: výchozí / `1` = smishing (podvodná SMS „GOV",
   přes falešnou bankovní identitu až na podvodnou přihlašovací stránku Monety),

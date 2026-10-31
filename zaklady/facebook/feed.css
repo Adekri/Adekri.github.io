@@ -1,5 +1,35 @@
 /* Výuková kopie feedu Facebooku (vzhled podle webové verze). */
 
+/* Písma jsou v ../fonts, aby stránka vypadala stejně na každém počítači (i bez nainstalovaného Segoe UI).
+   Facebook sám žádné webové písmo nemá, na Windows používá systémové Segoe UI. Varianta East European
+   obsahuje česká písmena, West European ne (chybí v ní ě, ř, ů, ť, ď, ň). */
+@font-face {
+    font-family: 'FB Segoe UI';
+    src: url('../fonts/SegoeUIWebEastEuropean400.woff2') format('woff2');
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: 'FB Segoe UI';
+    src: url('../fonts/SegoeUIWebEastEuropean600.woff2') format('woff2');
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: 'FB Segoe UI';
+    src: url('../fonts/SegoeUIWebEastEuropean700.woff2') format('woff2');
+    font-weight: 700;
+}
+
+/* Výřez Material Symbols Rounded (Google, licence Apache 2.0) jen s ikonami, které stránka používá.
+   Novou ikonu je potřeba přidat i do souboru s písmem, jinak se místo ní ukáže její název. */
+@font-face {
+    font-family: 'Material Symbols Rounded';
+    src: url('../fonts/MaterialSymbolsRounded.woff2') format('woff2');
+    font-weight: 400;
+    font-display: block;
+}
+
 * {
     box-sizing: border-box;
 }
@@ -8,7 +38,7 @@ body {
     margin: 0;
     background: #f0f2f5;
     color: #050505;
-    font: 15px/1.34 "Segoe UI Historic", "Segoe UI", Helvetica, Arial, sans-serif;
+    font: 15px/1.34 'FB Segoe UI', "Segoe UI", Helvetica, Arial, sans-serif; /* bez "Segoe UI Historic": chybí v něm ě, č, ř, ů, ť, ď, ň */
 }
 
 img {
@@ -16,9 +46,16 @@ img {
 }
 
 .material-symbols-rounded {
+    display: inline-block;
+    font-family: 'Material Symbols Rounded';
     font-size: 22px;
+    font-style: normal;
+    font-weight: normal;
     line-height: 1;
+    letter-spacing: normal;
+    white-space: nowrap;
     vertical-align: middle;
+    font-feature-settings: 'liga';
 }
 
 .material-symbols-rounded.fill {

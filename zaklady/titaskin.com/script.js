@@ -157,12 +157,12 @@
     });
   });
 
-  // odpočet akce v horním pruhu – po vypršení i po každém načtení stránky začne znovu od 14:59
-  let remaining = 14 * 60 + 59;
+  // odpočet akce v horním pruhu – po vypršení i po každém načtení stránky začne znovu od 30:00
+  let remaining = 30 * 60;
   function tick(){
     const m = Math.floor(remaining / 60), s = remaining % 60;
     document.getElementById('countdown').textContent = `${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s}`;
-    remaining = remaining > 0 ? remaining - 1 : 14 * 60 + 59;
+    remaining = remaining > 0 ? remaining - 1 : 30 * 60;
   }
   tick();
   setInterval(tick, 1000);
