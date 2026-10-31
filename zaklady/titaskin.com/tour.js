@@ -11,9 +11,9 @@
       (reklamační řád). Signály nejsou důkaz podvodu, jen důvod
       zpozornět.
    3. Najde titaskin.com v seznamu rizikových e-shopů ČOI. FLAGem
-      je rok, kdy ČOI před webem varovala (2021, záznam ze
-      16. 07. 2021) – student ho zadá přímo do platformy, průvodce
-      ho neprozrazuje ani nekontroluje.
+      je datum, kdy ČOI před webem varovala (16. 07. 2021) –
+      student ho zadá přímo do platformy, průvodce ho neprozrazuje
+      ani nekontroluje.
    Stav se drží v sessionStorage, protože jeden ze signálů
    (odpočet) se odhaluje obnovením stránky.
 
@@ -243,16 +243,16 @@
             + `<li>Sjeďte k nadpisu <i>Přehled dosud známých rizikových e-shopů</i> a do pole <b>Hledat</b> napište ${copyable('titaskin')}.</li>`
             + '<li>Pod popisem záznamu je v závorce datum.</li>'
             + '</ol>'
-            + '<p><b>FLAG je rok z tohoto data.</b> Zadejte ho do platformy.</p>'
+            + '<p><b>FLAG je toto datum.</b> Zadejte ho do platformy přesně tak, jak je uvedené, jen bez závorek.</p>'
             + '<div class="zk-note" data-hint><button type="button" class="zk-linkbtn" data-show-direct>Nedaří se mi záznam najít</button></div>'
-            + '<div class="zk-actions"><button type="button" class="zk-btn" data-finish>Mám rok →</button></div>');
+            + '<div class="zk-actions"><button type="button" class="zk-btn" data-finish>Mám datum →</button></div>');
     }
 
     /* ---------- závěr (FLAG zadává student sám do platformy) ---------- */
 
     function summaryStep() {
         return step(0, undefined, 'Výborně, podvod odhalen!',
-            'Rok z ČOI zadejte do platformy jako <b>FLAG</b>.'
+            'Datum z ČOI zadejte do platformy jako <b>FLAG</b>.'
             + '<br><br><b>Co si zapamatovat:</b><ul class="zk-list">'
             + '<li>Reklamu si může zaplatit kdokoli.</li>'
             + '<li>Nekonečný odpočet vás má jen uspěchat.</li>'
