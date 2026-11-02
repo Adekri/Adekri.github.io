@@ -6,10 +6,10 @@
    Úkol „Podvodný e-shop“:
    1. Na Facebooku (../facebook/, vlastní průvodce, kroky 1–2)
       student najde sponzorovaný příspěvek a otevře odkaz.
-   2. Na e-shopu (index.html) najde dva varovné signály: odpočet,
-      který se po obnovení spustí znovu, a nejasného provozovatele
-      (reklamační řád). Signály nejsou důkaz podvodu, jen důvod
-      zpozornět.
+   2. Na e-shopu (index.html) najde tři varovné signály: odpočet,
+      který se po obnovení spustí znovu, reklamace do Hongkongu
+      (reklamační řád) a chybějícího provozovatele (obchodní
+      podmínky). Signály nejsou důkaz podvodu, jen důvod zpozornět.
    3. Najde titaskin.com v seznamu rizikových e-shopů ČOI. FLAGem
       je datum, kdy ČOI před webem varovala (16. 07. 2021) –
       student ho zadá přímo do platformy, průvodce ho neprozrazuje
@@ -41,16 +41,28 @@
         },
         {
             id: 'refund',
-            title: 'Kdo obchod provozuje?',
+            title: 'Kam se reklamuje?',
             hint: 'Otevřete v patičce <b>Reklamační řád</b>. Kam se posílá reklamace?',
-            note: 'Obchod „z Brna“ reklamuje v Hongkongu a nemá IČO.',
+            note: 'Obchod „z Brna“ reklamuje v Hongkongu.',
             // vysvětlení v bublině u otevřeného dokumentu
             explainTitle: 'Brno, nebo Hongkong?',
             explain: '<ul class="zk-list">'
                 + '<li>Reklama slibovala „TITASKIN Brno“, reklamace jde do Hongkongu.</li>'
-                + '<li>Chybí IČO, tedy kdo obchod provozuje.</li>'
                 + '<li>Záruka „24 dní“ je výmysl, zákon dává 24 měsíců.</li>'
                 + '</ul>'
+        },
+        {
+            id: 'terms',
+            title: 'Kdo obchod provozuje?',
+            hint: 'Otevřete v patičce <b>Obchodní podmínky</b>. Kdo je v nich uvedený jako provozovatel?',
+            note: 'V podmínkách chybí jméno provozovatele, sídlo i IČO.',
+            explainTitle: 'Podmínky bez provozovatele',
+            explain: '<ul class="zk-list">'
+                + '<li>Provozovatel doufá, že se vám dlouhý text nebude chtít číst. Stačí ale podmínky aspoň projet.</li>'
+                + '<li>Jméno firmy, sídlo ani IČO v nich nenajdete, jen „my“ a „provozovatel“.</li>'
+                + '<li>Jediná adresa na webu je ta z Hongkongu v reklamačním řádu.</li>'
+                + '</ul>',
+            centered: true // text je delší než obrazovka, bublina by se k němu nevešla
         }
     ];
 
@@ -190,7 +202,7 @@
         const items = TRICKS.map((t) => `<li class="${found.includes(t.id) ? 'done' : ''}">`
             + `<span><b>${t.title}</b><br><small>${t.hint}</small></span></li>`).join('');
         const enough = found.length === TRICKS.length;
-        return 'Najděte dva varovné signály:'
+        return 'Najděte tři varovné signály:'
             + `<ul class="zk-checklist zk-tricks">${items}</ul>`
             + `<div class="zk-note">Nalezeno <b>${found.length} ze ${TRICKS.length}</b>.</div>`
             + (enough ? '<div class="zk-actions"><button type="button" class="zk-btn" data-next-coi>Pokračovat →</button></div>' : '');
@@ -216,7 +228,7 @@
     // panel se mezitím schová, aby nic nezakrýval, a po „Rozumím“ se vrátí s odškrtnutým signálem.
     function explainDoc(id) {
         const trick = TRICKS.find((t) => t.id === id);
-        const anchor = document.querySelector('.products > div');
+        const anchor = trick.centered ? null : document.querySelector('.products > div');
         mission.hide();
         drive([step(0, anchor || undefined, trick.explainTitle, trick.explain, {
             popoverClass: 'zk-tour zk-wide',
@@ -333,7 +345,7 @@
         });
 
         // Dokumenty z patičky, které jsou zároveň varovným signálem (ostatní dokumenty jen otevřou svůj text).
-        const DOC_TRICKS = { refund: 'refund' };
+        const DOC_TRICKS = { refund: 'refund', terms: 'terms' };
         document.addEventListener('titaskin:doc', (event) => {
             if (phase !== 'hunt') return;
             const id = DOC_TRICKS[event.detail.doc];

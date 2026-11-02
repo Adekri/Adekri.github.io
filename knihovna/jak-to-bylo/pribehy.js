@@ -136,8 +136,8 @@ const POHADKY = [
                 veci: [
                     { e: '🌙', x: 12, y: 24, s: 12 },
                     { e: 'chaloupka', x: 68, y: 92, s: 58 },
-                    { e: 'marenka-smutna', x: 15, y: 96, s: 30 },
-                    { e: 'jenicek-smutny', x: 34, y: 96, s: 30 },
+                    { e: 'marenka', x: 15, y: 96, s: 30 },
+                    { e: 'jenicek', x: 34, y: 96, s: 30 },
                     { e: 'pernicek', x: 43, y: 62, s: 14 }
                 ]
             },
