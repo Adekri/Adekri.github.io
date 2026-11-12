@@ -97,14 +97,12 @@
 
     /* ---------- špatná adresa ---------- */
 
-    function startWrong(kind, query) {
-        const reason = kind === 'clean'
-            ? 'Tahle stránka je v pořádku – ale my chceme prověřit odkaz z tlačítka <b>Stáhnout</b>.'
-            : 'Tuhle adresu VirusTotal nezná. Nejspíš se nezkopírovala celá.';
+    function startWrong(query) {
         start('wrong', [{
             popover: {
                 title: 'Tohle není ta adresa 🙈',
-                description: `Zadaná adresa:<br><b class="zk-address">${esc(query)}</b><br><br>${reason}`
+                description: `Zadaná adresa:<br><b class="zk-address">${esc(query)}</b><br><br>`
+                    + 'Prověřit chceme odkaz z tlačítka <b>Stáhnout</b>. Zkontrolujte, že se zkopíroval celý.'
                     + '<div class="zk-note">Správná adresa začíná na <b>http://free-photoshop</b></div>'
                     + '<div class="zk-actions">'
                     + '<button type="button" class="zk-btn" data-retry>Zkusit znovu</button>'
@@ -168,13 +166,13 @@
         };
     }
 
-    function startReport(detail) {
+    function startReport() {
         start('report', [
             step(8, undefined, 'Analýza dokončena!',
                 'Takhle vypadá zpráva o prověřeném odkazu.',
                 LOOK),
             step(9, '[data-tour="score"]', 'Výsledek kontroly',
-                `<b>${detail.detections} z ${detail.total}</b> antivirů označilo odkaz za nebezpečný.`
+                '<b>42 z 94</b> antivirů označilo odkaz za nebezpečný.'
                 + '<br><br>U bezpečné stránky by tu svítila zelená nula.'),
             step(10, vendorSpot, 'Seznam antivirů, které detekovaly hrozbu',
                 'Červené <b>Malware</b> nebo <b>Malicious</b> znamená škodlivý soubor.',
@@ -248,14 +246,12 @@
         if (phase === 'report' && tour.getActiveIndex() === REPORT_STEP_COMMUNITY && event.detail.tab === 'community') tour.moveNext();
     });
 
-    document.addEventListener('vt:report', (event) => {
-        if (finished) return;
-        if (event.detail.report.malicious) startReport(event.detail);
-        else startWrong('clean', event.detail.query);
+    document.addEventListener('vt:report', () => {
+        if (!finished) startReport();
     });
 
     document.addEventListener('vt:notfound', (event) => {
-        if (!finished) startWrong('notfound', event.detail.query);
+        if (!finished) startWrong(event.detail.query);
     });
 
     // Odeslání adresy i tlačítko Zpět mění hash: během načítání průvodce schováme.

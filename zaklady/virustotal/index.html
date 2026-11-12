@@ -193,40 +193,40 @@
         <a href="#/" class="btn-outline">Try another search</a>
     </main>
 
-    <!-- ============ REPORT ============ -->
+    <!-- ============ VÝSLEDEK (free-photoshop.example) ============ -->
     <main id="view-report" class="view" hidden>
         <div class="report-head">
             <div class="score-card" data-tour="score">
                 <div class="gauge">
                     <svg viewBox="0 0 100 100">
                         <circle class="gauge-track" cx="50" cy="50" r="45" />
-                        <circle class="gauge-value" id="gaugeValue" cx="50" cy="50" r="45" />
+                        <circle class="gauge-value" cx="50" cy="50" r="45" style="--offset: 156.4" />
                     </svg>
-                    <div class="gauge-text"><span id="scoreNum"></span><small id="scoreTotal"></small></div>
+                    <div class="gauge-text"><span>42</span><small>/ 94</small></div>
                 </div>
                 <div class="community-score">
                     <span>Community<br>Score</span>
-                    <b id="communityScore"></b>
+                    <b class="neg">-1</b>
                 </div>
             </div>
 
             <div class="info-card">
                 <div class="info-title">
-                    <span>URL report for <b id="reportDate"></b>.</span>
+                    <span>URL report for <b>2026-02-17 10:24:14 UTC</b>.</span>
                     <span class="info-actions">
-                        <button id="reanalyzeBtn"><svg><use href="#i-reload" /></svg> Reanalyze</button>
+                        <button data-reanalyze><svg><use href="#i-reload" /></svg> Reanalyze</button>
                         <button>More <svg><use href="#i-chevron" /></svg></button>
                     </span>
                 </div>
                 <div class="info-body">
                     <div class="info-url">
-                        <div id="reportUrl"></div>
-                        <div id="reportHost"></div>
+                        <div data-fill="url"></div>
+                        <div>free-photoshop.example 203.0.113.111</div>
                     </div>
                     <dl class="info-meta">
-                        <div><dt>Status</dt><dd id="metaStatus"></dd></div>
-                        <div><dt>Content Type</dt><dd id="metaType"></dd></div>
-                        <div><dt>Last Analysis Date</dt><dd id="metaAgo"></dd></div>
+                        <div><dt>Status</dt><dd>-</dd></div>
+                        <div><dt>Content Type</dt><dd>-</dd></div>
+                        <div><dt>Last Analysis Date</dt><dd>8 months ago</dd></div>
                     </dl>
                     <div class="info-globe"><svg><use href="#i-globe" /></svg></div>
                 </div>
@@ -237,23 +237,235 @@
             <button role="tab" data-rtab="summary">SUMMARY</button>
             <button role="tab" data-rtab="detection">DETECTION</button>
             <button role="tab" data-rtab="details">DETAILS</button>
-            <button role="tab" data-rtab="community" data-tour="rtab-community">COMMUNITY <span class="badge" id="communityCount"></span></button>
+            <button role="tab" data-rtab="community" data-tour="rtab-community">COMMUNITY <span class="badge">4</span></button>
         </nav>
 
         <div class="join-banner"><a href="#/">Join our Community</a> and enjoy additional community insights and
             crowdsourced detections, plus an API key to <a href="#/">automate checks.</a></div>
 
-        <section class="rpanel" data-rpanel="summary" id="panelSummary"></section>
+        <section class="rpanel" data-rpanel="summary">
+            <div class="box">
+                <h3 class="strong">Page Stats</h3>
+                <div class="box-body stats">
+                    <div class="stat"><svg><use href="#i-file" /></svg><b>Network Requests</b><svg><use href="#i-info" /></svg><span class="pill">2</span></div>
+                    <div class="stat"><svg><use href="#i-code" /></svg><b>HTTPS Requests</b><svg><use href="#i-info" /></svg><span class="pill">50%</span></div>
+                    <div class="stat"><svg><use href="#i-window" /></svg><b>Domains</b><svg><use href="#i-info" /></svg><span class="pill">1</span></div>
+                    <div class="stat"><svg><use href="#i-pin" /></svg><b>IP Addresses</b><svg><use href="#i-info" /></svg><span class="pill">0</span></div>
+                    <div class="stat"><svg><use href="#i-pin" /></svg><b>IPv6 Addresses</b><svg><use href="#i-info" /></svg><span class="pill">0%</span></div>
+                    <div class="stat"><svg><use href="#i-globe" /></svg><b>Countries</b><svg><use href="#i-info" /></svg><span class="pill">0</span></div>
+                    <div class="stat"><svg><use href="#i-resize" /></svg><b>Response Size</b><svg><use href="#i-info" /></svg><span class="pill">0 B</span></div>
+                    <div class="stat"><svg><use href="#i-cookie" /></svg><b>Cookies</b><svg><use href="#i-info" /></svg><span class="pill">0</span></div>
+                </div>
+            </div>
+            <div class="box">
+                <h3 class="strong">URL Overview</h3>
+                <div class="box-body">
+                    <dl class="kv kv-wide">
+                        <dt>Vendors Analysis:</dt>
+                        <dd class="summary-verdict bad"><svg><use href="#i-bad" /></svg> 42/94 security vendors flagged this URL as malicious</dd>
+                        <dt>Final URL:</dt><dd data-fill="url"></dd>
+                        <dt>Domain:</dt><dd>free-photoshop.example</dd>
+                        <dt>Serving IP:</dt><dd>-</dd>
+                        <dt>Current Status Code:</dt><dd>Error ()</dd>
+                        <dt>Category:</dt><dd class="tags"><span>Malicious (alphaMountain.ai)</span><span>spyware and malware</span><span>Malware Sites</span><span>malicious web sites</span></dd>
+                    </dl>
+                </div>
+            </div>
+            <div class="box">
+                <h3 class="strong">History <svg><use href="#i-info" /></svg></h3>
+                <div class="box-body">
+                    <dl class="kv">
+                        <dt>First Submission</dt><dd>2025-05-18 21:57:42 UTC - <span class="src-unknown">?</span> UNKNOWN OR UNSPECIFIED</dd>
+                        <dt>Last Submission</dt><dd>2026-02-17 10:24:14 UTC - <span class="src-unknown">?</span> UNKNOWN OR UNSPECIFIED</dd>
+                        <dt>Last Analysis</dt><dd>2026-02-17 10:24:14 UTC</dd>
+                    </dl>
+                </div>
+            </div>
+        </section>
 
         <section class="rpanel" data-rpanel="detection">
             <div class="box" data-tour="vendors">
                 <h3>Security vendors' analysis</h3>
-                <div class="vendors" id="vendorList"></div>
+                <div class="vendors">
+                    <div class="vendor"><span>ADMINUSLabs</span><span class="verdict bad"><svg><use href="#i-bad" /></svg> Malicious</span></div>
+                    <div class="vendor"><span>AILabs (MONITORAPP)</span><span class="verdict bad"><svg><use href="#i-bad" /></svg> Malicious</span></div>
+                    <div class="vendor"><span>AlienVault</span><span class="verdict bad"><svg><use href="#i-bad" /></svg> Malicious</span></div>
+                    <div class="vendor"><span>alphaMountain.ai</span><span class="verdict bad"><svg><use href="#i-bad" /></svg> Malicious</span></div>
+                    <div class="vendor"><span>Antiy-AVL</span><span class="verdict bad"><svg><use href="#i-bad" /></svg> Malicious</span></div>
+                    <div class="vendor"><span>BitDefender</span><span class="verdict bad"><svg><use href="#i-bad" /></svg> Malware</span></div>
+                    <div class="vendor"><span>Certego</span><span class="verdict bad"><svg><use href="#i-bad" /></svg> Malicious</span></div>
+                    <div class="vendor"><span>Chong Lua Dao</span><span class="verdict bad"><svg><use href="#i-bad" /></svg> Malicious</span></div>
+                    <div class="vendor"><span>CMC Threat Intelligence</span><span class="verdict bad"><svg><use href="#i-bad" /></svg> Malware</span></div>
+                    <div class="vendor"><span>CRDF</span><span class="verdict bad"><svg><use href="#i-bad" /></svg> Malicious</span></div>
+                    <div class="vendor"><span>Criminal IP</span><span class="verdict bad"><svg><use href="#i-bad" /></svg> Malicious</span></div>
+                    <div class="vendor"><span>Cyble</span><span class="verdict bad"><svg><use href="#i-bad" /></svg> Malicious</span></div>
+                    <div class="vendor"><span>CyRadar</span><span class="verdict bad"><svg><use href="#i-bad" /></svg> Malicious</span></div>
+                    <div class="vendor"><span>Dr.Web</span><span class="verdict bad"><svg><use href="#i-bad" /></svg> Malicious</span></div>
+                    <div class="vendor"><span>EmergingThreats</span><span class="verdict bad"><svg><use href="#i-bad" /></svg> Malware</span></div>
+                    <div class="vendor"><span>Emsisoft</span><span class="verdict bad"><svg><use href="#i-bad" /></svg> Malware</span></div>
+                    <div class="vendor"><span>ESTsecurity</span><span class="verdict bad"><svg><use href="#i-bad" /></svg> Malicious</span></div>
+                    <div class="vendor"><span>Forcepoint ThreatSeeker</span><span class="verdict bad"><svg><use href="#i-bad" /></svg> Malicious</span></div>
+                    <div class="vendor"><span>Fortinet</span><span class="verdict bad"><svg><use href="#i-bad" /></svg> Malware</span></div>
+                    <div class="vendor"><span>G-Data</span><span class="verdict bad"><svg><use href="#i-bad" /></svg> Malware</span></div>
+                    <div class="vendor"><span>Google Safebrowsing</span><span class="verdict bad"><svg><use href="#i-bad" /></svg> Malicious</span></div>
+                    <div class="vendor"><span>Gridinsoft</span><span class="verdict bad"><svg><use href="#i-bad" /></svg> Malware</span></div>
+                    <div class="vendor"><span>Heimdal Security</span><span class="verdict bad"><svg><use href="#i-bad" /></svg> Malicious</span></div>
+                    <div class="vendor"><span>Juniper Networks</span><span class="verdict bad"><svg><use href="#i-bad" /></svg> Malicious</span></div>
+                    <div class="vendor"><span>Kaspersky</span><span class="verdict bad"><svg><use href="#i-bad" /></svg> Malware</span></div>
+                    <div class="vendor"><span>Lionic</span><span class="verdict bad"><svg><use href="#i-bad" /></svg> Malware</span></div>
+                    <div class="vendor"><span>MalwarePatrol</span><span class="verdict bad"><svg><use href="#i-bad" /></svg> Malicious</span></div>
+                    <div class="vendor"><span>Quick Heal</span><span class="verdict bad"><svg><use href="#i-bad" /></svg> Malware</span></div>
+                    <div class="vendor"><span>Quttera</span><span class="verdict bad"><svg><use href="#i-bad" /></svg> Malicious</span></div>
+                    <div class="vendor"><span>Rising</span><span class="verdict bad"><svg><use href="#i-bad" /></svg> Malware</span></div>
+                    <div class="vendor"><span>Sangfor</span><span class="verdict bad"><svg><use href="#i-bad" /></svg> Malware</span></div>
+                    <div class="vendor"><span>Seclookup</span><span class="verdict bad"><svg><use href="#i-bad" /></svg> Malicious</span></div>
+                    <div class="vendor"><span>SOCRadar</span><span class="verdict bad"><svg><use href="#i-bad" /></svg> Malware</span></div>
+                    <div class="vendor"><span>Sophos</span><span class="verdict bad"><svg><use href="#i-bad" /></svg> Malware</span></div>
+                    <div class="vendor"><span>Sucuri SiteCheck</span><span class="verdict bad"><svg><use href="#i-bad" /></svg> Malicious</span></div>
+                    <div class="vendor"><span>Trustwave</span><span class="verdict bad"><svg><use href="#i-bad" /></svg> Malicious</span></div>
+                    <div class="vendor"><span>URLhaus</span><span class="verdict bad"><svg><use href="#i-bad" /></svg> Malware</span></div>
+                    <div class="vendor"><span>Viettel Threat Intelligence</span><span class="verdict bad"><svg><use href="#i-bad" /></svg> Malicious</span></div>
+                    <div class="vendor"><span>VIPRE</span><span class="verdict bad"><svg><use href="#i-bad" /></svg> Malware</span></div>
+                    <div class="vendor"><span>VX Vault</span><span class="verdict bad"><svg><use href="#i-bad" /></svg> Malware</span></div>
+                    <div class="vendor"><span>Webroot</span><span class="verdict bad"><svg><use href="#i-bad" /></svg> Malicious</span></div>
+                    <div class="vendor"><span>Xcitium Verdict Cloud</span><span class="verdict bad"><svg><use href="#i-bad" /></svg> Malware</span></div>
+                    <div class="vendor"><span>ESET</span><span class="verdict suspicious"><svg><use href="#i-info" /></svg> Suspicious</span></div>
+                    <div class="vendor"><span>Abusix</span><span class="verdict clean"><svg><use href="#i-ok" /></svg> Clean</span></div>
+                    <div class="vendor"><span>Acronis</span><span class="verdict clean"><svg><use href="#i-ok" /></svg> Clean</span></div>
+                    <div class="vendor"><span>ArcSight Threat Intelligence</span><span class="verdict clean"><svg><use href="#i-ok" /></svg> Clean</span></div>
+                    <div class="vendor"><span>Artists Against 419</span><span class="verdict clean"><svg><use href="#i-ok" /></svg> Clean</span></div>
+                    <div class="vendor"><span>benkow.cc</span><span class="verdict clean"><svg><use href="#i-ok" /></svg> Clean</span></div>
+                    <div class="vendor"><span>Bkav</span><span class="verdict clean"><svg><use href="#i-ok" /></svg> Clean</span></div>
+                    <div class="vendor"><span>Blueliv</span><span class="verdict clean"><svg><use href="#i-ok" /></svg> Clean</span></div>
+                    <div class="vendor"><span>CINS Army</span><span class="verdict clean"><svg><use href="#i-ok" /></svg> Clean</span></div>
+                    <div class="vendor"><span>CSIS Security Group</span><span class="verdict clean"><svg><use href="#i-ok" /></svg> Clean</span></div>
+                    <div class="vendor"><span>Cyan</span><span class="verdict clean"><svg><use href="#i-ok" /></svg> Clean</span></div>
+                    <div class="vendor"><span>desenmascara.me</span><span class="verdict clean"><svg><use href="#i-ok" /></svg> Clean</span></div>
+                    <div class="vendor"><span>DNS8</span><span class="verdict clean"><svg><use href="#i-ok" /></svg> Clean</span></div>
+                    <div class="vendor"><span>GreenSnow</span><span class="verdict clean"><svg><use href="#i-ok" /></svg> Clean</span></div>
+                    <div class="vendor"><span>IPsum</span><span class="verdict clean"><svg><use href="#i-ok" /></svg> Clean</span></div>
+                    <div class="vendor"><span>Malwared</span><span class="verdict clean"><svg><use href="#i-ok" /></svg> Clean</span></div>
+                    <div class="vendor"><span>malwares.com URL checker</span><span class="verdict clean"><svg><use href="#i-ok" /></svg> Clean</span></div>
+                    <div class="vendor"><span>OpenPhish</span><span class="verdict clean"><svg><use href="#i-ok" /></svg> Clean</span></div>
+                    <div class="vendor"><span>Phishing Database</span><span class="verdict clean"><svg><use href="#i-ok" /></svg> Clean</span></div>
+                    <div class="vendor"><span>Phishtank</span><span class="verdict clean"><svg><use href="#i-ok" /></svg> Clean</span></div>
+                    <div class="vendor"><span>PREBYTES</span><span class="verdict clean"><svg><use href="#i-ok" /></svg> Clean</span></div>
+                    <div class="vendor"><span>Sansec eComscan</span><span class="verdict clean"><svg><use href="#i-ok" /></svg> Clean</span></div>
+                    <div class="vendor"><span>Scantitan</span><span class="verdict clean"><svg><use href="#i-ok" /></svg> Clean</span></div>
+                    <div class="vendor"><span>SCUMWARE.org</span><span class="verdict clean"><svg><use href="#i-ok" /></svg> Clean</span></div>
+                    <div class="vendor"><span>securolytics</span><span class="verdict clean"><svg><use href="#i-ok" /></svg> Clean</span></div>
+                    <div class="vendor"><span>Snort IP sample list</span><span class="verdict clean"><svg><use href="#i-ok" /></svg> Clean</span></div>
+                    <div class="vendor"><span>Spam404</span><span class="verdict clean"><svg><use href="#i-ok" /></svg> Clean</span></div>
+                    <div class="vendor"><span>StopForumSpam</span><span class="verdict clean"><svg><use href="#i-ok" /></svg> Clean</span></div>
+                    <div class="vendor"><span>ThreatHive</span><span class="verdict clean"><svg><use href="#i-ok" /></svg> Clean</span></div>
+                    <div class="vendor"><span>Threatsourcing</span><span class="verdict clean"><svg><use href="#i-ok" /></svg> Clean</span></div>
+                    <div class="vendor"><span>Underworld</span><span class="verdict clean"><svg><use href="#i-ok" /></svg> Clean</span></div>
+                    <div class="vendor"><span>URLQuery</span><span class="verdict clean"><svg><use href="#i-ok" /></svg> Clean</span></div>
+                    <div class="vendor"><span>ViriBack</span><span class="verdict clean"><svg><use href="#i-ok" /></svg> Clean</span></div>
+                    <div class="vendor"><span>Yandex Safebrowsing</span><span class="verdict clean"><svg><use href="#i-ok" /></svg> Clean</span></div>
+                    <div class="vendor"><span>ZeroCERT</span><span class="verdict clean"><svg><use href="#i-ok" /></svg> Clean</span></div>
+                    <div class="vendor"><span>0xSI_f33d</span><span class="verdict unrated"><svg><use href="#i-unrated" /></svg> Unrated</span></div>
+                    <div class="vendor"><span>AlphaSOC</span><span class="verdict unrated"><svg><use href="#i-unrated" /></svg> Unrated</span></div>
+                    <div class="vendor"><span>AutoShun</span><span class="verdict unrated"><svg><use href="#i-unrated" /></svg> Unrated</span></div>
+                    <div class="vendor"><span>Bfore.Ai PreCrime</span><span class="verdict unrated"><svg><use href="#i-unrated" /></svg> Unrated</span></div>
+                    <div class="vendor"><span>Cluster25</span><span class="verdict unrated"><svg><use href="#i-unrated" /></svg> Unrated</span></div>
+                    <div class="vendor"><span>Ermes</span><span class="verdict unrated"><svg><use href="#i-unrated" /></svg> Unrated</span></div>
+                    <div class="vendor"><span>GCP Abuse Intelligence</span><span class="verdict unrated"><svg><use href="#i-unrated" /></svg> Unrated</span></div>
+                    <div class="vendor"><span>Hunt.io Intelligence</span><span class="verdict unrated"><svg><use href="#i-unrated" /></svg> Unrated</span></div>
+                    <div class="vendor"><span>Lumu</span><span class="verdict unrated"><svg><use href="#i-unrated" /></svg> Unrated</span></div>
+                    <div class="vendor"><span>MalwareURL</span><span class="verdict unrated"><svg><use href="#i-unrated" /></svg> Unrated</span></div>
+                    <div class="vendor"><span>Mimecast</span><span class="verdict unrated"><svg><use href="#i-unrated" /></svg> Unrated</span></div>
+                    <div class="vendor"><span>Netcraft</span><span class="verdict unrated"><svg><use href="#i-unrated" /></svg> Unrated</span></div>
+                    <div class="vendor"><span>PhishFort</span><span class="verdict unrated"><svg><use href="#i-unrated" /></svg> Unrated</span></div>
+                    <div class="vendor"><span>PhishLabs</span><span class="verdict unrated"><svg><use href="#i-unrated" /></svg> Unrated</span></div>
+                    <div class="vendor"><span>PrecisionSec</span><span class="verdict unrated"><svg><use href="#i-unrated" /></svg> Unrated</span></div>
+                    <div class="vendor"><span>SafeToOpen</span><span class="verdict unrated"><svg><use href="#i-unrated" /></svg> Unrated</span></div>
+                    <div class="vendor"><span>zvelo</span><span class="verdict unrated"><svg><use href="#i-unrated" /></svg> Unrated</span></div>
+                </div>
             </div>
         </section>
 
-        <section class="rpanel" data-rpanel="details" id="panelDetails"></section>
-        <section class="rpanel" data-rpanel="community" id="panelCommunity"></section>
+        <section class="rpanel" data-rpanel="details">
+            <div class="details-layout">
+                <nav class="toc">
+                    <b>Table of Contents</b>
+                    <span>Categories</span><span>History</span><span>Network Requests / HTTPs Transactions</span>
+                </nav>
+                <div>
+                    <div class="box">
+                        <h3 class="strong">Categories <svg><use href="#i-info" /></svg></h3>
+                        <div class="box-body">
+                            <dl class="kv">
+                                <dt>alphaMountain.ai</dt><dd>Malicious (alphaMountain.ai)</dd>
+                                <dt>Sophos</dt><dd>spyware and malware</dd>
+                                <dt>Webroot</dt><dd>Malware Sites</dd>
+                                <dt>Forcepoint ThreatSeeker</dt><dd>malicious web sites</dd>
+                            </dl>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <h3 class="strong">History <svg><use href="#i-info" /></svg></h3>
+                        <div class="box-body">
+                            <dl class="kv">
+                                <dt>First Submission</dt><dd>2025-05-18 21:57:42 UTC - <span class="src-unknown">?</span> UNKNOWN OR UNSPECIFIED</dd>
+                                <dt>Last Submission</dt><dd>2026-02-17 10:24:14 UTC - <span class="src-unknown">?</span> UNKNOWN OR UNSPECIFIED</dd>
+                                <dt>Last Analysis</dt><dd>2026-02-17 10:24:14 UTC</dd>
+                            </dl>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <h3 class="strong">Network Requests / HTTPs Transactions (2/2) <svg><use href="#i-info" /></svg></h3>
+                        <div class="box-body">
+                            <table class="net">
+                                <tr><th>URL</th><th>Headers</th><th>GTI Score</th><th>Status</th>
+                                    <th>Detections <svg><use href="#i-info" /></svg></th><th>Relation Date <svg><use href="#i-info" /></svg></th></tr>
+                                <tr><td><div class="net-url" data-fill="url"></div></td>
+                                    <td>-</td><td>-</td><td>-</td>
+                                    <td><span class="det-bad">42</span> / 94</td><td>2026-02-17 10:24:14 UTC</td></tr>
+                                <tr><td><div class="net-url" data-fill="https"></div>
+                                        <div class="net-note"><svg><use href="#i-info" /></svg> This IoC is not available in our public corpus at this time</div></td>
+                                    <td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="rpanel" data-rpanel="community">
+            <section class="csection">
+                <h3>Contained in Graphs &nbsp;(1) <svg><use href="#i-info" /></svg></h3>
+                <div class="graph-row">
+                    <span class="user-pill"><span class="avatar"></span>net.watcher</span>
+                    <span class="graph-name">free-photoshop.example</span>
+                    <span class="graph-date">2025-06-08 06:35:57</span>
+                </div>
+            </section>
+            <section class="csection">
+                <h3>Voting details &nbsp;(1) <svg><use href="#i-info" /></svg></h3>
+                <div class="votes">
+                    <div class="vote"><span class="avatar"></span>
+                        <div><b>safesurf_2024</b><span>1 year ago</span></div>
+                        <strong class="det-bad">-1</strong>
+                    </div>
+                </div>
+            </section>
+            <section class="csection" id="commentsSection">
+                <h3>Comments &nbsp;(2) <svg><use href="#i-info" /></svg></h3>
+                <div class="comment"><span class="avatar"></span>
+                    <div>
+                        <div class="comment-head"><b>thor_scanner</b><span>7 months ago</span></div>
+                        <p>Fake Adobe Photoshop installer. The dropped payload is an info-stealer (browser passwords, cookies, crypto wallets). Do not run.</p>
+                    </div>
+                </div>
+                <div class="comment"><span class="avatar"></span>
+                    <div>
+                        <div class="comment-head"><b>malware_hunter_cz</b><span>7 months ago</span></div>
+                        <p>Distributed via a &quot;free Photoshop&quot; landing page. Same IP hosts other fake cracked software downloads. #stealer #fakeinstaller</p>
+                    </div>
+                </div>
+            </section>
+        </section>
     </main>
 
 

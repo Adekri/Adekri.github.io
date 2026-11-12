@@ -69,7 +69,7 @@
                     <span><span class="material-symbols-rounded" style="color:#f7b928">mood</span>Pocit/aktivita</span>
                 </div>
             </section>
-
+<!--zobrazené příspěvky-->
             <article class="fb-card fb-post">
                 <header class="fb-post-head">
                     <img src="images/kuba.jpg" alt="">
@@ -80,7 +80,7 @@
                 <div class="fb-stats"><span><i class="fb-r like">👍</i><i class="fb-r haha">😆</i> 14</span><span>6 komentářů</span></div>
                 <div class="fb-actions"><span><span class="material-symbols-rounded">thumb_up</span>To se mi líbí</span><span><span class="material-symbols-rounded">chat_bubble</span>Okomentovat</span><span><span class="material-symbols-rounded">share</span>Sdílet</span></div>
             </article>
-
+<!--samotná reklama podstatná pro úkol Titaskin-->
             <article class="fb-card fb-post" id="adPost">
                 <header class="fb-post-head">
                     <span class="fb-page-avatar ts-avatar">T</span>
@@ -132,6 +132,7 @@
             </article>
         </main>
 
+        <!--obrázky profilů stažené z thisfacedoesnotexists-->
         <aside class="fb-right">
             <h4>Narozeniny</h4>
             <p class="fb-bday"><span class="material-symbols-rounded" style="color:#1b74e4">featured_seasonal_and_gifts</span><span>Dnes má narozeniny <b>Eliška Králová</b>.</span></p>
@@ -154,7 +155,7 @@
         if (new URLSearchParams(location.search).get('tour') === '0') {
             document.querySelectorAll('.ad-link').forEach((a) => { a.href += '&tour=0'; });
         }
-        // ostatní odkazy výukové kopie nikam nevedou
+        // ostatní odkazy nikam nevedou
         document.querySelectorAll('a[href="#"]').forEach((a) => a.addEventListener('click', (e) => e.preventDefault()));
     </script>
     <script src="https://cdn.jsdelivr.net/npm/driver.js@1/dist/driver.js.iife.js"></script>

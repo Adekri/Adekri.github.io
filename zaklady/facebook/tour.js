@@ -26,6 +26,7 @@
         window.scrollTo(x, y);
     }
 
+    //globální nastavení driveru
     function drive(steps) {
         stop();
         tour = driver({

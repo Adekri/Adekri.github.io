@@ -1,5 +1,9 @@
 /* Společný vzhled průvodce (driver.js) pro úkoly v adresáři zaklady.
-   Průvodce je ve stylu VUT (červená + písmo Vafle), aby se odlišil od stránek, které popisuje. */
+   Průvodce je ve stylu VUT (červená + písmo Vafle), aby se odlišil od stránek, které popisuje. 
+   Všechny položky začínají zk (jako základy) aby se netloukly s jinými defaultními
+   názvy objektů. */
+
+
 
 @font-face {
     font-family: 'VafleVUT';

@@ -26,11 +26,6 @@ bezpečné placení…). Každý úkol je samostatná složka se statickými str
 
 ## Obsah a bezpečnost
 
-- Scénáře a značky na funkčních stránkách jsou **fiktivní**. Skutečné firmy se
-  objevují jen jako ukázka v podvodných e-mailech, ne jako funkční web, který bych
-  stavěla pod jejich jménem (nenapodobovat reálné firmy). Výjimka na přání autorky:
-  aplikace banky v `outlook/DPD/phone.js` má logo a název Smart Banky; nic nesbírá
-  a slouží jen jako simulace uvnitř úkolu.
 - Obrázky: fiktivní / volné (CC0) / ilustrační. Obličeje ber z
   `thispersondoesnotexist.com`; nikdy ne fotky skutečných lidí.
 - Úkoly necílí na identifikaci ani vyhledání konkrétní reálné osoby.

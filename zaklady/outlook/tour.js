@@ -48,7 +48,7 @@
         }
     };
 
-    const STANISLAV_ID = '2';
+    const STANISLAV_ID = '2'; // je nutné pro funkčnost určit, který ten email je od útočníka
     const opened = new Set();
 
     // Popisky k jednotlivým zprávám. Stanislav + „DPD“ = jeden podvod, `other` = zpráva mimo podvodnou cestu.
@@ -68,6 +68,7 @@
         return `${note.html}<br><br>Pokračujte zprávou od <b>${next}</b>.`;
     }
 
+    // po kliknutí na email se načte jeho ID a související zpráva se načte z pole NOTES
     document.addEventListener('click', (event) => {
         const item = event.target.closest('.message-item');
         if (!item) return;
@@ -82,7 +83,7 @@
             'Na inzerát na prodej kola přišlo několik odpovědí. Většina je v pořádku, mezi nimi je ale i <b>pokus o podvod</b>. Podíváme se, jak funguje.');
         mission.note('Otevřete zprávu od <b>Stanislava Dlouhého</b>.', 'zk-note');
 
-        // Panel umístíme vlevo přes seznam složek – tam nepřekáží čtení zprávy ani seznamu e-mailů.
+        // Panel je umístěn napevno nalevo místo panelu možností,aby nepřekážel při čtení e-mailu
         Object.assign(mission.el.style, {
             left: '52px', right: 'auto', width: '235px', boxSizing: 'border-box',
             maxHeight: 'calc(100vh - 110px)', overflowY: 'auto'

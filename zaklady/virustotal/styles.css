@@ -449,11 +449,15 @@ svg {
 .gauge-value {
     stroke: var(--red);
     stroke-linecap: round;
-    transition: stroke-dashoffset .8s ease;
+    /* obvod kružnice r=45; --offset (v HTML) = obvod × (1 − podíl detekcí) */
+    stroke-dasharray: 282.7;
+    stroke-dashoffset: var(--offset);
+    animation: gauge-fill .8s ease;
 }
 
-.gauge.clean .gauge-value {
-    stroke: var(--green);
+/* animace se spustí pokaždé, když se zpráva zobrazí (z hidden) */
+@keyframes gauge-fill {
+    from { stroke-dashoffset: 282.7; }
 }
 
 .gauge-text {
@@ -469,10 +473,6 @@ svg {
 .gauge-text span {
     font-size: 42px;
     color: var(--red);
-}
-
-.gauge.clean .gauge-text span {
-    color: var(--green);
 }
 
 .gauge-text small {
@@ -781,11 +781,6 @@ svg {
 .summary-verdict.bad,
 .det-bad {
     color: var(--red);
-}
-
-.summary-verdict.clean,
-.det-ok {
-    color: var(--green);
 }
 
 /* summary: Page Stats */
