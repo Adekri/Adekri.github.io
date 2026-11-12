@@ -1,6 +1,3 @@
 .qodo
-# Obrázky postav z pohádek – jen pro výuku, nezveřejňovat
-knihovna/obrazky-postav/*
-!knihovna/obrazky-postav/NAVOD.txt
 CLAUDE.md
 zaklady/dokumentace/

@@ -10,45 +10,79 @@
     <link rel="stylesheet" href="../spolecne/hra.css">
     <style>
         .hra {
-            /* Čtyři okénka 4:3 ve dvou řadách se musí vejít na šířku i na výšku */
-            --sirka: min(calc((100vw - 100px) / 4), calc((100vh - 268px) * 2 / 3));
-            gap: clamp(8px, 1.6vh, 16px);
-            padding-top: 10px;
+            /* Komiks 2 × 2 co největší, ale tak, aby se vešel na šířku i na výšku obrazovky */
+            --mezera: 58px;
+            --velka: min(calc((100vw - 80px - var(--mezera)) / 2), calc((100vh - 196px - var(--mezera)) / 2 * 4 / 3));
+            gap: 10px;
+            padding-top: 8px;
         }
         /* Licence v rohu, ať nezabírá místo */
         .paticka { position: fixed; right: 10px; bottom: 2px; padding: 0; }
 
         .nazev-pohadky { margin: 0; font-family: var(--nadpisy); font-size: clamp(1.5rem, 3vw, 2.4rem); font-weight: 800; line-height: 1.1; }
 
-        .rada {
-            display: grid;
-            grid-template-columns: repeat(4, var(--sirka));
-            gap: 14px;
-            justify-content: center;
+        .zahlavi-hry { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 6px 24px; min-height: 52px; }
+        .zahlavi-hry .titulek { min-height: 0; font-size: clamp(1.1rem, 2vw, 1.6rem); }
+
+        .komiks { position: relative; display: grid; grid-template-columns: repeat(2, auto); gap: var(--mezera); }
+
+        /* Šipky mezi okénky ukazují, kudy příběh pokračuje (i pro děti, které ještě neumí číst) */
+        .sipka {
+            position: absolute;
+            width: 64px;
+            height: 64px;
+            color: var(--inkoust);
+            pointer-events: none;
         }
+        .sipka.doprava { left: calc(50% - 32px); top: calc(var(--velka) * 3 / 8 - 32px); }
+        .sipka.dolu    { left: calc(var(--velka) * 1.5 + var(--mezera) - 32px); top: calc(50% - 32px); }
+        .sipka.doleva  { left: calc(50% - 32px); top: calc(var(--velka) * 3 / 4 + var(--mezera) + var(--velka) * 3 / 8 - 32px); }
 
         .policko {
             position: relative;
-            width: var(--sirka);
+            width: var(--velka);
             aspect-ratio: 4 / 3;
             border-radius: 10px;
         }
-        .policko.cil { border: 3px dashed var(--linka); }
-        .policko.cil.nad { border-color: var(--okr); background: rgba(201, 154, 59, .15); }
-        .policko .cislo {
+        .policko.nad .panel { outline: 5px solid var(--okr); outline-offset: 3px; }
+        /* Číslo pozice v rohu */
+        .policko .roh {
             position: absolute;
-            inset: 0;
+            left: -12px;
+            top: -12px;
+            z-index: 3;
+            width: 40px;
+            height: 40px;
             display: grid;
             place-items: center;
+            border: 3px solid var(--inkoust);
+            border-radius: 50%;
+            background: var(--papir-svetly);
             font-family: var(--nadpisy);
-            font-size: calc(var(--sirka) * .3);
+            font-size: 1.4rem;
             font-weight: 800;
-            color: var(--linka);
+            pointer-events: none;
+        }
+        /* Věta po vyřešení: proužek přes spodní okraj okénka */
+        .policko .popis {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 2;
+            padding: .3em .7em .35em;
+            border-top: 3px solid var(--inkoust);
+            border-radius: 0 0 10px 10px;
+            background: rgba(251, 247, 238, .94);
+            font-family: var(--nadpisy);
+            font-size: clamp(1rem, 1.6vw, 1.45rem);
+            line-height: 1.2;
+            text-align: center;
         }
 
         .panel {
             position: absolute;
-            inset: -3px;
+            inset: 0;
             z-index: 1;
             padding: 0;
             border: 3px solid var(--inkoust);
@@ -59,21 +93,12 @@
             cursor: grab;
             touch-action: none;
         }
-        .policko.zasobnik .panel { inset: 0; }
         .panel svg { display: block; width: 100%; height: 100%; pointer-events: none; }
         .panel.tazeny { z-index: 100; cursor: grabbing; box-shadow: 8px 12px 18px rgba(46, 38, 32, .35); rotate: -1.5deg; }
         .panel.spravne { border-color: var(--zelena); border-width: 5px; cursor: default; }
         .panel.spatne { border-color: var(--cervena); border-width: 5px; }
+        .panel.vybrany { outline: 5px solid var(--okr); outline-offset: 3px; rotate: -1deg; }
 
-        /* Věty pod okénky po vyřešení */
-        .popisy p {
-            margin: 0;
-            font-family: var(--nadpisy);
-            font-size: clamp(1.1rem, 1.9vw, 1.6rem);
-            line-height: 1.2;
-        }
-        .popisy[hidden], .zasobniky[hidden] { display: none; }
-        .ovladani { display: flex; align-items: center; justify-content: center; gap: 20px; min-height: 60px; }
     </style>
 </head>
 <body>

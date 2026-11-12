@@ -3,8 +3,9 @@
  * Okénka z pohádky jsou zamíchaná a třída je skládá do správného pořadí.
  * Okénka jsou SVG scény poskládané z kreseb, data jsou v souboru pribehy.js.
  *
- * Ovládání: okénko se přetáhne do políčka (myší, prstem na tabuli).
- * Klik na okénko ho vloží do prvního volného políčka, nebo vrátí zpět dolů.
+ * Ovládání: okénka jsou od začátku v komiksu, jen zamíchaná. Okénko se přetáhne
+ * na jiné a ta dvě se prohodí (myší, prstem na tabuli). Totéž jde klikáním:
+ * klik okénko vybere, klik na jiné je prohodí.
  */
 
 const hra = document.getElementById('hra');
@@ -15,10 +16,25 @@ const POZADI = {
     den:   { nebe: '#d6e6e8', zeme: '#c5d6a2', horizont: 56 },
     les:   { nebe: '#cfe0cc', zeme: '#a9c48f', horizont: 56 },
     vecer: { nebe: '#d9d2e6', zeme: '#b4c89a', horizont: 56 },
+    noc:   { nebe: '#3E4A6E', zeme: '#55704A', horizont: 62 },
     pokoj: { nebe: '#eadbc0', zeme: '#c9a97a', horizont: 66 }
 };
 
 let pohadka = 0;
+
+// Okénka jdou dokola po směru hodinových ručiček (1 ↗ 2 ↓ 3 ↙ 4),
+// aby šipky mezi nimi byly krátké a nekřížily se
+const MISTA = ['1 / 1', '1 / 2', '2 / 2', '2 / 1'];
+
+// Ručně kreslené šipky v mezerách mezi okénky: doprava, dolů, doleva
+const sipka = (trida, d, hrot) => `<svg class="sipka ${trida}" viewBox="0 0 100 100" aria-hidden="true">
+    <path d="${d}" fill="none" stroke="currentColor" stroke-width="9" stroke-linecap="round"/>
+    <path d="${hrot}" fill="none" stroke="currentColor" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>`;
+const SIPKY =
+    sipka('doprava', 'M12,54 C34,44 58,58 80,48', 'M62,30 L84,47 L64,68') +
+    sipka('dolu', 'M48,10 C58,34 42,58 52,82', 'M32,64 L52,86 L70,64') +
+    sipka('doleva', 'M88,48 C66,58 42,44 20,54', 'M38,32 L16,52 L36,70');
 
 
 /* ================================================================
@@ -68,66 +84,58 @@ function zobrazPohadku() {
     if (pohadka >= POHADKY.length) return konec();
 
     const p = POHADKY[pohadka];
-    const pocet = p.okenka.length;
     Hra.postup(postupEl, pohadka + 1, POHADKY.length);
     Hra.dalsiKlavesou(null);
 
-    // Zamícháme tak, aby okénka nebyla hned správně
+    // Zamícháme tak, aby žádné okénko nebylo hned na svém místě
     let poradi = p.okenka.map((_, i) => i);
-    do { poradi = Hra.zamichej(poradi); } while (poradi.every((v, i) => v === i));
+    do { poradi = Hra.zamichej(poradi); } while (poradi.some((v, i) => v === i));
 
     hra.innerHTML = `
-        <h2 class="nazev-pohadky">${p.nazev}</h2>
-        <div class="rada">
-            ${p.okenka.map((_, i) => `<div class="policko cil" data-i="${i}"><span class="cislo">${i + 1}</span></div>`).join('')}
+        <div class="zahlavi-hry">
+            <h2 class="nazev-pohadky">${p.nazev}</h2>
+            <p class="titulek" id="titulek">Prohoďte okénka, aby šla za sebou.</p>
+            <button class="tlacitko mensi" id="zkontrolovat">Zkontrolovat</button>
         </div>
-        <div class="ovladani">
-            <p class="titulek" id="titulek">Přetáhněte okénka do políček.</p>
-            <button class="tlacitko mensi" id="zkontrolovat" disabled>Zkontrolovat</button>
-        </div>
-        <div class="rada zasobniky">
-            ${poradi.map(idx => `
-                <div class="policko zasobnik">
+        <div class="komiks">
+            ${poradi.map((idx, i) => `
+                <div class="policko" data-i="${i}" style="grid-area:${MISTA[i]}">
                     <button class="panel objev" data-idx="${idx}">${panelSvg(p.okenka[idx])}</button>
+                    <span class="roh">${i + 1}</span>
                 </div>`).join('')}
-        </div>
-        <div class="rada popisy" hidden>${p.okenka.map(o => `<p>${o.text}</p>`).join('')}</div>`;
+            ${SIPKY}
+        </div>`;
 
     hra.querySelectorAll('.panel').forEach(pripravPanel);
     document.getElementById('zkontrolovat').addEventListener('click', zkontroluj);
-    Hra.mluv(`${p.nazev}. Poskládejte okénka tak, jak šla v pohádce za sebou.`);
-
-    aktualizuj(pocet);
+    Hra.mluv(`${p.nazev}. Prohoďte okénka tak, aby šla za sebou jako v pohádce.`);
 }
 
-const cile = () => [...hra.querySelectorAll('.policko.cil')];
-const zasobniky = () => [...hra.querySelectorAll('.policko.zasobnik')];
+const policka = () => [...hra.querySelectorAll('.policko')];
+let vybrany = null; // okénko vybrané kliknutím, čeká na druhé kliknutí
 
-function aktualizuj() {
-    const vse = cile().every(c => c.querySelector('.panel'));
-    document.getElementById('zkontrolovat').disabled = !vse;
-}
-
-/** Vloží okénko do políčka a případné obsazené okénko pošle na místo, odkud přišlo nové. */
-function vloz(panel, kam) {
+/** Prohodí dvě okénka. Správně umístěná (zelená) okénka se už nehýbou. */
+function prohod(panel, kam) {
     const odkud = panel.parentElement;
-    if (kam === odkud) return;
-    const obsazene = kam.querySelector('.panel');
-    if (obsazene) {
-        if (obsazene.classList.contains('spravne')) return;
-        odkud.appendChild(obsazene);
-    }
-    panel.classList.remove('spatne');
-    kam.appendChild(panel);
-    Hra.zvuk.listek();
-    aktualizuj();
+    const druhy = kam.querySelector('.panel');
+    if (kam === odkud || !druhy || druhy.classList.contains('spravne')) return;
+    odkud.prepend(druhy);
+    kam.prepend(panel);
+    // Prohazování je potichu — zvuk zazní až při správném složení
+    [panel, druhy].forEach(p => p.classList.remove('spatne'));
 }
 
-/** Klik bez tažení: z dolní řady do prvního volného políčka, z políčka zpět dolů. */
+/** Klik bez tažení: první klik okénko vybere, druhý ho prohodí s jiným. */
 function klikNaPanel(panel) {
-    const jeVCili = panel.parentElement.classList.contains('cil');
-    const volne = (jeVCili ? zasobniky() : cile()).find(c => !c.querySelector('.panel'));
-    if (volne) vloz(panel, volne);
+    if (panel.classList.contains('spravne')) return;
+    if (!vybrany) {
+        vybrany = panel;
+        panel.classList.add('vybrany');
+        return;
+    }
+    vybrany.classList.remove('vybrany');
+    if (vybrany !== panel) prohod(vybrany, panel.parentElement);
+    vybrany = null;
 }
 
 
@@ -140,7 +148,7 @@ function pripravPanel(panel) {
     let tazeni = false;
 
     const policko = (x, y) => document.elementFromPoint(x, y)?.closest('.policko') || null;
-    const zvyrazni = cil => cile().forEach(c => c.classList.toggle('nad', c === cil));
+    const zvyrazni = cil => policka().forEach(c => c.classList.toggle('nad', c === cil));
 
     panel.addEventListener('pointerdown', e => {
         if (panel.classList.contains('spravne')) return;
@@ -173,7 +181,7 @@ function pripravPanel(panel) {
         panel.classList.remove('tazeny');
         panel.removeAttribute('style');
         zvyrazni(null);
-        if (cil) vloz(panel, cil);
+        if (cil) prohod(panel, cil);
     };
     panel.addEventListener('pointerup', konecTazeni);
     panel.addEventListener('pointercancel', () => {
@@ -200,7 +208,8 @@ function zkontroluj() {
     const titulek = document.getElementById('titulek');
     let spravne = 0;
 
-    cile().forEach((c, i) => {
+    if (vybrany) { vybrany.classList.remove('vybrany'); vybrany = null; }
+    policka().forEach((c, i) => {
         const panel = c.querySelector('.panel');
         if (Number(panel.dataset.idx) === i) {
             panel.classList.add('spravne');
@@ -213,29 +222,20 @@ function zkontroluj() {
 
     if (spravne === p.okenka.length) return vyreseno();
 
-    Hra.zvuk.spatne();
+    // Špatná okénka zůstanou červená, dokud je někdo neprohodí (bez zvuku)
     titulek.textContent = spravne
-        ? `Správně je ${spravne} z ${p.okenka.length}. Zkuste přesunout ty červené.`
-        : 'Ještě to tak nebylo. Zkuste to jinak.';
+        ? `Správně je ${spravne} z ${p.okenka.length}. Prohoďte ta červená.`
+        : 'Ještě to tak nebylo. Zkuste okénka prohodit.';
     Hra.mluv(titulek.textContent);
-
-    // Špatná okénka se po chvíli vrátí dolů
-    document.getElementById('zkontrolovat').disabled = true;
-    setTimeout(() => {
-        cile().forEach(c => {
-            const panel = c.querySelector('.panel.spatne');
-            if (panel) klikNaPanel(panel);
-        });
-    }, 1100);
 }
 
 function vyreseno() {
     const p = POHADKY[pohadka];
-    Hra.zvuk.spravne();
+    Hra.zvuk.vyhra();
     pohadka++;
 
-    hra.querySelector('.zasobniky').hidden = true;
-    hra.querySelector('.popisy').hidden = false;
+    // Pod každé okénko se dopíše věta, kterou můžete dětem přečíst
+    policka().forEach((c, i) => c.insertAdjacentHTML('beforeend', `<span class="popis objev">${p.okenka[i].text}</span>`));
 
     const posledni = pohadka >= POHADKY.length;
     document.getElementById('titulek').textContent = 'Přesně tak to bylo!';

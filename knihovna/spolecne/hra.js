@@ -180,34 +180,83 @@ const Hra = (() => {
 
 
     /* ================================================================
-       4. TÓNY — jemné, bez externích souborů
+       4. ZVUKY — měkký bubínek, bez externích souborů
+       Úder = hluboký tón, který rychle spadne (jako napnutá kůže bubnu),
+       a krátké tlumené šustnutí. Žádné vysoké tóny, nic nezvoní.
        ================================================================ */
 
     let audioKontext = null;
+    let vystup = null;
+    let sum = null;
 
-    function ton(frekvence, za, delka, hlasitost = 0.12) {
+    function zvukovyRetezec() {
         const AC = window.AudioContext || window.webkitAudioContext;
-        if (!AC) return;
-        if (!audioKontext) audioKontext = new AC();
+        if (!AC) return null;
+        if (!audioKontext) {
+            audioKontext = new AC();
+            const a = audioKontext;
+            // Tlumené výšky, aby úder zněl měkce a dřevěně
+            vystup = a.createBiquadFilter();
+            vystup.type = 'lowpass';
+            vystup.frequency.value = 1400;
+            vystup.connect(a.destination);
+            // Šum pro „ťuk“ paličky do kůže
+            sum = a.createBuffer(1, a.sampleRate * 0.2, a.sampleRate);
+            const data = sum.getChannelData(0);
+            for (let i = 0; i < data.length; i++) data[i] = Math.random() * 2 - 1;
+        }
         if (audioKontext.state === 'suspended') audioKontext.resume();
-        const a = audioKontext;
+        return audioKontext;
+    }
+
+    /** Jeden úder na bubínek: ladění v Hz, začátek v sekundách, hlasitost. */
+    function buben(ladeni = 150, za = 0, hlasitost = 0.5) {
+        const a = zvukovyRetezec();
+        if (!a) return;
+        const t = a.currentTime + za;
+
+        // Tělo úderu: tón začne o něco výš a hned spadne
         const osc = a.createOscillator();
         const zisk = a.createGain();
-        const t = a.currentTime + za;
         osc.type = 'sine';
-        osc.frequency.value = frekvence;
+        osc.frequency.setValueAtTime(ladeni * 1.7, t);
+        osc.frequency.exponentialRampToValueAtTime(ladeni, t + 0.035);
+        osc.frequency.exponentialRampToValueAtTime(ladeni * 0.8, t + 0.4);
         zisk.gain.setValueAtTime(0, t);
-        zisk.gain.linearRampToValueAtTime(hlasitost, t + 0.02);
-        zisk.gain.exponentialRampToValueAtTime(0.001, t + delka);
-        osc.connect(zisk).connect(a.destination);
+        zisk.gain.linearRampToValueAtTime(hlasitost, t + 0.004);
+        zisk.gain.exponentialRampToValueAtTime(0.0001, t + 0.4);
+        osc.connect(zisk).connect(vystup);
         osc.start(t);
-        osc.stop(t + delka + 0.05);
+        osc.stop(t + 0.45);
+
+        // Ťuk paličky: velmi krátké tlumené šustnutí
+        const zdroj = a.createBufferSource();
+        const pasmo = a.createBiquadFilter();
+        const ziskSumu = a.createGain();
+        zdroj.buffer = sum;
+        pasmo.type = 'bandpass';
+        pasmo.frequency.value = ladeni * 5;
+        pasmo.Q.value = 0.8;
+        ziskSumu.gain.setValueAtTime(hlasitost * 0.35, t);
+        ziskSumu.gain.exponentialRampToValueAtTime(0.0001, t + 0.05);
+        zdroj.connect(pasmo).connect(ziskSumu).connect(vystup);
+        zdroj.start(t);
+        zdroj.stop(t + 0.06);
     }
 
     const zvuk = {
-        spravne() { ton(659, 0, 0.5); ton(988, 0.12, 0.7); },
-        spatne()  { ton(220, 0, 0.35, 0.08); },
-        listek()  { ton(1175, 0, 0.25, 0.05); }
+        /** Správná odpověď: „duc duc“. */
+        spravne() { buben(165, 0); buben(196, 0.16); },
+        /** Chyba: jeden tichý hluboký úder, nic vyčítavého. */
+        spatne()  { buben(110, 0, 0.3); },
+        /** Drobná akce (další věc z kufru): tiché ťuknutí. */
+        listek()  { buben(220, 0, 0.18); },
+        /** Hotovo: krátký rytmus na bubínek zakončený hlubším úderem. */
+        vyhra()   {
+            [[165, 0], [165, 0.14], [196, 0.28], [196, 0.42], [220, 0.56], [220, 0.63], [220, 0.70]]
+                .forEach(([f, cas]) => buben(f, cas, 0.42));
+            buben(130, 0.9, 0.6);
+        }
     };
 
 

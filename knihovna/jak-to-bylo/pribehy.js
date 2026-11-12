@@ -9,7 +9,7 @@
  *
  *  Okénko:
  *    text     – věta, která se ukáže po správném seřazení
- *    pozadi   – 'den', 'les', 'vecer' nebo 'pokoj'
+ *    pozadi   – 'den', 'les', 'vecer', 'noc' nebo 'pokoj'
  *    navic    – (nepovinné) vlastní SVG tvary za postavami,
  *               souřadnice 0–400 × 0–300
  *    veci     – co je v okénku nakreslené:
@@ -60,6 +60,15 @@ const PERINA = `<path fill="#92D3F5" ${CARA} d="M58,194 C120,178 220,180 282,200
 
 // Kouř z komína perníkové chaloupky: pec ještě hoří
 const KOUR = `<path fill="none" stroke="#8A8A8A" stroke-width="7" stroke-linecap="round" d="M106,64 C96,52 118,44 108,30 C102,20 118,14 112,4"/>`;
+
+// Noční obloha a světýlko z okénka chaloupky daleko na obzoru
+const HVEZDY = [[150, 30], [220, 18], [300, 40], [360, 22], [250, 70], [380, 80]]
+    .map(([x, y]) => `<circle cx="${x}" cy="${y}" r="2.5" fill="#FCEA2B"/>`).join('');
+const SVETYLKO = `<circle cx="346" cy="172" r="52" fill="#FCEA2B" opacity=".18"/>
+    <circle cx="346" cy="172" r="32" fill="#FCEA2B" opacity=".35"/>
+    <path d="M322,190 L322,170 L346,150 L370,170 L370,190 Z" fill="#2A2F45" stroke="#000" stroke-width="2"/>
+    <rect x="338" y="168" width="16" height="13" fill="#FCEA2B" stroke="#000" stroke-width="2"/>
+    <path d="M346,104 V118 M296,124 L307,133 M396,124 L385,133 M282,172 H296 M396,172 H410" stroke="#FCEA2B" stroke-width="4" stroke-linecap="round"/>`;
 
 const LOZE = `<rect x="70" y="232" width="176" height="16" rx="4" fill="#D0A46B" ${CARA}/>
     <path d="M86,248 V272 M230,248 V272" stroke="#000" stroke-width="6" stroke-linecap="round"/>`;
@@ -131,14 +140,15 @@ const POHADKY = [
                 ]
             },
             {
-                text: 'V lese našli perníkovou chaloupku a začali z ní mlsat.',
-                pozadi: 'vecer',
+                text: 'Zabloudili. Jeníček vylezl na strom a v dálce uviděl světýlko.',
+                pozadi: 'noc',
+                navic: HVEZDY + SVETYLKO,
                 veci: [
-                    { e: '🌙', x: 12, y: 24, s: 12 },
-                    { e: 'chaloupka', x: 68, y: 92, s: 58 },
-                    { e: 'marenka', x: 15, y: 96, s: 30 },
-                    { e: 'jenicek', x: 34, y: 96, s: 30 },
-                    { e: 'pernicek', x: 43, y: 62, s: 14 }
+                    { e: '🌙', x: 10, y: 22, s: 11 },
+                    { e: '🌲', x: 62, y: 64, s: 14 },
+                    { e: '🌳', x: 30, y: 96, s: 64 },
+                    { e: 'jenicek-smutny', x: 34, y: 44, s: 20, z: 99 },
+                    { e: 'marenka-smutna', x: 58, y: 96, s: 26 }
                 ]
             },
             {
